@@ -103,8 +103,8 @@ export function Videos({ items = [] }: VideosProps) {
                     src={thumbUrl}
                     alt={video.title}
                     unoptimized
-                    width={480}
-                    height={360}
+                    fill
+                    sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
                     className="object-cover opacity-90 transition-transform duration-300 group-hover:scale-105"
                   />
                   <div className="absolute inset-0 flex items-center justify-center bg-slate-950/30">

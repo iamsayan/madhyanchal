@@ -106,6 +106,11 @@ export interface Homepage extends SingletonEntity {
   videos: HomepageVideo[];
 }
 
+export interface GalleryItem extends Entity {
+  year: string;
+  images: Asset[];
+}
+
 declare global {
   interface Window {
     Razorpay: new (options: unknown) => { open(): void };

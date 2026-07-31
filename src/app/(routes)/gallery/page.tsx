@@ -4,6 +4,7 @@ import type { Metadata } from 'next';
 
 import { GalleryFilterView } from '@/components/features/gallery-filter-view';
 import { PageLayout } from '@/components/layout/page-layout';
+import { getGalleryItems } from '@/lib/data';
 
 import { Sparkles } from 'lucide-react';
 
@@ -31,25 +32,8 @@ export const metadata: Metadata = {
   },
 };
 
-async function getGalleryData() {
-  try {
-    const serviceUrl =
-      process.env.NEXT_PUBLIC_IMAGE_SERVICE_URL ||
-      'https://web.madhyanchalsarbajanin.co.in/cms';
-    const res = await fetch(`${serviceUrl}/api.php?v=1s`, {
-      next: { revalidate: 3600, tags: ['gallery-data'] },
-    });
-    if (res.ok) {
-      return await res.json();
-    }
-  } catch (error) {
-    console.error('Gallery API fetch error:', error);
-  }
-  return {};
-}
-
 export default async function GalleryPage() {
-  const images = await getGalleryData();
+  const items = await getGalleryItems();
 
   const jsonLd = {
     '@context': 'https://schema.org',
@@ -92,7 +76,7 @@ export default async function GalleryPage() {
       breadcrumbCurrent="Gallery"
       scriptJsonLd={jsonLd}
     >
-      <GalleryFilterView images={images} />
+      <GalleryFilterView items={items} />
     </PageLayout>
   );
 }
