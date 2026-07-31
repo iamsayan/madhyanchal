@@ -105,9 +105,9 @@ export default function RootLayout({
     >
       <body className="text-foreground flex min-h-screen flex-col bg-amber-50/60 font-sans antialiased transition-colors duration-500 selection:bg-amber-500 selection:text-slate-950 dark:bg-stone-950">
         <SerwistProvider swUrl="/sw.js">
-          <ThemeProvider attribute="class" defaultTheme="dark" enableSystem>
+          <ThemeProvider attribute="class" defaultTheme="light" enableSystem>
             <AppProvider settingsPromise={settings}>
-              <Suspense fallback={<PageLoader />}>
+              <Suspense>
                 <Header />
                 <main className="flex-1">{children}</main>
                 <Footer />
