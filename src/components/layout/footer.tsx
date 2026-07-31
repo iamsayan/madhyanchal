@@ -78,7 +78,7 @@ export function Footer() {
         </Link>
 
         {/* Compact Navigation Links with Dot Separators */}
-        <nav className="flex flex-wrap items-center justify-center gap-x-2 gap-y-1 text-[11px] font-semibold text-slate-600 sm:gap-x-6 sm:text-xs dark:text-slate-300">
+        <nav className="flex flex-wrap items-center justify-center gap-x-2 gap-y-1 text-[11px] font-semibold text-slate-600 sm:gap-x-3 sm:text-xs dark:text-slate-300">
           {navLinks.map((link, idx) => (
             <React.Fragment key={link.href}>
               {idx > 0 && (
@@ -119,13 +119,19 @@ export function Footer() {
         {/* Legal & Copyright Info */}
         <div className="space-y-1 text-[10px] text-slate-500 sm:text-xs dark:text-slate-400">
           <p>
-            © {currentYear} Madhyanchal Sarbajanin Jagadhatri Puja Samity. All
-            Rights Reserved.
+            Copyright © {currentYear} Madhyanchal Sarbajanin. All Rights
+            Reserved.
           </p>
           <p className="flex items-center justify-center gap-1 text-[9.5px] text-slate-400 sm:text-[10px] dark:text-slate-500">
-            Crafted with{' '}
-            <Heart className="h-3 w-3 fill-rose-500 text-rose-500" /> for
-            Chandannagar & Bengal.
+            Developed with{' '}
+            <Heart className="h-3 w-3 fill-rose-500 text-rose-500" /> by{' '}
+            <Link
+              href="https://www.sayandatta.co.in"
+              target="_blank"
+              className="font-semibold transition-colors hover:text-amber-600 dark:hover:text-amber-400"
+            >
+              Sayan Datta
+            </Link>
           </p>
         </div>
       </div>
