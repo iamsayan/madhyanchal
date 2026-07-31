@@ -11,32 +11,6 @@ import { Calendar, MapPin } from 'lucide-react';
 export function Header() {
   const pathname = usePathname();
   const [scrolled, setScrolled] = React.useState(false);
-  const [isStandalone, setIsStandalone] = React.useState(false);
-  const [mounted, setMounted] = React.useState(false);
-
-  React.useEffect(() => {
-    setMounted(true);
-
-    const checkStandalone = () => {
-      const isPWA =
-        !window.matchMedia('(display-mode: browser)').matches ||
-        (window.navigator as unknown as { standalone?: boolean }).standalone === true ||
-        document.referrer.startsWith('android-app://') ||
-        window.location.search.includes('pwa');
-
-      setIsStandalone(isPWA);
-    };
-
-    checkStandalone();
-
-    const m = window.matchMedia('(display-mode: browser)');
-    const handleChange = () => checkStandalone();
-    m.addEventListener?.('change', handleChange);
-
-    return () => {
-      m.removeEventListener?.('change', handleChange);
-    };
-  }, [pathname]);
 
   React.useEffect(() => {
     const handleScroll = () => {
@@ -61,26 +35,22 @@ export function Header() {
     { label: 'Contact', href: '/contact-us' },
   ];
 
-  const activeStandalone = mounted && isStandalone;
-  const isCompact = activeStandalone || scrolled;
-
   return (
     <header
       style={{ viewTransitionName: 'site-header' }}
       className={cn(
         'fixed inset-x-0 top-0 z-50 w-full border-b transition-all duration-300',
-        activeStandalone
-          ? 'border-amber-600/30 bg-[#78350f]'
-          : scrolled
-            ? 'border-slate-200/60 bg-white/90 backdrop-blur-2xl dark:border-white/10 dark:bg-stone-950/90'
-            : 'border-transparent bg-transparent'
+        'border-amber-600/30 bg-[#78350f] lg:border-transparent lg:bg-transparent',
+        scrolled
+          ? 'lg:border-slate-200/60 lg:bg-white/90 lg:backdrop-blur-2xl lg:dark:border-white/10 lg:dark:bg-stone-950/90'
+          : 'lg:border-transparent lg:bg-transparent'
       )}
     >
       {/* DESKTOP HEADER LAYOUT (lg view) - ABSOLUTE 100% DEAD CENTERED DOCK */}
       <div
         className={cn(
           'relative mx-auto hidden max-w-7xl items-center justify-between px-4 transition-all duration-300 lg:flex lg:px-6 xl:px-8',
-          isCompact ? 'h-16' : 'h-20'
+          scrolled ? 'h-16' : 'h-20'
         )}
       >
         {/* Brand Logo (Far Left) */}
@@ -92,7 +62,7 @@ export function Header() {
           <div
             className={cn(
               'relative w-auto transition-all duration-300 group-hover:scale-105',
-              isCompact ? 'h-8 min-w-[130px]' : 'h-10 min-w-[150px]'
+              scrolled ? 'h-8 min-w-[130px]' : 'h-10 min-w-[150px]'
             )}
           >
             <Image
@@ -102,7 +72,7 @@ export function Header() {
               height={50}
               className={cn(
                 'w-auto object-contain transition-all duration-300',
-                isCompact ? 'h-8' : 'h-10'
+                scrolled ? 'h-8' : 'h-10'
               )}
               priority
             />
@@ -114,7 +84,7 @@ export function Header() {
           <nav
             className={cn(
               'flex max-w-full items-center gap-0.5 overflow-hidden rounded-full p-1 transition-all duration-300 xl:gap-1',
-              isCompact
+              scrolled
                 ? 'border border-slate-200/90 bg-white/95 text-slate-800 backdrop-blur-xl dark:border-white/15 dark:bg-stone-900/85 dark:text-slate-200'
                 : 'border border-amber-500/30 bg-white/90 text-slate-800 backdrop-blur-2xl dark:border-white/20 dark:bg-stone-950/80 dark:text-slate-100'
             )}
@@ -129,7 +99,7 @@ export function Header() {
                   transitionTypes={isHome ? ['nav-back'] : ['nav-forward']}
                   className={cn(
                     'flex shrink-0 items-center justify-center rounded-full text-center font-bold whitespace-nowrap transition-all',
-                    isCompact
+                    scrolled
                       ? 'min-h-[28px] px-2.5 py-1 text-[11px] xl:px-3 xl:text-xs'
                       : 'min-h-[32px] px-2.5 py-1 text-[11.5px] xl:px-3.5 xl:text-xs',
                     isActive
@@ -146,21 +116,12 @@ export function Header() {
 
         {/* Right Controls: Theme Toggle Switch (Far Right) */}
         <div className="flex shrink-0 items-center gap-2">
-          <ThemeToggle isScrolled={isCompact} />
+          <ThemeToggle isScrolled={scrolled} />
         </div>
       </div>
 
       {/* NATIVE MOBILE APP ACTION HEADER (<lg view) */}
-      <div
-        className={cn(
-          'flex items-center justify-between px-4 transition-all duration-300 lg:hidden',
-          activeStandalone
-            ? 'h-14 bg-[#78350f]'
-            : scrolled
-              ? 'h-14 bg-white/90 backdrop-blur-2xl dark:bg-stone-950/90'
-              : 'h-16'
-        )}
-      >
+      <div className="flex h-14 items-center justify-between bg-[#78350f] px-4 transition-all duration-300 lg:hidden">
         {/* Left: Brand Logo */}
         <Link
           href="/"
@@ -172,10 +133,7 @@ export function Header() {
             alt="Madhyanchal Sarbajanin Logo"
             width={140}
             height={36}
-            className={cn(
-              'w-auto object-contain transition-all duration-300',
-              isCompact ? 'h-7.5' : 'h-8.5'
-            )}
+            className="h-7.5 w-auto object-contain transition-all duration-300"
             priority
           />
         </Link>
@@ -186,12 +144,7 @@ export function Header() {
             href="https://maps.app.goo.gl/xY6cx8Arcy6ayLYq9"
             target="_blank"
             rel="noopener noreferrer"
-            className={cn(
-              'relative flex h-8 w-8 shrink-0 items-center justify-center rounded-full border backdrop-blur-2xl transition-all duration-300 active:scale-95',
-              isCompact
-                ? 'border-slate-200/90 bg-white/95 text-amber-600 dark:border-white/15 dark:bg-stone-900/80 dark:text-amber-400'
-                : 'border-amber-500/30 bg-white/90 text-amber-600 dark:border-white/20 dark:bg-stone-950/70 dark:text-amber-400'
-            )}
+            className="relative flex h-8 w-8 shrink-0 items-center justify-center rounded-full border border-slate-200/90 bg-white/95 text-amber-600 backdrop-blur-2xl transition-all duration-300 active:scale-95 dark:border-white/15 dark:bg-stone-900/80 dark:text-amber-400"
             aria-label="Map Location"
           >
             <MapPin className="h-4 w-4" />
@@ -199,17 +152,12 @@ export function Header() {
           <Link
             href="/schedule"
             transitionTypes={['nav-forward']}
-            className={cn(
-              'relative flex h-8 w-8 shrink-0 items-center justify-center rounded-full border backdrop-blur-2xl transition-all duration-300 active:scale-95',
-              isCompact
-                ? 'border-slate-200/90 bg-white/95 text-amber-600 dark:border-white/15 dark:bg-stone-900/80 dark:text-amber-400'
-                : 'border-amber-500/30 bg-white/90 text-amber-600 dark:border-white/20 dark:bg-stone-950/70 dark:text-amber-400'
-            )}
+            className="relative flex h-8 w-8 shrink-0 items-center justify-center rounded-full border border-slate-200/90 bg-white/95 text-amber-600 backdrop-blur-2xl transition-all duration-300 active:scale-95 dark:border-white/15 dark:bg-stone-900/80 dark:text-amber-400"
             aria-label="Puja Schedule"
           >
             <Calendar className="h-4 w-4" />
           </Link>
-          <ThemeToggle isScrolled={isCompact} />
+          <ThemeToggle isScrolled={true} />
         </div>
       </div>
     </header>
