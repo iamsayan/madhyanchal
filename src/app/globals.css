@@ -216,6 +216,13 @@
 
 /* OFFICIAL NEXT.JS TEAM VIEW TRANSITIONS SPECIFICATION */
 
+:root,
+::view-transition {
+  --duration-exit: 180ms;
+  --duration-enter: 240ms;
+  --duration-move: 350ms;
+}
+
 @keyframes fade {
   from { filter: blur(3px); opacity: 0; }
   to { filter: blur(0); opacity: 1; }
