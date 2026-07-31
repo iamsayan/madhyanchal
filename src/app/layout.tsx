@@ -32,7 +32,7 @@ const siteUrl =
   process.env.NEXT_PUBLIC_SITE_URL || 'https://madhyanchalsarbajanin.co.in';
 
 export const viewport: Viewport = {
-  themeColor: '#78350f',
+  themeColor: '#0c0a09',
   width: 'device-width',
   initialScale: 1,
   maximumScale: 1,
