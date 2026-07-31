@@ -228,99 +228,94 @@ body {
 
 /* OFFICIAL NEXT.JS TEAM VIEW TRANSITIONS SPECIFICATION */
 
-/* NATIVE APP TRANSITION TIMING & KEYFRAMES (60/120 FPS Ultra-Smooth GPU Composited) */
+/* ULTRA-LUXURY NATIVE APP VIEW TRANSITIONS SPECIFICATION */
 :root,
 ::view-transition {
-  --duration-native-exit: 180ms;
-  --duration-native-enter: 240ms;
-  --ease-native-apple: cubic-bezier(0.2, 0.8, 0.2, 1);
+  --duration-page-exit: 150ms;
+  --duration-page-enter: 220ms;
+  --ease-apple-spring: cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 ::view-transition-old(page),
-::view-transition-new(page),
-::view-transition-old(root),
-::view-transition-new(root) {
+::view-transition-new(page) {
   backface-visibility: hidden;
   transform-style: preserve-3d;
   will-change: transform, opacity;
+  mix-blend-mode: normal !important;
 }
 
+/* Disable root transition completely so persistent elements like Header never animate */
+::view-transition-old(root),
+::view-transition-new(root) {
+  animation: none !important;
+}
+
+/* Forward Navigation: Old page recedes (1 -> 0.985), New page arrives from front (1.015 -> 1) */
 @keyframes native-page-exit-forward {
   0% {
-    transform: translate3d(0, 0, 0) scale(1);
+    transform: scale(1);
     opacity: 1;
   }
   100% {
-    transform: translate3d(0, -12px, 0) scale(0.98);
+    transform: scale(0.985);
     opacity: 0;
   }
 }
 
 @keyframes native-page-enter-forward {
   0% {
-    transform: translate3d(0, 16px, 0) scale(0.99);
+    transform: scale(1.015);
     opacity: 0;
   }
   100% {
-    transform: translate3d(0, 0, 0) scale(1);
+    transform: scale(1);
     opacity: 1;
   }
 }
 
+/* Backward Navigation: Old page expands (1 -> 1.015), Previous page returns (0.985 -> 1) */
 @keyframes native-page-exit-back {
   0% {
-    transform: translate3d(0, 0, 0) scale(1);
+    transform: scale(1);
     opacity: 1;
   }
   100% {
-    transform: translate3d(0, 16px, 0) scale(0.99);
+    transform: scale(1.015);
     opacity: 0;
   }
 }
 
 @keyframes native-page-enter-back {
   0% {
-    transform: translate3d(0, -12px, 0) scale(0.98);
+    transform: scale(0.985);
     opacity: 0;
   }
   100% {
-    transform: translate3d(0, 0, 0) scale(1);
+    transform: scale(1);
     opacity: 1;
   }
 }
 
-/* FORWARD NATIVE APP TRANSITION (Page-to-Page Navigation) */
+/* FORWARD NATIVE APP TRANSITION (Page-to-Page Forward Navigation) */
 :active-view-transition-type(nav-forward)::view-transition-old(page),
-:active-view-transition-type(nav-forward)::view-transition-old(root),
-html:active-view-transition-type(nav-forward) ::view-transition-old(page),
-html:active-view-transition-type(nav-forward) ::view-transition-old(root),
-:root:active-view-transition-type(nav-forward) ::view-transition-old(*) {
-  animation: var(--duration-native-exit) var(--ease-native-apple) both native-page-exit-forward;
+html:active-view-transition-type(nav-forward) ::view-transition-old(page) {
+  animation: var(--duration-page-exit) var(--ease-apple-spring) both native-page-exit-forward;
 }
 
 :active-view-transition-type(nav-forward)::view-transition-new(page),
-:active-view-transition-type(nav-forward)::view-transition-new(root),
-html:active-view-transition-type(nav-forward) ::view-transition-new(page),
-html:active-view-transition-type(nav-forward) ::view-transition-new(root),
-:root:active-view-transition-type(nav-forward) ::view-transition-new(*) {
-  animation: var(--duration-native-enter) var(--ease-native-apple) both native-page-enter-forward;
+html:active-view-transition-type(nav-forward) ::view-transition-new(page) {
+  animation: var(--duration-page-enter) var(--ease-apple-spring) both native-page-enter-forward;
 }
 
-/* BACKWARD NATIVE APP TRANSITION (Page-to-Page Navigation) */
+/* BACKWARD NATIVE APP TRANSITION (Page-to-Page Backward Navigation) */
 :active-view-transition-type(nav-back)::view-transition-old(page),
-:active-view-transition-type(nav-back)::view-transition-old(root),
-html:active-view-transition-type(nav-back) ::view-transition-old(page),
-html:active-view-transition-type(nav-back) ::view-transition-old(root),
-:root:active-view-transition-type(nav-back) ::view-transition-old(*) {
-  animation: var(--duration-native-exit) var(--ease-native-apple) both native-page-exit-back;
+html:active-view-transition-type(nav-back) ::view-transition-old(page) {
+  animation: var(--duration-page-exit) var(--ease-apple-spring) both native-page-exit-back;
 }
 
 :active-view-transition-type(nav-back)::view-transition-new(page),
-:active-view-transition-type(nav-back)::view-transition-new(root),
-html:active-view-transition-type(nav-back) ::view-transition-new(page),
-html:active-view-transition-type(nav-back) ::view-transition-new(root),
-:root:active-view-transition-type(nav-back) ::view-transition-new(*) {
-  animation: var(--duration-native-enter) var(--ease-native-apple) both native-page-enter-back;
+html:active-view-transition-type(nav-back) ::view-transition-new(page) {
+  animation: var(--duration-page-enter) var(--ease-apple-spring) both native-page-enter-back;
 }
 
 ::view-transition-group(.morph) {
@@ -338,11 +333,17 @@ html:active-view-transition-type(nav-back) ::view-transition-new(root),
   pointer-events: none;
 }
 
-/* Fixed Header & Mobile Nav Anchoring (Suppresses header & mobile dock flickering/moving) */
+/* Fixed Header & Mobile Nav Anchoring */
 ::view-transition-group(site-header),
 ::view-transition-group(mobile-nav-dock) {
   animation: none;
   z-index: 100;
+}
+
+::view-transition-old(site-header),
+::view-transition-new(site-header) {
+  animation: none;
+  mix-blend-mode: normal;
 }
 
 ::view-transition-group(mobile-nav-dock) {
@@ -356,14 +357,8 @@ html:active-view-transition-type(nav-back) ::view-transition-new(root),
   border-radius: 9999px !important;
   clip-path: inset(0 round 9999px) !important;
   overflow: hidden !important;
-  animation: none;
-  mix-blend-mode: normal;
-}
-
-::view-transition-old(site-header),
-::view-transition-new(site-header) {
-  animation: none;
-  mix-blend-mode: normal;
+  animation: none !important;
+  mix-blend-mode: normal !important;
 }
 
 /* Accessibility: Reduced Motion Support */
