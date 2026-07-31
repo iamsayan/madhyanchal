@@ -24,7 +24,6 @@ export function GallerySlider({ slides = [] }: GallerySliderProps) {
   const [selectedIndex, setSelectedIndex] = React.useState<number | null>(null);
   const [activeMobileIndex, setActiveMobileIndex] = React.useState<number>(0);
   const [isMounted, setIsMounted] = React.useState(false);
-  const [isMobile, setIsMobile] = React.useState(false);
 
   const scrollRef = React.useRef<HTMLDivElement>(null);
   const thumbnailContainerRef = React.useRef<HTMLDivElement>(null);
@@ -33,13 +32,19 @@ export function GallerySlider({ slides = [] }: GallerySliderProps) {
 
   React.useEffect(() => {
     setIsMounted(true);
-    const checkMobile = () => {
-      setIsMobile(window.innerWidth < 640);
-    };
-    checkMobile();
-    window.addEventListener('resize', checkMobile);
-    return () => window.removeEventListener('resize', checkMobile);
   }, []);
+
+  // Lock body scroll when Lightbox is open
+  React.useEffect(() => {
+    if (selectedIndex !== null) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = '';
+    }
+    return () => {
+      document.body.style.overflow = '';
+    };
+  }, [selectedIndex]);
 
   const openLightbox = (index: number) => {
     setSelectedIndex(index);
@@ -73,7 +78,7 @@ export function GallerySlider({ slides = [] }: GallerySliderProps) {
     [selectedIndex, totalSlides]
   );
 
-  // Keyboard navigation for Lightbox
+  // Keyboard controls for Lightbox
   React.useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
       if (selectedIndex === null) return;
@@ -86,7 +91,7 @@ export function GallerySlider({ slides = [] }: GallerySliderProps) {
     return () => window.removeEventListener('keydown', handleKeyDown);
   }, [selectedIndex, closeLightbox, nextImage, prevImage]);
 
-  // Scroll thumbnail into view inside Lightbox
+  // Scroll active thumbnail into view inside Lightbox
   React.useEffect(() => {
     if (selectedIndex !== null && thumbnailContainerRef.current) {
       const activeThumb = thumbnailContainerRef.current.children[
@@ -114,6 +119,8 @@ export function GallerySlider({ slides = [] }: GallerySliderProps) {
 
   if (totalSlides === 0) return null;
 
+  const currentSlide = selectedIndex !== null ? slides[selectedIndex] : null;
+
   return (
     <div className="relative mx-auto w-full max-w-7xl">
       {/* ========================================================================= */}
@@ -129,9 +136,9 @@ export function GallerySlider({ slides = [] }: GallerySliderProps) {
             <div
               key={asset._id || idx}
               onClick={() => openLightbox(idx)}
-              className="group relative aspect-[4/3] w-[82vw] shrink-0 snap-center overflow-hidden rounded-2xl border border-amber-500/30 bg-slate-950 shadow-xl transition-transform active:scale-[0.98]"
+              className="group relative aspect-[4/3] w-[82vw] shrink-0 cursor-pointer snap-center overflow-hidden rounded-2xl border border-slate-100/80 bg-slate-900 transition-transform active:scale-[0.98] dark:border-white/10"
             >
-              <ViewTransition name={`mob-gallery-img-${asset._id || idx}`} share="morph">
+              <ViewTransition name={`gallery-mob-img-${asset._id || idx}`}>
                 <CockpitImage
                   asset={asset}
                   preset="thumbnail"
@@ -142,17 +149,17 @@ export function GallerySlider({ slides = [] }: GallerySliderProps) {
                 />
               </ViewTransition>
               {/* Gradient Overlay & Metadata */}
-              <div className="absolute inset-0 z-10 flex flex-col justify-between bg-gradient-to-t from-slate-950/90 via-slate-950/20 to-transparent p-3.5">
+              <div className="absolute inset-0 z-10 flex flex-col justify-between bg-gradient-to-t from-slate-950/70 via-slate-950/10 to-transparent p-3.5">
                 <div className="flex justify-end">
                   <span className="flex h-7 w-7 items-center justify-center rounded-full border border-white/20 bg-slate-950/70 text-white backdrop-blur-md">
                     <Maximize2 className="h-3.5 w-3.5 text-amber-400" />
                   </span>
                 </div>
                 <div className="space-y-0.5 text-left">
-                  <p className="line-clamp-1 text-xs font-bold text-white">
+                  <p className="line-clamp-1 text-xs font-bold text-white drop-shadow-sm">
                     {asset.title || 'Jagadhatri Puja Memory'}
                   </p>
-                  <p className="flex items-center gap-1 text-[10px] font-semibold text-amber-300">
+                  <p className="flex items-center gap-1 text-[10px] font-semibold text-amber-300 drop-shadow-sm">
                     <ZoomIn className="h-3 w-3" /> Tap for full screen
                   </p>
                 </div>
@@ -191,7 +198,7 @@ export function GallerySlider({ slides = [] }: GallerySliderProps) {
                   : 'aspect-[4/3]'
               }`}
             >
-              <ViewTransition name={`desk-gallery-img-${asset._id || idx}`} share="morph">
+              <ViewTransition name={`gallery-desk-img-${asset._id || idx}`}>
                 <CockpitImage
                   asset={asset}
                   preset="thumbnail"
@@ -234,7 +241,7 @@ export function GallerySlider({ slides = [] }: GallerySliderProps) {
       </div>
 
       {/* ========================================================================= */}
-      {/* 3. HIGH-END LIGHTBOX PORTAL OVERLAY */}
+      {/* 3. CLEAN & STREAMLINED LIGHTBOX PORTAL OVERLAY */}
       {/* ========================================================================= */}
       {isMounted &&
         selectedIndex !== null &&
@@ -248,15 +255,12 @@ export function GallerySlider({ slides = [] }: GallerySliderProps) {
               onClick={(e) => e.stopPropagation()}
               className="flex items-center justify-between border-b border-white/10 pb-4"
             >
-              <div className="flex items-center gap-2">
+              <div className="flex items-center gap-2.5">
                 <span className="inline-flex items-center justify-center rounded-full border border-amber-500/40 bg-amber-500/15 px-3 py-1 text-xs font-black text-amber-400">
-                  <span>
-                    {selectedIndex + 1} / {totalSlides}
-                  </span>
+                  {selectedIndex + 1} / {totalSlides}
                 </span>
                 <span className="line-clamp-1 max-w-xs text-xs font-bold text-slate-200 sm:max-w-md sm:text-sm">
-                  {slides[selectedIndex]?.title ||
-                    'Jagadhatri Puja Celebration Memory'}
+                  {currentSlide?.title || 'Jagadhatri Puja Memory'}
                 </span>
               </div>
 
@@ -272,26 +276,22 @@ export function GallerySlider({ slides = [] }: GallerySliderProps) {
             {/* Main Stage Image Display */}
             <div
               onClick={(e) => e.stopPropagation()}
-              className="relative flex flex-1 items-center justify-center py-2"
+              className="relative flex flex-1 flex-col items-center justify-center py-1"
             >
-              <div className="relative flex h-full max-h-[72vh] w-full max-w-[90vw] items-center justify-center sm:max-h-[76vh]">
-                <ViewTransition
-                  name={`${isMobile ? 'mob' : 'desk'}-gallery-img-${slides[selectedIndex]?._id || selectedIndex}`}
-                  share="morph"
-                >
-                  <CockpitImage
-                    asset={slides[selectedIndex]}
-                    preset="large"
-                    fill
-                    lazy={false}
-                    loaderPlaceholder={false}
-                    containerClassName="relative size-full bg-transparent flex items-center justify-center"
-                    className="rounded-2xl border border-white/15 object-contain shadow-[0_0_60px_rgba(0,0,0,0.9)] backdrop-blur-md"
-                  />
-                </ViewTransition>
+              <div className="relative flex h-full max-h-[68vh] w-full max-w-[90vw] items-center justify-center sm:max-h-[72vh]">
+                <CockpitImage
+                  key={slides[selectedIndex]._id || selectedIndex}
+                  asset={slides[selectedIndex]}
+                  preset="large"
+                  fill
+                  lazy={false}
+                  loaderPlaceholder={false}
+                  containerClassName="relative size-full bg-transparent flex items-center justify-center"
+                  className="rounded-2xl border border-white/15 object-contain shadow-[0_0_60px_rgba(0,0,0,0.9)] backdrop-blur-md"
+                />
               </div>
 
-              {/* Side Navigation Glass Buttons */}
+              {/* Side Navigation Buttons */}
               <button
                 onClick={prevImage}
                 className="absolute top-1/2 left-1 z-[999999] flex h-11 w-11 -translate-y-1/2 cursor-pointer items-center justify-center rounded-full border border-white/20 bg-stone-900/80 text-white shadow-xl backdrop-blur-md transition-all duration-300 hover:scale-110 hover:border-amber-400 hover:bg-amber-500 hover:text-slate-950 active:scale-90 sm:left-4 sm:h-13 sm:w-13"
@@ -306,6 +306,31 @@ export function GallerySlider({ slides = [] }: GallerySliderProps) {
               >
                 <ChevronRight className="h-6 w-6" />
               </button>
+
+              {/* Pure Unboxed Caption & Tags (No Box Container) */}
+              {currentSlide &&
+                (currentSlide.description ||
+                  (currentSlide.tags && currentSlide.tags.length > 0)) && (
+                  <div className="mt-2 flex max-w-xl flex-col items-center justify-center space-y-1 text-center">
+                    {currentSlide.description && (
+                      <p className="text-xs font-medium text-slate-200 drop-shadow-sm sm:text-sm">
+                        {currentSlide.description}
+                      </p>
+                    )}
+                    {currentSlide.tags && currentSlide.tags.length > 0 && (
+                      <div className="flex flex-wrap items-center justify-center gap-1.5 pt-0.5">
+                        {currentSlide.tags.map((tag, tIdx) => (
+                          <span
+                            key={tIdx}
+                            className="text-[11px] font-bold text-amber-400"
+                          >
+                            #{tag}
+                          </span>
+                        ))}
+                      </div>
+                    )}
+                  </div>
+                )}
             </div>
 
             {/* Bottom Horizontal Thumbnail Bar */}
@@ -315,13 +340,13 @@ export function GallerySlider({ slides = [] }: GallerySliderProps) {
             >
               <div
                 ref={thumbnailContainerRef}
-                className="flex max-w-full gap-2 overflow-x-auto rounded-2xl border border-white/10 bg-black/50 p-2 backdrop-blur-md [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden"
+                className="flex max-w-full [scrollbar-width:none] gap-2 overflow-x-auto rounded-2xl border border-white/10 bg-black/50 p-2 backdrop-blur-md [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden"
               >
                 {slides.map((asset, idx) => (
                   <button
                     key={asset._id || idx}
                     onClick={() => setSelectedIndex(idx)}
-                    className={`relative h-12 w-16 shrink-0 overflow-hidden rounded-xl border transition-all duration-300 ${
+                    className={`relative h-12 w-16 shrink-0 cursor-pointer overflow-hidden rounded-xl border transition-all duration-300 ${
                       selectedIndex === idx
                         ? 'scale-105 border-amber-400 ring-2 ring-amber-400/50'
                         : 'border-white/10 opacity-50 hover:opacity-100'

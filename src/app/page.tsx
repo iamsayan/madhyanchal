@@ -34,6 +34,9 @@ import {
 } from 'lucide-react';
 import { getHomePage, getSettings } from '@/lib/data';
 
+import lightShow from '@/public/light-show.jpg';
+import CockpitImage from '@/components/shared/cockpit-image';
+
 export default async function HomePage() {
   // Fetch CMS singletons with fallback data safety
   const [homepage, settings] = await Promise.all([
@@ -63,11 +66,11 @@ export default async function HomePage() {
     },
     {
       title: 'Prestigious Awards',
-      stat: '50+',
+      stat: '100+',
       icon: Award,
       color: 'from-emerald-500 to-teal-600',
       badgeColor: 'bg-emerald-500/10 text-emerald-500 dark:bg-emerald-500/20',
-      description: 'Won 12 top awards in 2024 alone',
+      description: 'Won 32 top awards in 2026 alone',
     },
     {
       title: 'Social Community',
@@ -149,7 +152,7 @@ export default async function HomePage() {
             />
             <Flame className="h-3.5 w-3.5 shrink-0 animate-pulse text-amber-500 sm:h-4 sm:w-4 dark:text-amber-400" />
             <span className="hidden sm:inline">
-              {legacyYears}Years of Tradition
+              {legacyYears} Years of Tradition
             </span>
             <span className="sm:hidden">{legacyYears}Years of Tradition</span>
           </div>
@@ -233,7 +236,7 @@ export default async function HomePage() {
             </span>
             <span className="flex flex-col items-center justify-center gap-1 text-center sm:flex-row sm:gap-2">
               <Award className="h-3.5 w-3.5 shrink-0 text-amber-400" />
-              50+ Awards
+              100+ Awards
             </span>
             <span className="flex flex-col items-center justify-center gap-1 text-center sm:flex-row sm:gap-2">
               <MapPin className="h-3.5 w-3.5 shrink-0 text-rose-400" />
@@ -261,10 +264,11 @@ export default async function HomePage() {
                 colorTo="#fef08a"
               />
 
-              <Image
-                src="/lighting-tableau.png"
-                alt="Chandannagar Street Illumination Tableau"
+              <CockpitImage
+                asset="6a27a7be35d02787960e45f0"
                 fill
+                loaderPlaceholder={false}
+                containerClassName="absolute inset-0 size-full"
                 className="object-cover object-center brightness-90 filter transition-transform duration-700 group-hover:scale-105"
               />
               <div className="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/65 to-transparent" />
@@ -319,7 +323,7 @@ export default async function HomePage() {
                 {/* Desktop Stat Row */}
                 <div className="hidden items-baseline gap-1 pt-1 sm:flex">
                   <NumberTicker
-                    value={50}
+                    value={100}
                     className="font-paytone bg-gradient-to-r from-amber-400 via-amber-500 to-yellow-500 bg-clip-text text-3xl font-extrabold text-transparent"
                   />
                   <span className="font-paytone text-3xl font-extrabold text-amber-500">
@@ -348,7 +352,7 @@ export default async function HomePage() {
 
                   <div className="flex items-baseline gap-0.5">
                     <NumberTicker
-                      value={50}
+                      value={100}
                       className="font-paytone bg-gradient-to-r from-amber-400 via-amber-500 to-yellow-500 bg-clip-text text-xl font-extrabold text-transparent"
                     />
                     <span className="font-paytone text-xl font-extrabold text-amber-500">

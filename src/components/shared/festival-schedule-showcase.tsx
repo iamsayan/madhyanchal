@@ -83,7 +83,7 @@ export function FestivalScheduleShowcase({
         <div className="pt-3">
           <div className="mb-2 flex items-center justify-between">
             <span className="text-[10px] font-extrabold tracking-widest text-slate-500 uppercase sm:text-xs dark:text-slate-400">
-              Select Puja Day
+              Puja Day
             </span>
             <span className="text-[10px] font-extrabold text-amber-600 sm:text-xs dark:text-amber-400">
               {dates.length} Days Showcase

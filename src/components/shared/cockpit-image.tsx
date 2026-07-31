@@ -1,6 +1,6 @@
 'use client';
 
-import { type ReactNode, useRef, useState } from 'react';
+import { type ReactNode, useEffect, useRef, useState } from 'react';
 
 import Image, { type ImageProps } from 'next/image';
 
@@ -8,7 +8,7 @@ import cockpit, { type Asset, type ImageOptions } from '@/lib/client';
 import { cn } from '@/lib/utils';
 import { ImagePreset } from '@/types';
 
-import placeholderImage from '../../../public/logo.png';
+import placeholderImage from '@/public/logo.png';
 import {
   type IntersectionOptions,
   useInView,
@@ -18,7 +18,7 @@ type CockpitImageProps = Omit<
   ImageProps,
   'loader' | 'src' | 'alt' | 'quality'
 > & {
-  asset: Asset;
+  asset: Asset | string;
   mode?: ImageOptions['m'];
   twidth?: number;
   theight?: number;
@@ -43,6 +43,8 @@ export default function CockpitImage({
   intersectionOptions,
   ...rest
 }: CockpitImageProps) {
+  const [assetData, setAssetData] = useState<Asset | string>(asset);
+
   const [imageState, setImageState] = useState<{
     isLoading: boolean;
     error: boolean;
@@ -55,6 +57,26 @@ export default function CockpitImage({
 
   const hasAttemptedFallback = useRef(false);
 
+  useEffect(() => {
+    if (typeof asset === 'string' && asset.trim()) {
+      cockpit
+        .getAsset(asset.trim())
+        .then((res) => {
+          if (res?._id) setAssetData(res);
+        })
+        .catch(() => {});
+    } else {
+      setAssetData(asset);
+    }
+  }, [asset]);
+
+  const targetAsset: Asset | null =
+    typeof assetData === 'object' && assetData?._id
+      ? assetData
+      : typeof assetData === 'string' && assetData.trim()
+        ? ({ _id: assetData.trim() } as Asset)
+        : null;
+
   const { ref, inView } = useInView({
     triggerOnce: true,
     rootMargin: '100px 50px',
@@ -66,7 +88,7 @@ export default function CockpitImage({
   const restWidth = rest.width;
   const restHeight = rest.height;
 
-  if (!asset || !asset._id) {
+  if (!targetAsset || !targetAsset._id) {
     return (
       <div
         className={cn(
@@ -85,18 +107,20 @@ export default function CockpitImage({
   }
 
   const url = preset
-    ? cockpit.getImagePresetUrl(asset._id, preset, { o: 1 })
-    : cockpit.getImageUrl(asset._id, {
+    ? cockpit.getImagePresetUrl(targetAsset._id, preset, { o: 1 })
+    : cockpit.getImageUrl(targetAsset._id, {
         o: 1,
-        w: asset.width || (restWidth as number) || twidth,
-        h: asset.height || (restHeight as number) || theight,
+        w: targetAsset.width || (restWidth as number) || twidth,
+        h: targetAsset.height || (restHeight as number) || theight,
         q: quality,
         m: mode,
       });
 
   const objectPosition =
-    asset.fp && typeof asset.fp.x === 'number' && typeof asset.fp.y === 'number'
-      ? `${asset.fp.x * 100}% ${asset.fp.y * 100}%`
+    targetAsset.fp &&
+    typeof targetAsset.fp.x === 'number' &&
+    typeof targetAsset.fp.y === 'number'
+      ? `${targetAsset.fp.x * 100}% ${targetAsset.fp.y * 100}%`
       : undefined;
 
   const handleLoad = () => {
@@ -173,7 +197,7 @@ export default function CockpitImage({
       {shouldRenderImage && (
         <Image
           src={url}
-          alt={asset.altText || asset.title || ''}
+          alt={targetAsset.altText || targetAsset.title || ''}
           sizes={autoSizes}
           loading={inView ? 'eager' : 'lazy'}
           onLoad={handleLoad}
