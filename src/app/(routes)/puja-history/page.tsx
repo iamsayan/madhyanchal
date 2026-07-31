@@ -88,9 +88,14 @@ export default function PujaHistoryPage() {
       title: 'Colonial Origins & French Heritage',
       subtitle: 'The 18th Century Genesis in Chandannagar',
       icon: Crown,
-      image: '/hero-pandal.png',
-      imageCaption: '18th Century French Colonial Chandannagar Heritage',
+      image: '/kaporerpatty-jagadhatri-1970.jpg',
+      imageCaption: 'The Kaporerpatty Mata - by Supratim Karmakar',
       tag: '1750s Origin',
+      highlights: [
+        { label: 'Era', value: 'French Colonial Period' },
+        { label: 'Pioneer', value: 'Indranarayan Chowdhury' },
+        { label: 'Origin', value: 'Predates 1750 CE' },
+      ],
       content: [
         'During British colonial rule in India, even though Chandannagar was governed by the French, it developed its own unique socio-cultural traditions. One of the most significant celebrations in this region is the grand Jagadhatri Puja.',
         'It is widely believed that Indranarayan Chowdhury introduced the Jagadhatri Puja in Chandannagar, inspired by the customs of King Krishnachandra of Krishnanagar.',
@@ -104,9 +109,14 @@ export default function PujaHistoryPage() {
       title: 'Sacred Iconography & Sankhya Philosophy',
       subtitle: 'The Slayer of Karindrasura & Sattva Guna',
       icon: Flame,
-      image: '/lighting-tableau.png',
+      image: '',
       imageCaption: 'Traditional Sola & Painted Canvas Artwork (Chalchitra)',
       tag: 'Sattva Guna',
+      highlights: [
+        { label: 'Tantra Texts', value: 'Mayatantra & Tantrasaar' },
+        { label: 'Deity Form', value: 'Four-Armed Sattva Guna' },
+        { label: 'Philosophy', value: 'Slayer of Karindrasura' },
+      ],
       content: [
         'The distinction between Goddess Durga and Goddess Jagadhatri is documented in the ancient text "Mayatantra", and Jagadhatri is referenced alongside Durga in Krishnananda’s "Tantrasaar". Worship on the ninth lunar day of Kartick is cited in "Krityatattarnab" by Srinath Acharyachuramoni (15th–16th century).',
         'The idol of Jagadhatri is portrayed with four arms—holding a conch (Sankha), discus (Chakra), bow (Dhanush), and arrow (Bana)—riding a lion standing victorious on an elephant (Karindrasura). The deity is traditionally adorned with exquisite sola decorations and vibrant painted canvas mats (Chalchitra).',
@@ -120,9 +130,14 @@ export default function PujaHistoryPage() {
       title: 'Literary Legacy & Anandamath',
       subtitle: 'The Mother India Triad in Vande Mataram',
       icon: Feather,
-      image: '/chandannagar-tableau.png',
+      image: '',
       imageCaption: 'Bankim Chandra Chatterjee’s Anandamath Inspiration',
       tag: 'Anandamath Connection',
+      highlights: [
+        { label: 'Novel', value: 'Anandamath (1882)' },
+        { label: 'Author', value: 'Bankim Chandra' },
+        { label: 'Symbolism', value: 'Glorious Past of Bharat Mata' },
+      ],
       content: [
         'In Indian literature, Jagadhatri holds a monumental place within Bankim Chandra Chatterjee’s celebrated semi-historical novel "Anandamath" (1882), which gave birth to India’s national song "Vande Mataram".',
         'In Anandamath, Kali, Durga, and Jagadhatri are presented as three distinct temporal manifestations of Bharat Mata (Mother India): Jagadhatri represents the glorious Past, Kali represents the troubled Present, and Durga represents the empowered Future.',
@@ -136,9 +151,14 @@ export default function PujaHistoryPage() {
       title: 'The 2nd Largest Procession in the World',
       subtitle: '190+ Community Pujas & Bose Family Legacy',
       icon: Globe2,
-      image: '/hero-pandal.png',
+      image: '',
       imageCaption: 'The Grand Nocturnal Immersion Procession',
       tag: 'World Record Procession',
+      highlights: [
+        { label: 'Oldest Puja', value: 'Bose Family (1788 CE)' },
+        { label: 'Total Pujas', value: '190+ Community Pujas' },
+        { label: 'Global Rank', value: '2nd Largest Procession' },
+      ],
       content: [
         'Among historical pujas, the Jagadhatri Puja of the Bose family in Palpara is especially legendary. Believed to have originated around 1788 (with family lineage records tracing back to 1640), it remains a cornerstone of heritage.',
         'Today, across Chandannagar, Bhadreswar, and Champdany, community pujas have surpassed 190. Of these, 161 puja committees are affiliated with the Chandannagar Central Jagadhatri Puja Committee.',
@@ -152,10 +172,15 @@ export default function PujaHistoryPage() {
       title: 'World-Famous Chandannagar Light Industry',
       subtitle: 'Tamaso Ma Jyotirgamaya • 5,000+ Master Artisans',
       icon: Lightbulb,
-      image: '/lighting-tableau.png',
+      image: '',
       imageCaption:
         'Master Light Artisans Sridhar Das & Kashinath Neogie Tapestry',
       tag: '5,000+ Artisans',
+      highlights: [
+        { label: 'Artisans', value: '5,000+ Light Craftsmen' },
+        { label: 'Pioneers', value: 'Sridhar Das & Kashinath' },
+        { label: 'Innovation', value: '3D Dynamic Illumination' },
+      ],
       content: [
         'The Sanskrit invocation "Tamaso ma jyotirgamaya" ("Oh Mother! Lead me from darkness to light") finds its ultimate artistic expression in Chandannagar. Over 5,000 light artisans thrive in this region, creating dynamic 3D illuminations that depict moving trains, cars, current affairs, and global icons.',
         'Pioneering master light artists such as Sridhar Das and Kashinath Neogie transformed simple bulbs into animated LED tapestries that are now commissioned worldwide for national events, royal weddings, and international carnivals.',
@@ -203,11 +228,11 @@ export default function PujaHistoryPage() {
                     </div>
                     <div>
                       <div className="flex items-center gap-2">
-                        <span className="inline-flex items-center gap-1 rounded-md border border-amber-500/30 bg-amber-500/15 px-2 py-0.5 text-[9.5px] font-black uppercase tracking-widest text-amber-700 sm:text-xs dark:text-amber-300">
+                        <span className="inline-flex items-center gap-1 rounded-md border border-amber-500/30 bg-amber-500/15 px-2 py-0.5 text-[9.5px] font-black tracking-widest text-amber-700 uppercase sm:text-xs dark:text-amber-300">
                           <Calendar className="h-3 w-3 text-amber-500" />{' '}
                           {chapter.era}
                         </span>
-                        <span className="text-[9px] font-black uppercase tracking-widest text-slate-500 sm:text-[10px] dark:text-slate-400">
+                        <span className="text-[9px] font-black tracking-widest text-slate-500 uppercase sm:text-[10px] dark:text-slate-400">
                           Chapter {chapter.number}
                         </span>
                       </div>
@@ -223,35 +248,70 @@ export default function PujaHistoryPage() {
                 <h2 className="font-paytone mb-1 text-base leading-snug text-slate-900 sm:text-2xl dark:text-white">
                   {chapter.title}
                 </h2>
-                <h3 className="mb-3 text-xs font-bold text-amber-700 sm:mb-5 sm:text-base dark:text-amber-300">
+                <h3 className="mb-4 text-xs font-bold text-amber-700 sm:mb-6 sm:text-base dark:text-amber-300">
                   ✦ {chapter.subtitle}
                 </h3>
 
-                {/* Museum-Style Heritage Photo Feature Card */}
-                <div className="group/img relative mb-4 h-36 w-full overflow-hidden rounded-lg border border-slate-200/80 sm:mb-6 sm:h-52 sm:rounded-2xl dark:border-white/10">
-                  <Image
-                    src={chapter.image}
-                    alt={chapter.imageCaption}
-                    fill
-                    className="object-cover object-center filter brightness-[0.9] contrast-[1.05] transition-transform duration-700 ease-out group-hover/img:scale-105"
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-t from-slate-950/80 via-slate-950/20 to-transparent" />
-                  <div className="absolute bottom-2 right-3 left-3 flex items-center justify-between rounded-lg border border-white/15 bg-stone-950/40 px-2.5 py-1 text-[10px] font-medium text-white/90 backdrop-blur-md sm:bottom-3 sm:px-3.5 sm:text-xs">
-                    <span className="flex items-center gap-1">
-                      <Compass className="h-3 w-3 text-amber-400" />{' '}
-                      {chapter.imageCaption}
-                    </span>
-                    <span className="hidden font-bold text-amber-300 sm:inline">
-                      Chandannagar Archive
-                    </span>
-                  </div>
-                </div>
+                {/* Side-by-Side Grid: Left Image or Fact Card / Right Text */}
+                <div className="grid grid-cols-1 gap-5 lg:grid-cols-12 lg:items-start lg:gap-8">
+                  {/* Left Column: Image Card or Heritage Highlights Card (Reduced Height Aspect 16/10) */}
+                  {chapter.image ? (
+                    <div className="group/img relative aspect-[16/10] min-h-[175px] w-full overflow-hidden rounded-xl border border-slate-200/80 sm:rounded-2xl lg:col-span-4 lg:aspect-[16/10] dark:border-white/12">
+                      <Image
+                        src={chapter.image}
+                        alt={chapter.imageCaption || chapter.title}
+                        fill
+                        className="object-cover object-center brightness-[0.92] contrast-[1.05] filter transition-transform duration-700 ease-out group-hover/img:scale-105"
+                      />
+                      <div className="absolute inset-0 bg-gradient-to-t from-slate-950/85 via-slate-950/20 to-transparent" />
+                      <div className="absolute right-2.5 bottom-2.5 left-2.5 flex items-center justify-between rounded-lg border border-white/15 bg-stone-950/60 px-2.5 py-1.5 text-[10px] font-medium text-white/90 backdrop-blur-md sm:px-3 sm:text-xs">
+                        <span className="line-clamp-1 flex items-center gap-1">
+                          <Compass className="h-3 w-3 shrink-0 text-amber-400" />{' '}
+                          {chapter.imageCaption}
+                        </span>
+                      </div>
+                    </div>
+                  ) : (
+                    <div className="relative flex aspect-[16/10] min-h-[175px] w-full flex-col justify-between overflow-hidden rounded-xl border border-amber-500/35 bg-gradient-to-br from-amber-500/10 via-amber-100/40 to-amber-50/60 p-3.5 shadow-sm sm:rounded-2xl lg:col-span-4 lg:aspect-[16/10] dark:border-amber-400/30 dark:from-amber-500/15 dark:via-stone-900/90 dark:to-stone-950">
+                      <div className="flex items-center justify-between border-b border-amber-500/20 pb-2 dark:border-amber-400/20">
+                        <span className="inline-flex items-center gap-1.5 rounded-full border border-amber-500/40 bg-amber-500/20 px-2.5 py-0.5 text-[9.5px] font-black text-amber-900 uppercase dark:border-amber-400/30 dark:bg-amber-500/15 dark:text-amber-300">
+                          <Sparkles className="h-3 w-3 text-amber-600 dark:text-amber-400" />{' '}
+                          Key Facts
+                        </span>
+                        <Icon className="h-4.5 w-4.5 text-amber-600 dark:text-amber-400" />
+                      </div>
 
-                {/* Paragraphs */}
-                <div className="space-y-2.5 text-justify text-[11.5px] font-normal leading-relaxed text-slate-700 sm:space-y-4 sm:text-sm dark:text-slate-300">
-                  {chapter.content.map((paragraph, pIdx) => (
-                    <p key={pIdx}>{paragraph}</p>
-                  ))}
+                      <div className="space-y-1.5 py-2">
+                        {chapter.highlights?.map((item, hIdx) => (
+                          <div
+                            key={hIdx}
+                            className="flex items-center justify-between border-b border-amber-500/15 pb-1 text-[10.5px] sm:text-[11.5px] dark:border-white/10"
+                          >
+                            <span className="font-bold text-slate-700 dark:text-slate-300">
+                              {item.label}
+                            </span>
+                            <span className="font-black text-amber-800 dark:text-amber-300">
+                              {item.value}
+                            </span>
+                          </div>
+                        ))}
+                      </div>
+
+                      <div className="flex items-center justify-between pt-0.5 text-[9.5px] font-bold text-slate-500 dark:text-slate-400">
+                        <span>Chandannagar Archives</span>
+                        <span className="font-extrabold text-amber-700 dark:text-amber-400">
+                          {chapter.era}
+                        </span>
+                      </div>
+                    </div>
+                  )}
+
+                  {/* Right Column: Paragraph Content */}
+                  <div className="space-y-3 text-justify text-xs leading-relaxed font-normal text-slate-700 sm:space-y-4 sm:text-sm lg:col-span-8 dark:text-slate-300">
+                    {chapter.content.map((paragraph, pIdx) => (
+                      <p key={pIdx}>{paragraph}</p>
+                    ))}
+                  </div>
                 </div>
               </div>
             </AnimatedWrapper>
@@ -267,8 +327,8 @@ export default function PujaHistoryPage() {
             </blockquote>
             <p className="mx-auto max-w-xl text-[11px] font-medium text-amber-800 sm:text-sm dark:text-amber-300">
               &quot;Oh Divine Mother! Lead us from darkness to light.&quot; This
-              timeless Vedic philosophy fuels Chandannagar’s world-renowned light
-              craftsmanship and sacred festival devotion.
+              timeless Vedic philosophy fuels Chandannagar’s world-renowned
+              light craftsmanship and sacred festival devotion.
             </p>
           </div>
         </AnimatedWrapper>
