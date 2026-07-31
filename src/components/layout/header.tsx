@@ -89,14 +89,15 @@ export function Header() {
                 : 'border border-amber-500/30 bg-white/90 text-slate-800 backdrop-blur-2xl dark:border-white/20 dark:bg-stone-950/80 dark:text-slate-100'
             )}
           >
-            {navItems.map((item) => {
+            {navItems.map((item, index) => {
               const isActive = pathname === item.href;
-              const isHome = item.href === '/';
+              const currentIndex = navItems.findIndex((i) => i.href === pathname);
+              const isBack = index < (currentIndex !== -1 ? currentIndex : 0);
               return (
                 <Link
                   key={item.href}
                   href={item.href}
-                  transitionTypes={isHome ? ['nav-back'] : ['nav-forward']}
+                  transitionTypes={isBack ? ['nav-back'] : ['nav-forward']}
                   className={cn(
                     'flex shrink-0 items-center justify-center rounded-full text-center font-bold whitespace-nowrap transition-all',
                     scrolled
