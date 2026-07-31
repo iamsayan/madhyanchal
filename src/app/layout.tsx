@@ -8,10 +8,12 @@ import { Header } from '@/components/layout/header';
 import { MobileNavDock } from '@/components/layout/mobile-nav';
 import { PwaInstallPrompt } from '@/components/shared/pwa-install';
 
-import './globals.css';
 import { getSettings } from '@/lib/data';
 import AppProvider from '@/app/providers/app-provider';
 import { Suspense } from 'react';
+import { PageLoader } from '@/components/shared/page-loader';
+
+import './globals.css';
 
 const outfit = Outfit({
   subsets: ['latin'],
@@ -105,7 +107,7 @@ export default function RootLayout({
         <SerwistProvider swUrl="/sw.js">
           <ThemeProvider attribute="class" defaultTheme="dark" enableSystem>
             <AppProvider settingsPromise={settings}>
-              <Suspense>
+              <Suspense fallback={<PageLoader />}>
                 <Header />
                 <main className="flex-1">{children}</main>
                 <Footer />
