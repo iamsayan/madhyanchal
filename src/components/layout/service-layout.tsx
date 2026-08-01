@@ -1,11 +1,11 @@
-import * as React from 'react';
+import { ReactNode } from 'react';
 
 import { PageLayout } from '@/components/layout/page-layout';
 
 import { ShieldCheck } from 'lucide-react';
 
 interface ServiceLayoutProps {
-  children: React.ReactNode;
+  children: ReactNode;
   title: string;
   className?: string;
 }

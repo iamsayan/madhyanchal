@@ -1,6 +1,6 @@
 'use client';
 
-import * as React from 'react';
+import { FormEvent, useCallback, useMemo, useState } from 'react';
 
 import Link from 'next/link';
 
@@ -38,15 +38,15 @@ export function ServiceMembershipForm({
   memberData,
   year,
 }: ServiceMembershipFormProps) {
-  const [success, setSuccess] = React.useState<{
+  const [success, setSuccess] = useState<{
     paymentId: string;
     amount: string;
   } | null>(null);
-  const [error, setError] = React.useState<string | null>(null);
-  const [processing, setProcessing] = React.useState(false);
-  const [copied, setCopied] = React.useState(false);
+  const [error, setError] = useState<string | null>(null);
+  const [processing, setProcessing] = useState(false);
+  const [copied, setCopied] = useState(false);
 
-  const [formData, setFormData] = React.useState({
+  const [formData, setFormData] = useState({
     member_id: memberData._id,
     name: memberData.name,
     phone: memberData.phone.replace(/\D+/g, ''),
@@ -54,7 +54,7 @@ export function ServiceMembershipForm({
     amount: '',
   });
 
-  const amountData = React.useMemo(() => {
+  const amountData = useMemo(() => {
     const total = Number(memberData.amount || 0);
     const totalPaid = (memberData.payments || []).reduce(
       (acc: number, curr: MembershipPayment) =>
@@ -71,7 +71,7 @@ export function ServiceMembershipForm({
   const dueAmount = amountData.totalAmount - amountData.totalPaidAmount;
   const isFullyPaid = dueAmount <= 0;
 
-  const paidPercent = React.useMemo(() => {
+  const paidPercent = useMemo(() => {
     if (!amountData.totalAmount) return 0;
     return Math.min(
       Math.round((amountData.totalPaidAmount / amountData.totalAmount) * 100),
@@ -79,7 +79,7 @@ export function ServiceMembershipForm({
     );
   }, [amountData]);
 
-  const quickSuggestions = React.useMemo(() => {
+  const quickSuggestions = useMemo(() => {
     const arr = [];
     const monthly = amountData.monthlyAmount;
     if (monthly && monthly <= dueAmount) {
@@ -95,7 +95,7 @@ export function ServiceMembershipForm({
     return arr;
   }, [amountData.monthlyAmount, dueAmount]);
 
-  const handleCopy = React.useCallback((text: string) => {
+  const handleCopy = useCallback((text: string) => {
     if (navigator.clipboard) {
       navigator.clipboard.writeText(text);
       setCopied(true);
@@ -103,7 +103,7 @@ export function ServiceMembershipForm({
     }
   }, []);
 
-  const handlePayment = async (e: React.FormEvent) => {
+  const handlePayment = async (e: FormEvent) => {
     e.preventDefault();
 
     if (

@@ -1,6 +1,6 @@
 'use client';
 
-import * as React from 'react';
+import { useEffect, useState } from 'react';
 
 import Link from 'next/link';
 
@@ -38,11 +38,11 @@ export interface DrawingCompetitionFormData {
 const competitionDate = new Date('2025-09-21T10:00:00');
 
 export function DrawingCompetitionForm() {
-  const [language, setLanguage] = React.useState<'en' | 'bn'>('en');
-  const [success, setSuccess] = React.useState<{
+  const [language, setLanguage] = useState<'en' | 'bn'>('en');
+  const [success, setSuccess] = useState<{
     registrationId: string;
   } | null>(null);
-  const [errorMsg, setErrorMsg] = React.useState<string | null>(null);
+  const [errorMsg, setErrorMsg] = useState<string | null>(null);
 
   const {
     register,
@@ -69,7 +69,7 @@ export function DrawingCompetitionForm() {
   const watchedDateOfBirth = watch('dateOfBirth');
 
   // Auto-calculate age and category when date of birth changes
-  React.useEffect(() => {
+  useEffect(() => {
     if (!watchedDateOfBirth) return;
 
     try {

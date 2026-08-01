@@ -1,6 +1,6 @@
 'use client';
 
-import * as React from 'react';
+import { useCallback, useEffect, useMemo, useState } from 'react';
 
 import Link from 'next/link';
 import { useSearchParams } from 'next/navigation';
@@ -81,17 +81,17 @@ export function ServiceMembershipStatus({
   year,
 }: ServiceMembershipStatusProps) {
   const searchParams = useSearchParams();
-  const [searchTerm, setSearchTerm] = React.useState('');
+  const [searchTerm, setSearchTerm] = useState('');
   const isInternal = searchParams.get('mode') === 'internal';
 
-  const sanitizedData = React.useMemo(() => {
+  const sanitizedData = useMemo(() => {
     return (Array.isArray(data) ? (data as unknown as Member[]) : []).filter(
       (m) => Number(m.amount) !== 0
     );
   }, [data]);
 
   // Persist opened WhatsApp member link to device list for quick family access
-  React.useEffect(() => {
+  useEffect(() => {
     if (sanitizedData.length === 1 && !isInternal) {
       try {
         const member = sanitizedData[0];
@@ -116,7 +116,7 @@ export function ServiceMembershipStatus({
     }
   }, [sanitizedData, isInternal]);
 
-  const filteredData = React.useMemo(() => {
+  const filteredData = useMemo(() => {
     if (!searchTerm.trim()) return sanitizedData;
     const term = searchTerm.toLowerCase();
     return sanitizedData.filter(
@@ -126,7 +126,7 @@ export function ServiceMembershipStatus({
     );
   }, [sanitizedData, searchTerm]);
 
-  const totals = React.useMemo(() => {
+  const totals = useMemo(() => {
     const totalAmount = filteredData.reduce(
       (sum, member) => sum + Number(member.amount || 0),
       0
@@ -158,7 +158,7 @@ export function ServiceMembershipStatus({
     };
   }, [filteredData]);
 
-  const exportCSV = React.useCallback(() => {
+  const exportCSV = useCallback(() => {
     const headers = [
       'Name',
       'Phone',

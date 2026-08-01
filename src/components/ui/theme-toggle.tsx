@@ -1,6 +1,6 @@
 'use client';
 
-import * as React from 'react';
+import { MouseEvent, useEffect, useState } from 'react';
 
 import { useTheme } from 'next-themes';
 
@@ -18,13 +18,13 @@ export function ThemeToggle({
   isScrolled = false,
 }: ThemeToggleProps) {
   const { setTheme, resolvedTheme } = useTheme();
-  const [mounted, setMounted] = React.useState(false);
+  const [mounted, setMounted] = useState(false);
 
-  React.useEffect(() => {
+  useEffect(() => {
     setMounted(true);
   }, []);
 
-  const handleToggle = (e: React.MouseEvent<HTMLButtonElement>) => {
+  const handleToggle = (e: MouseEvent<HTMLButtonElement>) => {
     const isDark = resolvedTheme === 'dark';
     const newTheme = isDark ? 'light' : 'dark';
 

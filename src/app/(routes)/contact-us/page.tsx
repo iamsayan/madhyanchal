@@ -1,5 +1,3 @@
-import * as React from 'react';
-
 import type { Metadata } from 'next';
 
 import { ContactForm } from '@/components/features/contact-form';

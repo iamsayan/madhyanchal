@@ -1,6 +1,6 @@
 'use client';
 
-import * as React from 'react';
+import { useRef, useState } from 'react';
 import Image from 'next/image';
 import { ChevronLeft, ChevronRight, CheckCircle2, Award } from 'lucide-react';
 import { cn } from '@/lib/utils';
@@ -16,8 +16,8 @@ interface AdvertiserSliderProps {
 }
 
 export function AdvertiserSlider({ slides = [] }: AdvertiserSliderProps) {
-  const containerRef = React.useRef<HTMLDivElement>(null);
-  const [scrollIndex, setScrollIndex] = React.useState<number>(0);
+  const containerRef = useRef<HTMLDivElement>(null);
+  const [scrollIndex, setScrollIndex] = useState<number>(0);
 
   const handleScroll = (direction: 'left' | 'right') => {
     if (!containerRef.current) return;

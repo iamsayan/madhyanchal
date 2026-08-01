@@ -10,7 +10,7 @@ import { PwaInstallPrompt } from '@/components/shared/pwa-install';
 
 import { getSettings } from '@/lib/data';
 import AppProvider from '@/app/providers/app-provider';
-import { Suspense } from 'react';
+import { ReactNode, Suspense } from 'react';
 import { PageLoader } from '@/components/shared/page-loader';
 
 import './globals.css';
@@ -92,7 +92,7 @@ export const metadata: Metadata = {
 export default function RootLayout({
   children,
 }: {
-  children: React.ReactNode;
+  children: ReactNode;
 }) {
   const settings = getSettings();
 

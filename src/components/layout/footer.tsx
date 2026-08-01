@@ -1,6 +1,6 @@
 'use client';
 
-import * as React from 'react';
+import { Fragment } from 'react';
 
 import Image from 'next/image';
 import Link from 'next/link';
@@ -80,7 +80,7 @@ export function Footer() {
         {/* Compact Navigation Links with Dot Separators */}
         <nav className="flex flex-wrap items-center justify-center gap-x-2 gap-y-1 text-[11px] font-semibold text-slate-600 sm:gap-x-3 sm:text-xs dark:text-slate-300">
           {navLinks.map((link, idx) => (
-            <React.Fragment key={link.href}>
+            <Fragment key={link.href}>
               {idx > 0 && (
                 <span className="text-[10px] text-amber-500/40 select-none">
                   •
@@ -93,7 +93,7 @@ export function Footer() {
               >
                 {link.label}
               </Link>
-            </React.Fragment>
+            </Fragment>
           ))}
         </nav>
 

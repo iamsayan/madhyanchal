@@ -1,6 +1,6 @@
 'use client';
 
-import * as React from 'react';
+import { useEffect, useState } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { motion, AnimatePresence } from 'motion/react';
@@ -25,15 +25,15 @@ import { cn } from '@/lib/utils';
 
 export function MobileNavDock() {
   const pathname = usePathname();
-  const [moreOpen, setMoreOpen] = React.useState(false);
-  const [savedMembers, setSavedMembers] = React.useState<
+  const [moreOpen, setMoreOpen] = useState(false);
+  const [savedMembers, setSavedMembers] = useState<
     Array<{ id: string; name: string }>
   >([]);
 
   const currentYear = new Date().getFullYear();
 
   // Load saved member profiles list from localStorage
-  React.useEffect(() => {
+  useEffect(() => {
     try {
       const stored = localStorage.getItem('madhyanchal_members_list');
       if (stored) {
@@ -45,7 +45,7 @@ export function MobileNavDock() {
   }, [pathname, moreOpen]);
 
   // Close sheet on route change
-  React.useEffect(() => {
+  useEffect(() => {
     setMoreOpen(false);
   }, [pathname]);
 

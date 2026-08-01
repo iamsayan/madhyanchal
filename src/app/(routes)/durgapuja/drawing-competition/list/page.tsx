@@ -1,5 +1,3 @@
-import * as React from 'react';
-
 import type { Metadata } from 'next';
 
 import { DrawingCompetitionList } from '@/components/features/drawing-competition-list';

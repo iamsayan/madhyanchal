@@ -1,5 +1,3 @@
-import * as React from 'react';
-
 import type { Metadata } from 'next';
 
 import { GalleryFilterView } from '@/components/features/gallery-filter-view';

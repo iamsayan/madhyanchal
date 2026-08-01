@@ -1,8 +1,8 @@
 'use client';
 
-import * as React from 'react';
-import { ViewTransition } from 'react';
+import { ReactNode, ViewTransition } from 'react';
 
-export default function Template({ children }: { children: React.ReactNode }) {
+
+export default function Template({ children }: { children: ReactNode }) {
   return <ViewTransition name="page">{children}</ViewTransition>;
 }

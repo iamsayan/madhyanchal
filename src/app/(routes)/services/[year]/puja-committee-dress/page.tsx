@@ -1,5 +1,3 @@
-import * as React from 'react';
-
 import type { Metadata } from 'next';
 
 import { ServiceDressOrder } from '@/components/features/service-dress-order';

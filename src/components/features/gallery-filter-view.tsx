@@ -1,6 +1,6 @@
 'use client';
 
-import * as React from 'react';
+import { useMemo, useState } from 'react';
 
 import { GallerySlider } from '@/components/shared/gallery-slider';
 import type { Asset } from '@/lib/client';
@@ -14,7 +14,7 @@ interface GalleryFilterViewProps {
 
 export function GalleryFilterView({ items = [] }: GalleryFilterViewProps) {
   // Extract all available years and create photo pools
-  const { yearTabs, photosByYear, allPhotos } = React.useMemo(() => {
+  const { yearTabs, photosByYear, allPhotos } = useMemo(() => {
     const photosMap: Record<string, Asset[]> = {};
     const yearList: string[] = [];
     const pool: Asset[] = [];
@@ -39,10 +39,10 @@ export function GalleryFilterView({ items = [] }: GalleryFilterViewProps) {
     };
   }, [items]);
 
-  const [selectedTab, setSelectedTab] = React.useState<string>('All');
+  const [selectedTab, setSelectedTab] = useState<string>('All');
 
   // Active photos based on selected tab
-  const activePhotos = React.useMemo(() => {
+  const activePhotos = useMemo(() => {
     if (selectedTab === 'All') return allPhotos;
     return photosByYear[selectedTab] || [];
   }, [selectedTab, allPhotos, photosByYear]);

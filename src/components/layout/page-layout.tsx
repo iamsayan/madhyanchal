@@ -1,4 +1,4 @@
-import * as React from 'react';
+import { ComponentType, ReactNode, useMemo } from 'react';
 
 import Link from 'next/link';
 
@@ -11,18 +11,18 @@ import { cn } from '@/lib/utils';
 import { ChevronRight } from 'lucide-react';
 
 export interface PageLayoutProps {
-  children: React.ReactNode;
-  title: string | React.ReactNode;
+  children: ReactNode;
+  title: string | ReactNode;
   subtitle?: string;
   badge?: {
     text: string;
-    icon?: React.ComponentType<{ className?: string }>;
+    icon?: ComponentType<{ className?: string }>;
   };
   breadcrumbCurrent?: string;
   showBreadcrumb?: boolean;
   maxWidth?: string;
   className?: string;
-  headerContent?: React.ReactNode;
+  headerContent?: ReactNode;
   scriptJsonLd?: Record<string, unknown>;
 }
 
@@ -38,7 +38,7 @@ export function PageLayout({
   headerContent,
   scriptJsonLd,
 }: PageLayoutProps) {
-  const renderedTitle = React.useMemo(() => {
+  const renderedTitle = useMemo(() => {
     if (typeof title !== 'string') return title;
     const words = title.split(' ');
     if (words.length <= 1) return title;

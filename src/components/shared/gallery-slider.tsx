@@ -1,7 +1,7 @@
 'use client';
 
-import * as React from 'react';
-import { ViewTransition } from 'react';
+import { MouseEvent, useCallback, useEffect, useRef, useState, ViewTransition } from 'react';
+
 import { createPortal } from 'react-dom';
 import { motion, AnimatePresence } from 'motion/react';
 
@@ -26,20 +26,20 @@ export function GallerySlider({
   slides = [],
   layout = 'responsive',
 }: GallerySliderProps) {
-  const [selectedIndex, setSelectedIndex] = React.useState<number | null>(null);
-  const [isMounted, setIsMounted] = React.useState(false);
+  const [selectedIndex, setSelectedIndex] = useState<number | null>(null);
+  const [isMounted, setIsMounted] = useState(false);
 
-  const scrollRef = React.useRef<HTMLDivElement>(null);
-  const thumbnailContainerRef = React.useRef<HTMLDivElement>(null);
+  const scrollRef = useRef<HTMLDivElement>(null);
+  const thumbnailContainerRef = useRef<HTMLDivElement>(null);
 
   const totalSlides = slides.length;
 
-  React.useEffect(() => {
+  useEffect(() => {
     setIsMounted(true);
   }, []);
 
   // Lock body scroll when Lightbox is open
-  React.useEffect(() => {
+  useEffect(() => {
     if (selectedIndex !== null) {
       document.body.style.overflow = 'hidden';
     } else {
@@ -54,12 +54,12 @@ export function GallerySlider({
     setSelectedIndex(index);
   };
 
-  const closeLightbox = React.useCallback(() => {
+  const closeLightbox = useCallback(() => {
     setSelectedIndex(null);
   }, []);
 
-  const nextImage = React.useCallback(
-    (e?: React.MouseEvent) => {
+  const nextImage = useCallback(
+    (e?: MouseEvent) => {
       e?.stopPropagation();
       if (selectedIndex !== null) {
         setSelectedIndex((prev) =>
@@ -70,8 +70,8 @@ export function GallerySlider({
     [selectedIndex, totalSlides]
   );
 
-  const prevImage = React.useCallback(
-    (e?: React.MouseEvent) => {
+  const prevImage = useCallback(
+    (e?: MouseEvent) => {
       e?.stopPropagation();
       if (selectedIndex !== null) {
         setSelectedIndex((prev) =>
@@ -83,7 +83,7 @@ export function GallerySlider({
   );
 
   // Keyboard controls for Lightbox
-  React.useEffect(() => {
+  useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
       if (selectedIndex === null) return;
       if (e.key === 'Escape') closeLightbox();
@@ -96,7 +96,7 @@ export function GallerySlider({
   }, [selectedIndex, closeLightbox, nextImage, prevImage]);
 
   // Scroll active thumbnail into view inside Lightbox
-  React.useEffect(() => {
+  useEffect(() => {
     if (selectedIndex !== null && thumbnailContainerRef.current) {
       const activeThumb = thumbnailContainerRef.current.children[
         selectedIndex

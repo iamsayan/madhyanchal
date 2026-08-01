@@ -1,6 +1,6 @@
 'use client';
 
-import * as React from 'react';
+import { FormEvent, useCallback, useMemo, useState } from 'react';
 
 import { createRazorpayOrder } from '@/app/actions/razorpay';
 import { AdvertiserSlider } from '@/components/features/advertiser-slider';
@@ -78,15 +78,15 @@ export function ServiceDressOrder({
   stockTotals,
   year,
 }: ServiceDressOrderProps) {
-  const [success, setSuccess] = React.useState<{
+  const [success, setSuccess] = useState<{
     paymentId: string;
     amount: string;
   } | null>(null);
-  const [error, setError] = React.useState<string | null>(null);
-  const [processing, setProcessing] = React.useState(false);
-  const [copied, setCopied] = React.useState(false);
+  const [error, setError] = useState<string | null>(null);
+  const [processing, setProcessing] = useState(false);
+  const [copied, setCopied] = useState(false);
 
-  const [formData, setFormData] = React.useState({
+  const [formData, setFormData] = useState({
     name: '',
     email: '',
     phone: '',
@@ -98,7 +98,7 @@ export function ServiceDressOrder({
     xxl: 0,
   });
 
-  const updatedDressData = React.useMemo(() => {
+  const updatedDressData = useMemo(() => {
     return Object.fromEntries(
       Object.entries(DRESS_DATA).map(([key, item]) => [
         key,
@@ -111,7 +111,7 @@ export function ServiceDressOrder({
     );
   }, [stockTotals]);
 
-  const adjustQuantity = React.useCallback(
+  const adjustQuantity = useCallback(
     (field: keyof typeof formData, change: number) => {
       setFormData((prev) => ({
         ...prev,
@@ -121,7 +121,7 @@ export function ServiceDressOrder({
     []
   );
 
-  const totalAmount = React.useMemo(() => {
+  const totalAmount = useMemo(() => {
     return Object.entries(formData)
       .filter(
         ([key]) =>
@@ -137,7 +137,7 @@ export function ServiceDressOrder({
       }, 0);
   }, [formData, updatedDressData]);
 
-  const handleCopy = React.useCallback((text: string) => {
+  const handleCopy = useCallback((text: string) => {
     if (navigator.clipboard) {
       navigator.clipboard.writeText(text);
       setCopied(true);
@@ -145,7 +145,7 @@ export function ServiceDressOrder({
     }
   }, []);
 
-  const handlePayment = async (e: React.FormEvent) => {
+  const handlePayment = async (e: FormEvent) => {
     e.preventDefault();
 
     if (!formData.name || !formData.email || !formData.phone) {

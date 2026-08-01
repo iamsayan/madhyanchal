@@ -1,6 +1,6 @@
 'use client';
 
-import { type ReactNode, useEffect, useRef, useState } from 'react';
+import { CSSProperties, type ReactNode, useEffect, useRef, useState } from 'react';
 
 import Image, { type ImageProps } from 'next/image';
 
@@ -206,7 +206,7 @@ export default function CockpitImage({
           {...rest}
           style={{
             objectPosition,
-            ...(rest.style as React.CSSProperties),
+            ...(rest.style as CSSProperties),
           }}
         />
       )}

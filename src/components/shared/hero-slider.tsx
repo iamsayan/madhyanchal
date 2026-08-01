@@ -1,6 +1,6 @@
 'use client';
 
-import * as React from 'react';
+import { ReactNode, useEffect, useState } from 'react';
 
 import CockpitImage from '@/components/shared/cockpit-image';
 import { BackgroundBeams } from '@/components/ui/background-beams';
@@ -10,14 +10,14 @@ import type { Asset } from '@/lib/cockpit';
 
 interface HeroSliderProps {
   images?: Asset[];
-  children?: React.ReactNode;
+  children?: ReactNode;
 }
 
 export function HeroSlider({ images = [], children }: HeroSliderProps) {
-  const [currentImageIndex, setCurrentImageIndex] = React.useState<number>(0);
+  const [currentImageIndex, setCurrentImageIndex] = useState<number>(0);
 
   // Automatic slide rotation if multiple images exist
-  React.useEffect(() => {
+  useEffect(() => {
     if (!images || images.length <= 1) return;
 
     const interval = setInterval(() => {

@@ -1,4 +1,3 @@
-import * as React from 'react';
 import Image from 'next/image';
 import { Loader2 } from 'lucide-react';
 

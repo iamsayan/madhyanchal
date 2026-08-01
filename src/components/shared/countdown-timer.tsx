@@ -1,6 +1,6 @@
 'use client';
 
-import * as React from 'react';
+import { Fragment, useEffect, useState } from 'react';
 import { cn } from '@/lib/utils';
 
 interface CountdownTimerProps {
@@ -16,15 +16,15 @@ interface TimeLeft {
 }
 
 export function CountdownTimer({ targetDate, className }: CountdownTimerProps) {
-  const [timeLeft, setTimeLeft] = React.useState<TimeLeft>({
+  const [timeLeft, setTimeLeft] = useState<TimeLeft>({
     days: 0,
     hours: 0,
     minutes: 0,
     seconds: 0,
   });
-  const [isMounted, setIsMounted] = React.useState(false);
+  const [isMounted, setIsMounted] = useState(false);
 
-  React.useEffect(() => {
+  useEffect(() => {
     setIsMounted(true);
     if (!targetDate) return;
 
@@ -69,7 +69,7 @@ export function CountdownTimer({ targetDate, className }: CountdownTimerProps) {
   return (
     <div className={cn('flex items-center justify-center gap-1 sm:gap-2 md:gap-3 py-1 sm:py-2 shrink-0', className)}>
       {units.map((unit, idx) => (
-        <React.Fragment key={unit.label}>
+        <Fragment key={unit.label}>
           <div className="group relative flex flex-col items-center justify-center rounded-xl border border-amber-500/30 bg-amber-500/5 p-1.5 backdrop-blur-xl transition-transform duration-300 shadow-none sm:rounded-2xl sm:p-2.5 md:p-3 dark:border-white/15 dark:bg-stone-900/90 min-w-[44px] sm:min-w-[60px] md:min-w-[72px] lg:min-w-[80px]">
             <div className="relative z-10 flex flex-col items-center">
               <span className="font-paytone text-sm sm:text-2xl md:text-3xl font-bold tracking-tight text-slate-900 dark:text-amber-400 tabular-nums">
@@ -85,7 +85,7 @@ export function CountdownTimer({ targetDate, className }: CountdownTimerProps) {
               :
             </span>
           )}
-        </React.Fragment>
+        </Fragment>
       ))}
     </div>
   );

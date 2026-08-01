@@ -1,6 +1,6 @@
 'use client';
 
-import * as React from 'react';
+import { useMemo, useState } from 'react';
 
 import { BorderBeam } from '@/components/ui/border-beam';
 import { cn } from '@/lib/utils';
@@ -27,10 +27,10 @@ interface DrawingCompetitionListProps {
 export function DrawingCompetitionList({
   initialData = [],
 }: DrawingCompetitionListProps) {
-  const [searchTerm, setSearchTerm] = React.useState('');
-  const [selectedCategory, setSelectedCategory] = React.useState<string>('all');
+  const [searchTerm, setSearchTerm] = useState('');
+  const [selectedCategory, setSelectedCategory] = useState<string>('all');
 
-  const filteredData = React.useMemo(() => {
+  const filteredData = useMemo(() => {
     return initialData.filter((item) => {
       const matchSearch =
         !searchTerm ||

@@ -1,5 +1,3 @@
-import * as React from 'react';
-
 import type { Metadata } from 'next';
 
 import { AdvertiserSlider } from '@/components/features/advertiser-slider';

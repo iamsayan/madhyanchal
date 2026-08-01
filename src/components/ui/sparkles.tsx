@@ -1,6 +1,6 @@
 'use client';
 
-import React from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { motion } from 'motion/react';
 import { cn } from '@/lib/utils';
 
@@ -13,13 +13,13 @@ export function SparklesCore({
   particleColor?: string;
   particleCount?: number;
 }) {
-  const [isMounted, setIsMounted] = React.useState(false);
+  const [isMounted, setIsMounted] = useState(false);
 
-  React.useEffect(() => {
+  useEffect(() => {
     setIsMounted(true);
   }, []);
 
-  const particles = React.useMemo(() => {
+  const particles = useMemo(() => {
     if (!isMounted) return [];
     return Array.from({ length: particleCount }).map((_, i) => ({
       id: i,

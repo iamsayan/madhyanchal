@@ -1,6 +1,6 @@
 'use client';
 
-import { createContext, use } from 'react';
+import { createContext, ReactNode, use } from 'react';
 
 import type { Settings } from '@/types';
 
@@ -12,7 +12,7 @@ export default function AppProvider({
   children,
   settingsPromise,
 }: {
-  children: React.ReactNode;
+  children: ReactNode;
   settingsPromise: Promise<Settings>;
 }) {
   return <SiteContext value={{ settingsPromise }}>{children}</SiteContext>;

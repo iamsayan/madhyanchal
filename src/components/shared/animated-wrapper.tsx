@@ -1,10 +1,10 @@
 'use client';
 
-import * as React from 'react';
+import { ReactNode } from 'react';
 import { motion, type HTMLMotionProps } from 'motion/react';
 
 interface AnimatedWrapperProps extends HTMLMotionProps<'div'> {
-  children: React.ReactNode;
+  children: ReactNode;
   delay?: number;
   direction?: 'up' | 'down' | 'left' | 'right' | 'none';
 }
@@ -37,7 +37,7 @@ export function StaggerContainer({
   children,
   className,
 }: {
-  children: React.ReactNode;
+  children: ReactNode;
   className?: string;
 }) {
   return (
@@ -65,7 +65,7 @@ export function StaggerItem({
   children,
   className,
 }: {
-  children: React.ReactNode;
+  children: ReactNode;
   className?: string;
 }) {
   return (

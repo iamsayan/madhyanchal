@@ -1,4 +1,3 @@
-import * as React from 'react';
 import type { Metadata } from 'next';
 import { ServiceLayout } from '@/components/layout/service-layout';
 import { ServicePaymentForm } from '@/components/features/service-payment-form';

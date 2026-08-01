@@ -1,6 +1,6 @@
 'use client';
 
-import * as React from 'react';
+import { ChangeEvent, FormEvent, useCallback, useMemo, useState } from 'react';
 
 import { createRazorpayOrder } from '@/app/actions/razorpay';
 import { BorderBeam } from '@/components/ui/border-beam';
@@ -40,23 +40,23 @@ interface FormDataState {
 }
 
 export function ServicePaymentForm({ type, year }: ServicePaymentFormProps) {
-  const [success, setSuccess] = React.useState<{
+  const [success, setSuccess] = useState<{
     paymentId: string;
     amount: string;
   } | null>(null);
-  const [error, setError] = React.useState<string | null>(null);
-  const [processing, setProcessing] = React.useState(false);
-  const [copied, setCopied] = React.useState(false);
+  const [error, setError] = useState<string | null>(null);
+  const [processing, setProcessing] = useState(false);
+  const [copied, setCopied] = useState(false);
 
-  const [formData, setFormData] = React.useState<FormDataState>({
+  const [formData, setFormData] = useState<FormDataState>({
     name: '',
     email: '',
     phone: '',
     amount: '',
   });
 
-  const handleInputChange = React.useCallback(
-    (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleInputChange = useCallback(
+    (e: ChangeEvent<HTMLInputElement>) => {
       const { name, value } = e.target;
       setFormData((prev) => ({
         ...prev,
@@ -66,7 +66,7 @@ export function ServicePaymentForm({ type, year }: ServicePaymentFormProps) {
     []
   );
 
-  const quickAmounts = React.useMemo(
+  const quickAmounts = useMemo(
     () => [
       { label: 'Starter', value: 500 },
       { label: 'Popular', value: 1000 },
@@ -76,7 +76,7 @@ export function ServicePaymentForm({ type, year }: ServicePaymentFormProps) {
     []
   );
 
-  const handleCopyPaymentId = React.useCallback((paymentId: string) => {
+  const handleCopyPaymentId = useCallback((paymentId: string) => {
     if (navigator.clipboard) {
       navigator.clipboard.writeText(paymentId);
       setCopied(true);
@@ -84,7 +84,7 @@ export function ServicePaymentForm({ type, year }: ServicePaymentFormProps) {
     }
   }, []);
 
-  const handlePayment = async (e: React.FormEvent) => {
+  const handlePayment = async (e: FormEvent) => {
     e.preventDefault();
 
     if (

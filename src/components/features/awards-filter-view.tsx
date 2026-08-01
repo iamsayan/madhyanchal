@@ -1,7 +1,7 @@
 'use client';
 
-import * as React from 'react';
-import { ViewTransition } from 'react';
+import { useMemo, useState, ViewTransition } from 'react';
+
 
 import { BorderBeam } from '@/components/ui/border-beam';
 import type { Award, Awards } from '@/data/awards';
@@ -23,7 +23,7 @@ interface AwardsFilterViewProps {
 
 export function AwardsFilterView({ awards }: AwardsFilterViewProps) {
   // Convert object structure into a flat array
-  const flatAwards = React.useMemo(() => {
+  const flatAwards = useMemo(() => {
     return Object.entries(awards).flatMap(([yearStr, awardList]) => {
       const year = Number(yearStr);
       return (awardList as Award[]).map((award: Award) => ({
@@ -34,17 +34,17 @@ export function AwardsFilterView({ awards }: AwardsFilterViewProps) {
   }, [awards]);
 
   // Extract sorted unique years
-  const years = React.useMemo(() => {
+  const years = useMemo(() => {
     const uniqueYears = Array.from(new Set(flatAwards.map((a) => a.year)));
     return uniqueYears.sort((a, b) => b - a);
   }, [flatAwards]);
 
-  const [selectedYear, setSelectedYear] = React.useState<number>(
+  const [selectedYear, setSelectedYear] = useState<number>(
     () => years[0] || 2024
   );
 
   // Filtered awards based on selected year
-  const filteredAwards = React.useMemo(() => {
+  const filteredAwards = useMemo(() => {
     return flatAwards.filter((award) => award.year === selectedYear);
   }, [flatAwards, selectedYear]);
 

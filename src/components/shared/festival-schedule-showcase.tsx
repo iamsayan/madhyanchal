@@ -1,7 +1,7 @@
 'use client';
 
-import * as React from 'react';
-import { ViewTransition } from 'react';
+import { useState, ViewTransition } from 'react';
+
 
 import Image from 'next/image';
 
@@ -22,7 +22,7 @@ export function FestivalScheduleShowcase({
   dates,
   targetPujaDate,
 }: FestivalScheduleShowcaseProps) {
-  const [activeIdx, setActiveIdx] = React.useState<number>(0);
+  const [activeIdx, setActiveIdx] = useState<number>(0);
 
   const activeEvent = dates[activeIdx] || dates[0];
 

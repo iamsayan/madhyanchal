@@ -1,6 +1,6 @@
 'use client';
 
-import * as React from 'react';
+import { useMemo, useState } from 'react';
 import { Search, Users, ShieldCheck, UserCheck, Heart, Sparkles } from 'lucide-react';
 import { BorderBeam } from '@/components/ui/border-beam';
 
@@ -23,9 +23,9 @@ const EXECUTIVE_DESIGNATIONS = [
 ];
 
 export function MembersList({ members = [] }: MembersListProps) {
-  const [searchTerm, setSearchTerm] = React.useState('');
+  const [searchTerm, setSearchTerm] = useState('');
 
-  const executiveRoles = React.useMemo(() => {
+  const executiveRoles = useMemo(() => {
     return EXECUTIVE_DESIGNATIONS.map((designation) => {
       const found = members.find((m) => m.designation === designation);
       if (!found) return { designation, names: [] };
@@ -43,7 +43,7 @@ export function MembersList({ members = [] }: MembersListProps) {
     }).filter((role) => role.names.length > 0);
   }, [members]);
 
-  const generalMembersRaw = React.useMemo(() => {
+  const generalMembersRaw = useMemo(() => {
     const genObj = members.find((m) => m.designation === 'Members');
     if (!genObj) return [];
     return genObj.name
@@ -53,7 +53,7 @@ export function MembersList({ members = [] }: MembersListProps) {
       .filter(Boolean);
   }, [members]);
 
-  const filteredGeneralMembers = React.useMemo(() => {
+  const filteredGeneralMembers = useMemo(() => {
     if (!searchTerm.trim()) return generalMembersRaw;
     const term = searchTerm.toLowerCase();
     return generalMembersRaw.filter((name) => name.toLowerCase().includes(term));

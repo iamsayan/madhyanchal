@@ -1,6 +1,6 @@
 'use client';
 
-import * as React from 'react';
+import { useState } from 'react';
 
 import Image from 'next/image';
 
@@ -36,7 +36,7 @@ const DEFAULT_VIDEOS: HomepageVideo[] = [
 
 export function Videos({ items = [] }: VideosProps) {
   const videoList = items && items.length > 0 ? items : DEFAULT_VIDEOS;
-  const [activeIdx, setActiveIdx] = React.useState<number>(0);
+  const [activeIdx, setActiveIdx] = useState<number>(0);
 
   const activeVideo = videoList[activeIdx] || videoList[0];
 
