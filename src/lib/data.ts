@@ -1,7 +1,14 @@
 import { cacheLife, cacheTag } from 'next/cache';
 
 import cockpit from '@/lib/client';
-import type { GalleryItem, Homepage, Settings } from '@/types';
+import type {
+  DrawingCompetitionRecord,
+  DressOrder,
+  GalleryItem,
+  Homepage,
+  Member,
+  Settings,
+} from '@/types';
 
 export async function getSettings(): Promise<Settings> {
   'use cache';
@@ -41,16 +48,50 @@ export async function getGalleryItems(): Promise<GalleryItem[]> {
   'use cache';
   cacheLife('weeks');
   cacheTag('gallery');
-  try {
-    const items = await cockpit.listContentItems<GalleryItem[]>('gallery', {
-      sort: { year: -1 },
-      populate: 1,
-    });
-    if (Array.isArray(items)) {
-      return items;
+  const items = await cockpit.listContentItems<GalleryItem[]>('gallery', {
+    sort: { year: -1 },
+    populate: 1,
+  });
+  return items;
+}
+
+export async function getMembersStatus(year: string): Promise<Member[]> {
+  'use cache';
+  cacheLife('weeks');
+  cacheTag('members', `members-${year}`);
+  const res = await cockpit.listContentItems<Member[]>('members', {
+    payments: year,
+    sort: { name: 1 },
+  });
+  return res;
+}
+
+export async function getMemberById(id: string, year: string): Promise<Member> {
+  'use cache';
+  cacheLife('weeks');
+  cacheTag('members', `member-${id}-${year}`);
+  const res = await cockpit.getContentItemById<Member>('members', id, {
+    payments: year,
+  });
+  return res;
+}
+
+export async function getDressOrders(year: string): Promise<DressOrder[]> {
+  const res = await cockpit.listContentItems<DressOrder[]>(`dress${year}`);
+  return res;
+}
+
+export async function getDrawingCompetitionParticipants(
+  year: string
+): Promise<DrawingCompetitionRecord[]> {
+  'use cache';
+  cacheLife('weeks');
+  cacheTag(`drawingcompetition${year}`);
+  const res = await cockpit.listContentItems<DrawingCompetitionRecord[]>(
+    `drawingcompetition${year}`,
+    {
+      sort: { category: 1, name: 1 },
     }
-  } catch (error) {
-    console.error('Failed to fetch gallery items:', error);
-  }
-  return [];
+  );
+  return res;
 }

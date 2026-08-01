@@ -550,7 +550,7 @@ export class CockpitClient {
    */
   async getContentItemByFilter<T = CollectionItem>(
     model: string,
-    options: ContentItemGetByFilterOptions,
+    options: ContentItemGetByFilterOptions & Record<string, unknown>,
     fetchOptions?: NextRequestInit
   ): Promise<T> {
     return this.request<T>(
@@ -568,7 +568,7 @@ export class CockpitClient {
   async getContentItemById<T = CollectionItem>(
     model: string,
     id: string,
-    options: ContentItemGetOptions = {},
+    options: (ContentItemGetOptions & Record<string, unknown>) | ContentItemGetOptions = {},
     fetchOptions?: NextRequestInit
   ): Promise<T> {
     return this.request<T>(
@@ -605,7 +605,7 @@ export class CockpitClient {
    */
   async listContentItems<T = CollectionItem[]>(
     model: string,
-    options: ContentItemsListOptions = {},
+    options: (ContentItemsListOptions & Record<string, unknown>) | ContentItemsListOptions = {},
     fetchOptions?: NextRequestInit
   ): Promise<T> {
     return this.request<T>(

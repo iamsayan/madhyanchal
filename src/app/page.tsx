@@ -154,7 +154,7 @@ export default async function HomePage() {
             <span className="hidden sm:inline">
               {legacyYears} Years of Tradition
             </span>
-            <span className="sm:hidden">{legacyYears}Years of Tradition</span>
+            <span className="sm:hidden">{legacyYears} Years of Tradition</span>
           </div>
 
           {/* Unique Tiered Display Title Composition */}

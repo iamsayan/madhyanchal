@@ -5,7 +5,7 @@ import { notFound } from 'next/navigation';
 
 import { ServiceMembershipStatus } from '@/components/features/service-membership-status';
 import { ServiceLayout } from '@/components/layout/service-layout';
-import { getModelItems } from '@/utils/fetch';
+import { getMemberById } from '@/lib/data';
 
 interface Props {
   params: Promise<{ year: string; id: string }>;
@@ -30,34 +30,15 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 
 export default async function Page({ params }: Props) {
   const { year, id } = await params;
+  const member = await getMemberById(id, year);
 
-  let data: Record<string, unknown>[] = [];
-  try {
-    const modelData = await getModelItems(
-      'members',
-      {
-        payments: year,
-        sort: {
-          name: 1,
-        },
-        filter: { _id: id },
-      },
-      0
-    );
-    if (Array.isArray(modelData?.data)) {
-      data = modelData.data as Record<string, unknown>[];
-    }
-  } catch (error) {
-    console.error('Error fetching member status:', error);
-  }
-
-  if (!data || data.length === 0) {
+  if (!member || !member._id) {
     notFound();
   }
 
   return (
     <ServiceLayout title={`Membership Status ${year}`}>
-      <ServiceMembershipStatus data={data} year={year} />
+      <ServiceMembershipStatus data={[member]} year={year} />
     </ServiceLayout>
   );
 }

@@ -23,28 +23,14 @@ import {
   User,
   XCircle,
 } from 'lucide-react';
-
-interface RazorpaySuccessResponse {
-  razorpay_payment_id: string;
-  razorpay_order_id: string;
-  razorpay_signature: string;
-}
-
-interface MemberPaymentRecord {
-  amount?: string | number;
-  [key: string]: unknown;
-}
-
-interface DbMember {
-  _id: string;
-  name: string;
-  phone: string;
-  amount?: string | number;
-  payments?: MemberPaymentRecord[];
-}
+import type {
+  Member,
+  MembershipPayment,
+  RazorpaySuccessResponse,
+} from '@/types';
 
 interface ServiceMembershipFormProps {
-  memberData: DbMember;
+  memberData: Member & { payments?: MembershipPayment[] };
   year: string;
 }
 
@@ -71,7 +57,7 @@ export function ServiceMembershipForm({
   const amountData = React.useMemo(() => {
     const total = Number(memberData.amount || 0);
     const totalPaid = (memberData.payments || []).reduce(
-      (acc: number, curr: MemberPaymentRecord) =>
+      (acc: number, curr: MembershipPayment) =>
         acc + parseFloat(String(curr.amount || 0)),
       0
     );

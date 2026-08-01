@@ -1,4 +1,5 @@
 import type { Asset, Entity, SingletonEntity, TreeEntity } from '@/lib/cockpit';
+import { DrawingCompetitionForm } from '../components/features/drawing-competition-form';
 
 export type ImagePreset =
   | 'thumbnail'
@@ -40,27 +41,33 @@ export type ImagePreset =
   | 'blueprint'
   | 'embossed_art';
 
+export interface PaymentRecord extends Entity {
+  amount: string;
+  phone: string;
+  email: string;
+  payment_id: string;
+  order_id: string;
+  timestamp: string;
+}
+
+export interface PaymentRecordData extends PaymentRecord {
+  mode: string;
+}
+
 export interface Member extends Entity {
   name: string;
   phone: string;
   amount: string;
 }
 
-export interface MemberLink {
-  _id: string;
-  model: 'members' | string;
+export interface MembershipPayment extends PaymentRecordData {
+  member: Member;
+  notes: string | null;
 }
 
-export interface MembershipPayment2026 extends Entity {
-  member: MemberLink;
-  amount: string;
-  mode: string;
-  phone: string;
-  email: string;
-  payment_id: string;
-  order_id: string;
-  notes: string | null;
-  timestamp: string;
+export interface DressOrder extends PaymentRecordData {
+  name: string;
+  quantity: string[];
 }
 
 export interface EventDate {
@@ -109,6 +116,27 @@ export interface Homepage extends SingletonEntity {
 export interface GalleryItem extends Entity {
   year: string;
   images: Asset[];
+}
+
+export interface DrawingCompetitionRecord extends Entity {
+  registration_id: string;
+  mode: string;
+  name: string;
+  dob: string;
+  age: string;
+  category: string;
+  guardian_name: string;
+  email: string;
+  phone: string;
+  address: string;
+  city: string;
+  pincode: string;
+}
+
+export interface RazorpaySuccessResponse {
+  razorpay_payment_id: string;
+  razorpay_order_id: string;
+  razorpay_signature: string;
 }
 
 declare global {

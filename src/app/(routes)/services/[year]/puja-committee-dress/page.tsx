@@ -4,7 +4,7 @@ import type { Metadata } from 'next';
 
 import { ServiceDressOrder } from '@/components/features/service-dress-order';
 import { ServiceLayout } from '@/components/layout/service-layout';
-import { getModelItems } from '@/utils/fetch';
+import { getDressOrders } from '@/lib/data';
 
 interface Props {
   params: Promise<{ year: string }>;
@@ -27,16 +27,9 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   };
 }
 
-interface DressOrderItem {
-  quantity?: string[];
-  [key: string]: unknown;
-}
-
 export default async function Page({ params }: Props) {
   const { year } = await params;
-
-  const res = (await getModelItems(`dress${year}`, {}, 0)) || {};
-  const data = (Array.isArray(res.data) ? res.data : []) as DressOrderItem[];
+  const data = await getDressOrders(year);
 
   const stockTotals: { [key: string]: number } = {};
 
