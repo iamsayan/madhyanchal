@@ -6,10 +6,13 @@ import Link from 'next/link';
 
 import { submitModel } from '@/app/actions/model';
 import { BorderBeam } from '@/components/ui/border-beam';
+import { NativeModal } from '@/components/ui/native-modal';
 import { Button } from '@/components/ui/button';
 import { cn } from '@/lib/utils';
 
 import { useForm } from 'react-hook-form';
+
+import { AnimatePresence, motion } from 'framer-motion';
 
 import {
   AlertCircle,
@@ -43,6 +46,17 @@ export function DrawingCompetitionForm() {
     registrationId: string;
   } | null>(null);
   const [errorMsg, setErrorMsg] = useState<string | null>(null);
+
+  useEffect(() => {
+    if (success !== null || errorMsg !== null) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = '';
+    }
+    return () => {
+      document.body.style.overflow = '';
+    };
+  }, [success, errorMsg]);
 
   const {
     register,
@@ -147,61 +161,42 @@ export function DrawingCompetitionForm() {
 
   return (
     <div className="relative mx-auto max-w-4xl space-y-6">
-      {/* SUCCESS MODAL DIALOG */}
-      {success && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-slate-950/80 p-4 backdrop-blur-md">
-          <div className="card-glass relative w-full max-w-md space-y-4 rounded-3xl border border-emerald-500/40 bg-white p-6 text-center shadow-2xl dark:bg-stone-900">
-            <div className="mx-auto flex h-14 w-14 items-center justify-center rounded-full bg-emerald-500/20 text-emerald-600 dark:text-emerald-400">
-              <CheckCircle2 className="h-8 w-8" />
-            </div>
-            <h3 className="font-paytone text-xl font-bold text-slate-900 dark:text-white">
-              {isBn ? 'রেজিস্ট্রেশন সফল হয়েছে!' : 'Registration Successful!'}
-            </h3>
-            <p className="text-xs text-slate-600 dark:text-slate-300">
-              {isBn ? 'আপনার রেজিস্ট্রেশন আইডি:' : 'Your Registration ID:'}
-            </p>
-            <span className="inline-block rounded-xl border border-emerald-500/30 bg-emerald-500/10 px-4 py-2 font-mono text-lg font-black text-emerald-700 dark:text-emerald-300">
-              {success.registrationId}
-            </span>
-            <p className="text-xs leading-relaxed text-slate-500 dark:text-slate-400">
-              {isBn
-                ? 'একটি নিশ্চিতকরণ মেল আপনার ইমেল ঠিকানায় পাঠানো হয়েছে। প্রতিযোগিতার দিনে এটি দেখান।'
-                : 'A confirmation email has been sent. Please present this ID at the venue on competition day.'}
-            </p>
-            <Button
-              variant="primary"
-              onClick={() => setSuccess(null)}
-              className="h-10 w-full rounded-full border border-emerald-400/60 bg-emerald-600 text-xs font-bold text-white hover:bg-emerald-700"
-            >
-              {isBn ? 'ঠিক আছে' : 'Done'}
-            </Button>
-          </div>
-        </div>
-      )}
+      {/* UNIFIED NATIVE SUCCESS MODAL */}
+      <NativeModal
+        isOpen={success !== null}
+        onClose={() => setSuccess(null)}
+        variant="success"
+        title={isBn ? 'রেজিস্ট্রেশন সফল হয়েছে!' : 'Registration Successful!'}
+        description={
+          isBn
+            ? 'একটি নিশ্চিতকরণ মেল আপনার ইমেল ঠিকানায় পাঠানো হয়েছে। প্রতিযোগিতার দিনে এটি দেখান।'
+            : 'A confirmation email has been sent. Please present this ID at the venue on competition day.'
+        }
+        details={[
+          {
+            label: isBn ? 'রেজিস্ট্রেশন আইডি' : 'Registration ID',
+            value: success?.registrationId || '',
+            copyable: true,
+          },
+        ]}
+        primaryButton={{
+          label: isBn ? 'ঠিক আছে' : 'Done',
+          onClick: () => setSuccess(null),
+        }}
+      />
 
-      {/* ERROR MODAL DIALOG */}
-      {errorMsg && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-slate-950/80 p-4 backdrop-blur-md">
-          <div className="card-glass relative w-full max-w-md space-y-4 rounded-3xl border border-rose-500/40 bg-white p-6 text-center shadow-2xl dark:bg-stone-900">
-            <div className="mx-auto flex h-14 w-14 items-center justify-center rounded-full bg-rose-500/20 text-rose-600 dark:text-rose-400">
-              <AlertCircle className="h-8 w-8" />
-            </div>
-            <h3 className="font-paytone text-lg font-bold text-slate-900 dark:text-white">
-              Registration Failed
-            </h3>
-            <p className="text-xs text-slate-600 dark:text-slate-300">
-              {errorMsg}
-            </p>
-            <Button
-              variant="outline"
-              onClick={() => setErrorMsg(null)}
-              className="h-10 w-full rounded-full border-slate-300 text-xs font-bold dark:border-white/20"
-            >
-              Close
-            </Button>
-          </div>
-        </div>
-      )}
+      {/* UNIFIED NATIVE ERROR MODAL */}
+      <NativeModal
+        isOpen={errorMsg !== null}
+        onClose={() => setErrorMsg(null)}
+        variant="error"
+        title={isBn ? 'রেজিস্ট্রেশন ব্যর্থ হয়েছে' : 'Registration Failed'}
+        description={errorMsg || ''}
+        primaryButton={{
+          label: isBn ? 'বন্ধ করুন' : 'Close',
+          onClick: () => setErrorMsg(null),
+        }}
+      />
 
       {/* TOP EVENT SUMMARY BAR & LANGUAGE SWITCHER */}
       <div className="card-glass relative overflow-hidden rounded-2xl border border-slate-200/90 p-4 backdrop-blur-2xl sm:rounded-3xl sm:p-6 dark:border-white/12">

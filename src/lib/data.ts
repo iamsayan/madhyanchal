@@ -67,9 +67,6 @@ export async function getMembersStatus(year: string): Promise<Member[]> {
 }
 
 export async function getMemberById(id: string, year: string): Promise<Member> {
-  'use cache';
-  cacheLife('weeks');
-  cacheTag('members', `member-${id}-${year}`);
   const res = await cockpit.getContentItemById<Member>('members', id, {
     payments: year,
   });

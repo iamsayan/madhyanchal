@@ -431,4 +431,18 @@ html.theme-transitioning ::view-transition-new(root) {
   }
 }
 
+/* YouTubeEmbed (@next/third-parties/google) lite-youtube element fixes */
+lite-youtube {
+  max-width: 100% !important;
+  width: 100% !important;
+  height: 100% !important;
+  border-radius: inherit !important;
+  overflow: hidden !important;
+}
+
+lite-youtube iframe,
+lite-youtube img {
+  border-radius: inherit !important;
+}
+
 

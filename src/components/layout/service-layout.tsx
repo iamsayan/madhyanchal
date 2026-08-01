@@ -20,7 +20,7 @@ export function ServiceLayout({
       title={title}
       subtitle="Fast, reliable, and secure digital services for Madhyanchal Sarbajanin members and devotees."
       badge={{
-        text: '100% Encrypted & Secured Payment Portal',
+        text: 'Secured Payment Portal',
         icon: ShieldCheck,
       }}
       breadcrumbCurrent="Services"

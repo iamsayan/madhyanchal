@@ -1,12 +1,15 @@
 'use client';
 
-import { FormEvent, useCallback, useMemo, useState } from 'react';
+import { FormEvent, useCallback, useEffect, useMemo, useState } from 'react';
 
 import Link from 'next/link';
 
 import { createRazorpayOrder } from '@/app/actions/razorpay';
 import { BorderBeam } from '@/components/ui/border-beam';
+import { NativeModal } from '@/components/ui/native-modal';
 import { loadRazorpay } from '@/lib/load-razorpay';
+
+import { AnimatePresence, motion } from 'framer-motion';
 
 import {
   Check,
@@ -48,11 +51,22 @@ export function ServiceMembershipForm({
 
   const [formData, setFormData] = useState({
     member_id: memberData._id,
-    name: memberData.name,
-    phone: memberData.phone.replace(/\D+/g, ''),
+    name: memberData.name || '',
+    phone: (memberData.phone || '').replace(/\D+/g, ''),
     email: '',
     amount: '',
   });
+
+  useEffect(() => {
+    if (success !== null || Boolean(error)) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = '';
+    }
+    return () => {
+      document.body.style.overflow = '';
+    };
+  }, [success, error]);
 
   const amountData = useMemo(() => {
     const total = Number(memberData.amount || 0);
@@ -198,108 +212,49 @@ export function ServiceMembershipForm({
 
   return (
     <div className="space-y-6">
-      {/* SUCCESS MODAL */}
-      {success && (
-        <div className="animate-in fade-in fixed inset-0 z-50 flex items-center justify-center bg-slate-950/80 p-4 backdrop-blur-md duration-300">
-          <div className="card-glass relative w-full max-w-md space-y-5 overflow-hidden rounded-3xl border border-amber-500/40 bg-stone-950/95 p-6 text-center shadow-2xl backdrop-blur-2xl">
-            <BorderBeam
-              size={160}
-              duration={6}
-              colorFrom="#10b981"
-              colorTo="#34d399"
-            />
+      {/* UNIFIED NATIVE SUCCESS MODAL */}
+      <NativeModal
+        isOpen={success !== null}
+        onClose={() => setSuccess(null)}
+        variant="success"
+        title="Payment Successful!"
+        description="Your subscription contribution has been recorded."
+        details={[
+          {
+            label: 'Amount Paid',
+            value: `₹${success?.amount || ''}`,
+            highlight: true,
+          },
+          {
+            label: 'Payment ID',
+            value: success?.paymentId || '',
+            copyable: true,
+          },
+        ]}
+        secondaryButton={{
+          label: 'Check Status',
+          href: `/services/${year}/membership/${memberData._id}/status`,
+          icon: <History className="h-4 w-4" />,
+        }}
+        primaryButton={{
+          label: 'Pay Again',
+          onClick: () => window.location.reload(),
+          icon: <RefreshCw className="h-4 w-4" />,
+        }}
+      />
 
-            <div className="mx-auto flex h-16 w-16 animate-bounce items-center justify-center rounded-full border border-emerald-500/30 bg-emerald-500/15 text-emerald-400">
-              <CheckCircle2 className="h-9 w-9" />
-            </div>
-
-            <div className="space-y-1">
-              <h3 className="font-paytone text-xl text-white">
-                Payment Successful!
-              </h3>
-              <p className="text-xs text-slate-300">
-                Your subscription contribution has been recorded.
-              </p>
-            </div>
-
-            <div className="space-y-2.5 rounded-xl border border-white/10 bg-white/5 p-4 text-left text-xs text-slate-300">
-              <div className="flex items-center justify-between border-b border-white/10 pb-2">
-                <span className="text-[10px] font-black tracking-wider text-slate-400 uppercase">
-                  Amount Paid
-                </span>
-                <span className="font-paytone text-base text-emerald-400">
-                  ₹{success.amount}
-                </span>
-              </div>
-              <div className="flex items-center justify-between pt-1">
-                <span className="text-[10px] font-black tracking-wider text-slate-400 uppercase">
-                  Payment ID
-                </span>
-                <div className="flex items-center gap-1.5 font-mono text-[11px] text-amber-300">
-                  <span>{success.paymentId}</span>
-                  <button
-                    type="button"
-                    onClick={() => handleCopy(success.paymentId)}
-                    className="p-1 hover:text-white"
-                  >
-                    {copied ? (
-                      <Check className="h-3 w-3 text-emerald-400" />
-                    ) : (
-                      <Copy className="h-3 w-3" />
-                    )}
-                  </button>
-                </div>
-              </div>
-            </div>
-
-            <div className="flex gap-2">
-              <Link
-                href={`/services/${year}/membership/${memberData._id}/status`}
-                className="inline-flex flex-1 items-center justify-center gap-1.5 rounded-xl border border-amber-500/40 bg-amber-500/20 py-2.5 text-xs font-bold text-amber-300 transition-colors hover:bg-amber-500/30"
-              >
-                <History className="h-4 w-4" /> Check Status
-              </Link>
-              <button
-                type="button"
-                onClick={() => window.location.reload()}
-                className="inline-flex flex-1 items-center justify-center gap-1.5 rounded-xl bg-gradient-to-r from-amber-600 to-yellow-500 py-2.5 text-xs font-black tracking-wider text-stone-950 uppercase transition-transform hover:scale-[1.02]"
-              >
-                <RefreshCw className="h-4 w-4" /> Pay Again
-              </button>
-            </div>
-          </div>
-        </div>
-      )}
-
-      {/* ERROR MODAL */}
-      {error && (
-        <div className="animate-in fade-in fixed inset-0 z-50 flex items-center justify-center bg-slate-950/80 p-4 backdrop-blur-md duration-300">
-          <div className="card-glass relative w-full max-w-md space-y-4 overflow-hidden rounded-3xl border border-rose-500/40 bg-stone-950/95 p-6 text-center shadow-2xl backdrop-blur-2xl">
-            <BorderBeam
-              size={160}
-              duration={6}
-              colorFrom="#f43f5e"
-              colorTo="#fb7185"
-            />
-            <div className="mx-auto flex h-16 w-16 items-center justify-center rounded-full border border-rose-500/30 bg-rose-500/15 text-rose-400">
-              <XCircle className="h-9 w-9" />
-            </div>
-            <div className="space-y-1">
-              <h3 className="font-paytone text-xl text-white">Payment Error</h3>
-              <p className="text-xs font-medium break-words text-rose-300">
-                {error}
-              </p>
-            </div>
-            <button
-              type="button"
-              onClick={() => setError(null)}
-              className="w-full rounded-xl border border-rose-500/40 bg-rose-500/20 py-2.5 text-xs font-bold text-rose-200 transition-colors hover:bg-rose-500/30"
-            >
-              Close & Try Again
-            </button>
-          </div>
-        </div>
-      )}
+      {/* UNIFIED NATIVE ERROR MODAL */}
+      <NativeModal
+        isOpen={error !== null}
+        onClose={() => setError(null)}
+        variant="error"
+        title="Payment Error"
+        description={error || ''}
+        primaryButton={{
+          label: 'Close & Retry',
+          onClick: () => setError(null),
+        }}
+      />
 
       {/* FULLY PAID VIEW BANNER */}
       {isFullyPaid ? (
@@ -507,7 +462,7 @@ export function ServiceMembershipForm({
                 {processing ? (
                   <>
                     <Loader2 className="h-4 w-4 animate-spin text-stone-950" />
-                    <span>Processing Razorpay Order...</span>
+                    <span>Processing...</span>
                   </>
                 ) : (
                   <>

@@ -141,26 +141,29 @@ export function Header() {
           />
         </Link>
 
-        {/* Right: Identical h-8 w-8 Mobile Action Buttons */}
+        {/* Right: 3 Distinct Colored Action Buttons (Fixed colors for both Light & Dark modes on #f59e0b) */}
         <div className="flex items-center gap-2">
           <a
             href="https://maps.app.goo.gl/xY6cx8Arcy6ayLYq9"
             target="_blank"
             rel="noopener noreferrer"
-            className="relative flex h-8 w-8 shrink-0 items-center justify-center rounded-full border border-slate-950/20 bg-slate-950/10 text-slate-950 backdrop-blur-xl transition-all duration-300 hover:bg-slate-950/20 active:scale-95"
+            className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full border border-rose-700/35 bg-rose-500/20 text-rose-950 shadow-xs backdrop-blur-xl transition-all hover:bg-rose-500/30 active:scale-90"
             aria-label="Map Location"
           >
-            <MapPin className="h-4 w-4" />
+            <MapPin className="h-4 w-4 text-rose-950" />
           </a>
           <Link
             href="/schedule"
             transitionTypes={['nav-forward']}
-            className="relative flex h-8 w-8 shrink-0 items-center justify-center rounded-full border border-slate-950/20 bg-slate-950/10 text-slate-950 backdrop-blur-xl transition-all duration-300 hover:bg-slate-950/20 active:scale-95"
+            className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full border border-indigo-700/35 bg-indigo-500/20 text-indigo-950 shadow-xs backdrop-blur-xl transition-all hover:bg-indigo-500/30 active:scale-90"
             aria-label="Puja Schedule"
           >
-            <Calendar className="h-4 w-4" />
+            <Calendar className="h-4 w-4 text-indigo-950" />
           </Link>
-          <ThemeToggle className="border-slate-950/20 bg-slate-950/10 text-slate-950 dark:border-slate-950/20 dark:bg-slate-950/10 dark:text-slate-950" />
+          <ThemeToggle
+            className="h-8 w-8 border-emerald-700/35 bg-emerald-500/20 text-emerald-950 shadow-xs backdrop-blur-xl hover:bg-emerald-500/30 active:scale-90"
+            iconClassName="text-emerald-950"
+          />
         </div>
       </div>
     </header>

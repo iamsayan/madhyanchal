@@ -6,7 +6,7 @@ import Image from 'next/image';
 
 import { cn } from '@/lib/utils';
 import type { HomepageVideo } from '@/types';
-
+import { YouTubeEmbed } from '@next/third-parties/google';
 import { Film, Play } from 'lucide-react';
 
 interface VideosProps {
@@ -23,14 +23,14 @@ export function Videos({ items = [] }: VideosProps) {
     <div className="grid grid-cols-1 gap-4 pt-2 sm:gap-6 sm:pt-4 lg:grid-cols-12">
       {/* MAIN FEATURED VIDEO PLAYER CONTAINER (8-col on desktop) */}
       <div className="flex flex-col space-y-3 lg:col-span-8">
-        <div className="relative aspect-video w-full overflow-hidden rounded-2xl border border-slate-200/90 bg-slate-950 sm:rounded-3xl dark:border-white/15">
-          <iframe
-            src={`https://www.youtube.com/embed/${activeVideo.video_id}?autoplay=0&rel=0`}
-            title={activeVideo.title}
-            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-            allowFullScreen
-            className="h-full w-full border-0"
-          />
+        <div className="relative aspect-video w-full overflow-hidden rounded-lg border border-slate-200/90 bg-slate-950 sm:rounded-3xl dark:border-white/15 [&>lite-youtube]:h-full [&>lite-youtube]:w-full [&>lite-youtube]:max-w-none [&>lite-youtube]:rounded-2xl sm:[&>lite-youtube]:rounded-3xl">
+          {activeVideo?.video_id && (
+            <YouTubeEmbed
+              videoid={activeVideo.video_id}
+              params="autoplay=0&rel=0"
+              style="height: 100%; width: 100%; max-width: none; border: 0;"
+            />
+          )}
         </div>
 
         {/* ACTIVE VIDEO STATUS BAR */}

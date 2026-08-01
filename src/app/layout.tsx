@@ -6,14 +6,16 @@ import { ThemeProvider } from '@/app/providers/theme-provider';
 import { Footer } from '@/components/layout/footer';
 import { Header } from '@/components/layout/header';
 import { MobileNavDock } from '@/components/layout/mobile-nav';
+import { DevModalPreview } from '@/components/ui/dev-modal-preview';
 import { PwaInstallPrompt } from '@/components/shared/pwa-install';
 import { PageLoader } from '@/components/shared/page-loader';
-
+import { GoogleTagManager } from '@next/third-parties/google';
 import { getSettings } from '@/lib/data';
 import AppProvider from '@/app/providers/app-provider';
 import { ReactNode, Suspense } from 'react';
 
 import './globals.css';
+import Script from 'next/script';
 
 const outfit = Outfit({
   subsets: ['latin'],
@@ -128,6 +130,30 @@ export default function RootLayout({ children }: { children: ReactNode }) {
       className={`${outfit.variable} ${paytoneOne.variable} scroll-smooth`}
       data-scroll-behavior="smooth"
     >
+      {process.env.NODE_ENV === 'production' && (
+        <>
+          <GoogleTagManager
+            gtmId={process.env.NEXT_PUBLIC_GA4_ID!}
+            dataLayer={{
+              cookie_prefix: 'MsjpsGtag',
+              cookie_domain: process.env.NEXT_PUBLIC_SITE_URL!,
+              cookie_flags: 'samesite=none;secure',
+              allow_google_signals: true,
+            }}
+          />
+          <Script id="statcounter">
+            {`
+              var sc_project=11173869;
+              var sc_invisible=1;
+              var sc_security="87f092e7";
+            `}
+          </Script>
+          <Script
+            src="https://www.statcounter.com/counter/counter.js"
+            async={true}
+          />
+        </>
+      )}
       <body className="text-foreground flex min-h-screen flex-col bg-amber-50/60 font-sans antialiased transition-colors duration-500 selection:bg-amber-500 selection:text-slate-950 dark:bg-stone-950">
         <SerwistProvider swUrl="/sw.js">
           <ThemeProvider attribute="class" defaultTheme="light" enableSystem>
@@ -138,6 +164,7 @@ export default function RootLayout({ children }: { children: ReactNode }) {
                 <Footer />
                 <MobileNavDock />
                 <PwaInstallPrompt />
+                <DevModalPreview />
               </Suspense>
             </AppProvider>
           </ThemeProvider>
