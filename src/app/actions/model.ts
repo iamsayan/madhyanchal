@@ -2,21 +2,12 @@
 
 import cockpit from '@/lib/client';
 
-export interface ActionResponse<T = unknown> {
-  success: boolean;
-  response?: T;
-  error?: string;
-}
-
-export async function submitModel<
-  TResponse = unknown,
-  TData extends object = object,
->(model: string, data: TData): Promise<ActionResponse<TResponse>> {
+export async function submitModel(
+  model: string,
+  data: Record<string, unknown>
+) {
   try {
-    const response = await cockpit.createItem<TResponse>(
-      model,
-      data as Record<string, unknown>
-    );
+    const response = await cockpit.saveContentItem(model, data);
 
     return {
       success: true,

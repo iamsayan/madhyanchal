@@ -216,7 +216,9 @@ export function DrawingCompetitionForm() {
           <div className="space-y-1">
             <span className="inline-flex items-center gap-1.5 rounded-full border border-amber-500/30 bg-amber-500/10 px-3 py-0.5 text-[10px] font-extrabold text-amber-700 dark:text-amber-400">
               <Palette className="h-3 w-3" />
-              {isBn ? 'বার্ষিক অঙ্কন প্রতিযোগিতা' : 'ANNUAL DRAWING COMPETITION'}
+              {isBn
+                ? 'বার্ষিক অঙ্কন প্রতিযোগিতা'
+                : 'ANNUAL DRAWING COMPETITION'}
             </span>
             <h2 className="font-paytone text-lg font-bold text-slate-900 sm:text-2xl dark:text-white">
               {isBn
@@ -297,7 +299,7 @@ export function DrawingCompetitionForm() {
               placeholder={
                 isBn ? 'সম্পূর্ণ নাম লিখুন' : 'Enter participant full name'
               }
-              className="h-10 w-full rounded-xl border border-slate-300/80 bg-white/80 px-3.5 text-xs text-slate-900 transition-all focus:border-amber-500 focus:outline-none focus:ring-2 focus:ring-amber-500/20 dark:border-white/15 dark:bg-stone-950/70 dark:text-white"
+              className="h-10 w-full rounded-xl border border-slate-300/80 bg-white/80 px-3.5 text-xs text-slate-900 transition-all focus:border-amber-500 focus:ring-2 focus:ring-amber-500/20 focus:outline-none dark:border-white/15 dark:bg-stone-950/70 dark:text-white"
             />
             {errors.participantName && (
               <p className="text-[11px] font-semibold text-rose-500">
@@ -318,7 +320,7 @@ export function DrawingCompetitionForm() {
                   ? 'জন্ম তারিখ আবশ্যক'
                   : 'Date of birth is required',
               })}
-              className="h-10 w-full rounded-xl border border-slate-300/80 bg-white/80 px-3.5 text-xs text-slate-900 transition-all focus:border-amber-500 focus:outline-none focus:ring-2 focus:ring-amber-500/20 dark:border-white/15 dark:bg-stone-950/70 dark:text-white"
+              className="h-10 w-full rounded-xl border border-slate-300/80 bg-white/80 px-3.5 text-xs text-slate-900 transition-all focus:border-amber-500 focus:ring-2 focus:ring-amber-500/20 focus:outline-none dark:border-white/15 dark:bg-stone-950/70 dark:text-white"
             />
             {errors.dateOfBirth && (
               <p className="text-[11px] font-semibold text-rose-500">
@@ -367,10 +369,8 @@ export function DrawingCompetitionForm() {
                   ? 'অভিভাবকের নাম আবশ্যক'
                   : 'Guardian name is required',
               })}
-              placeholder={
-                isBn ? 'অভিভাবকের নাম লিখুন' : 'Enter guardian name'
-              }
-              className="h-10 w-full rounded-xl border border-slate-300/80 bg-white/80 px-3.5 text-xs text-slate-900 transition-all focus:border-amber-500 focus:outline-none focus:ring-2 focus:ring-amber-500/20 dark:border-white/15 dark:bg-stone-950/70 dark:text-white"
+              placeholder={isBn ? 'অভিভাবকের নাম লিখুন' : 'Enter guardian name'}
+              className="h-10 w-full rounded-xl border border-slate-300/80 bg-white/80 px-3.5 text-xs text-slate-900 transition-all focus:border-amber-500 focus:ring-2 focus:ring-amber-500/20 focus:outline-none dark:border-white/15 dark:bg-stone-950/70 dark:text-white"
             />
             {errors.guardianName && (
               <p className="text-[11px] font-semibold text-rose-500">
@@ -394,7 +394,7 @@ export function DrawingCompetitionForm() {
                 },
               })}
               placeholder="example@mail.com"
-              className="h-10 w-full rounded-xl border border-slate-300/80 bg-white/80 px-3.5 text-xs text-slate-900 transition-all focus:border-amber-500 focus:outline-none focus:ring-2 focus:ring-amber-500/20 dark:border-white/15 dark:bg-stone-950/70 dark:text-white"
+              className="h-10 w-full rounded-xl border border-slate-300/80 bg-white/80 px-3.5 text-xs text-slate-900 transition-all focus:border-amber-500 focus:ring-2 focus:ring-amber-500/20 focus:outline-none dark:border-white/15 dark:bg-stone-950/70 dark:text-white"
             />
             {errors.email && (
               <p className="text-[11px] font-semibold text-rose-500">
@@ -418,7 +418,7 @@ export function DrawingCompetitionForm() {
                 },
               })}
               placeholder="+91 9876543210"
-              className="h-10 w-full rounded-xl border border-slate-300/80 bg-white/80 px-3.5 text-xs text-slate-900 transition-all focus:border-amber-500 focus:outline-none focus:ring-2 focus:ring-amber-500/20 dark:border-white/15 dark:bg-stone-950/70 dark:text-white"
+              className="h-10 w-full rounded-xl border border-slate-300/80 bg-white/80 px-3.5 text-xs text-slate-900 transition-all focus:border-amber-500 focus:ring-2 focus:ring-amber-500/20 focus:outline-none dark:border-white/15 dark:bg-stone-950/70 dark:text-white"
             />
             {errors.phone && (
               <p className="text-[11px] font-semibold text-rose-500">
@@ -440,7 +440,7 @@ export function DrawingCompetitionForm() {
               placeholder={
                 isBn ? 'সম্পূর্ণ ঠিকানা লিখুন' : 'Enter street address'
               }
-              className="h-10 w-full rounded-xl border border-slate-300/80 bg-white/80 px-3.5 text-xs text-slate-900 transition-all focus:border-amber-500 focus:outline-none focus:ring-2 focus:ring-amber-500/20 dark:border-white/15 dark:bg-stone-950/70 dark:text-white"
+              className="h-10 w-full rounded-xl border border-slate-300/80 bg-white/80 px-3.5 text-xs text-slate-900 transition-all focus:border-amber-500 focus:ring-2 focus:ring-amber-500/20 focus:outline-none dark:border-white/15 dark:bg-stone-950/70 dark:text-white"
             />
             {errors.address && (
               <p className="text-[11px] font-semibold text-rose-500">
@@ -460,7 +460,7 @@ export function DrawingCompetitionForm() {
                 required: isBn ? 'শহর আবশ্যক' : 'City is required',
               })}
               placeholder="Chandannagar"
-              className="h-10 w-full rounded-xl border border-slate-300/80 bg-white/80 px-3.5 text-xs text-slate-900 transition-all focus:border-amber-500 focus:outline-none focus:ring-2 focus:ring-amber-500/20 dark:border-white/15 dark:bg-stone-950/70 dark:text-white"
+              className="h-10 w-full rounded-xl border border-slate-300/80 bg-white/80 px-3.5 text-xs text-slate-900 transition-all focus:border-amber-500 focus:ring-2 focus:ring-amber-500/20 focus:outline-none dark:border-white/15 dark:bg-stone-950/70 dark:text-white"
             />
             {errors.city && (
               <p className="text-[11px] font-semibold text-rose-500">
@@ -480,7 +480,7 @@ export function DrawingCompetitionForm() {
                 required: isBn ? 'পিন কোড আবশ্যক' : 'Pin code is required',
               })}
               placeholder="712136"
-              className="h-10 w-full rounded-xl border border-slate-300/80 bg-white/80 px-3.5 text-xs text-slate-900 transition-all focus:border-amber-500 focus:outline-none focus:ring-2 focus:ring-amber-500/20 dark:border-white/15 dark:bg-stone-950/70 dark:text-white"
+              className="h-10 w-full rounded-xl border border-slate-300/80 bg-white/80 px-3.5 text-xs text-slate-900 transition-all focus:border-amber-500 focus:ring-2 focus:ring-amber-500/20 focus:outline-none dark:border-white/15 dark:bg-stone-950/70 dark:text-white"
             />
             {errors.pinCode && (
               <p className="text-[11px] font-semibold text-rose-500">

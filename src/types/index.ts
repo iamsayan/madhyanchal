@@ -133,6 +133,14 @@ export interface DrawingCompetitionRecord extends Entity {
   pincode: string;
 }
 
+export interface RazorpayFormData {
+  amount: number;
+  email: string;
+  name: string;
+  phone: string;
+  type?: string;
+}
+
 export interface RazorpaySuccessResponse {
   razorpay_payment_id: string;
   razorpay_order_id: string;

@@ -42,8 +42,9 @@ interface Person {
   designation: string;
 }
 
+const curYear = new Date().getFullYear();
+
 export default function AboutUsPage() {
-  const curYear = new Date().getFullYear();
   const yearsActive = curYear - 1971 + 1;
 
   const members: Person[] = [

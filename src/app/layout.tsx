@@ -7,11 +7,11 @@ import { Footer } from '@/components/layout/footer';
 import { Header } from '@/components/layout/header';
 import { MobileNavDock } from '@/components/layout/mobile-nav';
 import { PwaInstallPrompt } from '@/components/shared/pwa-install';
+import { PageLoader } from '@/components/shared/page-loader';
 
 import { getSettings } from '@/lib/data';
 import AppProvider from '@/app/providers/app-provider';
 import { ReactNode, Suspense } from 'react';
-import { PageLoader } from '@/components/shared/page-loader';
 
 import './globals.css';
 
@@ -89,11 +89,7 @@ export const metadata: Metadata = {
   },
 };
 
-export default function RootLayout({
-  children,
-}: {
-  children: ReactNode;
-}) {
+export default function RootLayout({ children }: { children: ReactNode }) {
   const settings = getSettings();
 
   return (
@@ -107,7 +103,7 @@ export default function RootLayout({
         <SerwistProvider swUrl="/sw.js">
           <ThemeProvider attribute="class" defaultTheme="light" enableSystem>
             <AppProvider settingsPromise={settings}>
-              <Suspense>
+              <Suspense fallback={<PageLoader />}>
                 <Header />
                 <main className="flex-1">{children}</main>
                 <Footer />

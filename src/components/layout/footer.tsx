@@ -1,5 +1,3 @@
-'use client';
-
 import { Fragment } from 'react';
 
 import Image from 'next/image';
@@ -15,9 +13,9 @@ import {
   Youtube,
 } from 'lucide-react';
 
-export function Footer() {
-  const currentYear = new Date().getFullYear();
+const currentYear = new Date().getFullYear();
 
+export function Footer() {
   const navLinks = [
     { label: 'About Us', href: '/about-us' },
     { label: 'Contact', href: '/contact-us' },
