@@ -1,28 +1,15 @@
 'use client';
 
-import { ChangeEvent, FormEvent, useState } from 'react';
+import { useActionState, useEffect, useState } from 'react';
 import { Send, CheckCircle2, AlertCircle, Loader2 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { BorderBeam } from '@/components/ui/border-beam';
-
-interface FormState {
-  name: string;
-  email: string;
-  phone: string;
-  subject: string;
-  message: string;
-}
-
-interface FormErrors {
-  name?: string;
-  email?: string;
-  phone?: string;
-  subject?: string;
-  message?: string;
-}
+import { submitContactForm } from '@/app/actions/form';
 
 export function ContactForm() {
-  const [formData, setFormData] = useState<FormState>({
+  const [state, formAction, isPending] = useActionState(submitContactForm, null);
+
+  const [formData, setFormData] = useState({
     name: '',
     email: '',
     phone: '',
@@ -30,66 +17,10 @@ export function ContactForm() {
     message: '',
   });
 
-  const [errors, setErrors] = useState<FormErrors>({});
-  const [isSubmitting, setIsSubmitting] = useState(false);
-  const [isSuccess, setIsSuccess] = useState(false);
-  const [errorMessage, setErrorMessage] = useState<string | null>(null);
+  const [clientErrors, setClientErrors] = useState<Record<string, string>>({});
 
-  const validate = (): boolean => {
-    const newErrors: FormErrors = {};
-
-    if (!formData.name.trim() || formData.name.trim().length < 2) {
-      newErrors.name = 'Name must be at least 2 characters';
-    }
-
-    if (
-      !formData.email.trim() ||
-      !/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i.test(formData.email)
-    ) {
-      newErrors.email = 'Please enter a valid email address';
-    }
-
-    if (
-      !formData.phone.trim() ||
-      formData.phone.trim().length < 10 ||
-      formData.phone.trim().length > 15
-    ) {
-      newErrors.phone = 'Please enter a valid phone number (10-15 digits)';
-    }
-
-    if (!formData.subject.trim() || formData.subject.trim().length < 3) {
-      newErrors.subject = 'Subject must be at least 3 characters';
-    }
-
-    if (!formData.message.trim() || formData.message.trim().length < 10) {
-      newErrors.message = 'Message must be at least 10 characters';
-    }
-
-    setErrors(newErrors);
-    return Object.keys(newErrors).length === 0;
-  };
-
-  const handleChange = (
-    e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
-  ) => {
-    const { name, value } = e.target;
-    setFormData((prev) => ({ ...prev, [name]: value }));
-    if (errors[name as keyof FormErrors]) {
-      setErrors((prev) => ({ ...prev, [name]: undefined }));
-    }
-  };
-
-  const handleSubmit = async (e: FormEvent) => {
-    e.preventDefault();
-    if (!validate()) return;
-
-    setIsSubmitting(true);
-    setErrorMessage(null);
-    try {
-      // Simulate form submission delay
-      await new Promise((resolve) => setTimeout(resolve, 1200));
-      console.log('Contact form submitted:', formData);
-      setIsSuccess(true);
+  useEffect(() => {
+    if (state?.success) {
       setFormData({
         name: '',
         email: '',
@@ -97,20 +28,33 @@ export function ContactForm() {
         subject: '',
         message: '',
       });
-      setErrors({});
-    } catch (err) {
-      console.error(err);
-      setErrorMessage('Failed to send message. Please try again or call us directly.');
-    } finally {
-      setIsSubmitting(false);
+      setClientErrors({});
     }
+  }, [state?.success]);
+
+  const handleChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+  ) => {
+    const { name, value } = e.target;
+    setFormData((prev) => ({ ...prev, [name]: value }));
+    if (clientErrors[name]) {
+      setClientErrors((prev) => ({ ...prev, [name]: '' }));
+    }
+  };
+
+  const getFieldError = (fieldName: string): string | undefined => {
+    if (clientErrors[fieldName]) return clientErrors[fieldName];
+    if (state?.errors && state.errors[fieldName]?.length) {
+      return state.errors[fieldName][0];
+    }
+    return undefined;
   };
 
   return (
     <div className="card-glass card-hover-glow relative overflow-hidden rounded-xl sm:rounded-2xl border border-slate-200/90 dark:border-white/12 p-4 sm:p-7 backdrop-blur-2xl transition-all duration-300">
       <BorderBeam size={140} duration={6} colorFrom="#f59e0b" colorTo="#fef08a" />
 
-      {isSuccess ? (
+      {state?.success ? (
         <div className="py-8 text-center space-y-3">
           <div className="flex h-12 w-12 items-center justify-center rounded-full bg-emerald-500/15 border border-emerald-500/30 text-emerald-500 mx-auto">
             <CheckCircle2 className="h-6 w-6" />
@@ -119,11 +63,11 @@ export function ContactForm() {
             Message Sent Successfully!
           </h3>
           <p className="text-xs sm:text-sm text-slate-600 dark:text-slate-300 max-w-sm mx-auto">
-            Thank you for reaching out to Madhyanchal Sarbajanin. Our team will get back to you shortly.
+            {state.message || 'Thank you for reaching out to Madhyanchal Sarbajanin. Our team will get back to you shortly.'}
           </p>
           <Button
             type="button"
-            onClick={() => setIsSuccess(false)}
+            onClick={() => window.location.reload()}
             variant="outline"
             className="rounded-full text-xs font-bold px-5 mt-2 cursor-pointer"
           >
@@ -131,34 +75,45 @@ export function ContactForm() {
           </Button>
         </div>
       ) : (
-        <form onSubmit={handleSubmit} className="space-y-3.5 sm:space-y-4" noValidate>
-          {errorMessage && (
+        <form action={formAction} className="space-y-3.5 sm:space-y-4" noValidate>
+          {/* Honeypot field for bot protection */}
+          <input
+            type="text"
+            name="_honeypot"
+            className="hidden"
+            tabIndex={-1}
+            autoComplete="off"
+          />
+
+          {state?.success === false && state.message && (
             <div className="flex items-center gap-2 rounded-lg border border-red-500/30 bg-red-500/10 p-3 text-xs text-red-600 dark:text-red-400">
               <AlertCircle className="h-4 w-4 shrink-0" />
-              <span>{errorMessage}</span>
+              <span>{state.message}</span>
             </div>
           )}
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
-            {/* Full Name */}
-            <div className="space-y-1">
-              <label htmlFor="contact-name" className="block text-[11px] sm:text-xs font-bold text-slate-700 dark:text-slate-300">
-                Your Full Name <span className="text-amber-500">*</span>
-              </label>
-              <input
-                id="contact-name"
-                name="name"
-                type="text"
-                value={formData.name}
-                onChange={handleChange}
-                placeholder="e.g. Swapan Banerjee"
-                className="w-full rounded-lg border border-slate-300/80 dark:border-white/15 bg-white/90 dark:bg-stone-900/90 px-3 py-2 text-xs sm:text-sm text-slate-900 dark:text-white placeholder:text-slate-400 focus:border-amber-500 focus:outline-none focus:ring-1 focus:ring-amber-500"
-              />
-              {errors.name && (
-                <p className="text-[10px] font-bold text-red-500">{errors.name}</p>
-              )}
-            </div>
+          {/* Full Name - Row 1 */}
+          <div className="space-y-1">
+            <label htmlFor="contact-name" className="block text-[11px] sm:text-xs font-bold text-slate-700 dark:text-slate-300">
+              Your Full Name <span className="text-amber-500">*</span>
+            </label>
+            <input
+              id="contact-name"
+              name="name"
+              type="text"
+              value={formData.name}
+              onChange={handleChange}
+              placeholder="e.g. Swapan Banerjee"
+              required
+              className="w-full rounded-lg border border-slate-300/80 dark:border-white/15 bg-white/90 dark:bg-stone-900/90 px-3 py-2 text-xs sm:text-sm text-slate-900 dark:text-white placeholder:text-slate-400 focus:border-amber-500 focus:outline-none focus:ring-1 focus:ring-amber-500"
+            />
+            {getFieldError('name') && (
+              <p className="text-[10px] font-bold text-red-500">{getFieldError('name')}</p>
+            )}
+          </div>
 
+          {/* Email & Phone - Row 2 */}
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
             {/* Email Address */}
             <div className="space-y-1">
               <label htmlFor="contact-email" className="block text-[11px] sm:text-xs font-bold text-slate-700 dark:text-slate-300">
@@ -171,19 +126,18 @@ export function ContactForm() {
                 value={formData.email}
                 onChange={handleChange}
                 placeholder="your.email@example.com"
+                required
                 className="w-full rounded-lg border border-slate-300/80 dark:border-white/15 bg-white/90 dark:bg-stone-900/90 px-3 py-2 text-xs sm:text-sm text-slate-900 dark:text-white placeholder:text-slate-400 focus:border-amber-500 focus:outline-none focus:ring-1 focus:ring-amber-500"
               />
-              {errors.email && (
-                <p className="text-[10px] font-bold text-red-500">{errors.email}</p>
+              {getFieldError('email') && (
+                <p className="text-[10px] font-bold text-red-500">{getFieldError('email')}</p>
               )}
             </div>
-          </div>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
             {/* Phone Number */}
             <div className="space-y-1">
               <label htmlFor="contact-phone" className="block text-[11px] sm:text-xs font-bold text-slate-700 dark:text-slate-300">
-                Phone Number <span className="text-amber-500">*</span>
+                Phone Number
               </label>
               <input
                 id="contact-phone"
@@ -194,32 +148,33 @@ export function ContactForm() {
                 placeholder="+91 98300 00000"
                 className="w-full rounded-lg border border-slate-300/80 dark:border-white/15 bg-white/90 dark:bg-stone-900/90 px-3 py-2 text-xs sm:text-sm text-slate-900 dark:text-white placeholder:text-slate-400 focus:border-amber-500 focus:outline-none focus:ring-1 focus:ring-amber-500"
               />
-              {errors.phone && (
-                <p className="text-[10px] font-bold text-red-500">{errors.phone}</p>
-              )}
-            </div>
-
-            {/* Subject */}
-            <div className="space-y-1">
-              <label htmlFor="contact-subject" className="block text-[11px] sm:text-xs font-bold text-slate-700 dark:text-slate-300">
-                Inquiry Subject <span className="text-amber-500">*</span>
-              </label>
-              <input
-                id="contact-subject"
-                name="subject"
-                type="text"
-                value={formData.subject}
-                onChange={handleChange}
-                placeholder="e.g. Sponsorship / General Query"
-                className="w-full rounded-lg border border-slate-300/80 dark:border-white/15 bg-white/90 dark:bg-stone-900/90 px-3 py-2 text-xs sm:text-sm text-slate-900 dark:text-white placeholder:text-slate-400 focus:border-amber-500 focus:outline-none focus:ring-1 focus:ring-amber-500"
-              />
-              {errors.subject && (
-                <p className="text-[10px] font-bold text-red-500">{errors.subject}</p>
+              {getFieldError('phone') && (
+                <p className="text-[10px] font-bold text-red-500">{getFieldError('phone')}</p>
               )}
             </div>
           </div>
 
-          {/* Message */}
+          {/* Subject - Row 3 */}
+          <div className="space-y-1">
+            <label htmlFor="contact-subject" className="block text-[11px] sm:text-xs font-bold text-slate-700 dark:text-slate-300">
+              Inquiry Subject <span className="text-amber-500">*</span>
+            </label>
+            <input
+              id="contact-subject"
+              name="subject"
+              type="text"
+              value={formData.subject}
+              onChange={handleChange}
+              placeholder="e.g. Sponsorship / General Query"
+              required
+              className="w-full rounded-lg border border-slate-300/80 dark:border-white/15 bg-white/90 dark:bg-stone-900/90 px-3 py-2 text-xs sm:text-sm text-slate-900 dark:text-white placeholder:text-slate-400 focus:border-amber-500 focus:outline-none focus:ring-1 focus:ring-amber-500"
+            />
+            {getFieldError('subject') && (
+              <p className="text-[10px] font-bold text-red-500">{getFieldError('subject')}</p>
+            )}
+          </div>
+
+          {/* Message - Row 4 */}
           <div className="space-y-1">
             <label htmlFor="contact-message" className="block text-[11px] sm:text-xs font-bold text-slate-700 dark:text-slate-300">
               Message / Inquiry Details <span className="text-amber-500">*</span>
@@ -231,22 +186,23 @@ export function ContactForm() {
               value={formData.message}
               onChange={handleChange}
               placeholder="Type your inquiry message here..."
+              required
               className="w-full rounded-lg border border-slate-300/80 dark:border-white/15 bg-white/90 dark:bg-stone-900/90 px-3 py-2 text-xs sm:text-sm text-slate-900 dark:text-white placeholder:text-slate-400 focus:border-amber-500 focus:outline-none focus:ring-1 focus:ring-amber-500 resize-none"
             />
-            {errors.message && (
-              <p className="text-[10px] font-bold text-red-500">{errors.message}</p>
+            {getFieldError('message') && (
+              <p className="text-[10px] font-bold text-red-500">{getFieldError('message')}</p>
             )}
           </div>
 
           {/* Submit Button */}
           <Button
             type="submit"
-            disabled={isSubmitting}
+            disabled={isPending}
             variant="primary"
             size="lg"
             className="w-full rounded-full text-xs sm:text-sm font-bold min-h-[44px] cursor-pointer mt-2 active:scale-[0.98] transition-transform duration-150"
           >
-            {isSubmitting ? (
+            {isPending ? (
               <>
                 <Loader2 className="h-4 w-4 animate-spin mr-2" /> Sending Message...
               </>

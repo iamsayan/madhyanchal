@@ -98,7 +98,10 @@ const DETAILED_DAILY_TIMINGS = [
     events: [
       { time: '07:00 AM', text: 'Kalparambha & Sacred Water Consecration' },
       { time: '06:30 PM', text: 'Bodhon & Adhibas Rituals' },
-      { time: '07:30 PM', text: 'Grand Evening Aarti & Royal Dhak Performance' },
+      {
+        time: '07:30 PM',
+        text: 'Grand Evening Aarti & Royal Dhak Performance',
+      },
       { time: '09:00 PM', text: 'Illuminated Pandal Opening & Public Viewing' },
     ],
   },
@@ -110,8 +113,14 @@ const DETAILED_DAILY_TIMINGS = [
     color: 'from-orange-500/20 to-amber-500/10 border-orange-500/30',
     iconColor: 'text-orange-500',
     events: [
-      { time: '06:00 AM', text: 'Nabapatrika Holy Bath (Kolabou Snan) at Ghat' },
-      { time: '08:30 AM', text: 'Mahasaptami Puja & Devotee Pushpanjali Batch 1' },
+      {
+        time: '06:00 AM',
+        text: 'Nabapatrika Holy Bath (Kolabou Snan) at Ghat',
+      },
+      {
+        time: '08:30 AM',
+        text: 'Mahasaptami Puja & Devotee Pushpanjali Batch 1',
+      },
       { time: '01:00 PM', text: 'Bhog Prasad Distribution Begins' },
       { time: '07:00 PM', text: 'Cultural Night Showcase & Vocal Concert' },
     ],
@@ -126,7 +135,10 @@ const DETAILED_DAILY_TIMINGS = [
     events: [
       { time: '08:00 AM', text: 'Mahashtami Morning Worship & Anjali' },
       { time: '11:30 AM', text: 'Sacred Kumari Puja Ceremony' },
-      { time: '06:15 PM', text: 'Sandhi Puja (Lighting of 108 Sacred Diya Lamps)' },
+      {
+        time: '06:15 PM',
+        text: 'Sandhi Puja (Lighting of 108 Sacred Diya Lamps)',
+      },
       { time: '08:30 PM', text: 'Gala Musical Performance & Devotional Songs' },
     ],
   },
@@ -152,23 +164,35 @@ const DETAILED_DAILY_TIMINGS = [
     color: 'from-purple-500/20 to-indigo-500/10 border-purple-500/30',
     iconColor: 'text-purple-500',
     events: [
-      { time: '09:00 AM', text: 'Vijayadashami Puja & Ritualistic Darpan Visarjan' },
+      {
+        time: '09:00 AM',
+        text: 'Vijayadashami Puja & Ritualistic Darpan Visarjan',
+      },
       { time: '11:00 AM', text: 'Traditional Sindoor Khela & Dhunuchi Dance' },
       { time: '04:00 PM', text: 'Shanti Jal Consecration & Farewell Chants' },
       { time: '08:00 PM', text: 'Tableau Setup for Nocturnal Immersion' },
     ],
   },
   {
-    day: 'Grand Shobhajatra Procession',
+    day: 'Grand Procession',
     subtitle: 'World-Famous Night Light Immersion',
     icon: Lightbulb,
     badge: 'Final Night',
     color: 'from-amber-600/30 to-rose-600/20 border-amber-500/50',
     iconColor: 'text-amber-400',
     events: [
-      { time: '08:30 PM', text: 'Assembly of 100+ Illuminated Tableaux on Station Road' },
-      { time: '09:30 PM', text: 'Procession Flag-off by Central Puja Committee' },
-      { time: '02:00 AM', text: 'Arrival at Rani Ghat for Sacred Ganga Immersion' },
+      {
+        time: '08:30 PM',
+        text: 'Assembly of 100+ Illuminated Tableaux on Station Road',
+      },
+      {
+        time: '09:30 PM',
+        text: 'Procession Flag-off by Central Puja Committee',
+      },
+      {
+        time: '02:00 AM',
+        text: 'Arrival at Rani Ghat for Sacred Ganga Immersion',
+      },
       { time: '04:00 AM', text: 'Conclusion of Festival Celebrations' },
     ],
   },
@@ -242,7 +266,7 @@ export default async function SchedulePage() {
         {/* DETAILED DAILY TIMINGS GRID */}
         <div className="space-y-4 sm:space-y-8">
           <AnimatedWrapper direction="up" className="space-y-1 text-center">
-            <span className="text-[10px] font-black uppercase tracking-widest text-amber-600 sm:text-xs dark:text-amber-400">
+            <span className="text-[10px] font-black tracking-widest text-amber-600 uppercase sm:text-xs dark:text-amber-400">
               Hour-By-Hour Guide
             </span>
             <h2 className="font-paytone text-lg text-slate-900 sm:text-3xl dark:text-white">
@@ -250,7 +274,7 @@ export default async function SchedulePage() {
             </h2>
           </AnimatedWrapper>
 
-          <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-3 sm:gap-5">
+          <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 sm:gap-5 lg:grid-cols-3">
             {DETAILED_DAILY_TIMINGS.map((daily, idx) => {
               const Icon = daily.icon;
 
@@ -261,7 +285,7 @@ export default async function SchedulePage() {
                   delay={idx * 0.05}
                 >
                   <div
-                    className={`card-glass card-hover-glow relative flex h-full flex-col justify-between overflow-hidden rounded-xl border p-4 backdrop-blur-2xl transition-all duration-300 sm:rounded-2xl sm:p-6 bg-gradient-to-br ${daily.color}`}
+                    className={`card-glass card-hover-glow relative flex h-full flex-col justify-between overflow-hidden rounded-xl border bg-gradient-to-br p-4 backdrop-blur-2xl transition-all duration-300 sm:rounded-2xl sm:p-6 ${daily.color}`}
                   >
                     <BorderBeam
                       size={120}
@@ -289,7 +313,7 @@ export default async function SchedulePage() {
                           </div>
                         </div>
 
-                        <span className="rounded-md border border-slate-200/80 bg-slate-100/90 px-2 py-0.5 text-[9.5px] font-extrabold uppercase text-slate-700 dark:border-white/15 dark:bg-stone-900 dark:text-slate-300">
+                        <span className="rounded-md border border-slate-200/80 bg-slate-100/90 px-2 py-0.5 text-[9.5px] font-extrabold text-slate-700 uppercase dark:border-white/15 dark:bg-stone-900 dark:text-slate-300">
                           {daily.badge}
                         </span>
                       </div>
@@ -304,7 +328,7 @@ export default async function SchedulePage() {
                             <span className="shrink-0 rounded-md border border-amber-500/30 bg-amber-500/10 px-1.5 py-0.5 font-mono text-[10px] font-bold text-amber-700 dark:text-amber-300">
                               {ev.time}
                             </span>
-                            <span className="font-medium leading-tight text-slate-700 dark:text-slate-300">
+                            <span className="leading-tight font-medium text-slate-700 dark:text-slate-300">
                               {ev.text}
                             </span>
                           </div>
@@ -341,9 +365,9 @@ export default async function SchedulePage() {
                   <span className="text-xs sm:text-sm">By Train</span>
                 </div>
                 <p className="text-[11px] leading-relaxed text-slate-600 sm:text-xs dark:text-slate-300">
-                  Board Howrah-Bandel local train to Chandannagar Railway Station.
-                  Our pandal on Station Road is just a 5-minute walk (800 meters)
-                  from the station.
+                  Board Howrah-Bandel local train to Chandannagar Railway
+                  Station. Our pandal on Station Road is just a 5-minute walk
+                  (800 meters) from the station.
                 </p>
               </div>
 
@@ -353,9 +377,9 @@ export default async function SchedulePage() {
                   <span className="text-xs sm:text-sm">Best Viewing Spots</span>
                 </div>
                 <p className="text-[11px] leading-relaxed text-slate-600 sm:text-xs dark:text-slate-300">
-                  Station Road offers optimal viewing for illuminated gates and the
-                  night immersion shobhajatra tableaux. Arrive before 7 PM on
-                  Ashtami & Nabami to avoid crowds.
+                  Station Road offers optimal viewing for illuminated gates and
+                  the night immersion shobhajatra tableaux. Arrive before 7 PM
+                  on Ashtami & Nabami to avoid crowds.
                 </p>
               </div>
 
@@ -373,7 +397,7 @@ export default async function SchedulePage() {
             </div>
 
             {/* QUICK ACTION BUTTONS */}
-            <div className="mt-6 flex flex-wrap items-center justify-between gap-3 pt-4 border-t border-slate-200/80 dark:border-white/10">
+            <div className="mt-6 flex flex-wrap items-center justify-between gap-3 border-t border-slate-200/80 pt-4 dark:border-white/10">
               <div className="flex flex-wrap items-center gap-2">
                 <Button
                   variant="primary"
@@ -405,7 +429,8 @@ export default async function SchedulePage() {
                 className="text-xs font-bold text-amber-600 hover:text-amber-700 dark:text-amber-400"
               >
                 <Link href="/contact-us" className="gap-1">
-                  Contact Committee Desk <ChevronRight className="h-3.5 w-3.5" />
+                  Contact Committee Desk{' '}
+                  <ChevronRight className="h-3.5 w-3.5" />
                 </Link>
               </Button>
             </div>

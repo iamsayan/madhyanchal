@@ -40,7 +40,7 @@ export function Header() {
       style={{ viewTransitionName: 'site-header' }}
       className={cn(
         'fixed inset-x-0 top-0 z-50 w-full transition-all duration-300',
-        'border-b border-stone-800/80 bg-stone-950 text-white lg:border-transparent lg:bg-transparent',
+        'border-b border-amber-600/15 bg-[#f59e0b] text-slate-950 lg:border-transparent lg:bg-transparent',
         scrolled
           ? 'lg:border-b lg:border-slate-200/60 lg:bg-white/90 lg:backdrop-blur-2xl lg:dark:border-white/10 lg:dark:bg-stone-950/90'
           : 'lg:border-transparent lg:bg-transparent'
@@ -123,8 +123,8 @@ export function Header() {
         </div>
       </div>
 
-      {/* NATIVE MOBILE APP ACTION HEADER (<lg view) - SINGLE UNIFIED ONYX #0c0a09 */}
-      <div className="flex h-14 items-center justify-between bg-stone-950 px-4 transition-all duration-300 lg:hidden">
+      {/* NATIVE MOBILE APP ACTION HEADER (<lg view) - SAFE-AREA COMPLIANT WARM AMBER #f59e0b */}
+      <div className="flex h-[calc(3.5rem+env(safe-area-inset-top,0px))] items-center justify-between border-b border-amber-600/15 bg-[#f59e0b] px-4 pt-[env(safe-area-inset-top,0px)] text-slate-950 shadow-sm transition-all duration-300 lg:hidden">
         {/* Left: Brand Logo */}
         <Link
           href="/"
@@ -135,8 +135,8 @@ export function Header() {
             src="/logo.png"
             alt="Madhyanchal Sarbajanin Logo"
             width={140}
-            height={36}
-            className="h-7.5 w-auto object-contain brightness-110 transition-all duration-300"
+            height={40}
+            className="h-8 w-auto object-contain transition-all duration-300"
             priority
           />
         </Link>
@@ -147,7 +147,7 @@ export function Header() {
             href="https://maps.app.goo.gl/xY6cx8Arcy6ayLYq9"
             target="_blank"
             rel="noopener noreferrer"
-            className="relative flex h-8 w-8 shrink-0 items-center justify-center rounded-full border border-white/15 bg-stone-900/90 text-amber-400 backdrop-blur-xl transition-all duration-300 hover:border-amber-400/60 hover:text-amber-300 active:scale-95"
+            className="relative flex h-8 w-8 shrink-0 items-center justify-center rounded-full border border-slate-950/20 bg-slate-950/10 text-slate-950 backdrop-blur-xl transition-all duration-300 hover:bg-slate-950/20 active:scale-95"
             aria-label="Map Location"
           >
             <MapPin className="h-4 w-4" />
@@ -155,12 +155,12 @@ export function Header() {
           <Link
             href="/schedule"
             transitionTypes={['nav-forward']}
-            className="relative flex h-8 w-8 shrink-0 items-center justify-center rounded-full border border-white/15 bg-stone-900/90 text-amber-400 backdrop-blur-xl transition-all duration-300 hover:border-amber-400/60 hover:text-amber-300 active:scale-95"
+            className="relative flex h-8 w-8 shrink-0 items-center justify-center rounded-full border border-slate-950/20 bg-slate-950/10 text-slate-950 backdrop-blur-xl transition-all duration-300 hover:bg-slate-950/20 active:scale-95"
             aria-label="Puja Schedule"
           >
             <Calendar className="h-4 w-4" />
           </Link>
-          <ThemeToggle isScrolled={true} />
+          <ThemeToggle className="border-slate-950/20 bg-slate-950/10 text-slate-950 dark:border-slate-950/20 dark:bg-slate-950/10 dark:text-slate-950" />
         </div>
       </div>
     </header>

@@ -31,8 +31,6 @@ import {
   Users,
 } from 'lucide-react';
 import { getHomePage, getSettings } from '@/lib/data';
-
-import lightShow from '@/public/light-show.jpg';
 import CockpitImage from '@/components/shared/cockpit-image';
 
 export default async function HomePage() {

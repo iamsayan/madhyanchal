@@ -32,60 +32,89 @@ const siteUrl =
   process.env.NEXT_PUBLIC_SITE_URL || 'https://madhyanchalsarbajanin.co.in';
 
 export const viewport: Viewport = {
-  themeColor: '#0c0a09',
+  themeColor: '#f59e0b',
   width: 'device-width',
   initialScale: 1,
   maximumScale: 1,
+  userScalable: false,
+  viewportFit: 'cover',
 };
 
+const curYear = new Date().getFullYear();
+const curYearInTradition = curYear - 1971 + 1;
+
 export const metadata: Metadata = {
-  metadataBase: new URL(siteUrl),
-  title: {
-    default: 'Madhyanchal Sarbajanin Jagadhatri Puja | Chandannagar',
-    template: '%s | Madhyanchal Sarbajanin',
+  metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL!),
+  alternates: {
+    canonical: '/',
   },
-  description:
-    'Official website of Madhyanchal Sarbajanin, Chandannagar. Celebrating over 50 years of tradition, unity, and devotion.',
+  title: {
+    template: `%s - Madhyanchal Sarbajanin | ${curYearInTradition} Years of Tradition, Unity, and Celebration since 1971!`,
+    default: `Madhyanchal Sarbajanin | ${curYearInTradition} Years of Tradition, Unity, and Celebration since 1971!`,
+  },
+  description: `Welcome to the official website of Madhyanchal Sarbajanin Jagadhatri Puja Samity! In ${curYear}, we proudly celebrate ${curYearInTradition} years of devotion, tradition, and togetherness.`,
   keywords: [
-    'Madhyanchal Sarbajanin',
-    'Jagadhatri Puja',
-    'Chandannagar',
-    'Jagadhatri Puja Chandannagar',
-    'Puja Samity',
-    'West Bengal Festival',
+    'madhyanchal',
+    'jagadhatri',
+    'puja',
+    'jagadhatri puja',
+    'chandannagar',
+    'jagadhatri puja chandannagar',
+    'chandannagar jagadhatri puja',
+    'west bengal festival',
+    'madhyanchal sarbajanin',
+    'madhyanchal sporting club',
+    'jagadhatri puja 2026',
+    'chandannagar puja committee',
+    'hooghly festival',
+    'bengal cultural festival',
+    'chandannagar lighting',
+    'jagadhatri puja procession',
   ],
-  authors: [{ name: 'Madhyanchal Sarbajanin' }],
-  creator: 'Madhyanchal Sarbajanin',
-  appleWebApp: {
-    capable: true,
-    statusBarStyle: 'black-translucent',
-    title: 'Madhyanchal Jagadhatri Puja',
+  category: 'Religion & Culture',
+  authors: [{ name: 'Sayan Datta', url: 'https://www.sayandatta.co.in' }],
+  creator: 'Sayan Datta',
+  publisher: 'Madhyanchal Sarbajanin',
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      'max-video-preview': -1,
+      'max-image-preview': 'large',
+      'max-snippet': -1,
+    },
   },
   openGraph: {
-    type: 'website',
-    locale: 'en_IN',
-    url: siteUrl,
-    title: 'Madhyanchal Sarbajanin Jagadhatri Puja',
-    description:
-      'Celebrating over 50 years of tradition, unity, and devotion in Chandannagar.',
     siteName: 'Madhyanchal Sarbajanin',
-    images: [
-      {
-        url: `${siteUrl}/circle-logo.png`,
-        width: 800,
-        height: 800,
-        alt: 'Madhyanchal Sarbajanin Logo',
-      },
-    ],
+    locale: 'en_IN',
+    type: 'website',
+    url: '/',
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'Madhyanchal Sarbajanin Jagadhatri Puja',
-    description:
-      'Celebrating over 50 years of tradition, unity, and devotion in Chandannagar.',
+    site: '@msjpsofficial',
+    creator: '@msjpsofficial',
+    title: `Madhyanchal Sarbajanin | ${curYearInTradition} Years of Tradition, Unity, and Celebration since 1971!`,
+    description: `Welcome to the official website of Madhyanchal Sarbajanin Jagadhatri Puja Samity! In ${curYear}, we proudly celebrate ${curYearInTradition} years of devotion, tradition, and togetherness.`,
   },
-  icons: {
-    icon: '/circle-logo.png',
+  verification: {
+    google: 'SYZt9rv7_qvB3hl-_KzC5lcd-yrB4C2hr4tb2q6RyBA',
+    other: {
+      me: ['madhyanchalsarbajanin@gmail.com'],
+    },
+  },
+  facebook: {
+    appId: process.env.NEXT_PUBLIC_FB_APP_ID!,
+  },
+  other: {
+    'facebook-domain-verification': '0zt2e0ie65lmgs9vgwe2j434t5cboq',
+  },
+  appleWebApp: {
+    capable: true,
+    statusBarStyle: 'black-translucent',
+    title: 'Madhyanchal',
   },
 };
 

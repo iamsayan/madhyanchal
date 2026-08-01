@@ -45,7 +45,8 @@ export function HeroSlider({ images = [], children }: HeroSliderProps) {
             <CockpitImage
               asset={item}
               fill
-              lazy={index !== 0}
+              loaderPlaceholder={false}
+              loading="eager"
               containerClassName="absolute inset-0 size-full bg-transparent"
               className="object-cover object-center brightness-[0.92] contrast-[1.05] saturate-[1.15] filter transition-all duration-500 dark:brightness-[0.65] dark:saturate-[1.25]"
             />
@@ -74,7 +75,7 @@ export function HeroSlider({ images = [], children }: HeroSliderProps) {
       <SparklesCore particleCount={50} particleColor="#fef08a" />
 
       {/* Main Content Centered Container */}
-      <div className="relative z-10 mx-auto flex w-full max-w-5xl flex-1 flex-col items-center justify-center px-4 pt-20 pb-10 text-center sm:px-6 sm:pt-28 sm:pb-8 lg:px-8">
+      <div className="relative z-10 mx-auto flex w-full max-w-5xl flex-1 flex-col items-center justify-center px-4 pt-[calc(5rem+env(safe-area-inset-top,0px))] pb-10 text-center sm:px-6 sm:pt-28 sm:pb-8 lg:px-8">
         {children}
       </div>
 

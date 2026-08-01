@@ -110,13 +110,13 @@ export default function AboutUsPage() {
       icon: ShieldCheck,
     },
     {
-      title: '500,000+ Footfall',
+      title: '1.2M+ Footfall',
       description:
         'Devotees and international tourists flocking to Station Road every year.',
       icon: Globe2,
     },
     {
-      title: '45+ Prestigious Awards',
+      title: '100+ Prestigious Awards',
       description:
         'Recognized for road lighting, idol craftsmanship, and theme architecture.',
       icon: Trophy,

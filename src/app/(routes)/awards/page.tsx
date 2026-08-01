@@ -18,7 +18,7 @@ import {
 export const metadata: Metadata = {
   title: 'Our Awards & Accolades | Madhyanchal Sarbajanin Chandannagar',
   description:
-    'Explore the 45+ prestigious awards and recognitions earned by Madhyanchal Sarbajanin in Chandannagar—from Best Road Lighting to Idol Mukhasree and Cultural Heritage.',
+    'Explore the 100+ Prestigious Awards and recognitions earned by Madhyanchal Sarbajanin in Chandannagar—from Best Road Lighting to Idol Mukhasree and Cultural Heritage.',
   keywords: [
     'madhyanchal awards',
     'jagadhatri puja awards chandannagar',
@@ -30,7 +30,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: 'Our Awards & Accolades | Madhyanchal Sarbajanin Chandannagar',
     description:
-      'Recognized for excellence in creativity, road lighting, and cultural heritage with 45+ awards since 2016.',
+      'Recognized for excellence in creativity, road lighting, and cultural heritage with 100+ awards since 2016.',
     url: '/awards',
     type: 'website',
   },
@@ -64,7 +64,7 @@ export default function AwardsPage() {
         '@type': 'ItemPage',
         name: 'Our Awards & Recognitions',
         description:
-          '45+ prestigious awards recognized across artistic excellence, road lighting, idol craftsmanship, and environmental responsibility.',
+          '100+ Prestigious Awards recognized across artistic excellence, road lighting, idol craftsmanship, and environmental responsibility.',
         url: 'https://www.madhyanchalsarbajanin.co.in/awards',
       },
     ],
@@ -124,7 +124,7 @@ export default function AwardsPage() {
       title="Our Awards & Recognitions"
       subtitle="Recognized for excellence in creativity, road lighting, idol craftsmanship, and environmental responsibility by Bengal’s premier cultural organizations."
       badge={{
-        text: '45+ Prestigious Accolades (2016 - 2024)',
+        text: '100+ Prestigious Accolades',
         icon: Sparkles,
       }}
       breadcrumbCurrent="Awards"
@@ -185,7 +185,7 @@ export default function AwardsPage() {
               Year-wise Accolades Archive
             </h2>
             <p className="text-xs text-slate-600 dark:text-slate-400">
-              Filter through 45+ awards by year from 2016 to 2024.
+              Filter through 100+ awards by year since 2016.
             </p>
           </AnimatedWrapper>
 
@@ -204,7 +204,7 @@ export default function AwardsPage() {
             </p>
           </AnimatedWrapper>
 
-          <AdvertiserSlider slides={awardsSlides} />
+          {/* <AdvertiserSlider slides={awardsSlides} /> */}
         </div>
 
         {/* COMMUNITY GRATITUDE DOCK */}

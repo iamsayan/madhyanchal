@@ -27,7 +27,7 @@ import {
 export const metadata: Metadata = {
   title: 'Advertise with Us | Madhyanchal Sarbajanin Chandannagar',
   description:
-    'Partner with Madhyanchal Sarbajanin in Chandannagar. Elevate your brand with 500,000+ footfall, prime Station Road location, and 60-day pre-event branding.',
+    'Partner with Madhyanchal Sarbajanin in Chandannagar. Elevate your brand with 1.2M+ footfall, prime Station Road location, and 60-day pre-event branding.',
   keywords: [
     'advertise jagadhatri puja',
     'chandannagar puja sponsorship',
@@ -39,7 +39,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: 'Advertise with Us | Madhyanchal Sarbajanin Chandannagar',
     description:
-      'Partner with Madhyanchal Sarbajanin to reach 500,000+ visitors on Chandannagar’s busiest festival corridor.',
+      'Partner with Madhyanchal Sarbajanin to reach 1.2M+ visitors on Chandannagar’s busiest festival corridor.',
     url: '/advertise',
     type: 'website',
   },
@@ -87,7 +87,7 @@ export default function AdvertisePage() {
   const whyChooseUs = [
     {
       title: 'High Footfall',
-      metric: '500,000+',
+      metric: '1.2M+',
       description:
         'Over 5 lakh visitors attend our pandal each year, creating unmatched visibility for your brand.',
       icon: Footprints,
@@ -169,7 +169,7 @@ export default function AdvertisePage() {
   return (
     <PageLayout
       title="Amplify Your Brand With Us"
-      subtitle="Since 1971, Madhyanchal Sarbajanin has drawn massive audiences on Chandannagar’s Station Road. Partner with us to reach over 500,000+ engaged attendees."
+      subtitle="Since 1971, Madhyanchal Sarbajanin has drawn massive audiences on Chandannagar’s Station Road. Partner with us to reach over 1.2M+ engaged attendees."
       badge={{
         text: 'Brand Sponsorship & Media Kit',
         icon: Sparkles,
@@ -266,7 +266,7 @@ export default function AdvertisePage() {
               <div className="grid w-full grid-cols-2 gap-3 sm:gap-4 md:w-1/2">
                 <div className="rounded-xl border border-amber-500/30 bg-amber-500/10 p-3.5 text-center sm:p-5">
                   <span className="font-paytone text-xl text-amber-700 sm:text-3xl dark:text-amber-300">
-                    500,000+
+                    1.2M+
                   </span>
                   <span className="mt-0.5 block text-[10px] font-bold tracking-wider text-slate-700 uppercase sm:text-xs dark:text-slate-300">
                     Annual Footfall
