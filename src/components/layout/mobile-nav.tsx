@@ -22,6 +22,7 @@ import {
   UserCheck,
 } from 'lucide-react';
 import { cn } from '@/lib/utils';
+import { sendGTMEvent } from '@next/third-parties/google';
 
 export function MobileNavDock() {
   const pathname = usePathname();
@@ -135,6 +136,13 @@ export function MobileNavDock() {
               <Link
                 key={item.label}
                 href={item.href}
+                onClick={() =>
+                  sendGTMEvent({
+                    event: 'mobile_nav_tab_click',
+                    label: item.label,
+                    value: item.href,
+                  })
+                }
                 transitionTypes={isBack ? ['nav-back'] : ['nav-forward']}
                 className={cn(
                   'flex min-h-[44px] min-w-[44px] flex-col items-center justify-center rounded-full px-3.5 py-1 transition-transform duration-100 outline-none select-none [webkit-tap-highlight-color:transparent] focus:outline-none focus-visible:outline-none active:scale-95',
@@ -154,7 +162,14 @@ export function MobileNavDock() {
           {/* 5th Tab: More Drawer Trigger */}
           <button
             type="button"
-            onClick={() => setMoreOpen(!moreOpen)}
+            onClick={() => {
+              const nextState = !moreOpen;
+              setMoreOpen(nextState);
+              sendGTMEvent({
+                event: 'mobile_nav_more_toggle',
+                state: nextState ? 'open' : 'close',
+              });
+            }}
             className={cn(
               'relative flex min-h-[44px] min-w-[44px] cursor-pointer flex-col items-center justify-center rounded-full px-3.5 py-1 transition-transform duration-100 outline-none select-none [webkit-tap-highlight-color:transparent] focus:outline-none focus-visible:outline-none active:scale-95',
               isMoreActive
@@ -210,7 +225,7 @@ export function MobileNavDock() {
                     Explore Madhyanchal
                   </h3>
                   <p className="text-xs text-slate-500 dark:text-slate-400">
-                    Official App
+                    Tradition, Unity, and Celebration
                   </p>
                 </div>
                 <button

@@ -6,6 +6,7 @@ import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { ThemeToggle } from '@/components/ui/theme-toggle';
 import { cn } from '@/lib/utils';
+import { sendGTMEvent } from '@next/third-parties/google';
 import { Calendar, MapPin } from 'lucide-react';
 
 export function Header() {
@@ -13,15 +14,20 @@ export function Header() {
   const [scrolled, setScrolled] = useState(false);
 
   useEffect(() => {
+    sendGTMEvent({ event: 'page_view', value: pathname });
+
+    const controller = new AbortController();
     const handleScroll = () => {
-      setScrolled(window.scrollY > 0);
+      setScrolled(window.scrollY > 5);
     };
 
-    window.addEventListener('scroll', handleScroll, { passive: true });
     handleScroll();
+    window.addEventListener('scroll', handleScroll, {
+      signal: controller.signal,
+    });
 
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
+    return () => controller.abort();
+  }, [pathname]);
 
   const navItems = [
     { label: 'Home', href: '/' },
