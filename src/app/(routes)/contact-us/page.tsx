@@ -18,7 +18,7 @@ import {
 export const metadata: Metadata = {
   title: 'Contact Us | Madhyanchal Sarbajanin Chandannagar',
   description:
-    'Get in touch with Madhyanchal Sarbajanin Jagadhatri Puja Samity for inquiries, sponsorships, and collaborations. Located at Station Road, Chandannagar.',
+    'Get in touch with Madhyanchal Sarbajanin for inquiries, sponsorships, and collaborations. Located at Station Road, Chandannagar.',
   keywords: [
     'contact madhyanchal',
     'jagadhatri puja contact chandannagar',
@@ -63,7 +63,7 @@ export default function ContactUsPage() {
       {
         '@type': 'LocalBusiness',
         '@id': 'https://www.madhyanchalsarbajanin.co.in/#localbusiness',
-        name: 'Madhyanchal Sarbajanin Jagadhatri Puja Samity',
+        name: 'Madhyanchal Sarbajanin',
         description:
           'Cultural and religious organization celebrating Jagadhatri Puja since 1971 in Chandannagar, West Bengal.',
         url: 'https://www.madhyanchalsarbajanin.co.in',
@@ -134,11 +134,7 @@ export default function ContactUsPage() {
           {contactCards.map((card, i) => {
             const Icon = card.icon;
             return (
-              <AnimatedWrapper
-                key={card.title}
-                direction="up"
-                delay={i * 0.08}
-              >
+              <AnimatedWrapper key={card.title} direction="up" delay={i * 0.08}>
                 <div className="card-glass card-hover-glow relative flex h-full flex-col justify-between space-y-2.5 overflow-hidden rounded-xl border border-slate-200/90 p-3 backdrop-blur-2xl transition-all duration-300 sm:rounded-2xl sm:p-5 dark:border-white/12">
                   <BorderBeam
                     size={100}
@@ -154,7 +150,7 @@ export default function ContactUsPage() {
                     <h3 className="font-paytone text-xs text-slate-900 sm:text-base dark:text-white">
                       {card.title}
                     </h3>
-                    <p className="break-words font-medium text-[11px] leading-relaxed text-slate-600 sm:text-xs dark:text-slate-300">
+                    <p className="text-[11px] leading-relaxed font-medium break-words text-slate-600 sm:text-xs dark:text-slate-300">
                       {card.value}
                     </p>
                   </div>
@@ -175,9 +171,9 @@ export default function ContactUsPage() {
         </div>
 
         {/* FORM & GOOGLE MAPS DUAL GRID */}
-        <div className="grid grid-cols-1 items-start gap-6 lg:grid-cols-2 sm:gap-8">
+        <div className="grid grid-cols-1 items-start gap-6 sm:gap-8 lg:grid-cols-2">
           {/* Left: Interactive Contact Form */}
-          <div className="space-y-3">
+          <AnimatedWrapper direction="up" delay={0.15} className="space-y-3">
             <div className="flex items-center gap-2">
               <MessageSquare className="h-4 w-4 text-amber-500" />
               <h2 className="font-paytone text-base text-slate-900 sm:text-xl dark:text-white">
@@ -185,10 +181,10 @@ export default function ContactUsPage() {
               </h2>
             </div>
             <ContactForm />
-          </div>
+          </AnimatedWrapper>
 
           {/* Right: Interactive Location & Google Maps Card */}
-          <div className="space-y-3">
+          <AnimatedWrapper direction="up" delay={0.25} className="space-y-3">
             <div className="flex items-center gap-2">
               <MapPin className="h-4 w-4 text-amber-500" />
               <h2 className="font-paytone text-base text-slate-900 sm:text-xl dark:text-white">
@@ -206,9 +202,9 @@ export default function ContactUsPage() {
 
               <div className="space-y-1.5">
                 <h3 className="font-paytone text-sm text-slate-900 sm:text-lg dark:text-white">
-                  Madhyanchal Sarbajanin Jagadhatri Puja Samity
+                  Madhyanchal Sarbajanin
                 </h3>
-                <p className="text-xs font-normal leading-relaxed text-slate-600 dark:text-slate-300">
+                <p className="text-xs leading-relaxed font-normal text-slate-600 dark:text-slate-300">
                   Madhyanchal, Station Road, Chandannagar, Hooghly, West Bengal
                   – 712136
                 </p>
@@ -229,7 +225,7 @@ export default function ContactUsPage() {
                   allowFullScreen={false}
                   loading="lazy"
                   referrerPolicy="no-referrer-when-downgrade"
-                  className="filter contrast-[1.05] brightness-[0.95] transition-transform duration-500 group-hover:scale-102"
+                  className="brightness-[0.95] contrast-[1.05] filter transition-transform duration-500 group-hover:scale-102"
                 />
               </div>
 
@@ -237,13 +233,13 @@ export default function ContactUsPage() {
                 href="https://www.google.com/maps/search/?api=1&query=Madhyanchal+Sarbajanin+Jagadhatri+Puja+Samity,Chandannagar,Hooghly,West+Bengal,712136"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="flex cursor-pointer items-center justify-center gap-2 rounded-full bg-amber-500 py-2.5 px-5 text-xs font-bold text-slate-950 shadow-sm transition-all hover:bg-amber-600 sm:text-sm"
+                className="flex cursor-pointer items-center justify-center gap-2 rounded-full bg-amber-500 px-5 py-2.5 text-xs font-bold text-slate-950 shadow-sm transition-all hover:bg-amber-600 active:scale-[0.98] sm:text-sm"
               >
                 <MapPin className="h-4 w-4" /> Open Full Direction in Google
                 Maps
               </a>
             </div>
-          </div>
+          </AnimatedWrapper>
         </div>
       </div>
     </PageLayout>

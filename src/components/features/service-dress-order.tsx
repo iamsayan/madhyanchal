@@ -182,7 +182,7 @@ export function ServiceDressOrder({
         key: process.env.NEXT_PUBLIC_RAZORPAY_KEY_ID!,
         amount: amountInPaise.toString(),
         currency: 'INR',
-        name: 'Madhyanchal Sarbajanin Jagadhatri Puja Samity',
+        name: 'Madhyanchal Sarbajanin',
         description: `Payment of Dress Order ₹${totalAmount} for ${formData.name}`,
         order_id: orderResponse.orderId,
         notes: {

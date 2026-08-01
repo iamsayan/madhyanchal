@@ -5,7 +5,7 @@ export default function manifest(): MetadataRoute.Manifest {
     name: 'Madhyanchal Sarbajanin Jagadhatri Puja',
     short_name: 'Madhyanchal',
     description:
-      'Golden Jubilee Edition — Official Portal for Madhyanchal Sarbajanin Jagadhatri Puja Samity, Station Road, Chandannagar.',
+      'Golden Jubilee Edition — Official Portal for Madhyanchal Sarbajanin, Station Road, Chandannagar.',
     start_url: '/',
     scope: '/',
     display: 'standalone',

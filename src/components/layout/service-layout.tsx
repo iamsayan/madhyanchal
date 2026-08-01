@@ -18,7 +18,7 @@ export function ServiceLayout({
   return (
     <PageLayout
       title={title}
-      subtitle="Fast, reliable, and secure digital services for Madhyanchal Sarbajanin Jagadhatri Puja Samity members and devotees."
+      subtitle="Fast, reliable, and secure digital services for Madhyanchal Sarbajanin members and devotees."
       badge={{
         text: '100% Encrypted & Secured Payment Portal',
         icon: ShieldCheck,

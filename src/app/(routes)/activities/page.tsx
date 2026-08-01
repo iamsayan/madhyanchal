@@ -19,7 +19,7 @@ import {
 export const metadata: Metadata = {
   title: 'Social Activities & Community Initiatives | Madhyanchal Sarbajanin',
   description:
-    'Discover the year-round social initiatives of Madhyanchal Sarbajanin Jagadhatri Puja Samity—from orphanage Kali Puja celebrations to COVID vaccination camps and blood donation drives.',
+    'Discover the year-round social initiatives of Madhyanchal Sarbajanin—from orphanage Kali Puja celebrations to COVID vaccination camps and blood donation drives.',
   keywords: [
     'madhyanchal social activities',
     'chandannagar community service',
@@ -66,7 +66,7 @@ export default function ActivitiesPage() {
         name: 'Madhyanchal Social Activities & Community Welfare',
         provider: {
           '@type': 'Organization',
-          name: 'Madhyanchal Sarbajanin Jagadhatri Puja Samity',
+          name: 'Madhyanchal Sarbajanin',
         },
         description:
           'Health camps, blood & eye donation, COVID-19 vaccination drives, youth drawing competitions, and orphanage care.',
@@ -204,14 +204,14 @@ export default function ActivitiesPage() {
 
         {/* 4 INITIATIVES CARDS (Compact Mobile Optimized Layout) */}
         <div className="space-y-4 sm:space-y-10">
-          <div className="space-y-1 text-center">
+          <AnimatedWrapper direction="up" className="space-y-1 text-center">
             <span className="text-[9px] font-black tracking-widest text-amber-600 uppercase sm:text-xs dark:text-amber-400">
               Serving Humanity
             </span>
             <h2 className="font-paytone text-base text-slate-900 sm:text-3xl dark:text-white">
               Our Core Social Programs
             </h2>
-          </div>
+          </AnimatedWrapper>
 
           <div className="grid grid-cols-1 gap-3.5 sm:gap-8 md:grid-cols-2">
             {initiatives.map((item, idx) => {

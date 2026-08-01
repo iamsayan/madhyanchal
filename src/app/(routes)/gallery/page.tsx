@@ -9,7 +9,7 @@ import { Sparkles } from 'lucide-react';
 export const metadata: Metadata = {
   title: 'Photo Gallery | Madhyanchal Sarbajanin Chandannagar',
   description:
-    'Explore high-resolution photo archives of Madhyanchal Sarbajanin Jagadhatri Puja Samity in Chandannagar—featuring majestic pandal architecture, idol decorations, and legendary LED illuminations.',
+    'Explore high-resolution photo archives of Madhyanchal Sarbajanin in Chandannagar—featuring majestic pandal architecture, idol decorations, and legendary LED illuminations.',
   keywords: [
     'jagadhatri puja photos',
     'madhyanchal puja gallery',
@@ -21,7 +21,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: 'Photo Gallery | Madhyanchal Sarbajanin Chandannagar',
     description:
-      'Explore high-resolution photo archives of Madhyanchal Sarbajanin Jagadhatri Puja Samity in Chandannagar.',
+      'Explore high-resolution photo archives of Madhyanchal Sarbajanin in Chandannagar.',
     url: '/gallery',
     type: 'website',
   },
@@ -57,7 +57,7 @@ export default async function GalleryPage() {
         '@type': 'ImageGallery',
         name: 'Madhyanchal Sarbajanin Jagadhatri Puja Photo Gallery',
         description:
-          'Photo archive collection of Madhyanchal Sarbajanin Jagadhatri Puja Samity in Chandannagar.',
+          'Photo archive collection of Madhyanchal Sarbajanin in Chandannagar.',
         url: 'https://www.madhyanchalsarbajanin.co.in/gallery',
       },
     ],

@@ -25,12 +25,12 @@ export function Header() {
 
   const navItems = [
     { label: 'Home', href: '/' },
-    { label: 'Schedule', href: '/schedule' },
     { label: 'History', href: '/puja-history' },
+    { label: 'Schedule', href: '/schedule' },
     { label: 'Gallery', href: '/gallery' },
-    { label: 'Advertise', href: '/advertise' },
+    //{ label: 'Advertise', href: '/advertise' },
     { label: 'Activities', href: '/activities' },
-    { label: 'Awards', href: '/awards' },
+    //{ label: 'Awards', href: '/awards' },
     { label: 'About Us', href: '/about-us' },
     { label: 'Contact', href: '/contact-us' },
   ];

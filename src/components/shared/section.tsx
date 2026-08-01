@@ -1,4 +1,5 @@
 import { HTMLAttributes, ReactNode } from 'react';
+import { AnimatedWrapper } from '@/components/shared/animated-wrapper';
 import { cn } from '@/lib/utils';
 
 export interface SectionProps extends HTMLAttributes<HTMLElement> {
@@ -33,7 +34,7 @@ export function Section({
 
       <div className={cn('mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 relative z-10', containerClassName)}>
         {(title || subtitle || badge) && (
-          <div className="mb-6 sm:mb-12">
+          <AnimatedWrapper direction="up" className="mb-6 sm:mb-12">
             {/* Mobile Header: Ultra-Sleek Native App Left-Bar Widget Header */}
             <div className="flex items-center justify-between border-l-2 border-amber-500 pl-3 py-0.5 sm:hidden">
               <div className="flex flex-col space-y-0.5">
@@ -79,7 +80,7 @@ export function Section({
                 </p>
               )}
             </div>
-          </div>
+          </AnimatedWrapper>
         )}
         {children}
       </div>

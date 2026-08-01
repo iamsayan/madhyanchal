@@ -71,7 +71,7 @@ export default function PujaHistoryPage() {
           'Comprehensive timeline account of Chandannagar Jagadhatri Puja, French colonial influence, iconography, Anandamath literary ties, and master light artisans.',
         publisher: {
           '@type': 'Organization',
-          name: 'Madhyanchal Sarbajanin Jagadhatri Puja Samity',
+          name: 'Madhyanchal Sarbajanin',
           url: 'https://www.madhyanchalsarbajanin.co.in',
         },
       },

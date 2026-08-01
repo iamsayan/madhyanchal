@@ -45,7 +45,7 @@ export const metadata: Metadata = {
     template: '%s | Madhyanchal Sarbajanin',
   },
   description:
-    'Official website of Madhyanchal Sarbajanin Jagadhatri Puja Samity, Chandannagar. Celebrating over 50 years of tradition, unity, and devotion.',
+    'Official website of Madhyanchal Sarbajanin, Chandannagar. Celebrating over 50 years of tradition, unity, and devotion.',
   keywords: [
     'Madhyanchal Sarbajanin',
     'Jagadhatri Puja',

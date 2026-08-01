@@ -27,7 +27,7 @@ import {
 export const metadata: Metadata = {
   title: 'Advertise with Us | Madhyanchal Sarbajanin Chandannagar',
   description:
-    'Partner with Madhyanchal Sarbajanin Jagadhatri Puja Samity in Chandannagar. Elevate your brand with 500,000+ footfall, prime Station Road location, and 60-day pre-event branding.',
+    'Partner with Madhyanchal Sarbajanin in Chandannagar. Elevate your brand with 500,000+ footfall, prime Station Road location, and 60-day pre-event branding.',
   keywords: [
     'advertise jagadhatri puja',
     'chandannagar puja sponsorship',
@@ -39,7 +39,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: 'Advertise with Us | Madhyanchal Sarbajanin Chandannagar',
     description:
-      'Partner with Madhyanchal Sarbajanin Jagadhatri Puja Samity to reach 500,000+ visitors on Chandannagar’s busiest festival corridor.',
+      'Partner with Madhyanchal Sarbajanin to reach 500,000+ visitors on Chandannagar’s busiest festival corridor.',
     url: '/advertise',
     type: 'website',
   },
@@ -74,7 +74,7 @@ export default function AdvertisePage() {
         name: 'Brand Sponsorship & Advertising - Madhyanchal Sarbajanin Jagadhatri Puja',
         provider: {
           '@type': 'Organization',
-          name: 'Madhyanchal Sarbajanin Jagadhatri Puja Samity',
+          name: 'Madhyanchal Sarbajanin',
           url: 'https://www.madhyanchalsarbajanin.co.in',
         },
         areaServed: 'Chandannagar, Hooghly, West Bengal',
@@ -169,7 +169,7 @@ export default function AdvertisePage() {
   return (
     <PageLayout
       title="Amplify Your Brand With Us"
-      subtitle="Since 1971, Madhyanchal Sarbajanin Jagadhatri Puja Samity has drawn massive audiences on Chandannagar’s Station Road. Partner with us to reach over 500,000+ engaged attendees."
+      subtitle="Since 1971, Madhyanchal Sarbajanin has drawn massive audiences on Chandannagar’s Station Road. Partner with us to reach over 500,000+ engaged attendees."
       badge={{
         text: 'Brand Sponsorship & Media Kit',
         icon: Sparkles,
@@ -268,7 +268,7 @@ export default function AdvertisePage() {
                   <span className="font-paytone text-xl text-amber-700 sm:text-3xl dark:text-amber-300">
                     500,000+
                   </span>
-                  <span className="mt-0.5 block text-[10px] font-bold text-slate-700 uppercase tracking-wider sm:text-xs dark:text-slate-300">
+                  <span className="mt-0.5 block text-[10px] font-bold tracking-wider text-slate-700 uppercase sm:text-xs dark:text-slate-300">
                     Annual Footfall
                   </span>
                 </div>
@@ -277,7 +277,7 @@ export default function AdvertisePage() {
                   <span className="font-paytone text-xl text-emerald-700 sm:text-3xl dark:text-emerald-300">
                     60 Days
                   </span>
-                  <span className="mt-0.5 block text-[10px] font-bold text-slate-700 uppercase tracking-wider sm:text-xs dark:text-slate-300">
+                  <span className="mt-0.5 block text-[10px] font-bold tracking-wider text-slate-700 uppercase sm:text-xs dark:text-slate-300">
                     Pre-Event Ads
                   </span>
                 </div>
@@ -297,14 +297,17 @@ export default function AdvertisePage() {
 
         {/* WHY CHOOSE US GRID (Compact 2-Column Mobile Grid) */}
         <div className="space-y-4 sm:space-y-8">
-          <div className="space-y-1 text-center sm:space-y-2">
-            <span className="text-[9.5px] font-black uppercase tracking-widest text-amber-600 sm:text-xs dark:text-amber-400">
+          <AnimatedWrapper
+            direction="up"
+            className="space-y-1 text-center sm:space-y-2"
+          >
+            <span className="text-[9.5px] font-black tracking-widest text-amber-600 uppercase sm:text-xs dark:text-amber-400">
               Strategic Advantage
             </span>
             <h2 className="font-paytone text-lg text-slate-900 sm:text-3xl dark:text-white">
               Why Partner With Madhyanchal?
             </h2>
-          </div>
+          </AnimatedWrapper>
 
           <div className="grid grid-cols-2 gap-2 sm:grid-cols-2 sm:gap-6 lg:grid-cols-3">
             {whyChooseUs.map((item, idx) => {
@@ -321,7 +324,7 @@ export default function AdvertisePage() {
                         <div className="flex h-7 w-7 items-center justify-center rounded-lg border border-amber-500/40 bg-amber-500/15 font-black text-amber-600 sm:h-10 sm:w-10 sm:rounded-xl dark:text-amber-400">
                           <Icon className="h-3.5 w-3.5 sm:h-5 sm:w-5" />
                         </div>
-                        <span className="truncate rounded-full border border-amber-500/30 bg-amber-500/15 px-1.5 py-0.5 text-[8.5px] font-black uppercase text-amber-700 sm:text-[10px] dark:text-amber-300">
+                        <span className="truncate rounded-full border border-amber-500/30 bg-amber-500/15 px-1.5 py-0.5 text-[8.5px] font-black text-amber-700 uppercase sm:text-[10px] dark:text-amber-300">
                           {item.metric}
                         </span>
                       </div>
@@ -341,14 +344,17 @@ export default function AdvertisePage() {
 
         {/* EXCLUSIVE SPONSORSHIP BENEFITS GRID (Compact 2-Column Mobile Grid) */}
         <div className="space-y-4 sm:space-y-8">
-          <div className="space-y-1 text-center sm:space-y-2">
-            <span className="text-[9.5px] font-black uppercase tracking-widest text-amber-600 sm:text-xs dark:text-amber-400">
+          <AnimatedWrapper
+            direction="up"
+            className="space-y-1 text-center sm:space-y-2"
+          >
+            <span className="text-[9.5px] font-black tracking-widest text-amber-600 uppercase sm:text-xs dark:text-amber-400">
               Placement & Visibility
             </span>
             <h2 className="font-paytone text-lg text-slate-900 sm:text-3xl dark:text-white">
               Exclusive Sponsorship Assets
             </h2>
-          </div>
+          </AnimatedWrapper>
 
           <div className="grid grid-cols-2 gap-2 sm:grid-cols-2 sm:gap-5 lg:grid-cols-4">
             {sponsorshipBenefits.map((benefit, idx) => {
@@ -383,7 +389,7 @@ export default function AdvertisePage() {
 
         {/* PAST ADVERTISERS & BRAND SHOWCASE (Horizontal Touch Carousel) */}
         <div className="space-y-4 sm:space-y-6">
-          <div className="space-y-1 text-center">
+          <AnimatedWrapper direction="up" className="space-y-1 text-center">
             <h3 className="font-paytone text-base text-slate-900 sm:text-xl dark:text-white">
               Previous Brand Showcase
             </h3>
@@ -391,7 +397,7 @@ export default function AdvertisePage() {
               Explore illuminated gates, hoardings, and wrapper branding from
               past editions.
             </p>
-          </div>
+          </AnimatedWrapper>
 
           <AdvertiserSlider slides={pastAdvertisers} />
         </div>
@@ -409,13 +415,12 @@ export default function AdvertisePage() {
                   Together
                 </h2>
                 <p className="text-xs text-slate-600 sm:text-sm dark:text-slate-300">
-                  Connect directly with our festival sponsorship desk to
-                  reserve premium hoardings, gate branding, or custom brand
-                  stalls.
+                  Connect directly with our festival sponsorship desk to reserve
+                  premium hoardings, gate branding, or custom brand stalls.
                 </p>
               </div>
 
-              <div className="grid grid-cols-1 items-stretch gap-6 md:grid-cols-2 sm:gap-8">
+              <div className="grid grid-cols-1 items-stretch gap-6 sm:gap-8 md:grid-cols-2">
                 {/* Left Column: Direct Contacts */}
                 <div className="flex flex-col justify-between space-y-4 rounded-xl border border-slate-200/90 bg-white/70 p-4 backdrop-blur-xl sm:rounded-2xl sm:p-6 dark:border-white/12 dark:bg-stone-900/70">
                   <h3 className="font-paytone flex items-center gap-2 text-base text-slate-900 sm:text-lg dark:text-white">

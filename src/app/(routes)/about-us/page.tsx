@@ -16,7 +16,7 @@ import {
 export const metadata: Metadata = {
   title: 'About Us | Madhyanchal Sarbajanin Chandannagar',
   description:
-    'Discover the heart of Madhyanchal Sarbajanin Jagadhatri Puja Samity, a beacon of cultural, sports, and social heritage since 1971 in Chandannagar.',
+    'Discover the heart of Madhyanchal Sarbajanin, a beacon of cultural, sports, and social heritage since 1971 in Chandannagar.',
   keywords: [
     'madhyanchal history',
     'jagadhatri puja samity chandannagar',
@@ -28,7 +28,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: 'About Us | Madhyanchal Sarbajanin Chandannagar',
     description:
-      'Discover the heart of Madhyanchal Sarbajanin Jagadhatri Puja Samity, promoting sports, culture, and community welfare since 1971.',
+      'Discover the heart of Madhyanchal Sarbajanin, promoting sports, culture, and community welfare since 1971.',
     url: '/about-us',
     type: 'website',
   },
@@ -94,7 +94,7 @@ export default function AboutUsPage() {
       },
       {
         '@type': 'Organization',
-        name: 'Madhyanchal Sarbajanin Jagadhatri Puja Samity',
+        name: 'Madhyanchal Sarbajanin',
         url: 'https://www.madhyanchalsarbajanin.co.in',
         foundingDate: '1971',
         description:
@@ -189,9 +189,9 @@ export default function AboutUsPage() {
               pride amidst West Bengal’s densely populated district of Hooghly
               and the recognized French Colony of Chandannagar, just one
               kilometer away from the railway station, is the renowned{' '}
-              <strong>Madhyanchal Sarbajanin Jagadhatri Puja Samity</strong>.
-              Since its inception in 1971, a remarkable {yearsActive} years ago,
-              the committee’s benevolent presence has been ever-expanding.
+              <strong>Madhyanchal Sarbajanin</strong>. Since its inception in
+              1971, a remarkable {yearsActive} years ago, the committee’s
+              benevolent presence has been ever-expanding.
             </p>
 
             <p className="text-justify">

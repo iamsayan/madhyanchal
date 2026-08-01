@@ -241,14 +241,14 @@ export default async function SchedulePage() {
 
         {/* DETAILED DAILY TIMINGS GRID */}
         <div className="space-y-4 sm:space-y-8">
-          <div className="space-y-1 text-center">
+          <AnimatedWrapper direction="up" className="space-y-1 text-center">
             <span className="text-[10px] font-black uppercase tracking-widest text-amber-600 sm:text-xs dark:text-amber-400">
               Hour-By-Hour Guide
             </span>
             <h2 className="font-paytone text-lg text-slate-900 sm:text-3xl dark:text-white">
               Daily Ritual & Program Breakdown
             </h2>
-          </div>
+          </AnimatedWrapper>
 
           <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-3 sm:gap-5">
             {DETAILED_DAILY_TIMINGS.map((daily, idx) => {

@@ -94,7 +94,7 @@ export default async function HomePage() {
       {
         '@type': 'Organization',
         '@id': 'https://www.madhyanchalsarbajanin.co.in/#organization',
-        name: 'Madhyanchal Sarbajanin Jagadhatri Puja Samity',
+        name: 'Madhyanchal Sarbajanin',
         url: 'https://www.madhyanchalsarbajanin.co.in',
         logo: 'https://www.madhyanchalsarbajanin.co.in/circle-logo.png',
         email: 'madhyanchalsarbajanin@gmail.com',
@@ -140,7 +140,7 @@ export default async function HomePage() {
           direction="up"
           className="relative z-10 mx-auto flex max-w-5xl flex-col items-center justify-center space-y-6 text-center sm:space-y-8"
         >
-          {/* Golden Jubilee Emblem Badge with Magic UI BorderBeam */}
+          {/* Golden Emblem Badge with Magic UI BorderBeam */}
           <div className="gold-glow relative inline-flex items-center gap-1.5 overflow-hidden rounded-full border border-amber-500/40 bg-amber-500/15 px-3 py-1 text-[10px] font-extrabold tracking-widest text-amber-800 uppercase backdrop-blur-xl sm:px-6 sm:py-2 sm:text-xs dark:text-amber-300">
             <BorderBeam
               size={120}

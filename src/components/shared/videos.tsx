@@ -13,29 +13,8 @@ interface VideosProps {
   items?: HomepageVideo[];
 }
 
-const DEFAULT_VIDEOS: HomepageVideo[] = [
-  {
-    video_id: 'Zq1Yn5D3vMo',
-    title:
-      'Chandannagar Jagadhatri Puja Light Tapestries & Nocturnal Procession Grandeur',
-  },
-  {
-    video_id: '8vK8v1gW0kM',
-    title:
-      'Madhyanchal Sarbajanin Pandal Architecture & 56th Jubilee Illumination',
-  },
-  {
-    video_id: 'Ld6V6W8Qx88',
-    title: 'World-Famous Moving Light Tableaux Shobhajatra Highlights',
-  },
-  {
-    video_id: 'Y3k9v8Qx88a',
-    title: 'Golden Jubilee Special Divine Cultural Celebrations & Rituals',
-  },
-];
-
 export function Videos({ items = [] }: VideosProps) {
-  const videoList = items && items.length > 0 ? items : DEFAULT_VIDEOS;
+  const videoList = items;
   const [activeIdx, setActiveIdx] = useState<number>(0);
 
   const activeVideo = videoList[activeIdx] || videoList[0];

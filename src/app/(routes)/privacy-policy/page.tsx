@@ -25,7 +25,7 @@ import {
 export const metadata: Metadata = {
   title: 'Privacy Policy | Madhyanchal Sarbajanin Chandannagar',
   description:
-    'Explore the privacy policy of Madhyanchal Sarbajanin Jagadhatri Puja Samity. Learn how we collect, protect, and safeguard your personal information and ensure data transparency.',
+    'Explore the privacy policy of Madhyanchal Sarbajanin. Learn how we collect, protect, and safeguard your personal information and ensure data transparency.',
   keywords: [
     'madhyanchal privacy policy',
     'madhyanchal sarbajanin privacy',
@@ -35,7 +35,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: 'Privacy Policy | Madhyanchal Sarbajanin Chandannagar',
     description:
-      'Detailed privacy policy outlining data collection, security measures, cookies, and user rights at Madhyanchal Sarbajanin Jagadhatri Puja Samity.',
+      'Detailed privacy policy outlining data collection, security measures, cookies, and user rights at Madhyanchal Sarbajanin.',
     url: '/privacy-policy',
     type: 'website',
   },
@@ -123,7 +123,7 @@ export default function PrivacyPolicyPage() {
   return (
     <PageLayout
       title="Privacy Policy"
-      subtitle="How Madhyanchal Sarbajanin Jagadhatri Puja Samity handles, protects, and respects your personal information and digital data."
+      subtitle="How Madhyanchal Sarbajanin handles, protects, and respects your personal information and digital data."
       badge={{
         text: 'DATA TRANSPARENCY & PROTECTION',
         icon: ShieldCheck,

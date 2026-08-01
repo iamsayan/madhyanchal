@@ -16,10 +16,10 @@ export function PwaInstallPrompt() {
   return (
     <pwa-install
       manifest-url="/manifest.webmanifest"
-      name="Madhyanchal Sarbajanin"
+      name="Madhyanchal"
       icon="/circle-logo.png"
-      description="Golden Jubilee Edition — Official Web App for Madhyanchal Sarbajanin Jagadhatri Puja Samity, Chandannagar."
-      install-description="Install our official Web App on your mobile device or desktop for quick access to Puja Schedules, Gallery, and Pushpanjali timings."
+      description="Official App for Madhyanchal Sarbajanin, Chandannagar."
+      install-description="Install our official App on your mobile device or desktop for quick access to Puja Schedules, Gallery, and Pushpanjali timings."
     />
   );
 }

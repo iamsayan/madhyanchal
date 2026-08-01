@@ -28,7 +28,7 @@ import {
 export const metadata: Metadata = {
   title: 'Terms & Conditions | Madhyanchal Sarbajanin Chandannagar',
   description:
-    'Explore the terms and conditions for Madhyanchal Sarbajanin Jagadhatri Puja Samity. Understand our website policies, user guidelines, and event rules to ensure a seamless experience.',
+    'Explore the terms and conditions for Madhyanchal Sarbajanin. Understand our website policies, user guidelines, and event rules to ensure a seamless experience.',
   keywords: [
     'madhyanchal terms conditions',
     'madhyanchal sarbajanin terms',
@@ -38,7 +38,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: 'Terms & Conditions | Madhyanchal Sarbajanin Chandannagar',
     description:
-      'Official terms and conditions for using the Madhyanchal Sarbajanin Jagadhatri Puja Samity website, digital services, and event participation.',
+      'Official terms and conditions for using the Madhyanchal Sarbajanin website, digital services, and event participation.',
     url: '/terms',
     type: 'website',
   },
@@ -63,7 +63,7 @@ export default function TermsPage() {
       title: '2. Website Content & Ownership',
       icon: FileText,
       content:
-        'All content featured on this platform—including but not limited to photography archives, digital designs, festival schedules, committee publications, lighting tableau media, logos, and written text—is the exclusive property of Madhyanchal Sarbajanin Jagadhatri Puja Samity. Unauthorized reproduction, distribution, scraping, or commercial exploitation is strictly prohibited without prior written consent.',
+        'All content featured on this platform—including but not limited to photography archives, digital designs, festival schedules, committee publications, lighting tableau media, logos, and written text—is the exclusive property of Madhyanchal Sarbajanin. Unauthorized reproduction, distribution, scraping, or commercial exploitation is strictly prohibited without prior written consent.',
     },
     {
       id: 'usage',
@@ -103,7 +103,7 @@ export default function TermsPage() {
       title: '7. Liability & Technical Disclaimer',
       icon: AlertTriangle,
       content:
-        'While we endeavor to keep festival information, schedules, and live updates precise, Madhyanchal Sarbajanin Jagadhatri Puja Samity provides website content on an "as is" basis without warranties of any kind. We shall not be held liable for any indirect or incidental damages resulting from site downtime or external network failures.',
+        'While we endeavor to keep festival information, schedules, and live updates precise, Madhyanchal Sarbajanin provides website content on an "as is" basis without warranties of any kind. We shall not be held liable for any indirect or incidental damages resulting from site downtime or external network failures.',
     },
     {
       id: 'privacy',
@@ -130,7 +130,7 @@ export default function TermsPage() {
       title: '9. Intellectual Property Rights',
       icon: Award,
       content:
-        'The trademarks, service marks, emblem, Golden Jubilee branding, and official titles of Madhyanchal Sarbajanin Jagadhatri Puja Samity are protected under Indian intellectual property laws. Unauthorized usage in external media or commercial banners is forbidden.',
+        'The trademarks, service marks, emblem, puja branding, and official titles of Madhyanchal Sarbajanin are protected under Indian intellectual property laws. Unauthorized usage in external media or commercial banners is forbidden.',
     },
     {
       id: 'governing-law',
@@ -153,7 +153,7 @@ export default function TermsPage() {
   return (
     <PageLayout
       title="Terms & Conditions"
-      subtitle="Guidelines and statutory terms governing website access, digital services, and event participation for Madhyanchal Sarbajanin Jagadhatri Puja Samity."
+      subtitle="Guidelines and statutory terms governing website access, digital services, and event participation for Madhyanchal Sarbajanin."
       badge={{
         text: 'OFFICIAL GOVERNANCE & POLICIES',
         icon: ShieldCheck,

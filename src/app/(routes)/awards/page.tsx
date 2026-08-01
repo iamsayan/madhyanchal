@@ -18,7 +18,7 @@ import {
 export const metadata: Metadata = {
   title: 'Our Awards & Accolades | Madhyanchal Sarbajanin Chandannagar',
   description:
-    'Explore the 45+ prestigious awards and recognitions earned by Madhyanchal Sarbajanin Jagadhatri Puja Samity in Chandannagar—from Best Road Lighting to Idol Mukhasree and Cultural Heritage.',
+    'Explore the 45+ prestigious awards and recognitions earned by Madhyanchal Sarbajanin in Chandannagar—from Best Road Lighting to Idol Mukhasree and Cultural Heritage.',
   keywords: [
     'madhyanchal awards',
     'jagadhatri puja awards chandannagar',
@@ -133,14 +133,14 @@ export default function AwardsPage() {
       <div className="space-y-8 sm:space-y-14">
         {/* 4 PILLARS OF EXCELLENCE (Compact 2-Column Mobile Grid) */}
         <div className="space-y-4 sm:space-y-6">
-          <div className="space-y-1 text-center">
+          <AnimatedWrapper direction="up" className="space-y-1 text-center">
             <span className="text-[9.5px] font-black tracking-widest text-amber-600 uppercase sm:text-xs dark:text-amber-400">
               Pillars of Excellence
             </span>
             <h2 className="font-paytone text-lg text-slate-900 sm:text-2xl dark:text-white">
               What We Are Honored For
             </h2>
-          </div>
+          </AnimatedWrapper>
 
           <div className="grid grid-cols-2 gap-2 sm:grid-cols-2 sm:gap-5 lg:grid-cols-4">
             {pillars.map((pillar, idx) => {
@@ -180,29 +180,29 @@ export default function AwardsPage() {
 
         {/* INTERACTIVE YEAR-WISE AWARDS SHOWCASE */}
         <div className="space-y-4 sm:space-y-6">
-          <div className="space-y-1 text-center">
+          <AnimatedWrapper direction="up" className="space-y-1 text-center">
             <h2 className="font-paytone text-lg text-slate-900 sm:text-3xl dark:text-white">
               Year-wise Accolades Archive
             </h2>
             <p className="text-xs text-slate-600 dark:text-slate-400">
               Filter through 45+ awards by year from 2016 to 2024.
             </p>
-          </div>
+          </AnimatedWrapper>
 
           <AwardsFilterView awards={awards} />
         </div>
 
         {/* PREVIOUS AWARDS PHOTO SHOWCASE (Horizontal Touch Carousel) */}
         <div className="space-y-4 pt-4 sm:space-y-6">
-          <div className="space-y-1 text-center">
+          <AnimatedWrapper direction="up" className="space-y-1 text-center">
             <h3 className="font-paytone text-base text-slate-900 sm:text-xl dark:text-white">
               Award Ceremonies Showcase
             </h3>
             <p className="text-xs text-slate-600 dark:text-slate-400">
-              Moments of triumph captured across grand award stages and trophy
-              presentations.
+              Moments of recognition captured across award functions over the
+              years.
             </p>
-          </div>
+          </AnimatedWrapper>
 
           <AdvertiserSlider slides={awardsSlides} />
         </div>

@@ -11,7 +11,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 
   return {
     title: `Membership ${year} | Madhyanchal Sarbajanin`,
-    description: `Membership Payment for Madhyanchal Sarbajanin Jagadhatri Puja Samity ${year}`,
+    description: `Membership Payment for Madhyanchal Sarbajanin ${year}`,
     robots: {
       index: false,
       follow: false,

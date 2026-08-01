@@ -1,5 +1,4 @@
-import type { Asset, Entity, SingletonEntity, TreeEntity } from '@/lib/cockpit';
-import { DrawingCompetitionForm } from '../components/features/drawing-competition-form';
+import type { Asset, Entity, SingletonEntity } from '@/lib/cockpit';
 
 export type ImagePreset =
   | 'thumbnail'
@@ -40,6 +39,14 @@ export type ImagePreset =
   | 'high_contrast'
   | 'blueprint'
   | 'embossed_art';
+
+export interface PageProps<
+  TParams = Record<string, string>,
+  TSearchParams = Record<string, string | string[]>,
+> {
+  params: Promise<TParams>;
+  searchParams: Promise<TSearchParams>;
+}
 
 export interface PaymentRecord extends Entity {
   amount: string;

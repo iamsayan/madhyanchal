@@ -55,16 +55,13 @@ export function ServicePaymentForm({ type, year }: ServicePaymentFormProps) {
     amount: '',
   });
 
-  const handleInputChange = useCallback(
-    (e: ChangeEvent<HTMLInputElement>) => {
-      const { name, value } = e.target;
-      setFormData((prev) => ({
-        ...prev,
-        [name]: value,
-      }));
-    },
-    []
-  );
+  const handleInputChange = useCallback((e: ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = e.target;
+    setFormData((prev) => ({
+      ...prev,
+      [name]: value,
+    }));
+  }, []);
 
   const quickAmounts = useMemo(
     () => [
@@ -121,7 +118,7 @@ export function ServicePaymentForm({ type, year }: ServicePaymentFormProps) {
         key: process.env.NEXT_PUBLIC_RAZORPAY_KEY_ID!,
         amount: amountInPaise.toString(),
         currency: 'INR',
-        name: 'Madhyanchal Sarbajanin Jagadhatri Puja Samity',
+        name: 'Madhyanchal Sarbajanin',
         description: `Payment of ₹${formData.amount} for ${formData.name}`,
         order_id: orderResponse.orderId,
         notes: {

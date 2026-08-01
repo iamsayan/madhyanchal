@@ -152,7 +152,7 @@ export function ServiceMembershipForm({
         key: process.env.NEXT_PUBLIC_RAZORPAY_KEY_ID!,
         amount: amountInPaise.toString(),
         currency: 'INR',
-        name: 'Madhyanchal Sarbajanin Jagadhatri Puja Samity',
+        name: 'Madhyanchal Sarbajanin',
         description: `Payment of ₹${formData.amount} for ${formData.name}`,
         order_id: orderResponse.orderId,
         notes: {

@@ -244,7 +244,7 @@ export function ContactForm() {
             disabled={isSubmitting}
             variant="primary"
             size="lg"
-            className="w-full rounded-full text-xs sm:text-sm font-bold min-h-[42px] cursor-pointer mt-2"
+            className="w-full rounded-full text-xs sm:text-sm font-bold min-h-[44px] cursor-pointer mt-2 active:scale-[0.98] transition-transform duration-150"
           >
             {isSubmitting ? (
               <>
