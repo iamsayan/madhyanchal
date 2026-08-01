@@ -2,7 +2,7 @@ import type { MetadataRoute } from 'next';
 
 export default function manifest(): MetadataRoute.Manifest {
   return {
-    name: 'Madhyanchal Sarbajanin Jagadhatri Puja',
+    name: 'Madhyanchal Sarbajanin',
     short_name: 'Madhyanchal',
     description:
       'Official Portal for Madhyanchal Sarbajanin, Station Road, Chandannagar.',
@@ -31,18 +31,6 @@ export default function manifest(): MetadataRoute.Manifest {
         sizes: '512x512',
         type: 'image/png',
         purpose: 'any',
-      },
-      {
-        src: '/icons/icon-192x192-maskable.png',
-        sizes: '192x192',
-        type: 'image/png',
-        purpose: 'maskable',
-      },
-      {
-        src: '/icons/icon-512x512-maskable.png',
-        sizes: '512x512',
-        type: 'image/png',
-        purpose: 'maskable',
       },
     ],
     shortcuts: [

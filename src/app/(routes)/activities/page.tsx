@@ -91,7 +91,7 @@ export default function ActivitiesPage() {
         { name: 'Gift Distribution & Dinner', path: '/lighting-tableau.png' },
         {
           name: 'Festive Joy with Children',
-          path: '/chandannagar-tableau.png',
+          path: '/kaporerpatty-jagadhatri-1970',
         },
       ],
     },
@@ -110,7 +110,10 @@ export default function ActivitiesPage() {
           name: 'R.N. Tagore Covid Vaccination Drive (520+ Served)',
           path: '/hero-pandal.png',
         },
-        { name: 'Medicine Distribution', path: '/chandannagar-tableau.png' },
+        {
+          name: 'Medicine Distribution',
+          path: '/kaporerpatty-jagadhatri-1970',
+        },
       ],
     },
     {
@@ -125,7 +128,7 @@ export default function ActivitiesPage() {
       slides: [
         {
           name: 'Annual Blood Donation Camp',
-          path: '/chandannagar-tableau.png',
+          path: '/kaporerpatty-jagadhatri-1970',
         },
         { name: 'Eye Donation Pledge & Drive', path: '/lighting-tableau.png' },
         { name: 'Community Volunteer Support', path: '/hero-pandal.png' },
@@ -144,7 +147,7 @@ export default function ActivitiesPage() {
         { name: 'Annual Children Art Competition', path: '/hero-pandal.png' },
         {
           name: 'Prize & Certificate Ceremony',
-          path: '/chandannagar-tableau.png',
+          path: '/kaporerpatty-jagadhatri-1970',
         },
         { name: 'Young Artists Showcase', path: '/lighting-tableau.png' },
       ],

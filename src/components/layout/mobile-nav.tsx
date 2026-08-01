@@ -119,7 +119,7 @@ export function MobileNavDock() {
   return (
     <>
       {/* Bottom Floating Navigation Dock (Safe-area inset compliant) */}
-      <div className="pointer-events-auto fixed inset-x-4 bottom-[calc(0.75rem+env(safe-area-inset-bottom,0px))] z-50 lg:hidden">
+      <div className="pointer-events-auto fixed inset-x-4 bottom-[max(0.75rem,env(safe-area-inset-bottom,0px))] z-50 lg:hidden">
         <nav
           style={{ viewTransitionName: 'mobile-nav-dock' }}
           className="mx-auto flex max-w-md items-center justify-around rounded-full border border-slate-200/90 bg-white/95 p-1.5 shadow-lg backdrop-blur-2xl dark:border-white/15 dark:bg-stone-950/95"
@@ -214,7 +214,7 @@ export function MobileNavDock() {
                 stiffness: 360,
                 mass: 0.8,
               }}
-              className="relative z-10 max-h-[85vh] w-full space-y-4 overflow-y-auto rounded-t-3xl border-t border-slate-200 bg-white/95 p-5 pb-[calc(5.5rem+env(safe-area-inset-bottom,0px))] shadow-2xl backdrop-blur-2xl dark:border-white/15 dark:bg-stone-950/95"
+              className="relative z-10 max-h-[85vh] w-full space-y-4 overflow-y-auto rounded-t-3xl border-t border-slate-200 bg-white/95 p-5 pb-[calc(5rem+max(0.75rem,env(safe-area-inset-bottom,0px)))] shadow-2xl backdrop-blur-2xl dark:border-white/15 dark:bg-stone-950/95"
             >
               {/* Sheet Handle Bar */}
               <div className="mx-auto mb-1 h-1.5 w-12 rounded-full bg-slate-300 dark:bg-slate-700" />

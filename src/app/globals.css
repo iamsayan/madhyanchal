@@ -445,4 +445,14 @@ lite-youtube img {
   border-radius: inherit !important;
 }
 
+/* Hide bprogress top bar on mobile (<sm) in favor of Native Bottom Toast */
+@media (max-width: 639px) {
+  #bprogress,
+  .bprogress,
+  [data-bprogress],
+  .bprogress-bar {
+    display: none !important;
+  }
+}
+
 

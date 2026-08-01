@@ -82,8 +82,14 @@ export function GallerySlider({
     [selectedIndex, totalSlides]
   );
 
-  // Keyboard controls for Lightbox
+  // Body Scroll Lock & Keyboard controls for Lightbox
   useEffect(() => {
+    if (selectedIndex !== null) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = '';
+    }
+
     const handleKeyDown = (e: KeyboardEvent) => {
       if (selectedIndex === null) return;
       if (e.key === 'Escape') closeLightbox();
@@ -92,7 +98,10 @@ export function GallerySlider({
     };
 
     window.addEventListener('keydown', handleKeyDown);
-    return () => window.removeEventListener('keydown', handleKeyDown);
+    return () => {
+      document.body.style.overflow = '';
+      window.removeEventListener('keydown', handleKeyDown);
+    };
   }, [selectedIndex, closeLightbox, nextImage, prevImage]);
 
   // Scroll active thumbnail into view inside Lightbox
@@ -371,7 +380,7 @@ export function GallerySlider({
                 exit={{ opacity: 0 }}
                 transition={{ duration: 0.25, ease: 'easeOut' }}
                 onClick={closeLightbox}
-                className="fixed inset-0 z-[99999] flex flex-col justify-between border-b border-stone-800/80 bg-stone-950/95 p-4 text-white backdrop-blur-2xl transition-all duration-300 sm:p-6"
+                className="fixed inset-0 z-[99999] flex flex-col justify-between bg-stone-950/95 text-white backdrop-blur-2xl transition-all duration-300 pt-[calc(1rem+env(safe-area-inset-top,0px))] pb-[calc(1rem+env(safe-area-inset-bottom,0px))] pl-[calc(1rem+env(safe-area-inset-left,0px))] pr-[calc(1rem+env(safe-area-inset-right,0px))] sm:pt-[calc(1.5rem+env(safe-area-inset-top,0px))] sm:pb-[calc(1.5rem+env(safe-area-inset-bottom,0px))] sm:px-6"
               >
                 {/* Top Toolbar */}
                 <motion.div

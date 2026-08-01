@@ -163,7 +163,7 @@ export default function AdvertisePage() {
   const pastAdvertisers = [
     { name: 'Illuminated Gate Branding', path: '/lighting-tableau.png' },
     { name: 'Station Road Hoardings', path: '/hero-pandal.png' },
-    { name: 'Pandal Wrapper Branding', path: '/chandannagar-tableau.png' },
+    { name: 'Pandal Wrapper Branding', path: '/kaporerpatty-jagadhatri-1970' },
   ];
 
   return (

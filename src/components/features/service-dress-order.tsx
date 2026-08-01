@@ -244,7 +244,7 @@ export function ServiceDressOrder({
     { name: 'Committee Dress Front', path: '/hero-pandal.png' },
     {
       name: 'Committee Dress Fabric Details',
-      path: '/chandannagar-tableau.png',
+      path: '/kaporerpatty-jagadhatri-1970',
     },
   ];
 

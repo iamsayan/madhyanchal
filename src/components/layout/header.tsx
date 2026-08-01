@@ -73,7 +73,7 @@ export function Header() {
           >
             <Image
               src="/logo.png"
-              alt="Madhyanchal Sarbajanin Jagadhatri Puja Logo"
+              alt="Madhyanchal Sarbajanin Logo"
               width={200}
               height={50}
               className={cn(

@@ -110,12 +110,12 @@ export default function AwardsPage() {
     { name: 'Sarbik Srestho Jagadhatri Somman 2023', path: '/hero-pandal.png' },
     {
       name: 'Idol Mukhasree 2nd Prize 2024',
-      path: '/chandannagar-tableau.png',
+      path: '/kaporerpatty-jagadhatri-1970',
     },
     { name: 'Alok Ananda ABP Ananda Award', path: '/lighting-tableau.png' },
     {
       name: 'Best Procession & Light Tableau',
-      path: '/chandannagar-tableau.png',
+      path: '/kaporerpatty-jagadhatri-1970',
     },
   ];
 
