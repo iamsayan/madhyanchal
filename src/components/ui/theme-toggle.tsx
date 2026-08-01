@@ -43,14 +43,29 @@ export function ThemeToggle({
         Math.max(y, window.innerHeight - y)
       );
 
+      document.documentElement.classList.add('theme-transitioning');
+
       const transition = (
         document as unknown as {
-          startViewTransition: (cb: () => void | Promise<void>) => { ready: Promise<void> };
+          startViewTransition: (cb: () => void | Promise<void>) => {
+            ready: Promise<void>;
+            finished?: Promise<void>;
+          };
         }
       ).startViewTransition(async () => {
         setTheme(newTheme);
         await new Promise((resolve) => setTimeout(resolve, 20));
       });
+
+      const cleanUp = () => {
+        document.documentElement.classList.remove('theme-transitioning');
+      };
+
+      if (transition.finished) {
+        transition.finished.then(cleanUp).catch(cleanUp);
+      } else {
+        setTimeout(cleanUp, 700);
+      }
 
       transition.ready.then(() => {
         const clipPath = [
@@ -58,7 +73,7 @@ export function ThemeToggle({
           `circle(${endRadius}px at ${x}px ${y}px)`,
         ];
 
-        document.documentElement.animate(
+        const anim = document.documentElement.animate(
           {
             clipPath: clipPath,
           },
@@ -68,6 +83,8 @@ export function ThemeToggle({
             pseudoElement: '::view-transition-new(root)',
           }
         );
+
+        anim.onfinish = cleanUp;
       });
     } else {
       setTheme(newTheme);

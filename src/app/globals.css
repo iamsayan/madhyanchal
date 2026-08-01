@@ -231,16 +231,17 @@ body {
 /* ULTRA-LUXURY NATIVE APP VIEW TRANSITIONS SPECIFICATION */
 :root,
 ::view-transition {
-  --duration-page-exit: 150ms;
-  --duration-page-enter: 220ms;
+  --duration-page-exit: 200ms;
+  --duration-page-enter: 320ms;
   --ease-apple-spring: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-smooth-out: cubic-bezier(0.22, 1, 0.36, 1);
 }
 
 ::view-transition-old(page),
 ::view-transition-new(page) {
   backface-visibility: hidden;
   transform-style: preserve-3d;
-  will-change: transform, opacity;
+  will-change: transform, opacity, filter;
   mix-blend-mode: normal !important;
 }
 
@@ -250,15 +251,54 @@ body {
   animation: none !important;
 }
 
-/* Forward Navigation: Old page recedes (1 -> 0.985), New page arrives from front (1.015 -> 1) */
+/* DEFAULT PAGE VIEW TRANSITION (Applies to all route navigations) */
+::view-transition-old(page) {
+  animation: var(--duration-page-exit) var(--ease-smooth-out) both page-exit-smooth;
+}
+
+::view-transition-new(page) {
+  animation: var(--duration-page-enter) var(--ease-apple-spring) both page-enter-smooth;
+}
+
+/* Default Page Exit: Soft fade out with subtle depth scale (No vertical up/down movement) */
+@keyframes page-exit-smooth {
+  0% {
+    transform: scale(1);
+    opacity: 1;
+    filter: blur(0px);
+  }
+  100% {
+    transform: scale(0.99);
+    opacity: 0;
+    filter: blur(2px);
+  }
+}
+
+/* Default Page Enter: Soft fade in with subtle depth scale (No vertical up/down movement) */
+@keyframes page-enter-smooth {
+  0% {
+    transform: scale(0.995);
+    opacity: 0;
+    filter: blur(3px);
+  }
+  100% {
+    transform: scale(1);
+    opacity: 1;
+    filter: blur(0px);
+  }
+}
+
+/* Directional Forward Page Exit & Enter Keyframes (No vertical shifting) */
 @keyframes native-page-exit-forward {
   0% {
     transform: scale(1);
     opacity: 1;
+    filter: blur(0px);
   }
   100% {
     transform: scale(0.985);
     opacity: 0;
+    filter: blur(2px);
   }
 }
 
@@ -266,22 +306,26 @@ body {
   0% {
     transform: scale(1.015);
     opacity: 0;
+    filter: blur(3px);
   }
   100% {
     transform: scale(1);
     opacity: 1;
+    filter: blur(0px);
   }
 }
 
-/* Backward Navigation: Old page expands (1 -> 1.015), Previous page returns (0.985 -> 1) */
+/* Directional Back Page Exit & Enter Keyframes (No vertical shifting) */
 @keyframes native-page-exit-back {
   0% {
     transform: scale(1);
     opacity: 1;
+    filter: blur(0px);
   }
   100% {
     transform: scale(1.015);
     opacity: 0;
+    filter: blur(2px);
   }
 }
 
@@ -289,17 +333,19 @@ body {
   0% {
     transform: scale(0.985);
     opacity: 0;
+    filter: blur(3px);
   }
   100% {
     transform: scale(1);
     opacity: 1;
+    filter: blur(0px);
   }
 }
 
 /* FORWARD NATIVE APP TRANSITION (Page-to-Page Forward Navigation) */
 :active-view-transition-type(nav-forward)::view-transition-old(page),
 html:active-view-transition-type(nav-forward) ::view-transition-old(page) {
-  animation: var(--duration-page-exit) var(--ease-apple-spring) both native-page-exit-forward;
+  animation: var(--duration-page-exit) var(--ease-smooth-out) both native-page-exit-forward;
 }
 
 :active-view-transition-type(nav-forward)::view-transition-new(page),
@@ -310,7 +356,7 @@ html:active-view-transition-type(nav-forward) ::view-transition-new(page) {
 /* BACKWARD NATIVE APP TRANSITION (Page-to-Page Backward Navigation) */
 :active-view-transition-type(nav-back)::view-transition-old(page),
 html:active-view-transition-type(nav-back) ::view-transition-old(page) {
-  animation: var(--duration-page-exit) var(--ease-apple-spring) both native-page-exit-back;
+  animation: var(--duration-page-exit) var(--ease-smooth-out) both native-page-exit-back;
 }
 
 :active-view-transition-type(nav-back)::view-transition-new(page),
@@ -357,6 +403,20 @@ html:active-view-transition-type(nav-back) ::view-transition-new(page) {
   border-radius: 9999px !important;
   clip-path: inset(0 round 9999px) !important;
   overflow: hidden !important;
+  animation: none !important;
+  mix-blend-mode: normal !important;
+}
+
+/* Disable standalone view-transition names during theme toggle so Header & Mobile Nav are captured inside root snapshot */
+html.theme-transitioning header,
+html.theme-transitioning nav,
+html.theme-transitioning [style*="view-transition-name"],
+html.theme-transitioning [style*="viewTransitionName"] {
+  view-transition-name: none !important;
+}
+
+html.theme-transitioning ::view-transition-old(root),
+html.theme-transitioning ::view-transition-new(root) {
   animation: none !important;
   mix-blend-mode: normal !important;
 }

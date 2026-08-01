@@ -261,6 +261,7 @@ export default function PujaHistoryPage() {
                         src={chapter.image}
                         alt={chapter.imageCaption || chapter.title}
                         fill
+                        sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
                         className="object-cover object-center brightness-[0.92] contrast-[1.05] filter transition-transform duration-700 ease-out group-hover/img:scale-105"
                       />
                       <div className="absolute inset-0 bg-gradient-to-t from-slate-950/85 via-slate-950/20 to-transparent" />
