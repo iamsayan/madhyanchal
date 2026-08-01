@@ -61,32 +61,32 @@ export function MobileNavDock() {
       label: 'Puja History',
       href: '/puja-history',
       icon: History,
-      desc: 'Golden Jubilee Heritage',
+      desc: 'Heritage Since 1971',
     },
-    {
-      label: 'Drawing Competition',
-      href: '/durgapuja/drawing-competition',
-      icon: Sparkles,
-      desc: 'Kids & Open Contest',
-    },
-    {
-      label: 'Durga Puja',
-      href: '/durgapuja',
-      icon: Calendar,
-      desc: 'Celebration Portal',
-    },
-    {
-      label: 'Social Activities',
-      href: '/activities',
-      icon: Sparkles,
-      desc: 'Community Service',
-    },
-    {
-      label: 'Advertise with Us',
-      href: '/advertise',
-      icon: Megaphone,
-      desc: 'Sponsorship & Souvenir',
-    },
+    // {
+    //   label: 'Drawing Competition',
+    //   href: '/durgapuja/drawing-competition',
+    //   icon: Sparkles,
+    //   desc: 'Kids & Open Contest',
+    // },
+    // {
+    //   label: 'Durga Puja',
+    //   href: '/durgapuja',
+    //   icon: Calendar,
+    //   desc: 'Celebration Portal',
+    // },
+    // {
+    //   label: 'Social Activities',
+    //   href: '/activities',
+    //   icon: Sparkles,
+    //   desc: 'Community Service',
+    // },
+    // {
+    //   label: 'Advertise with Us',
+    //   href: '/advertise',
+    //   icon: Megaphone,
+    //   desc: 'Sponsorship & Souvenir',
+    // },
     {
       label: 'About Committee',
       href: '/about-us',
@@ -210,7 +210,7 @@ export function MobileNavDock() {
                     Explore Madhyanchal
                   </h3>
                   <p className="text-xs text-slate-500 dark:text-slate-400">
-                    Golden Jubilee Edition
+                    Official App
                   </p>
                 </div>
                 <button

@@ -5,7 +5,7 @@ export default function manifest(): MetadataRoute.Manifest {
     name: 'Madhyanchal Sarbajanin Jagadhatri Puja',
     short_name: 'Madhyanchal',
     description:
-      'Golden Jubilee Edition — Official Portal for Madhyanchal Sarbajanin, Station Road, Chandannagar.',
+      'Official Portal for Madhyanchal Sarbajanin, Station Road, Chandannagar.',
     start_url: '/',
     scope: '/',
     display: 'standalone',
@@ -54,14 +54,14 @@ export default function manifest(): MetadataRoute.Manifest {
         url: '/gallery',
         icons: [{ src: '/circle-logo.png', sizes: '192x192' }],
       },
-      {
-        name: 'Drawing Competition',
-        short_name: 'Contest',
-        description:
-          'View youth drawing competition directory and participants',
-        url: '/durgapuja/drawing-competition',
-        icons: [{ src: '/circle-logo.png', sizes: '192x192' }],
-      },
+      // {
+      //   name: 'Drawing Competition',
+      //   short_name: 'Contest',
+      //   description:
+      //     'View youth drawing competition directory and participants',
+      //   url: '/durgapuja/drawing-competition',
+      //   icons: [{ src: '/circle-logo.png', sizes: '192x192' }],
+      // },
     ],
   };
 }
