@@ -70,8 +70,8 @@ export function PageLayout({
 
       {/* HERO HEADER BANNER (Standardized Mobile-First Spacing) */}
       <section className="relative overflow-hidden border-b border-amber-500/20 bg-amber-50/60 pt-20 pb-5 transition-colors duration-500 sm:pt-32 sm:pb-10 dark:bg-stone-950">
-        <div className="absolute top-0 left-1/2 h-px w-3/4 max-w-5xl -translate-x-1/2 bg-gradient-to-r from-transparent via-amber-500/50 to-transparent" />
-        <div className="pointer-events-none absolute -top-24 left-1/2 h-[250px] w-[500px] -translate-x-1/2 rounded-full bg-amber-500/10 blur-[120px] sm:h-[300px] sm:w-[600px]" />
+        {/* <div className="absolute top-0 left-1/2 h-px w-3/4 max-w-5xl -translate-x-1/2 bg-gradient-to-r from-transparent via-amber-500/50 to-transparent" />
+        <div className="pointer-events-none absolute -top-24 left-1/2 h-[250px] w-[500px] -translate-x-1/2 rounded-full bg-amber-500/10 blur-[120px] sm:h-[300px] sm:w-[600px]" /> */}
 
         <div className="relative z-10 mx-auto max-w-6xl px-3.5 sm:px-6 lg:px-8">
           <AnimatedWrapper
