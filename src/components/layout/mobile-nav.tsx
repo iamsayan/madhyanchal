@@ -68,14 +68,13 @@ export function MobileNavDock() {
       icon: Palette,
     },
     { label: 'Schedule', href: '/durgapuja#schedule', icon: Calendar },
-    { label: 'Main Site', href: '/', icon: ArrowLeft },
   ];
 
   const primaryTabs = isDurgaPuja ? durgaPujaPrimaryTabs : mainPrimaryTabs;
 
   const mainExplorePages = [
     {
-      label: 'Durga Puja Portal',
+      label: 'Durga Puja',
       href: '/durgapuja',
       icon: Flame,
       desc: 'Rituals, Drawing Contest & Events',
@@ -110,7 +109,7 @@ export function MobileNavDock() {
 
   const durgaPujaExplorePages = [
     {
-      label: 'Durga Puja Home',
+      label: 'Home',
       href: '/durgapuja',
       icon: Flame,
       desc: 'Festive Celebration Landing',
@@ -142,9 +141,7 @@ export function MobileNavDock() {
     },
   ];
 
-  const explorePages = isDurgaPuja
-    ? durgaPujaExplorePages
-    : mainExplorePages;
+  const explorePages = isDurgaPuja ? durgaPujaExplorePages : mainExplorePages;
 
   const isMoreActive =
     moreOpen ||
@@ -264,7 +261,9 @@ export function MobileNavDock() {
               <div className="flex items-center justify-between border-b border-slate-200/80 pb-3 dark:border-white/10">
                 <div>
                   <h3 className="font-paytone text-lg text-slate-900 dark:text-white">
-                    {isDurgaPuja ? 'Durga Puja Navigation' : 'Explore Madhyanchal'}
+                    {isDurgaPuja
+                      ? 'Durga Puja Navigation'
+                      : 'Explore Madhyanchal'}
                   </h3>
                   <p className="text-xs text-slate-500 dark:text-slate-400">
                     {isDurgaPuja
@@ -282,7 +281,7 @@ export function MobileNavDock() {
               </div>
 
               {/* SAVED MEMBERSHIPS ON THIS DEVICE SECTION */}
-              {savedMembers.length > 0 && (
+              {!isDurgaPuja && savedMembers.length > 0 && (
                 <div className="space-y-2 rounded-2xl border border-amber-500/30 bg-gradient-to-r from-amber-500/10 via-amber-500/5 to-amber-500/10 p-3">
                   <div className="flex items-center gap-1.5">
                     <UserCheck className="h-4 w-4 text-amber-600 dark:text-amber-400" />
@@ -382,7 +381,7 @@ export function MobileNavDock() {
                           <div className="flex items-center gap-1.5 text-xs font-bold text-slate-900 dark:text-white">
                             <span>{item.label}</span>
                             {isHighlighted && (
-                              <span className="rounded-full bg-amber-500 px-1.5 py-0.2 text-[9px] font-black text-slate-950 uppercase tracking-wider">
+                              <span className="py-0.2 rounded-full bg-amber-500 px-1.5 text-[9px] font-black tracking-wider text-slate-950 uppercase">
                                 Featured
                               </span>
                             )}

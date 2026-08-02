@@ -176,7 +176,7 @@ export function Header() {
         )}
       >
         {/* Left: (< Logo) Back Button & Brand Logo */}
-        <div className="flex items-center gap-2">
+        <div className="flex items-center gap-2 shrink-0">
           {isDurgaPuja && (
             <Link
               href="/"
@@ -205,7 +205,7 @@ export function Header() {
           </Link>
         </div>
 
-        {/* Right: 3 Distinct Colored Action Buttons */}
+        {/* Right: 3 Distinct Action Buttons (Map, Schedule, Theme) */}
         <div className="flex items-center gap-2">
           <a
             href="https://maps.app.goo.gl/xY6cx8Arcy6ayLYq9"
