@@ -32,9 +32,6 @@ const paytoneOne = Paytone_One({
   variable: '--font-paytone',
 });
 
-const siteUrl =
-  process.env.NEXT_PUBLIC_SITE_URL || 'https://madhyanchalsarbajanin.co.in';
-
 export const viewport: Viewport = {
   themeColor: '#f59e0b',
   width: 'device-width',
@@ -137,7 +134,7 @@ export default function RootLayout({ children }: { children: ReactNode }) {
           <GoogleTagManager
             gtmId={process.env.NEXT_PUBLIC_GA4_ID!}
             dataLayer={{
-              cookie_prefix: 'MsjpsGtag',
+              cookie_prefix: 'MsGtag',
               cookie_domain: process.env.NEXT_PUBLIC_SITE_URL!,
               cookie_flags: 'samesite=none;secure',
               allow_google_signals: true,
