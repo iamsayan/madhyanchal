@@ -70,23 +70,27 @@ export function PageTransition({ children }: PageTransitionProps) {
 
   const direction = state.direction;
 
+  // Ultra-fluid iOS native app motion variants (subtle depth scale + gentle 18px slide)
   const variants = {
     initial: (dir: 'forward' | 'back') => ({
       opacity: 0,
-      x: dir === 'forward' ? 32 : -32,
+      x: dir === 'forward' ? 18 : -18,
+      scale: 0.992,
     }),
     animate: {
       opacity: 1,
       x: 0,
+      scale: 1,
     },
     exit: (dir: 'forward' | 'back') => ({
       opacity: 0,
-      x: dir === 'forward' ? -32 : 32,
+      x: dir === 'forward' ? -18 : 18,
+      scale: 0.992,
     }),
   };
 
   return (
-    <AnimatePresence mode="wait" initial={false} custom={direction}>
+    <AnimatePresence mode="popLayout" initial={false} custom={direction}>
       <motion.div
         key={pathname}
         custom={direction}
@@ -94,9 +98,10 @@ export function PageTransition({ children }: PageTransitionProps) {
         initial="initial"
         animate="animate"
         exit="exit"
+        style={{ willChange: 'transform, opacity' }}
         transition={{
-          duration: 0.24,
-          ease: [0.25, 0.1, 0.25, 1.0], // iOS native spring curve
+          duration: 0.32,
+          ease: [0.16, 1, 0.3, 1], // Ultra-luxury Apple iOS spring curve
         }}
         className="w-full flex-1"
       >
