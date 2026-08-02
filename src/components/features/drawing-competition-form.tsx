@@ -557,7 +557,7 @@ export function DrawingCompetitionForm() {
           </li>
         </ul>
 
-        <div className="mt-4 flex justify-end border-t border-slate-200/60 pt-2 dark:border-white/10">
+        {/* <div className="mt-4 flex justify-end border-t border-slate-200/60 pt-2 dark:border-white/10">
           <Link
             href="/durgapuja/drawing-competition/list"
             className="inline-flex items-center gap-1 text-xs font-bold text-amber-600 hover:underline dark:text-amber-400"
@@ -565,7 +565,7 @@ export function DrawingCompetitionForm() {
             View Registered Participants List{' '}
             <ChevronRight className="h-3.5 w-3.5" />
           </Link>
-        </div>
+        </div> */}
       </div>
     </div>
   );

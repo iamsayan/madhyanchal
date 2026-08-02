@@ -57,17 +57,16 @@ export function MobileNavDock() {
     { label: 'Home', href: '/', icon: Home },
     { label: 'Schedule', href: '/schedule', icon: Calendar },
     { label: 'Gallery', href: '/gallery', icon: ImageIcon },
-    { label: 'Awards', href: '/awards', icon: Award },
+    { label: 'Durga Puja', href: '/durgapuja', icon: Flame },
   ];
 
   const durgaPujaPrimaryTabs = [
-    { label: 'Durga Puja', href: '/durgapuja', icon: Flame },
+    { label: 'Home', href: '/durgapuja', icon: Flame },
     {
       label: 'Drawing',
       href: '/durgapuja/drawing-competition',
       icon: Palette,
     },
-    { label: 'Schedule', href: '/durgapuja#schedule', icon: Calendar },
   ];
 
   const primaryTabs = isDurgaPuja ? durgaPujaPrimaryTabs : mainPrimaryTabs;
@@ -79,6 +78,12 @@ export function MobileNavDock() {
       icon: Flame,
       desc: 'Rituals, Drawing Contest & Events',
       highlighted: true,
+    },
+    {
+      label: 'Awards & Honors',
+      href: '/awards',
+      icon: Award,
+      desc: 'Recognitions & Trophies',
     },
     {
       label: 'Puja History',
@@ -108,29 +113,29 @@ export function MobileNavDock() {
   ];
 
   const durgaPujaExplorePages = [
+    // {
+    //   label: 'Youth Drawing Contest',
+    //   href: '/durgapuja/drawing-competition',
+    //   icon: Palette,
+    //   desc: 'Sit & Draw Registration',
+    // },
+    // {
+    //   label: 'Participants List',
+    //   href: '/durgapuja/drawing-competition/list',
+    //   icon: Sparkles,
+    //   desc: 'Confirmed Contestants',
+    // },
     {
-      label: 'Home',
-      href: '/durgapuja',
-      icon: Flame,
-      desc: 'Festive Celebration Landing',
+      label: 'Contact Us',
+      href: '/contact-us',
+      icon: Phone,
+      desc: 'Get in Touch',
     },
     {
-      label: 'Youth Drawing Contest',
-      href: '/durgapuja/drawing-competition',
-      icon: Palette,
-      desc: 'Sit & Draw Registration',
-    },
-    {
-      label: 'Participants List',
-      href: '/durgapuja/drawing-competition/list',
-      icon: Sparkles,
-      desc: 'Confirmed Contestants',
-    },
-    {
-      label: 'Main Website Home',
+      label: 'Main Home',
       href: '/',
       icon: ArrowLeft,
-      desc: 'Return to Jagadhatri Puja Site',
+      desc: 'Return to Jagadhatri Puja',
     },
     {
       label: 'Puja Location',
@@ -143,21 +148,26 @@ export function MobileNavDock() {
 
   const explorePages = isDurgaPuja ? durgaPujaExplorePages : mainExplorePages;
 
+  const isPrimaryActive = primaryTabs.some((tab) => tab.href === pathname);
+
   const isMoreActive =
     moreOpen ||
-    explorePages.some(
-      (page) => !page.isExternal && pathname.startsWith(page.href)
-    ) ||
-    !primaryTabs.some((tab) => tab.href === pathname);
+    (!isPrimaryActive &&
+      explorePages.some(
+        (page) =>
+          !page.isExternal &&
+          page.href !== '/' &&
+          (pathname === page.href || pathname.startsWith(page.href + '/'))
+      ));
 
   return (
     <>
       {/* Bottom Floating Navigation Dock (Safe-area inset compliant) */}
-      <div className="pointer-events-auto fixed inset-x-4 bottom-[max(0.75rem,env(safe-area-inset-bottom,0px))] z-50 lg:hidden">
+      <div className="pointer-events-auto fixed inset-x-0 bottom-[max(0.75rem,env(safe-area-inset-bottom,0px))] z-50 flex justify-center px-4 lg:hidden">
         <nav
           style={{ viewTransitionName: 'mobile-nav-dock' }}
           className={cn(
-            'mx-auto flex max-w-md items-center justify-around rounded-full p-1.5 shadow-lg backdrop-blur-2xl transition-colors duration-300',
+            'flex w-fit max-w-[calc(100vw-2rem)] items-center justify-center gap-1 rounded-full p-1.5 shadow-lg backdrop-blur-2xl transition-all duration-300 sm:gap-1.5',
             isDurgaPuja
               ? 'border border-amber-500/40 bg-white/95 dark:border-white/15 dark:bg-stone-950/95'
               : 'border border-slate-200/90 bg-white/95 dark:border-white/15 dark:bg-stone-950/95'
@@ -184,14 +194,14 @@ export function MobileNavDock() {
                 }
                 transitionTypes={isBack ? ['nav-back'] : ['nav-forward']}
                 className={cn(
-                  'flex min-h-[44px] min-w-[44px] flex-col items-center justify-center rounded-full px-3.5 py-1 transition-transform duration-100 outline-none select-none [webkit-tap-highlight-color:transparent] focus:outline-none focus-visible:outline-none active:scale-95',
+                  'flex min-h-[44px] min-w-[44px] flex-col items-center justify-center rounded-full px-3 py-1 transition-transform duration-100 outline-none select-none [webkit-tap-highlight-color:transparent] focus:outline-none focus-visible:outline-none active:scale-95',
                   isActive
                     ? 'bg-amber-500 font-black text-slate-950'
                     : 'text-slate-700 hover:text-amber-600 dark:text-slate-300 dark:hover:text-amber-400'
                 )}
               >
                 <Icon className="h-4.5 w-4.5" />
-                <span className="mt-0.5 text-[10px] font-bold tracking-tight">
+                <span className="mt-0.5 text-[10px] font-bold tracking-tight whitespace-nowrap">
                   {item.label}
                 </span>
               </Link>
@@ -210,7 +220,7 @@ export function MobileNavDock() {
               });
             }}
             className={cn(
-              'relative flex min-h-[44px] min-w-[44px] cursor-pointer flex-col items-center justify-center rounded-full px-3.5 py-1 transition-transform duration-100 outline-none select-none [webkit-tap-highlight-color:transparent] focus:outline-none focus-visible:outline-none active:scale-95',
+              'relative flex min-h-[44px] min-w-[44px] cursor-pointer flex-col items-center justify-center rounded-full px-3 py-1 transition-transform duration-100 outline-none select-none [webkit-tap-highlight-color:transparent] focus:outline-none focus-visible:outline-none active:scale-95',
               isMoreActive
                 ? 'bg-amber-500 font-black text-slate-950'
                 : 'text-slate-700 hover:text-amber-600 dark:text-slate-300 dark:hover:text-amber-400'
