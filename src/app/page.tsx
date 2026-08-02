@@ -194,7 +194,6 @@ export default async function HomePage() {
             >
               <Link
                 href="/puja-history"
-                transitionTypes={['nav-forward']}
                 className="flex items-center justify-center gap-1.5 whitespace-nowrap sm:gap-2"
               >
                 <BorderBeam
@@ -295,7 +294,6 @@ export default async function HomePage() {
                   >
                     <Link
                       href="/gallery"
-                      transitionTypes={['nav-forward']}
                       className="gap-1.5 sm:gap-2"
                     >
                       Explore Photo Gallery{' '}

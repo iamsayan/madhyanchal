@@ -1,6 +1,7 @@
 'use client';
 
-import { useState, ViewTransition } from 'react';
+import { useState } from 'react';
+import { motion } from 'motion/react';
 
 
 import Image from 'next/image';
@@ -170,14 +171,13 @@ export function FestivalScheduleShowcase({
           </div>
         </div>
 
-        {/* 3. FLAT NATIVE APP ACTIVE DAY HIGHLIGHT CARD (With React 19 ViewTransition Crossfade) */}
+        {/* 3. FLAT NATIVE APP ACTIVE DAY HIGHLIGHT CARD */}
         {activeEvent && (
-          <ViewTransition
+          <motion.div
             key={activeIdx}
-            name="puja-day-card"
-            share="auto"
-            enter="auto"
-            default="none"
+            initial={{ opacity: 0, y: 6 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.2 }}
           >
             <div className="mt-3 flex flex-col gap-2 rounded-2xl border border-amber-500/30 bg-gradient-to-br from-amber-500/10 via-amber-500/5 to-transparent p-3.5 shadow-none backdrop-blur-md transition-all duration-300 sm:p-5 dark:border-white/12 dark:bg-stone-950/60">
               {/* Header Badge & Title */}
@@ -207,7 +207,7 @@ export function FestivalScheduleShowcase({
                   : activeEvent.information}
               </p>
             </div>
-          </ViewTransition>
+          </motion.div>
         )}
       </div>
     </div>

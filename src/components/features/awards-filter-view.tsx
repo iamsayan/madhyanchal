@@ -1,6 +1,7 @@
 'use client';
 
-import { useMemo, useState, ViewTransition } from 'react';
+import { useMemo, useState } from 'react';
+import { motion } from 'motion/react';
 
 
 import { BorderBeam } from '@/components/ui/border-beam';
@@ -143,13 +144,12 @@ export function AwardsFilterView({ awards }: AwardsFilterViewProps) {
         </span>
       </div>
 
-      {/* COMPACT 2-COLUMN MOBILE AWARDS GRID WITH VIEW TRANSITION */}
-      <ViewTransition
+      {/* COMPACT 2-COLUMN MOBILE AWARDS GRID */}
+      <motion.div
         key={selectedYear}
-        name="awards-grid"
-        share="auto"
-        enter="auto"
-        default="none"
+        initial={{ opacity: 0, y: 6 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.2 }}
       >
         <div className="grid grid-cols-2 gap-2.5 sm:grid-cols-2 sm:gap-5 lg:grid-cols-3 xl:grid-cols-4">
           {filteredAwards.map((item, index) => {
@@ -215,7 +215,7 @@ export function AwardsFilterView({ awards }: AwardsFilterViewProps) {
             );
           })}
         </div>
-      </ViewTransition>
+      </motion.div>
     </div>
   );
 }

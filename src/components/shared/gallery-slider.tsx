@@ -1,6 +1,6 @@
 'use client';
 
-import { MouseEvent, useCallback, useEffect, useRef, useState, ViewTransition } from 'react';
+import { MouseEvent, useCallback, useEffect, useRef, useState } from 'react';
 
 import { createPortal } from 'react-dom';
 import { motion, AnimatePresence } from 'motion/react';
@@ -139,9 +139,6 @@ export function GallerySlider({
                 onClick={() => openLightbox(idx)}
                 className="group/item relative aspect-[4/3] w-[82vw] shrink-0 cursor-pointer snap-center overflow-hidden rounded-2xl border border-slate-200/90 bg-slate-900 transition-transform active:scale-[0.98] sm:w-[45vw] md:w-[30vw] dark:border-white/10"
               >
-                <ViewTransition
-                  name={`gallery-carousel-img-${asset._id || 'img'}-${idx}`}
-                >
                   <CockpitImage
                     asset={asset}
                     preset="thumbnail"
@@ -150,7 +147,6 @@ export function GallerySlider({
                     containerClassName="absolute inset-0 size-full"
                     className="object-cover transition-transform duration-700 group-hover/item:scale-105"
                   />
-                </ViewTransition>
 
                 {/* Gradient Overlay & Metadata */}
                 <div className="absolute inset-0 z-10 flex flex-col justify-between bg-gradient-to-t from-slate-950/80 via-slate-950/10 to-transparent p-3.5">
@@ -214,9 +210,6 @@ export function GallerySlider({
                     : 'aspect-[4/3]'
                 }`}
               >
-                <ViewTransition
-                  name={`gallery-grid-img-${asset._id || 'img'}-${idx}`}
-                >
                   <CockpitImage
                     asset={asset}
                     preset="thumbnail"
@@ -229,7 +222,6 @@ export function GallerySlider({
                     containerClassName="absolute inset-0 size-full"
                     className="object-cover transition-transform duration-700 group-hover:scale-105"
                   />
-                </ViewTransition>
 
                 {/* Top Featured Pill Badge */}
                 {isFeatured && (
@@ -274,9 +266,6 @@ export function GallerySlider({
                   onClick={() => openLightbox(idx)}
                   className="group/item relative aspect-[4/3] w-[82vw] shrink-0 cursor-pointer snap-center overflow-hidden rounded-2xl border border-slate-100/80 bg-slate-900 transition-transform active:scale-[0.98] dark:border-white/10"
                 >
-                  <ViewTransition
-                    name={`gallery-mob-img-${asset._id || 'img'}-${idx}`}
-                  >
                     <CockpitImage
                       asset={asset}
                       preset="thumbnail"
@@ -285,7 +274,6 @@ export function GallerySlider({
                       containerClassName="absolute inset-0 size-full"
                       className="object-cover transition-transform duration-700 group-hover/item:scale-105"
                     />
-                  </ViewTransition>
 
                   <div className="absolute inset-0 z-10 flex flex-col justify-between bg-gradient-to-t from-slate-950/70 via-slate-950/10 to-transparent p-3.5">
                     <div className="flex justify-end">
@@ -322,9 +310,6 @@ export function GallerySlider({
                       : 'aspect-[4/3]'
                   }`}
                 >
-                  <ViewTransition
-                    name={`gallery-desk-img-${asset._id || 'img'}-${idx}`}
-                  >
                     <CockpitImage
                       asset={asset}
                       preset="thumbnail"
@@ -337,7 +322,6 @@ export function GallerySlider({
                       containerClassName="absolute inset-0 size-full"
                       className="object-cover transition-transform duration-700 group-hover:scale-105"
                     />
-                  </ViewTransition>
 
                   {isFeatured && (
                     <div className="absolute top-3 left-3 z-20">

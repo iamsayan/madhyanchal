@@ -54,7 +54,6 @@ export function Header() {
 
   return (
     <header
-      style={{ viewTransitionName: 'site-header' }}
       className={cn(
         'fixed inset-x-0 top-0 z-50 w-full transition-all duration-300',
         isDurgaPuja
@@ -77,7 +76,6 @@ export function Header() {
           {isDurgaPuja && (
             <Link
               href="/"
-              transitionTypes={['nav-back']}
               className={cn(
                 'flex items-center justify-center rounded-full transition-all focus-visible:outline-none active:scale-95',
                 scrolled
@@ -93,7 +91,6 @@ export function Header() {
 
           <Link
             href={isDurgaPuja ? '/durgapuja' : '/'}
-            transitionTypes={['nav-back']}
             className="group flex shrink-0 items-center focus-visible:outline-none"
           >
             <div
@@ -135,12 +132,10 @@ export function Header() {
               const currentIndex = navItems.findIndex(
                 (i) => i.href === pathname
               );
-              const isBack = index < (currentIndex !== -1 ? currentIndex : 0);
               return (
                 <Link
                   key={item.href}
                   href={item.href}
-                  transitionTypes={isBack ? ['nav-back'] : ['nav-forward']}
                   className={cn(
                     'flex shrink-0 items-center justify-center rounded-full text-center font-bold whitespace-nowrap transition-all',
                     scrolled
@@ -180,7 +175,6 @@ export function Header() {
           {isDurgaPuja && (
             <Link
               href="/"
-              transitionTypes={['nav-back']}
               className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full border border-amber-700/35 bg-amber-600/20 text-slate-950 shadow-xs backdrop-blur-xl transition-all hover:bg-amber-600/30 active:scale-90"
               aria-label="Back to Main Site"
               title="Back to Main Site"
@@ -191,7 +185,6 @@ export function Header() {
 
           <Link
             href={isDurgaPuja ? '/durgapuja' : '/'}
-            transitionTypes={['nav-back']}
             className="flex shrink-0 items-center focus-visible:outline-none"
           >
             <Image
@@ -223,7 +216,6 @@ export function Header() {
           </a>
           <Link
             href={isDurgaPuja ? '/durgapuja#schedule' : '/schedule'}
-            transitionTypes={['nav-forward']}
             className={cn(
               'flex h-8 w-8 shrink-0 items-center justify-center rounded-full border shadow-xs backdrop-blur-xl transition-all active:scale-90',
               isDurgaPuja

@@ -62,7 +62,6 @@ export function Footer() {
         {/* Prominent Brand Logo */}
         <Link
           href="/"
-          transitionTypes={['nav-back']}
           className="inline-block transition-transform hover:scale-105"
         >
           <Image
@@ -86,7 +85,6 @@ export function Footer() {
               )}
               <Link
                 href={link.href}
-                transitionTypes={['nav-forward']}
                 className="transition-colors hover:text-amber-600 dark:hover:text-amber-400"
               >
                 {link.label}

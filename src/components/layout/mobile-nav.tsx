@@ -165,7 +165,6 @@ export function MobileNavDock() {
       {/* Bottom Floating Navigation Dock (Safe-area inset compliant) */}
       <div className="pointer-events-auto fixed inset-x-0 bottom-[max(0.75rem,env(safe-area-inset-bottom,0px))] z-50 flex justify-center px-4 lg:hidden">
         <nav
-          style={{ viewTransitionName: 'mobile-nav-dock' }}
           className={cn(
             'flex w-fit max-w-[calc(100vw-2rem)] items-center justify-center gap-1 rounded-full p-1.5 shadow-lg backdrop-blur-2xl transition-all duration-300 sm:gap-1.5',
             isDurgaPuja
@@ -192,7 +191,6 @@ export function MobileNavDock() {
                     value: item.href,
                   })
                 }
-                transitionTypes={isBack ? ['nav-back'] : ['nav-forward']}
                 className={cn(
                   'flex min-h-[44px] min-w-[44px] flex-col items-center justify-center rounded-full px-3 py-1 transition-transform duration-100 outline-none select-none [webkit-tap-highlight-color:transparent] focus:outline-none focus-visible:outline-none active:scale-95',
                   isActive
@@ -304,7 +302,6 @@ export function MobileNavDock() {
                       <Link
                         key={m.id}
                         href={`/services/${currentYear}/membership/${m.id}/status`}
-                        transitionTypes={['nav-forward']}
                         onClick={() => setMoreOpen(false)}
                         className="flex items-center justify-between rounded-xl border border-amber-500/30 bg-white/80 p-2.5 transition-colors hover:bg-amber-500/20 active:scale-[0.98] dark:bg-stone-900/80"
                       >
@@ -363,7 +360,6 @@ export function MobileNavDock() {
                     <Link
                       key={item.label}
                       href={item.href}
-                      transitionTypes={['nav-forward']}
                       onClick={() => setMoreOpen(false)}
                       className={cn(
                         'flex items-center justify-between rounded-2xl border p-3 transition-colors active:scale-[0.98]',

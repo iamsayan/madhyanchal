@@ -1,9 +1,6 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   allowedDevOrigins: ['192.168.0.224', 'preview-local.sayandatta.co.in'],
-  experimental: {
-    viewTransition: true,
-  },
   images: {
     qualities: [25, 50, 70, 80, 90, 100],
     formats: ['image/avif', 'image/webp'],
