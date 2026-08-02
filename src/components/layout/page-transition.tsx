@@ -1,58 +1,87 @@
 'use client';
 
 import { usePathname } from 'next/navigation';
-import { useEffect, useRef, useState, ReactNode } from 'react';
+import { useEffect, useState, ReactNode } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 
 interface PageTransitionProps {
   children: ReactNode;
 }
 
+// Global history stack and popstate listener persistent across template re-mounts
+const globalHistoryStack: string[] = [];
+let globalIsPopState = false;
+let isListenerAttached = false;
+
+function ensureListenerAttached() {
+  if (typeof window !== 'undefined' && !isListenerAttached) {
+    isListenerAttached = true;
+    window.addEventListener('popstate', () => {
+      globalIsPopState = true;
+    });
+  }
+}
+
 export function PageTransition({ children }: PageTransitionProps) {
   const pathname = usePathname();
-  const [direction, setDirection] = useState<'forward' | 'back'>('forward');
-  const isPopState = useRef(false);
-  const prevPathname = useRef(pathname);
 
   useEffect(() => {
-    const handlePopState = () => {
-      isPopState.current = true;
-    };
-
-    window.addEventListener('popstate', handlePopState);
-    return () => {
-      window.removeEventListener('popstate', handlePopState);
-    };
+    ensureListenerAttached();
   }, []);
 
-  useEffect(() => {
-    if (prevPathname.current !== pathname) {
-      if (isPopState.current) {
-        setDirection('back');
-        isPopState.current = false;
-      } else {
-        setDirection('forward');
-      }
-      prevPathname.current = pathname;
+  const [state, setState] = useState(() => {
+    ensureListenerAttached();
+    if (globalHistoryStack.length === 0) {
+      globalHistoryStack.push(pathname);
     }
-  }, [pathname]);
+    return { pathname, direction: 'forward' as 'forward' | 'back' };
+  });
 
-  // Motion variants for forward vs back mobile native transitions
+  // Synchronously compute direction when pathname changes during render
+  if (state.pathname !== pathname) {
+    let dir: 'forward' | 'back' = 'forward';
+
+    if (globalIsPopState) {
+      dir = 'back';
+      globalIsPopState = false;
+      const idx = globalHistoryStack.lastIndexOf(pathname);
+      if (idx !== -1) {
+        globalHistoryStack.length = idx + 1;
+      } else {
+        globalHistoryStack.push(pathname);
+      }
+    } else {
+      const existingIndex = globalHistoryStack.indexOf(pathname);
+      if (existingIndex !== -1 && existingIndex < globalHistoryStack.length - 1) {
+        // Navigating via Link to a previously visited parent/higher page
+        dir = 'back';
+        globalHistoryStack.length = existingIndex + 1;
+      } else {
+        // Forward navigation
+        dir = 'forward';
+        if (globalHistoryStack[globalHistoryStack.length - 1] !== pathname) {
+          globalHistoryStack.push(pathname);
+        }
+      }
+    }
+
+    setState({ pathname, direction: dir });
+  }
+
+  const direction = state.direction;
+
   const variants = {
     initial: (dir: 'forward' | 'back') => ({
       opacity: 0,
-      x: dir === 'forward' ? 24 : -24,
-      filter: 'blur(2px)',
+      x: dir === 'forward' ? 32 : -32,
     }),
     animate: {
       opacity: 1,
       x: 0,
-      filter: 'blur(0px)',
     },
     exit: (dir: 'forward' | 'back') => ({
       opacity: 0,
-      x: dir === 'forward' ? -24 : 24,
-      filter: 'blur(2px)',
+      x: dir === 'forward' ? -32 : 32,
     }),
   };
 
@@ -66,8 +95,8 @@ export function PageTransition({ children }: PageTransitionProps) {
         animate="animate"
         exit="exit"
         transition={{
-          duration: 0.25,
-          ease: [0.25, 0.1, 0.25, 1.0], // Native iOS curve
+          duration: 0.24,
+          ease: [0.25, 0.1, 0.25, 1.0], // iOS native spring curve
         }}
         className="w-full flex-1"
       >
