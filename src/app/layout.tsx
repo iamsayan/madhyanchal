@@ -1,4 +1,3 @@
-import { ProgressProvider } from '@/app/providers/progress-provider';
 import { SerwistProvider } from '@serwist/next/react';
 import type { Metadata, Viewport } from 'next';
 import { Outfit, Paytone_One } from 'next/font/google';
@@ -7,10 +6,8 @@ import { ThemeProvider } from '@/app/providers/theme-provider';
 import { Footer } from '@/components/layout/footer';
 import { Header } from '@/components/layout/header';
 import { MobileNavDock } from '@/components/layout/mobile-nav';
-import { DevModalPreview } from '@/components/ui/dev-modal-preview';
 import { PwaInstallPrompt } from '@/components/shared/pwa-install';
 import { PageLoader } from '@/components/shared/page-loader';
-import { NativeToast } from '@/components/shared/native-toast';
 import { GoogleTagManager } from '@next/third-parties/google';
 import { getSettings } from '@/lib/data';
 import AppProvider from '@/app/providers/app-provider';
@@ -156,19 +153,15 @@ export default function RootLayout({ children }: { children: ReactNode }) {
       <body className="text-foreground flex min-h-screen flex-col bg-amber-50/60 font-sans antialiased transition-colors duration-500 selection:bg-amber-500 selection:text-slate-950 dark:bg-stone-950">
         <SerwistProvider swUrl="/sw.js">
           <ThemeProvider attribute="class" defaultTheme="light" enableSystem>
-            <ProgressProvider>
-              <AppProvider settingsPromise={settings}>
-                <Suspense fallback={<PageLoader />}>
-                  <Header />
-                  <main className="flex-1">{children}</main>
-                  <Footer />
-                  <MobileNavDock />
-                  <NativeToast />
-                  <PwaInstallPrompt />
-                  {/* <DevModalPreview /> */}
-                </Suspense>
-              </AppProvider>
-            </ProgressProvider>
+            <AppProvider settingsPromise={settings}>
+              <Suspense fallback={<PageLoader />}>
+                <Header />
+                <main className="flex-1">{children}</main>
+                <Footer />
+                <MobileNavDock />
+                <PwaInstallPrompt />
+              </Suspense>
+            </AppProvider>
           </ThemeProvider>
         </SerwistProvider>
       </body>
