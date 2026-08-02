@@ -172,12 +172,14 @@ export default function NoticeClientView({
     );
   }, [searchQuery, allNotices, featuredNotice]);
 
-const getLetterheadFilename = (notice: NoticeItem): string => {
-  const tmpl = (notice.template || notice.category || '').toLowerCase().trim();
-  if (tmpl === 'durga') return '/letter-head-msdps.jpg';
-  if (tmpl === 'jagadhatri') return '/letter-head-msjps.jpg';
-  return '';
-};
+  const getLetterheadFilename = (notice: NoticeItem): string => {
+    const tmpl = (notice.template || notice.category || '')
+      .toLowerCase()
+      .trim();
+    if (tmpl === 'durga') return '/letter-head-msdps.jpg';
+    if (tmpl === 'jagadhatri') return '/letter-head-msjps.jpg';
+    return '';
+  };
 
   const handlePrintNotice = (notice: NoticeItem) => {
     const printWindow = window.open('', '_blank');
@@ -492,84 +494,82 @@ const getLetterheadFilename = (notice: NoticeItem): string => {
         {featuredNotice && (
           <AnimatedWrapper direction="up">
             <div className="relative overflow-hidden rounded-2xl border border-amber-500/25 bg-gradient-to-br from-amber-500/10 via-amber-500/5 to-transparent p-4 shadow-2xs backdrop-blur-md transition-all duration-300 sm:rounded-3xl sm:p-7 dark:border-amber-500/20 dark:from-stone-900/90 dark:to-stone-950/80">
-              <div className="flex flex-col gap-3.5 sm:gap-5 lg:flex-row lg:items-start lg:justify-between">
-                <div className="space-y-2.5 sm:space-y-3.5 lg:max-w-3xl">
-                  {/* Top Badges */}
-                  <div className="flex flex-wrap items-center gap-1.5 sm:gap-2">
-                    <span className="inline-flex items-center gap-1 rounded-full border border-amber-500/30 bg-amber-500/15 px-2.5 py-0.5 text-[10px] font-bold text-amber-700 sm:px-3 sm:text-[11px] dark:text-amber-300">
-                      <Sparkles className="h-3 w-3 fill-amber-500 text-amber-500" />
-                      Latest Announcement
-                    </span>
+              <div className="space-y-3 sm:space-y-3.5">
+                {/* Top Badges */}
+                <div className="flex flex-wrap items-center gap-1.5 sm:gap-2">
+                  <span className="inline-flex items-center gap-1 rounded-full border border-amber-500/30 bg-amber-500/15 px-2.5 py-0.5 text-[10px] font-bold text-amber-700 sm:px-3 sm:text-[11px] dark:text-amber-300">
+                    <Sparkles className="h-3 w-3 fill-amber-500 text-amber-500" />
+                    Latest Announcement
+                  </span>
 
-                    <span
-                      className={cn(
-                        'inline-flex items-center gap-1 rounded-full border px-2 py-0.5 text-[10px] font-extrabold uppercase sm:px-2.5',
-                        getCategoryBadgeClass(featuredNotice.category)
-                      )}
-                    >
-                      {featuredNotice.category} Notice
-                    </span>
+                  <span
+                    className={cn(
+                      'inline-flex items-center gap-1 rounded-full border px-2 py-0.5 text-[10px] font-extrabold uppercase sm:px-2.5',
+                      getCategoryBadgeClass(featuredNotice.category)
+                    )}
+                  >
+                    {featuredNotice.category} Notice
+                  </span>
 
-                    {featuredNotice.ref_no && (
-                      <span className="rounded-full border border-slate-200 bg-white/80 px-2 py-0.5 font-mono text-[10px] font-medium text-slate-600 sm:px-2.5 sm:text-[11px] dark:border-white/10 dark:bg-stone-800/80 dark:text-slate-300">
-                        Ref: {featuredNotice.ref_no}
+                  {featuredNotice.ref_no && (
+                    <span className="rounded-full border border-slate-200 bg-white/80 px-2 py-0.5 font-mono text-[10px] font-medium text-slate-600 sm:px-2.5 sm:text-[11px] dark:border-white/10 dark:bg-stone-800/80 dark:text-slate-300">
+                      Ref: {featuredNotice.ref_no}
+                    </span>
+                  )}
+                </div>
+
+                {/* Title */}
+                <h2 className="font-paytone text-base text-slate-900 sm:text-2xl dark:text-white">
+                  {featuredNotice.title}
+                </h2>
+
+                {/* Inline Key Meta Details (Event Date, Time & Venue) */}
+                {(getEventDate(featuredNotice) ||
+                  getEventTime(featuredNotice) ||
+                  getNoticeVenue(featuredNotice)) && (
+                  <div className="flex flex-wrap items-center gap-x-4 gap-y-1.5 text-[11px] text-slate-700 sm:gap-x-5 sm:text-xs dark:text-slate-200">
+                    {getEventDate(featuredNotice) && (
+                      <span className="inline-flex items-center gap-1.5">
+                        <Calendar className="h-3.5 w-3.5 text-amber-500" />
+                        <span>
+                          <strong>Event Date:</strong>{' '}
+                          {getEventDate(featuredNotice)}
+                        </span>
+                      </span>
+                    )}
+
+                    {getEventTime(featuredNotice) && (
+                      <span className="inline-flex items-center gap-1.5">
+                        <Clock className="h-3.5 w-3.5 text-amber-500" />
+                        <span>
+                          <strong>Time:</strong>{' '}
+                          {getEventTime(featuredNotice)}
+                        </span>
+                      </span>
+                    )}
+
+                    {getNoticeVenue(featuredNotice) && (
+                      <span className="inline-flex items-center gap-1.5">
+                        <MapPin className="h-3.5 w-3.5 text-amber-500" />
+                        <span>
+                          <strong>Venue:</strong>{' '}
+                          {getNoticeVenue(featuredNotice)}
+                        </span>
                       </span>
                     )}
                   </div>
+                )}
 
-                  {/* Title */}
-                  <h2 className="font-paytone text-base text-slate-900 sm:text-2xl dark:text-white">
-                    {featuredNotice.title}
-                  </h2>
+                {/* Summary */}
+                <p className="line-clamp-3 text-[11px] leading-relaxed text-slate-600 sm:line-clamp-none sm:text-sm dark:text-slate-300">
+                  {featuredNotice.summary}
+                </p>
 
-                  {/* Inline Key Meta Details (Event Date, Time & Venue) */}
-                  {(getEventDate(featuredNotice) ||
-                    getEventTime(featuredNotice) ||
-                    getNoticeVenue(featuredNotice)) && (
-                    <div className="flex flex-wrap items-center gap-x-4 gap-y-1.5 text-[11px] text-slate-700 sm:gap-x-5 sm:text-xs dark:text-slate-200">
-                      {getEventDate(featuredNotice) && (
-                        <span className="inline-flex items-center gap-1.5">
-                          <Calendar className="h-3.5 w-3.5 text-amber-500" />
-                          <span>
-                            <strong>Event Date:</strong>{' '}
-                            {getEventDate(featuredNotice)}
-                          </span>
-                        </span>
-                      )}
-
-                      {getEventTime(featuredNotice) && (
-                        <span className="inline-flex items-center gap-1.5">
-                          <Clock className="h-3.5 w-3.5 text-amber-500" />
-                          <span>
-                            <strong>Time:</strong>{' '}
-                            {getEventTime(featuredNotice)}
-                          </span>
-                        </span>
-                      )}
-
-                      {getNoticeVenue(featuredNotice) && (
-                        <span className="inline-flex items-center gap-1.5">
-                          <MapPin className="h-3.5 w-3.5 text-amber-500" />
-                          <span>
-                            <strong>Venue:</strong>{' '}
-                            {getNoticeVenue(featuredNotice)}
-                          </span>
-                        </span>
-                      )}
-                    </div>
-                  )}
-
-                  {/* Summary */}
-                  <p className="line-clamp-3 text-[11px] leading-relaxed text-slate-600 sm:line-clamp-none sm:text-sm dark:text-slate-300">
-                    {featuredNotice.summary}
-                  </p>
-                </div>
-
-                {/* Right Call-to-action buttons */}
-                <div className="flex items-center gap-2 pt-1 lg:shrink-0 lg:flex-col lg:pt-1">
+                {/* 3 Buttons Side-by-Side Right Under Summary */}
+                <div className="flex flex-wrap items-center gap-2 pt-1.5 sm:pt-2">
                   <button
                     onClick={() => handleOpenNotice(featuredNotice)}
-                    className="inline-flex flex-1 items-center justify-center gap-1.5 rounded-xl bg-amber-500 px-3.5 py-2 text-xs font-bold text-slate-950 shadow-2xs transition-all hover:bg-amber-400 active:scale-95 sm:px-4 sm:py-2.5 sm:text-sm"
+                    className="inline-flex items-center justify-center gap-1.5 rounded-xl bg-amber-500 px-3.5 py-2 text-xs font-bold text-slate-950 shadow-2xs transition-all hover:bg-amber-400 active:scale-95 sm:px-4 sm:py-2.5 sm:text-sm"
                   >
                     <FileText className="h-3.5 w-3.5 sm:h-4 sm:w-4" />
                     <span>Read Full Notice</span>
@@ -578,18 +578,19 @@ const getLetterheadFilename = (notice: NoticeItem): string => {
                   <button
                     onClick={() => handlePrintNotice(featuredNotice)}
                     title="Print Notice"
-                    className="inline-flex items-center justify-center gap-1.5 rounded-xl border border-slate-200 bg-white/90 px-3 py-2 text-xs font-semibold text-slate-800 backdrop-blur-md transition-all hover:bg-slate-100 dark:border-white/10 dark:bg-stone-800/90 dark:text-slate-200 dark:hover:bg-stone-800"
+                    className="inline-flex items-center justify-center gap-1.5 rounded-xl border border-slate-200 bg-white/90 px-3 py-2 text-xs font-semibold text-slate-800 backdrop-blur-md transition-all hover:bg-slate-100 sm:px-3.5 sm:py-2.5 sm:text-sm dark:border-white/10 dark:bg-stone-800/90 dark:text-slate-200 dark:hover:bg-stone-800"
                   >
-                    <Printer className="h-3.5 w-3.5 text-amber-500" />
-                    <span className="hidden sm:inline">Print</span>
+                    <Printer className="h-3.5 w-3.5 text-amber-500 sm:h-4 sm:w-4" />
+                    <span>Print</span>
                   </button>
 
                   <button
                     onClick={() => handleShareNotice(featuredNotice)}
                     title="Share Direct Notice Link"
-                    className="inline-flex items-center justify-center rounded-xl border border-slate-200 bg-white/90 p-2 text-slate-700 backdrop-blur-md transition-all hover:bg-slate-100 dark:border-white/10 dark:bg-stone-800/90 dark:text-slate-200 dark:hover:bg-stone-800"
+                    className="inline-flex items-center justify-center gap-1.5 rounded-xl border border-slate-200 bg-white/90 px-3 py-2 text-xs font-semibold text-slate-800 backdrop-blur-md transition-all hover:bg-slate-100 sm:px-3.5 sm:py-2.5 sm:text-sm dark:border-white/10 dark:bg-stone-800/90 dark:text-slate-200 dark:hover:bg-stone-800"
                   >
-                    <Share2 className="h-3.5 w-3.5 text-amber-500" />
+                    <Share2 className="h-3.5 w-3.5 text-amber-500 sm:h-4 sm:w-4" />
+                    <span>Share</span>
                   </button>
                 </div>
               </div>
