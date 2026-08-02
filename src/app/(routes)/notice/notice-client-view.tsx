@@ -420,57 +420,57 @@ export default function NoticeClientView({
               )}
             </div>
           ) : (
-            <div className="grid grid-cols-1 gap-2 sm:gap-3.5 md:grid-cols-2 lg:grid-cols-3">
+            <div className="grid grid-cols-1 gap-2.5 sm:gap-5 md:grid-cols-2 lg:grid-cols-3">
               {filteredNotices.map((notice) => (
                 <div
                   key={notice._id}
-                  className="group relative flex flex-col justify-between rounded-xl border border-slate-200/80 bg-white/90 px-3.5 py-2.5 shadow-2xs backdrop-blur-md transition-all duration-200 hover:-translate-y-0.5 hover:border-amber-500/50 hover:shadow-md sm:p-3.5 dark:border-white/10 dark:bg-stone-900/80"
+                  className="group relative flex flex-col justify-between rounded-xl border border-slate-200/80 bg-white/90 px-3.5 py-2.5 shadow-2xs backdrop-blur-md transition-all duration-200 hover:-translate-y-0.5 hover:border-amber-500/50 hover:shadow-md sm:rounded-2xl sm:p-5 dark:border-white/10 dark:bg-stone-900/80"
                 >
-                  <div className="space-y-1">
+                  <div className="space-y-1 sm:space-y-2.5">
                     {/* Top Row: Category Tag, Ref No & Published Date */}
                     <div className="flex items-center justify-between gap-2">
-                      <div className="flex items-center gap-1.5 overflow-hidden">
+                      <div className="flex items-center gap-1.5 overflow-hidden sm:gap-2">
                         <span
                           className={cn(
-                            'py-0.2 inline-flex shrink-0 items-center rounded-md border px-1.5 text-[9px] font-bold uppercase',
+                            'inline-flex shrink-0 items-center rounded-md border px-1.5 py-0.2 text-[9px] font-bold uppercase sm:rounded-full sm:px-2.5 sm:py-0.5 sm:text-[10px]',
                             getCategoryBadgeClass(notice.category)
                           )}
                         >
                           {notice.category}
                         </span>
                         {notice.ref_no && (
-                          <span className="truncate font-mono text-[9px] text-slate-400 dark:text-slate-500">
+                          <span className="truncate font-mono text-[9px] text-slate-400 sm:text-[11px] dark:text-slate-500">
                             Ref: {notice.ref_no}
                           </span>
                         )}
                       </div>
 
-                      <span className="shrink-0 text-[10px] font-medium text-slate-500 dark:text-slate-400">
+                      <span className="shrink-0 text-[10px] font-medium text-slate-500 sm:text-xs dark:text-slate-400">
                         {getPublishedDate(notice)}
                       </span>
                     </div>
 
                     {/* Notice Title */}
-                    <h3 className="line-clamp-1 text-xs font-bold text-slate-900 transition-colors group-hover:text-amber-600 sm:text-sm dark:text-white dark:group-hover:text-amber-400">
+                    <h3 className="line-clamp-1 text-xs font-bold text-slate-900 transition-colors group-hover:text-amber-600 sm:line-clamp-2 sm:text-base dark:text-white dark:group-hover:text-amber-400">
                       {notice.title}
                     </h3>
 
-                    {/* Summary (2 Lines snippet) */}
+                    {/* Summary */}
                     {notice.summary && (
-                      <p className="line-clamp-2 text-[11px] leading-relaxed text-slate-600 dark:text-slate-400">
+                      <p className="line-clamp-2 text-[11px] leading-relaxed text-slate-600 sm:line-clamp-3 sm:text-xs dark:text-slate-400">
                         {notice.summary}
                       </p>
                     )}
                   </div>
 
                   {/* Card Bottom Actions */}
-                  <div className="mt-2 flex items-center justify-between border-t border-slate-100/80 pt-1.5 dark:border-white/5">
+                  <div className="mt-2 flex items-center justify-between border-t border-slate-100/80 pt-1.5 sm:mt-4 sm:pt-3 dark:border-white/5">
                     <button
                       onClick={() => handleOpenNotice(notice)}
-                      className="inline-flex items-center gap-1 text-[11px] font-bold text-amber-600 transition-colors hover:text-amber-700 dark:text-amber-400 dark:hover:text-amber-300"
+                      className="inline-flex items-center gap-1 text-[11px] font-bold text-amber-600 transition-colors hover:text-amber-700 sm:text-xs dark:text-amber-400 dark:hover:text-amber-300"
                     >
                       View Notice
-                      <ChevronRight className="h-3 w-3 transition-transform group-hover:translate-x-0.5" />
+                      <ChevronRight className="h-3 w-3 transition-transform group-hover:translate-x-0.5 sm:h-3.5 sm:w-3.5" />
                     </button>
 
                     <div className="flex items-center gap-1">
@@ -478,17 +478,17 @@ export default function NoticeClientView({
                         onClick={() => handleShareNotice(notice)}
                         title="Share Notice Link"
                         aria-label="Share Notice Link"
-                        className="rounded-md p-1 text-slate-400 hover:bg-slate-100 hover:text-slate-700 dark:hover:bg-stone-800 dark:hover:text-slate-200"
+                        className="rounded-md p-1 text-slate-400 hover:bg-slate-100 hover:text-slate-700 sm:p-1.5 dark:hover:bg-stone-800 dark:hover:text-slate-200"
                       >
-                        <Share2 className="h-3 w-3" />
+                        <Share2 className="h-3 w-3 sm:h-3.5 sm:w-3.5" />
                       </button>
                       <button
                         onClick={() => handlePrintNotice(notice)}
                         title="Print Notice"
                         aria-label="Print Notice"
-                        className="rounded-md p-1 text-slate-400 hover:bg-slate-100 hover:text-slate-700 dark:hover:bg-stone-800 dark:hover:text-slate-200"
+                        className="rounded-md p-1 text-slate-400 hover:bg-slate-100 hover:text-slate-700 sm:p-1.5 dark:hover:bg-stone-800 dark:hover:text-slate-200"
                       >
-                        <Printer className="h-3 w-3" />
+                        <Printer className="h-3 w-3 sm:h-3.5 sm:w-3.5" />
                       </button>
                     </div>
                   </div>
