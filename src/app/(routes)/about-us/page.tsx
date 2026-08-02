@@ -131,7 +131,7 @@ export default function AboutUsPage() {
 
   return (
     <PageLayout
-      title="About Madhyanchal Samity"
+      title="About Madhyanchal"
       subtitle="A beacon of cultural heritage, sports excellence, and community welfare in Chandannagar for over five decades."
       badge={{
         text: `Heritage Since 1971 (${yearsActive} Years)`,

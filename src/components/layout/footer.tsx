@@ -18,7 +18,6 @@ const currentYear = new Date().getFullYear();
 export function Footer() {
   const navLinks = [
     { label: 'About Us', href: '/about-us' },
-    { label: 'Notice Board', href: '/notice' },
     { label: 'Contact', href: '/contact-us' },
     { label: 'Terms', href: '/terms' },
     { label: 'Privacy', href: '/privacy-policy' },
