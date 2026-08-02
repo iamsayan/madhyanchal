@@ -43,11 +43,8 @@ export function Header() {
 
   const durgaPujaNavItems = [
     { label: 'Home', href: '/durgapuja' },
+    { label: 'Schedule', href: '/durgapuja/schedule' },
     { label: 'Drawing Contest', href: '/durgapuja/drawing-competition' },
-    { label: 'Puja Schedule', href: '/durgapuja#schedule' },
-    { label: 'Highlights', href: '/durgapuja#highlights' },
-    { label: 'Gallery', href: '/gallery' },
-    { label: 'Contact', href: '/contact-us' },
   ];
 
   const navItems = isDurgaPuja ? durgaPujaNavItems : mainNavItems;
@@ -171,7 +168,7 @@ export function Header() {
         )}
       >
         {/* Left: (< Logo) Back Button & Brand Logo */}
-        <div className="flex items-center gap-2 shrink-0">
+        <div className="flex shrink-0 items-center gap-2">
           {isDurgaPuja && (
             <Link
               href="/"
@@ -215,7 +212,7 @@ export function Header() {
             <MapPin className="h-4 w-4" />
           </a>
           <Link
-            href={isDurgaPuja ? '/durgapuja#schedule' : '/schedule'}
+            href={isDurgaPuja ? '/durgapuja/schedule' : '/schedule'}
             className={cn(
               'flex h-8 w-8 shrink-0 items-center justify-center rounded-full border shadow-xs backdrop-blur-xl transition-all active:scale-90',
               isDurgaPuja

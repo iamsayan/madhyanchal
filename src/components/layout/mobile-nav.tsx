@@ -62,6 +62,7 @@ export function MobileNavDock() {
 
   const durgaPujaPrimaryTabs = [
     { label: 'Home', href: '/durgapuja', icon: Flame },
+    { label: 'Schedule', href: '/durgapuja/schedule', icon: Calendar },
     {
       label: 'Drawing',
       href: '/durgapuja/drawing-competition',
@@ -113,18 +114,12 @@ export function MobileNavDock() {
   ];
 
   const durgaPujaExplorePages = [
-    // {
-    //   label: 'Youth Drawing Contest',
-    //   href: '/durgapuja/drawing-competition',
-    //   icon: Palette,
-    //   desc: 'Sit & Draw Registration',
-    // },
-    // {
-    //   label: 'Participants List',
-    //   href: '/durgapuja/drawing-competition/list',
-    //   icon: Sparkles,
-    //   desc: 'Confirmed Contestants',
-    // },
+    {
+      label: 'Puja Schedule',
+      href: '/durgapuja/schedule',
+      icon: Calendar,
+      desc: '5-Day Festival Rituals & Timings',
+    },
     {
       label: 'Contact Us',
       href: '/contact-us',
@@ -166,7 +161,7 @@ export function MobileNavDock() {
       <div className="pointer-events-auto fixed inset-x-0 bottom-[max(0.75rem,env(safe-area-inset-bottom,0px))] z-50 flex justify-center px-4 lg:hidden">
         <nav
           className={cn(
-            'flex w-fit max-w-[calc(100vw-2rem)] items-center justify-center gap-1 rounded-full p-1.5 shadow-lg backdrop-blur-2xl transition-all duration-300 sm:gap-1.5',
+            'flex w-fit max-w-[calc(100vw-1.5rem)] items-center justify-center gap-0.5 rounded-full p-1 shadow-lg backdrop-blur-2xl transition-all duration-300 sm:gap-1 sm:p-1.5',
             isDurgaPuja
               ? 'border border-amber-500/40 bg-white/95 dark:border-white/15 dark:bg-stone-950/95'
               : 'border border-slate-200/90 bg-white/95 dark:border-white/15 dark:bg-stone-950/95'
@@ -192,14 +187,14 @@ export function MobileNavDock() {
                   })
                 }
                 className={cn(
-                  'flex min-h-[44px] min-w-[44px] flex-col items-center justify-center rounded-full px-3 py-1 transition-transform duration-100 outline-none select-none [webkit-tap-highlight-color:transparent] focus:outline-none focus-visible:outline-none active:scale-95',
+                  'flex h-11 w-[64px] shrink-0 flex-col items-center justify-center rounded-full px-1 py-1 text-center transition-all duration-150 outline-none select-none [webkit-tap-highlight-color:transparent] focus:outline-none focus-visible:outline-none active:scale-95 sm:w-[72px]',
                   isActive
-                    ? 'bg-amber-500 font-black text-slate-950'
+                    ? 'bg-amber-500 font-extrabold text-slate-950 shadow-xs'
                     : 'text-slate-700 hover:text-amber-600 dark:text-slate-300 dark:hover:text-amber-400'
                 )}
               >
-                <Icon className="h-4.5 w-4.5" />
-                <span className="mt-0.5 text-[10px] font-bold tracking-tight whitespace-nowrap">
+                <Icon className="h-4.5 w-4.5 shrink-0" />
+                <span className="mt-0.5 max-w-full truncate px-0.5 text-[9.5px] font-bold tracking-tight sm:text-[10px]">
                   {item.label}
                 </span>
               </Link>
@@ -218,15 +213,15 @@ export function MobileNavDock() {
               });
             }}
             className={cn(
-              'relative flex min-h-[44px] min-w-[44px] cursor-pointer flex-col items-center justify-center rounded-full px-3 py-1 transition-transform duration-100 outline-none select-none [webkit-tap-highlight-color:transparent] focus:outline-none focus-visible:outline-none active:scale-95',
+              'relative flex h-11 w-[64px] shrink-0 cursor-pointer flex-col items-center justify-center rounded-full px-1 py-1 text-center transition-all duration-150 outline-none select-none [webkit-tap-highlight-color:transparent] focus:outline-none focus-visible:outline-none active:scale-95 sm:w-[72px]',
               isMoreActive
-                ? 'bg-amber-500 font-black text-slate-950'
+                ? 'bg-amber-500 font-extrabold text-slate-950 shadow-xs'
                 : 'text-slate-700 hover:text-amber-600 dark:text-slate-300 dark:hover:text-amber-400'
             )}
             aria-label="Open More Menu"
           >
-            <Grid className="h-4.5 w-4.5" />
-            <span className="mt-0.5 text-[10px] font-bold tracking-tight">
+            <Grid className="h-4.5 w-4.5 shrink-0" />
+            <span className="mt-0.5 max-w-full truncate px-0.5 text-[9.5px] font-bold tracking-tight sm:text-[10px]">
               More
             </span>
             {savedMembers.length > 0 && (

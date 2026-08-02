@@ -1,5 +1,6 @@
 import type { Metadata } from 'next';
 import Link from 'next/link';
+import Script from 'next/script';
 
 import { PageLayout } from '@/components/layout/page-layout';
 import { AnimatedWrapper } from '@/components/shared/animated-wrapper';
@@ -16,23 +17,27 @@ import {
   Palette,
   Sparkles,
   Sun,
+  Award,
+  Compass,
+  Image as ImageIcon,
 } from 'lucide-react';
 
 export const metadata: Metadata = {
-  title: 'Durga Puja Celebrations | Madhyanchal Sarbajanin',
+  title: 'Durga Puja Celebrations & Festival Hub | Madhyanchal Sarbajanin',
   description:
-    'Experience the divine celebration of Durga Puja at Madhyanchal, Chandannagar. Traditional rituals, cultural programs, and youth drawing competition.',
+    'Welcome to Madhyanchal Durga Puja in Chandannagar. Discover sacred autumn rituals, 5-day festival schedule, youth drawing competition, and photo gallery.',
   keywords: [
     'durga puja chandannagar',
     'madhyanchal durga puja',
-    'durga puja schedule chandannagar',
+    'durga puja landing page',
+    'chandannagar durga puja 2026',
     'madhyanchal drawing competition',
-    'chandannagar festival',
+    'sandhi puja chandannagar',
   ],
   openGraph: {
     title: 'Durga Puja Celebrations | Madhyanchal Sarbajanin',
     description:
-      'Experience traditional rituals, cultural events, and spiritual festivities at Madhyanchal Durga Puja in Chandannagar.',
+      'Experience the divine autumn homecoming of Maa Durga at Madhyanchal, Chandannagar — traditional rituals, youth drawing contest, and community feast.',
     url: '/durgapuja',
     type: 'website',
   },
@@ -41,7 +46,7 @@ export const metadata: Metadata = {
   },
 };
 
-export default function DurgaPujaPage() {
+export default function DurgaPujaLandingPage() {
   const jsonLd = {
     '@context': 'https://schema.org',
     '@graph': [
@@ -66,10 +71,10 @@ export default function DurgaPujaPage() {
         '@type': 'Event',
         name: 'Madhyanchal Durga Puja Celebrations',
         description:
-          'Five days of divine worship, traditional rituals, cultural music, and youth drawing competition.',
+          'Experience the divine autumn homecoming of Goddess Durga in Chandannagar with Vedic rituals, cultural galas, and youth drawing competition.',
         location: {
           '@type': 'Place',
-          name: 'Madhyanchal Puja Premises',
+          name: 'Madhyanchal Puja Grounds',
           address: {
             '@type': 'PostalAddress',
             streetAddress: 'Station Road',
@@ -81,118 +86,294 @@ export default function DurgaPujaPage() {
     ],
   };
 
-  const festivalHighlights = [
+  const festivalPillars = [
     {
-      title: 'Traditional Rituals',
+      title: 'Vedic Rituals & Aarti',
       description:
-        'Authentic Vedic mantras, Pushpanjali, Sandhi Puja, and dhak rhythms performed with reverence.',
+        'Sacred Bodhon, Kalparambha, 108 lotus Pushpanjali, and Sandhi Puja performed with Vedic purity.',
       icon: Sun,
     },
     {
-      title: 'Youth Drawing Contest',
+      title: 'Youth Art Competition',
       description:
-        'Annual Sit & Draw competition fostering young artistic talent across 3 age categories.',
+        'Annual Sit & Draw contest nurturing artistic creativity across 3 age categories with awards.',
       icon: Palette,
     },
     {
-      title: 'Community Feast',
+      title: 'Community Prasad',
       description:
-        'Bhog and Prasad distribution bringing together families and devotees from all walks of life.',
+        'Grand Bhog and Prasad distribution connecting families, neighbors, and visiting devotees.',
       icon: HeartHandshake,
     },
     {
-      title: 'Cultural Evenings',
+      title: 'Sindoor Khela & Farewell',
       description:
-        'Captivating musical performances, dance dramas, and local talent showcases every night.',
+        'Festive vermilion farewell, dhunuchi dance, and solemn immersion procession with devotion.',
       icon: Sparkles,
     },
   ];
 
-  const pujaSchedule = [
+  const quickExploreCards = [
     {
-      day: 'Shashthi',
+      title: '5-Day Festival Schedule',
+      desc: 'Check ritual timings from Shashthi to Dashami',
+      href: '/durgapuja/schedule',
+      icon: Calendar,
+      badge: 'Itinerary',
+      cta: 'View Schedule',
+    },
+    {
+      title: 'Youth Drawing Contest',
+      desc: 'Annual Sit & Draw competition for children',
+      href: '/durgapuja/drawing-competition',
+      icon: Palette,
+      badge: 'Event',
+      cta: 'Register Now',
+    },
+    {
+      title: 'Festive Photo Gallery',
+      desc: 'Browse moments from previous puja celebrations',
+      href: '/gallery',
+      icon: ImageIcon,
+      badge: 'Memories',
+      cta: 'Explore Gallery',
+    },
+    {
+      title: 'Puja Venue & Directions',
+      desc: 'Station Road, Chandannagar (800m from station)',
+      href: '#venue',
+      icon: MapPin,
+      badge: 'Location',
+      cta: 'Get Directions',
+    },
+  ];
+
+  const ritualSpotlights = [
+    {
+      tag: 'Day 1 • Shashthi',
       title: 'Kalparambha & Bodhon',
-      description: 'Invocation of Goddess Durga with evening Aarti and Dhak.',
-      events: ['Kalparambha Puja', 'Akhanda Jyoti', 'Evening Aarti & Dhak'],
-      badge: 'Day 1',
+      desc: 'Invocation of Maa Durga under the Bilva tree, awakening the divine mother with dhak beats.',
     },
     {
-      day: 'Saptami',
+      tag: 'Day 2 • Saptami',
       title: 'Nabapatrika & Kolabou Snan',
-      description: 'Sacred bath ceremony and ritualistic morning offerings.',
-      events: ['Kolabou Snan', 'Nabapatrika Pravesh', 'Cultural Evening'],
-      badge: 'Day 2',
+      desc: 'Sacred bath of 9 holy plants at the Ganges ghat followed by morning Pushpanjali.',
     },
     {
-      day: 'Ashtami',
-      title: 'Sandhi Puja & Kumari Puja',
-      description: 'The pinnacle of worship during the auspicious juncture.',
-      events: ['Pushpanjali', 'Sandhi Puja', 'Evening Bhajan Performance'],
-      badge: 'Day 3',
+      tag: 'Day 3 • Ashtami',
+      title: 'Sandhi Puja & 108 Lotuses',
+      desc: 'The most auspicious 48-minute juncture between Ashtami and Navami marked by 108 lamps.',
     },
     {
-      day: 'Navami',
-      title: 'Mahasnan & Homa',
-      description: 'Sacred fire rituals and grand evening cultural gala.',
-      events: ['Maha Yajna & Homa', 'Bhog Prasad', 'Gala Music Night'],
-      badge: 'Day 4',
-    },
-    {
-      day: 'Dashami',
-      title: 'Sindoor Khela & Visarjan',
-      description: 'Festive farewell rituals and solemn immersion procession.',
-      events: ['Sindoor Khela', 'Darpan Visarjan', 'Grand Procession'],
-      badge: 'Day 5',
+      tag: 'Day 4 & 5 • Navami & Dashami',
+      title: 'Maha Yajna & Sindoor Khela',
+      desc: 'Sacred fire offerings, joyous vermilion farewell ritual, and solemn immersion procession.',
     },
   ];
 
   return (
     <PageLayout
-      title="Durga Puja Celebrations"
-      subtitle="Experience the divine mother’s sacred homecoming at Madhyanchal — traditional rituals, cultural events, and community camaraderie."
+      title="Durga Puja Festival"
+      subtitle="Experience the autumn homecoming of Mother Durga at Madhyanchal — traditional rituals, youth artistic contest, and community festivities."
       badge={{
-        text: 'Sacred Autumn Festival',
+        text: 'Autumn Sacred Festival',
         icon: Flame,
       }}
       breadcrumbCurrent="Durga Puja"
       scriptJsonLd={jsonLd}
     >
-      <div className="space-y-8 sm:space-y-14">
-        {/* 4 FEATURE HIGHLIGHT CARDS */}
-        <div id="highlights" className="scroll-mt-24 grid grid-cols-2 gap-2.5 sm:grid-cols-2 sm:gap-5 lg:grid-cols-4">
-          {festivalHighlights.map((item, idx) => {
-            const Icon = item.icon;
-            return (
+      <div className="space-y-10 sm:space-y-16">
+        {/* HERO CTA HEADER CARD */}
+        <AnimatedWrapper direction="up">
+          <div className="relative overflow-hidden rounded-2xl border border-amber-500/40 bg-gradient-to-br from-amber-500/15 via-amber-500/5 to-amber-500/20 p-5 shadow-sm backdrop-blur-2xl sm:rounded-3xl sm:p-10 dark:border-white/15 dark:bg-stone-900/90">
+            <BorderBeam
+              size={220}
+              duration={7}
+              colorFrom="#f59e0b"
+              colorTo="#fef08a"
+            />
+            <div className="flex flex-col items-center space-y-4 text-center sm:space-y-6">
+              <span className="inline-flex items-center gap-1.5 rounded-full border border-amber-500/40 bg-amber-500/20 px-3.5 py-1 text-[11px] font-extrabold tracking-widest text-amber-900 uppercase dark:text-amber-300">
+                <Flame className="h-3.5 w-3.5 animate-pulse text-amber-600" />
+                Sacred Autumn Homecoming
+              </span>
+
+              <h1 className="font-paytone text-2xl leading-tight text-slate-900 sm:text-4xl lg:text-5xl dark:text-white">
+                Welcome to Madhyanchal <br />
+                <span className="bg-gradient-to-r from-amber-600 via-amber-500 to-yellow-600 bg-clip-text text-transparent">
+                  Durga Puja Celebrations
+                </span>
+              </h1>
+
+              <p className="max-w-2xl text-xs leading-relaxed text-slate-600 sm:text-sm dark:text-slate-300">
+                Celebrating Bengal’s grand autumn festival with traditional
+                Vedic rituals, Pushpanjali, Dhak rhythms, youth art competition,
+                and community dining in Chandannagar.
+              </p>
+
+              <div className="flex flex-wrap items-center justify-center gap-3 pt-2">
+                <Button
+                  variant="primary"
+                  size="default"
+                  asChild
+                  className="h-10 rounded-full border border-amber-400/60 px-6 text-xs font-bold shadow-none"
+                >
+                  <Link href="/durgapuja/schedule" className="gap-2">
+                    <Calendar className="h-4 w-4" /> Explore 5-Day Schedule
+                  </Link>
+                </Button>
+
+                <Button
+                  variant="outline"
+                  size="default"
+                  asChild
+                  className="h-10 rounded-full border-amber-500/40 bg-white/80 px-6 text-xs font-bold shadow-none dark:border-white/20 dark:bg-stone-900"
+                >
+                  <Link href="/durgapuja/drawing-competition" className="gap-2">
+                    <Palette className="h-4 w-4 text-amber-500" /> Youth Drawing
+                    Contest
+                  </Link>
+                </Button>
+              </div>
+            </div>
+          </div>
+        </AnimatedWrapper>
+
+        {/* 4 FESTIVAL PILLARS GRID */}
+        <div className="space-y-4">
+          <div className="space-y-1 text-center">
+            <span className="text-[10px] font-black tracking-widest text-amber-600 uppercase sm:text-xs dark:text-amber-400">
+              Essence of Festivity
+            </span>
+            <h2 className="font-paytone text-lg text-slate-900 sm:text-2xl dark:text-white">
+              Festive Traditions & Heritage
+            </h2>
+          </div>
+
+          <div className="grid grid-cols-2 gap-2.5 sm:grid-cols-2 sm:gap-5 lg:grid-cols-4">
+            {festivalPillars.map((pillar, idx) => {
+              const Icon = pillar.icon;
+              return (
+                <AnimatedWrapper
+                  key={pillar.title}
+                  direction="up"
+                  delay={idx * 0.05}
+                >
+                  <div className="card-glass card-hover-glow relative flex h-full flex-col justify-between space-y-2 overflow-hidden rounded-xl border border-slate-200/90 p-3 backdrop-blur-2xl transition-all duration-300 sm:rounded-2xl sm:p-5 dark:border-white/12">
+                    <BorderBeam
+                      size={100}
+                      duration={6}
+                      colorFrom="#f59e0b"
+                      colorTo="#fef08a"
+                    />
+                    <div className="flex h-8 w-8 items-center justify-center rounded-lg border border-amber-500/30 bg-amber-500/15 text-amber-600 sm:h-9 sm:w-9 sm:rounded-xl dark:text-amber-400">
+                      <Icon className="h-4 w-4 sm:h-4.5 sm:w-4.5" />
+                    </div>
+                    <div>
+                      <h3 className="font-paytone text-xs text-slate-900 sm:text-base dark:text-white">
+                        {pillar.title}
+                      </h3>
+                      <p className="mt-0.5 text-[10px] leading-tight font-normal text-slate-600 sm:text-xs sm:leading-relaxed dark:text-slate-300">
+                        {pillar.description}
+                      </p>
+                    </div>
+                  </div>
+                </AnimatedWrapper>
+              );
+            })}
+          </div>
+        </div>
+
+        {/* QUICK EXPLORE CARDS GRID */}
+        <div className="space-y-4">
+          <div className="space-y-1 text-center">
+            <span className="text-[10px] font-black tracking-widest text-amber-600 uppercase sm:text-xs dark:text-amber-400">
+              Quick Navigation
+            </span>
+            <h2 className="font-paytone text-lg text-slate-900 sm:text-2xl dark:text-white">
+              Explore Durga Puja Hub
+            </h2>
+          </div>
+
+          <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 sm:gap-5 lg:grid-cols-4">
+            {quickExploreCards.map((card, idx) => {
+              const Icon = card.icon;
+              return (
+                <AnimatedWrapper
+                  key={card.title}
+                  direction="up"
+                  delay={idx * 0.05}
+                >
+                  <div className="card-glass card-hover-glow relative flex h-full flex-col justify-between space-y-4 overflow-hidden rounded-xl border border-slate-200/90 p-4 backdrop-blur-2xl transition-all duration-300 sm:rounded-2xl sm:p-6 dark:border-white/12">
+                    <div className="space-y-2">
+                      <div className="flex items-center justify-between">
+                        <span className="inline-flex items-center gap-1 rounded-full border border-amber-500/30 bg-amber-500/10 px-2.5 py-0.5 text-[10px] font-bold text-amber-700 dark:text-amber-300">
+                          <Icon className="h-3 w-3" /> {card.badge}
+                        </span>
+                      </div>
+                      <h3 className="font-paytone text-base text-slate-900 sm:text-lg dark:text-white">
+                        {card.title}
+                      </h3>
+                      <p className="text-xs text-slate-600 dark:text-slate-300">
+                        {card.desc}
+                      </p>
+                    </div>
+
+                    <Button
+                      variant="outline"
+                      size="sm"
+                      asChild
+                      className="h-8 w-full rounded-full border-amber-500/40 text-xs font-bold text-amber-900 hover:bg-amber-500/15 dark:text-amber-300"
+                    >
+                      <Link href={card.href} className="justify-between">
+                        <span>{card.cta}</span>
+                        <ChevronRight className="h-3.5 w-3.5" />
+                      </Link>
+                    </Button>
+                  </div>
+                </AnimatedWrapper>
+              );
+            })}
+          </div>
+        </div>
+
+        {/* RITUAL SPOTLIGHT CARDS */}
+        <div className="space-y-4">
+          <div className="space-y-1 text-center">
+            <span className="text-[10px] font-black tracking-widest text-amber-600 uppercase sm:text-xs dark:text-amber-400">
+              Devotional Highlights
+            </span>
+            <h2 className="font-paytone text-lg text-slate-900 sm:text-2xl dark:text-white">
+              Sacred Ritual Spotlights
+            </h2>
+          </div>
+
+          <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 sm:gap-5 lg:grid-cols-4">
+            {ritualSpotlights.map((item, idx) => (
               <AnimatedWrapper
                 key={item.title}
                 direction="up"
-                delay={idx * 0.06}
+                delay={idx * 0.05}
               >
-                <div className="card-glass card-hover-glow relative flex h-full flex-col justify-between space-y-2 overflow-hidden rounded-xl border border-slate-200/90 p-3 backdrop-blur-2xl transition-all duration-300 sm:rounded-2xl sm:p-5 dark:border-white/12">
-                  <BorderBeam
-                    size={100}
-                    duration={6}
-                    colorFrom="#f59e0b"
-                    colorTo="#fef08a"
-                  />
-                  <div className="flex h-8 w-8 items-center justify-center rounded-lg border border-amber-500/30 bg-amber-500/15 text-amber-600 sm:h-9 sm:w-9 sm:rounded-xl dark:text-amber-400">
-                    <Icon className="h-4 w-4 sm:h-4.5 sm:w-4.5" />
-                  </div>
-                  <div>
-                    <h3 className="font-paytone text-xs text-slate-900 sm:text-base dark:text-white">
+                <div className="card-glass relative flex h-full flex-col justify-between space-y-3 overflow-hidden rounded-xl border border-slate-200/90 p-4 backdrop-blur-2xl transition-all duration-300 sm:rounded-2xl sm:p-5 dark:border-white/12">
+                  <div className="space-y-2">
+                    <span className="inline-block rounded-md border border-amber-500/30 bg-amber-500/10 px-2 py-0.5 text-[10px] font-extrabold text-amber-800 dark:text-amber-300">
+                      {item.tag}
+                    </span>
+                    <h3 className="font-paytone text-sm font-bold text-slate-900 sm:text-base dark:text-white">
                       {item.title}
                     </h3>
-                    <p className="mt-0.5 text-[10px] font-normal leading-tight text-slate-600 sm:text-xs sm:leading-relaxed dark:text-slate-300">
-                      {item.description}
+                    <p className="text-xs leading-relaxed text-slate-600 dark:text-slate-300">
+                      {item.desc}
                     </p>
                   </div>
                 </div>
               </AnimatedWrapper>
-            );
-          })}
+            ))}
+          </div>
         </div>
 
-        {/* FEATURED CTA BANNER: YOUTH DRAWING COMPETITION */}
+        {/* YOUTH DRAWING COMPETITION FEATURE BANNER */}
         <AnimatedWrapper direction="up">
           <div className="relative overflow-hidden rounded-2xl border border-amber-500/40 bg-gradient-to-br from-amber-500/15 via-amber-500/5 to-amber-500/15 p-4 shadow-sm backdrop-blur-2xl sm:rounded-3xl sm:p-8 dark:border-white/15 dark:bg-stone-900/90">
             <BorderBeam
@@ -203,16 +384,15 @@ export default function DurgaPujaPage() {
             />
             <div className="flex flex-col items-start justify-between gap-4 sm:flex-row sm:items-center">
               <div className="space-y-1">
-                <span className="inline-flex items-center gap-1 rounded-full border border-amber-500/40 bg-amber-500/20 px-2.5 py-0.5 text-[10px] font-extrabold uppercase tracking-wider text-amber-800 dark:text-amber-300">
-                  <Palette className="h-3 w-3" /> Special Event Showcase
+                <span className="inline-flex items-center gap-1 rounded-full border border-amber-500/40 bg-amber-500/20 px-2.5 py-0.5 text-[10px] font-extrabold tracking-wider text-amber-800 uppercase dark:text-amber-300">
+                  <Palette className="h-3 w-3" /> Annual Art Festival
                 </span>
                 <h3 className="font-paytone text-lg font-bold text-slate-900 sm:text-2xl dark:text-white">
-                  Youth Drawing Competition
+                  Youth Sit & Draw Competition
                 </h3>
                 <p className="max-w-xl text-xs text-slate-600 sm:text-sm dark:text-slate-300">
-                  Encouraging creative expression among children across 3 age
-                  groups (Category A, B & C) with exciting trophies and
-                  certificates.
+                  Fostering young artistic talent across 3 age categories
+                  (Category A, B & C) with trophies, medals, and certificates.
                 </p>
               </div>
 
@@ -227,7 +407,7 @@ export default function DurgaPujaPage() {
                     href="/durgapuja/drawing-competition"
                     className="gap-1.5"
                   >
-                    View Registration <ChevronRight className="h-4 w-4" />
+                    View Contest & Register <ChevronRight className="h-4 w-4" />
                   </Link>
                 </Button>
               </div>
@@ -235,61 +415,12 @@ export default function DurgaPujaPage() {
           </div>
         </AnimatedWrapper>
 
-        {/* 5-DAY PUJA SCHEDULE CARDS */}
-        <div id="schedule" className="scroll-mt-24 space-y-4 sm:space-y-6">
-          <div className="space-y-1 text-center">
-            <span className="text-[10px] font-black uppercase tracking-widest text-amber-600 sm:text-xs dark:text-amber-400">
-              Rituals & Timings
-            </span>
-            <h2 className="font-paytone text-lg text-slate-900 sm:text-3xl dark:text-white">
-              5-Day Festival Itinerary
-            </h2>
-          </div>
-
-          <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-3 sm:gap-5">
-            {pujaSchedule.map((item, idx) => (
-              <AnimatedWrapper
-                key={item.day}
-                direction="up"
-                delay={idx * 0.05}
-              >
-                <div className="card-glass card-hover-glow relative flex h-full flex-col justify-between space-y-3 overflow-hidden rounded-xl border border-slate-200/90 p-4 backdrop-blur-2xl transition-all duration-300 sm:rounded-2xl sm:p-6 dark:border-white/12">
-                  <div className="space-y-2">
-                    <div className="flex items-center justify-between">
-                      <span className="inline-flex items-center gap-1 rounded-full border border-amber-500/30 bg-amber-500/10 px-2.5 py-0.5 text-[10px] font-bold text-amber-700 dark:text-amber-300">
-                        <Calendar className="h-3 w-3" /> {item.day}
-                      </span>
-                      <span className="rounded-md border border-slate-200/80 bg-slate-100/80 px-2 py-0.5 text-[9.5px] font-extrabold uppercase text-slate-600 dark:border-white/10 dark:bg-stone-900 dark:text-slate-400">
-                        {item.badge}
-                      </span>
-                    </div>
-
-                    <h3 className="font-paytone text-base text-slate-900 sm:text-lg dark:text-white">
-                      {item.title}
-                    </h3>
-
-                    <p className="text-xs text-slate-600 dark:text-slate-300">
-                      {item.description}
-                    </p>
-
-                    <ul className="space-y-1 pt-1 text-[11px] font-medium text-slate-700 dark:text-slate-300">
-                      {item.events.map((ev, evIdx) => (
-                        <li key={evIdx} className="flex items-center gap-1.5">
-                          <span className="h-1.5 w-1.5 rounded-full bg-amber-500" />
-                          <span>{ev}</span>
-                        </li>
-                      ))}
-                    </ul>
-                  </div>
-                </div>
-              </AnimatedWrapper>
-            ))}
-          </div>
-        </div>
-
         {/* VENUE & LOCATION DOCK */}
         <AnimatedWrapper direction="up">
-          <div className="relative space-y-3 overflow-hidden rounded-xl border border-slate-200/90 bg-white/80 p-4 backdrop-blur-2xl sm:space-y-4 sm:rounded-3xl sm:p-8 dark:border-white/12 dark:bg-stone-900/90">
+          <div
+            id="venue"
+            className="relative scroll-mt-24 space-y-3 overflow-hidden rounded-xl border border-slate-200/90 bg-white/80 p-4 backdrop-blur-2xl sm:space-y-4 sm:rounded-3xl sm:p-8 dark:border-white/12 dark:bg-stone-900/90"
+          >
             <div className="flex flex-col items-start justify-between gap-3 sm:flex-row sm:items-center">
               <div className="space-y-1">
                 <div className="flex items-center gap-2">
@@ -307,16 +438,34 @@ export default function DurgaPujaPage() {
                 </span>
               </div>
 
-              <Button
-                variant="outline"
-                size="sm"
-                asChild
-                className="h-9 rounded-full border-slate-300 px-4 text-xs font-bold shadow-none dark:border-white/20"
-              >
-                <Link href="/contact-us" className="gap-1">
-                  Contact Committee <ChevronRight className="h-3.5 w-3.5" />
-                </Link>
-              </Button>
+              <div className="flex items-center gap-2">
+                <Button
+                  variant="outline"
+                  size="sm"
+                  asChild
+                  className="h-9 rounded-full border-slate-300 px-4 text-xs font-bold shadow-none dark:border-white/20"
+                >
+                  <Link href="/contact-us" className="gap-1">
+                    Contact Committee <ChevronRight className="h-3.5 w-3.5" />
+                  </Link>
+                </Button>
+
+                <Button
+                  variant="primary"
+                  size="sm"
+                  asChild
+                  className="h-9 rounded-full border-amber-400/60 px-4 text-xs font-bold shadow-none"
+                >
+                  <a
+                    href="https://maps.app.goo.gl/xY6cx8Arcy6ayLYq9"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="gap-1"
+                  >
+                    Open Map <Compass className="h-3.5 w-3.5" />
+                  </a>
+                </Button>
+              </div>
             </div>
           </div>
         </AnimatedWrapper>
