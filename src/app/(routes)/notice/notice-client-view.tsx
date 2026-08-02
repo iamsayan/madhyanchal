@@ -4,7 +4,6 @@ import { useEffect, useMemo, useState } from 'react';
 import { useSearchParams } from 'next/navigation';
 import { PageLayout } from '@/components/layout/page-layout';
 import { AnimatedWrapper } from '@/components/shared/animated-wrapper';
-import { BorderBeam } from '@/components/ui/border-beam';
 import { NativeModal } from '@/components/ui/native-modal';
 import type { NoticeItem } from '@/types';
 import { cn } from '@/lib/utils';
@@ -173,60 +172,285 @@ export default function NoticeClientView({
     );
   }, [searchQuery, allNotices, featuredNotice]);
 
+const getLetterheadFilename = (notice: NoticeItem): string => {
+  const tmpl = (notice.template || notice.category || '').toLowerCase().trim();
+  if (tmpl === 'durga') return '/letter-head-msdps.jpg';
+  if (tmpl === 'jagadhatri') return '/letter-head-msjps.jpg';
+  return '';
+};
+
   const handlePrintNotice = (notice: NoticeItem) => {
     const printWindow = window.open('', '_blank');
     if (!printWindow) return;
+
+    const bgImage = getLetterheadFilename(notice);
+    const hasLetterhead = Boolean(bgImage);
+    const letterheadUrl =
+      hasLetterhead && typeof window !== 'undefined'
+        ? `${window.location.origin}${bgImage}`
+        : bgImage;
+
+    const eventDate = getEventDate(notice);
+    const eventTime = getEventTime(notice);
+    const venue = getNoticeVenue(notice);
+    const pubDate = getPublishedDate(notice);
 
     printWindow.document.write(`
       <!DOCTYPE html>
       <html>
         <head>
-          <title>${notice.title} - Madhyanchal Sarbajanin</title>
+          <title>Official Notice: ${notice.title} - Madhyanchal Sarbajanin</title>
+          <meta charset="utf-8">
           <style>
-            body { font-family: system-ui, -apple-system, sans-serif; padding: 40px; color: #111; line-height: 1.6; }
-            .header { text-align: center; border-bottom: 2px solid #ea580c; padding-bottom: 20px; margin-bottom: 30px; }
-            .org-title { font-size: 24px; font-weight: bold; text-transform: uppercase; color: #9a3412; margin: 0; }
-            .sub-title { font-size: 14px; color: #555; margin-top: 4px; }
-            .ref-date { display: flex; justify-space-between; margin-bottom: 20px; font-weight: bold; font-size: 14px; border-bottom: 1px dashed #ccc; padding-bottom: 10px; }
-            .notice-title { font-size: 20px; font-weight: bold; margin-bottom: 20px; text-align: center; text-transform: uppercase; text-decoration: underline; }
-            .meta-box { background: #f8fafc; border: 1px solid #cbd5e1; padding: 15px; border-radius: 6px; margin-bottom: 25px; }
-            .content { font-size: 14px; white-space: pre-wrap; margin-bottom: 40px; }
-            .signature { margin-top: 50px; text-align: right; font-weight: bold; font-size: 14px; }
+            @page {
+              size: A4 portrait;
+              margin: 0;
+            }
+            * {
+              box-sizing: border-box;
+            }
+            body {
+              margin: 0;
+              padding: 0;
+              font-family: Verdana, Geneva, Tahoma, sans-serif;
+              color: #0f172a;
+              background-color: #f1f5f9;
+              -webkit-print-color-adjust: exact !important;
+              print-color-adjust: exact !important;
+            }
+            .no-print-header {
+              position: sticky;
+              top: 0;
+              left: 0;
+              right: 0;
+              background: #0f172a;
+              color: #ffffff;
+              padding: 12px 24px;
+              display: flex;
+              justify-content: space-between;
+              align-items: center;
+              box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+              z-index: 9999;
+            }
+            .no-print-header h3 {
+              margin: 0;
+              font-size: 14px;
+              font-weight: 600;
+            }
+            .btn-group {
+              display: flex;
+              gap: 10px;
+            }
+            .btn {
+              padding: 7px 16px;
+              border-radius: 6px;
+              font-size: 13px;
+              font-weight: 700;
+              cursor: pointer;
+              border: none;
+              transition: all 0.2s;
+            }
+            .btn-primary {
+              background: #f59e0b;
+              color: #0f172a;
+            }
+            .btn-primary:hover {
+              background: #d97706;
+            }
+            .btn-secondary {
+              background: #334155;
+              color: #ffffff;
+            }
+            .btn-secondary:hover {
+              background: #475569;
+            }
+            .page-container {
+              padding: 20px 0 40px 0;
+              display: flex;
+              justify-content: center;
+            }
+            .letterhead-sheet {
+              width: 210mm;
+              min-height: 297mm;
+              ${
+                hasLetterhead
+                  ? `background-image: url('${letterheadUrl}'); background-size: 100% 100%; background-repeat: no-repeat; background-position: top center; padding-top: 215px; padding-left: 65px; padding-right: 65px; padding-bottom: 130px;`
+                  : `padding: 50px 60px;`
+              }
+              background-color: #ffffff;
+              box-shadow: 0 10px 30px rgba(0, 0, 0, 0.12);
+              position: relative;
+            }
+            .plain-header {
+              text-align: center;
+              border-bottom: 2px solid #ea580c;
+              padding-bottom: 15px;
+              margin-bottom: 25px;
+            }
+            .plain-header h1 {
+              font-size: 22px;
+              font-weight: 800;
+              color: #991b1b;
+              text-transform: uppercase;
+              margin: 0 0 4px 0;
+            }
+            .plain-header p {
+              margin: 2px 0;
+              font-size: 12px;
+              color: #475569;
+            }
+            .ref-date-row {
+              display: flex;
+              justify-content: space-between;
+              align-items: center;
+              font-size: 11px;
+              font-weight: 700;
+              color: #1e3a8a;
+              margin-bottom: 20px;
+              font-family: monospace;
+              ${!hasLetterhead ? 'border-bottom: 1px dashed #cbd5e1; padding-bottom: 8px;' : ''}
+            }
+            .notice-main-title {
+              font-size: 15px;
+              font-weight: 800;
+              text-align: center;
+              text-transform: uppercase;
+              color: #991b1b;
+              margin-bottom: 18px;
+              line-height: 1.4;
+              letter-spacing: 0.3px;
+              border-bottom: 2px dashed #f59e0b;
+              padding-bottom: 10px;
+            }
+            .event-meta-card {
+              background-color: rgba(254, 243, 199, 0.5);
+              border: 1px solid rgba(245, 158, 11, 0.4);
+              padding: 8px 14px;
+              border-radius: 8px;
+              margin-bottom: 18px;
+              font-size: 11px;
+              display: flex;
+              flex-wrap: wrap;
+              gap: 14px;
+              color: #78350f;
+            }
+            .event-meta-card strong {
+              color: #92400e;
+            }
+            .notice-content-body {
+              font-size: 11.5px;
+              line-height: 1.65;
+              color: #0f172a;
+              margin-bottom: 30px;
+              word-wrap: break-word;
+            }
+            .notice-content-body p {
+              margin-bottom: 12px;
+            }
+            .notice-content-body ul, .notice-content-body ol {
+              margin-left: 20px;
+              margin-bottom: 12px;
+            }
+            .signature-block {
+              margin-top: 40px;
+              float: right;
+              text-align: center;
+              min-width: 220px;
+            }
+            .sig-title {
+              font-size: 12.5px;
+              font-weight: 700;
+              color: #0f172a;
+              margin-bottom: 4px;
+            }
+            .sig-issuer {
+              font-size: 12px;
+              font-weight: 800;
+              color: #1e3a8a;
+              margin-top: 30px;
+              border-top: 1px solid #cbd5e1;
+              padding-top: 6px;
+            }
+            .sig-org {
+              font-size: 11px;
+              color: #64748b;
+              font-weight: 600;
+            }
             @media print {
-              body { padding: 0; }
+              .no-print-header {
+                display: none !important;
+              }
+              body {
+                background: none !important;
+                margin: 0 !important;
+                padding: 0 !important;
+              }
+              .page-container {
+                padding: 0 !important;
+                display: block !important;
+              }
+              .letterhead-sheet {
+                box-shadow: none !important;
+                width: 210mm !important;
+                min-height: 297mm !important;
+                page-break-after: always;
+              }
             }
           </style>
         </head>
         <body>
-          <div class="header">
-            <h1 class="org-title">Madhyanchal Sarbajanin</h1>
-            <p class="sub-title">Jagadhatri Puja Samity • Chandannagar, Hooghly, West Bengal</p>
-            <p class="sub-title">Regd. Official Notice & Public Circular</p>
+          <div class="no-print-header">
+            <h3>Official Notice Print Preview - Madhyanchal Sarbajanin</h3>
+            <div class="btn-group">
+              <button class="btn btn-primary" onclick="window.print()">Print / Save as PDF</button>
+              <button class="btn btn-secondary" onclick="window.close()">Close Preview</button>
+            </div>
           </div>
-          <div class="ref-date">
-            <div>Ref No: ${notice.ref_no || 'MS/NOTICE/2026'}</div>
-            <div>Published: ${getPublishedDate(notice)}</div>
-          </div>
-          <div class="notice-title">${notice.title}</div>
-          ${
-            getEventDate(notice) ||
-            getEventTime(notice) ||
-            getNoticeVenue(notice)
-              ? `<div class="meta-box">
-                  ${getEventDate(notice) ? `<div><strong>Event Date:</strong> ${getEventDate(notice)}</div>` : ''}
-                  ${getEventTime(notice) ? `<div><strong>Event Time:</strong> ${getEventTime(notice)}</div>` : ''}
-                  ${getNoticeVenue(notice) ? `<div><strong>Venue:</strong> ${getNoticeVenue(notice)}</div>` : ''}
-                </div>`
-              : ''
-          }
-          <div class="content">${notice.content || notice.summary}</div>
-          <div class="signature">
-            <p>By Order of Executive Committee</p>
-            <p style="margin-top: 30px;">(${notice.issued_by || 'General Secretary'})</p>
-            <p>Madhyanchal Sarbajanin</p>
+          <div class="page-container">
+            <div class="letterhead-sheet">
+              ${
+                !hasLetterhead
+                  ? `<div class="plain-header">
+                      <h1>Madhyanchal Sarbajanin</h1>
+                      <p>Chandannagar, Hooghly, West Bengal - 712136</p>
+                      <p>Official Notice & Public Announcement</p>
+                    </div>`
+                  : ''
+              }
+              <div class="ref-date-row">
+                <div>Ref No: ${notice.ref_no || 'MS/NOTICE/2026'}</div>
+                <div>Date: ${pubDate}</div>
+              </div>
+
+              <div class="notice-main-title">${notice.title}</div>
+
+              ${
+                eventDate || eventTime || venue
+                  ? `<div class="event-meta-card">
+                      ${eventDate ? `<div><strong>Event Date:</strong> ${eventDate}</div>` : ''}
+                      ${eventTime ? `<div><strong>Time:</strong> ${eventTime}</div>` : ''}
+                      ${venue ? `<div><strong>Venue:</strong> ${venue}</div>` : ''}
+                    </div>`
+                  : ''
+              }
+
+              <div class="notice-content-body">
+                ${notice.content || `<p>${notice.summary || ''}</p>`}
+              </div>
+
+              <div class="signature-block">
+                <div class="sig-title">By Order of Executive Committee</div>
+                <div class="sig-issuer">${notice.issued_by || 'General Secretary'}</div>
+                <div class="sig-org">Madhyanchal Sarbajanin</div>
+              </div>
+            </div>
           </div>
           <script>
-            window.onload = function() { window.print(); }
+            window.onload = function() {
+              setTimeout(function() {
+                window.print();
+              }, 500);
+            }
           </script>
         </body>
       </html>
@@ -432,7 +656,7 @@ export default function NoticeClientView({
                       <div className="flex items-center gap-1.5 overflow-hidden sm:gap-2">
                         <span
                           className={cn(
-                            'inline-flex shrink-0 items-center rounded-md border px-1.5 py-0.2 text-[9px] font-bold uppercase sm:rounded-full sm:px-2.5 sm:py-0.5 sm:text-[10px]',
+                            'py-0.2 inline-flex shrink-0 items-center rounded-md border px-1.5 text-[9px] font-bold uppercase sm:rounded-full sm:px-2.5 sm:py-0.5 sm:text-[10px]',
                             getCategoryBadgeClass(notice.category)
                           )}
                         >

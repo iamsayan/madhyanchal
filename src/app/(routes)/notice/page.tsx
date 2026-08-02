@@ -67,15 +67,5 @@ export default async function NoticePage() {
     ],
   };
 
-  return (
-    <Suspense
-      fallback={
-        <div className="flex min-h-screen items-center justify-center bg-stone-950 text-amber-500 font-bold">
-          Loading Notice Board...
-        </div>
-      }
-    >
-      <NoticeClientView notices={notices} jsonLd={jsonLd} />
-    </Suspense>
-  );
+  return <NoticeClientView notices={notices} jsonLd={jsonLd} />;
 }
