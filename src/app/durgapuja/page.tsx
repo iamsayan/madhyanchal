@@ -159,7 +159,7 @@ export default function DurgaPujaPage() {
     >
       <div className="space-y-8 sm:space-y-14">
         {/* 4 FEATURE HIGHLIGHT CARDS */}
-        <div className="grid grid-cols-2 gap-2.5 sm:grid-cols-2 sm:gap-5 lg:grid-cols-4">
+        <div id="highlights" className="scroll-mt-24 grid grid-cols-2 gap-2.5 sm:grid-cols-2 sm:gap-5 lg:grid-cols-4">
           {festivalHighlights.map((item, idx) => {
             const Icon = item.icon;
             return (
@@ -236,7 +236,7 @@ export default function DurgaPujaPage() {
         </AnimatedWrapper>
 
         {/* 5-DAY PUJA SCHEDULE CARDS */}
-        <div className="space-y-4 sm:space-y-6">
+        <div id="schedule" className="scroll-mt-24 space-y-4 sm:space-y-6">
           <div className="space-y-1 text-center">
             <span className="text-[10px] font-black uppercase tracking-widest text-amber-600 sm:text-xs dark:text-amber-400">
               Rituals & Timings

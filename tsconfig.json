@@ -27,7 +27,11 @@
         "./*",
         "./src/*"
       ]
-    }
+    },
+    "types": [
+      "dom-chromium-installation-events",
+      "web-app-manifest"
+    ]
   },
   "include": [
     "next-env.d.ts",

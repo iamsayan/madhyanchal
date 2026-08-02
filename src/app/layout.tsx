@@ -33,7 +33,7 @@ const paytoneOne = Paytone_One({
 });
 
 export const viewport: Viewport = {
-  themeColor: '#f59e0b',
+  themeColor: '#1c1917',
   width: 'device-width',
   initialScale: 1,
   maximumScale: 1,

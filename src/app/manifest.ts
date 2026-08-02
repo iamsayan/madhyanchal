@@ -10,8 +10,8 @@ export default function manifest(): MetadataRoute.Manifest {
     scope: '/',
     display: 'standalone',
     orientation: 'portrait-primary',
-    background_color: '#f59e0b',
-    theme_color: '#f59e0b',
+    background_color: '#1c1917',
+    theme_color: '#1c1917',
     categories: ['events', 'lifestyle', 'culture', 'entertainment'],
     icons: [
       {
@@ -32,8 +32,27 @@ export default function manifest(): MetadataRoute.Manifest {
         type: 'image/png',
         purpose: 'any',
       },
+      {
+        src: '/icons/icon-192x192-maskable.png',
+        sizes: '192x192',
+        type: 'image/png',
+        purpose: 'maskable',
+      },
+      {
+        src: '/icons/icon-512x512-maskable.png',
+        sizes: '512x512',
+        type: 'image/png',
+        purpose: 'maskable',
+      },
     ],
     shortcuts: [
+      {
+        name: 'Durga Puja',
+        short_name: 'Durga Puja',
+        description: 'Durga Puja Celebrations',
+        url: '/durgapuja',
+        icons: [{ src: '/circle-logo.png', sizes: '192x192' }],
+      },
       {
         name: 'Puja Schedule',
         short_name: 'Schedule',

@@ -12,14 +12,16 @@ import {
   Grid,
   X,
   History,
-  Megaphone,
-  Sparkles,
   Info,
   Phone,
   MapPin,
   ChevronRight,
   CreditCard,
   UserCheck,
+  Flame,
+  Palette,
+  ArrowLeft,
+  Sparkles,
 } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { sendGTMEvent } from '@next/third-parties/google';
@@ -32,6 +34,7 @@ export function MobileNavDock() {
   >([]);
 
   const currentYear = new Date().getFullYear();
+  const isDurgaPuja = pathname.startsWith('/durgapuja');
 
   // Load saved member profiles list from localStorage
   useEffect(() => {
@@ -50,44 +53,40 @@ export function MobileNavDock() {
     setMoreOpen(false);
   }, [pathname]);
 
-  const primaryTabs = [
+  const mainPrimaryTabs = [
     { label: 'Home', href: '/', icon: Home },
     { label: 'Schedule', href: '/schedule', icon: Calendar },
     { label: 'Gallery', href: '/gallery', icon: ImageIcon },
     { label: 'Awards', href: '/awards', icon: Award },
   ];
 
-  const explorePages = [
+  const durgaPujaPrimaryTabs = [
+    { label: 'Durga Puja', href: '/durgapuja', icon: Flame },
+    {
+      label: 'Drawing',
+      href: '/durgapuja/drawing-competition',
+      icon: Palette,
+    },
+    { label: 'Schedule', href: '/durgapuja#schedule', icon: Calendar },
+    { label: 'Main Site', href: '/', icon: ArrowLeft },
+  ];
+
+  const primaryTabs = isDurgaPuja ? durgaPujaPrimaryTabs : mainPrimaryTabs;
+
+  const mainExplorePages = [
+    {
+      label: 'Durga Puja Portal',
+      href: '/durgapuja',
+      icon: Flame,
+      desc: 'Rituals, Drawing Contest & Events',
+      highlighted: true,
+    },
     {
       label: 'Puja History',
       href: '/puja-history',
       icon: History,
       desc: 'Heritage Since 1971',
     },
-    // {
-    //   label: 'Drawing Competition',
-    //   href: '/durgapuja/drawing-competition',
-    //   icon: Sparkles,
-    //   desc: 'Kids & Open Contest',
-    // },
-    // {
-    //   label: 'Durga Puja',
-    //   href: '/durgapuja',
-    //   icon: Calendar,
-    //   desc: 'Celebration Portal',
-    // },
-    // {
-    //   label: 'Social Activities',
-    //   href: '/activities',
-    //   icon: Sparkles,
-    //   desc: 'Community Service',
-    // },
-    // {
-    //   label: 'Advertise with Us',
-    //   href: '/advertise',
-    //   icon: Megaphone,
-    //   desc: 'Sponsorship & Souvenir',
-    // },
     {
       label: 'About Committee',
       href: '/about-us',
@@ -109,6 +108,44 @@ export function MobileNavDock() {
     },
   ];
 
+  const durgaPujaExplorePages = [
+    {
+      label: 'Durga Puja Home',
+      href: '/durgapuja',
+      icon: Flame,
+      desc: 'Festive Celebration Landing',
+    },
+    {
+      label: 'Youth Drawing Contest',
+      href: '/durgapuja/drawing-competition',
+      icon: Palette,
+      desc: 'Sit & Draw Registration',
+    },
+    {
+      label: 'Participants List',
+      href: '/durgapuja/drawing-competition/list',
+      icon: Sparkles,
+      desc: 'Confirmed Contestants',
+    },
+    {
+      label: 'Main Website Home',
+      href: '/',
+      icon: ArrowLeft,
+      desc: 'Return to Jagadhatri Puja Site',
+    },
+    {
+      label: 'Puja Location',
+      href: 'https://maps.app.goo.gl/xY6cx8Arcy6ayLYq9',
+      icon: MapPin,
+      desc: 'Station Road, Chandannagar',
+      isExternal: true,
+    },
+  ];
+
+  const explorePages = isDurgaPuja
+    ? durgaPujaExplorePages
+    : mainExplorePages;
+
   const isMoreActive =
     moreOpen ||
     explorePages.some(
@@ -122,7 +159,12 @@ export function MobileNavDock() {
       <div className="pointer-events-auto fixed inset-x-4 bottom-[max(0.75rem,env(safe-area-inset-bottom,0px))] z-50 lg:hidden">
         <nav
           style={{ viewTransitionName: 'mobile-nav-dock' }}
-          className="mx-auto flex max-w-md items-center justify-around rounded-full border border-slate-200/90 bg-white/95 p-1.5 shadow-lg backdrop-blur-2xl dark:border-white/15 dark:bg-stone-950/95"
+          className={cn(
+            'mx-auto flex max-w-md items-center justify-around rounded-full p-1.5 shadow-lg backdrop-blur-2xl transition-colors duration-300',
+            isDurgaPuja
+              ? 'border border-amber-500/40 bg-white/95 dark:border-white/15 dark:bg-stone-950/95'
+              : 'border border-slate-200/90 bg-white/95 dark:border-white/15 dark:bg-stone-950/95'
+          )}
         >
           {primaryTabs.map((item, index) => {
             const Icon = item.icon;
@@ -222,10 +264,12 @@ export function MobileNavDock() {
               <div className="flex items-center justify-between border-b border-slate-200/80 pb-3 dark:border-white/10">
                 <div>
                   <h3 className="font-paytone text-lg text-slate-900 dark:text-white">
-                    Explore Madhyanchal
+                    {isDurgaPuja ? 'Durga Puja Navigation' : 'Explore Madhyanchal'}
                   </h3>
                   <p className="text-xs text-slate-500 dark:text-slate-400">
-                    Tradition, Unity, and Celebration
+                    {isDurgaPuja
+                      ? 'Sacred Autumn Festival & Youth Contest'
+                      : 'Tradition, Unity, and Celebration'}
                   </p>
                 </div>
                 <button
@@ -275,6 +319,9 @@ export function MobileNavDock() {
                 {explorePages.map((item) => {
                   const Icon = item.icon;
                   const isActive = pathname === item.href;
+                  const isHighlighted = Boolean(
+                    'highlighted' in item && item.highlighted
+                  );
 
                   if (item.isExternal) {
                     return (
@@ -313,7 +360,9 @@ export function MobileNavDock() {
                         'flex items-center justify-between rounded-2xl border p-3 transition-colors active:scale-[0.98]',
                         isActive
                           ? 'border-amber-500/60 bg-amber-500/15 text-slate-900 dark:text-white'
-                          : 'border-slate-200/80 bg-slate-50/50 hover:bg-amber-500/10 dark:border-white/10 dark:bg-slate-900/50'
+                          : isHighlighted
+                            ? 'border-amber-500/60 bg-amber-500/10 text-slate-900 shadow-xs dark:border-amber-400/50 dark:bg-amber-500/15 dark:text-white'
+                            : 'border-slate-200/80 bg-slate-50/50 hover:bg-amber-500/10 dark:border-white/10 dark:bg-slate-900/50'
                       )}
                     >
                       <div className="flex items-center gap-3">
@@ -322,14 +371,21 @@ export function MobileNavDock() {
                             'flex h-9 w-9 items-center justify-center rounded-xl',
                             isActive
                               ? 'bg-amber-500 text-slate-950'
-                              : 'bg-amber-500/15 text-amber-600 dark:text-amber-400'
+                              : isHighlighted
+                                ? 'bg-amber-500 text-slate-950 shadow-xs'
+                                : 'bg-amber-500/15 text-amber-600 dark:text-amber-400'
                           )}
                         >
                           <Icon className="h-4.5 w-4.5" />
                         </div>
                         <div>
-                          <div className="text-xs font-bold text-slate-900 dark:text-white">
-                            {item.label}
+                          <div className="flex items-center gap-1.5 text-xs font-bold text-slate-900 dark:text-white">
+                            <span>{item.label}</span>
+                            {isHighlighted && (
+                              <span className="rounded-full bg-amber-500 px-1.5 py-0.2 text-[9px] font-black text-slate-950 uppercase tracking-wider">
+                                Featured
+                              </span>
+                            )}
                           </div>
                           <div className="text-[10px] text-slate-500 dark:text-slate-400">
                             {item.desc}
