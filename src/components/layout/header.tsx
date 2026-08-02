@@ -7,7 +7,7 @@ import { usePathname } from 'next/navigation';
 import { ThemeToggle } from '@/components/ui/theme-toggle';
 import { cn } from '@/lib/utils';
 import { sendGTMEvent } from '@next/third-parties/google';
-import { Calendar, MapPin, ChevronLeft } from 'lucide-react';
+import { Calendar, MapPin, ChevronLeft, Bell } from 'lucide-react';
 
 export function Header() {
   const pathname = usePathname();
@@ -152,8 +152,27 @@ export function Header() {
           </nav>
         </div>
 
-        {/* Right Controls: Theme Toggle Switch (Far Right) */}
+        {/* Right Controls: Notice Icon & Theme Toggle Switch (Far Right) */}
         <div className="flex shrink-0 items-center gap-2">
+          <Link
+            href="/notice"
+            className={cn(
+              'relative flex items-center justify-center rounded-full border transition-all active:scale-95',
+              scrolled
+                ? 'h-8 w-8 border-slate-300/80 bg-slate-100/80 text-slate-700 hover:border-amber-500/50 hover:bg-amber-500 hover:text-slate-950 dark:border-white/15 dark:bg-stone-900/80 dark:text-slate-200 dark:hover:bg-amber-500 dark:hover:text-slate-950'
+                : 'h-9 w-9 border-amber-500/30 bg-amber-500/10 text-slate-800 backdrop-blur-md hover:bg-amber-500/20 dark:border-white/20 dark:bg-stone-950/80 dark:text-slate-100',
+              pathname === '/notice' &&
+                'border-amber-500 bg-amber-500 text-slate-950 dark:bg-amber-500 dark:text-slate-950'
+            )}
+            title="Public Notices & Announcements"
+            aria-label="Public Notices & Announcements"
+          >
+            <Bell className="h-4.5 w-4.5" />
+            <span className="absolute -top-0.5 -right-0.5 flex h-2.5 w-2.5">
+              <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-amber-400 opacity-75"></span>
+              <span className="relative inline-flex h-2.5 w-2.5 rounded-full border border-slate-900 bg-amber-500"></span>
+            </span>
+          </Link>
           <ThemeToggle isScrolled={scrolled} />
         </div>
       </div>
@@ -195,8 +214,8 @@ export function Header() {
           </Link>
         </div>
 
-        {/* Right: 3 Distinct Action Buttons (Map, Schedule, Theme) */}
-        <div className="flex items-center gap-2">
+        {/* Right: Action Buttons (Map, Schedule, Notice, Theme) */}
+        <div className="flex items-center gap-1.5 sm:gap-2">
           <a
             href="https://maps.app.goo.gl/xY6cx8Arcy6ayLYq9"
             target="_blank"
@@ -222,6 +241,25 @@ export function Header() {
             aria-label="Puja Schedule"
           >
             <Calendar className="h-4 w-4" />
+          </Link>
+          <Link
+            href="/notice"
+            className={cn(
+              'relative flex h-8 w-8 shrink-0 items-center justify-center rounded-full border shadow-xs backdrop-blur-xl transition-all active:scale-90',
+              isDurgaPuja
+                ? 'border-amber-700/35 bg-amber-600/20 text-slate-950 hover:bg-amber-600/30'
+                : 'border-stone-700 bg-stone-800/80 text-amber-400 hover:bg-stone-800',
+              pathname === '/notice' &&
+                'border-amber-500 bg-amber-500 text-slate-950 dark:bg-amber-500 dark:text-slate-950'
+            )}
+            aria-label="Public Notices"
+            title="Public Notices"
+          >
+            <Bell className="h-4 w-4" />
+            <span className="absolute -top-0.5 -right-0.5 flex h-2 w-2">
+              <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-amber-400 opacity-75"></span>
+              <span className="relative inline-flex h-2 w-2 rounded-full bg-amber-500"></span>
+            </span>
           </Link>
           <ThemeToggle
             className={cn(

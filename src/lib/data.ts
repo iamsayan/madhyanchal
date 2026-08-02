@@ -7,6 +7,7 @@ import type {
   GalleryItem,
   Homepage,
   Member,
+  NoticeItem,
   Settings,
 } from '@/types';
 
@@ -51,6 +52,16 @@ export async function getGalleryItems(): Promise<GalleryItem[]> {
   const items = await cockpit.listContentItems<GalleryItem[]>('gallery', {
     sort: { year: -1 },
     populate: 1,
+  });
+  return items;
+}
+
+export async function getNotices(): Promise<NoticeItem[]> {
+  'use cache';
+  cacheLife('weeks');
+  cacheTag('announcements');
+  const items = await cockpit.listContentItems<NoticeItem[]>('announcements', {
+    sort: { published_at: -1 },
   });
   return items;
 }

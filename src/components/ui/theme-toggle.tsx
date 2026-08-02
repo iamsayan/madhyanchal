@@ -37,12 +37,12 @@ export function ThemeToggle({
       onClick={handleToggle}
       disabled={!mounted}
       className={cn(
-        'relative flex h-8 w-8 shrink-0 cursor-pointer items-center justify-center rounded-full border backdrop-blur-2xl transition-transform duration-150 select-none active:scale-90',
+        'relative flex shrink-0 cursor-pointer items-center justify-center rounded-full border backdrop-blur-2xl transition-all duration-300 select-none active:scale-90',
         !mounted && 'pointer-events-none opacity-40',
         !className &&
           (isScrolled
-            ? 'border-slate-200/90 bg-white/95 text-amber-600 hover:scale-105 dark:border-white/15 dark:bg-stone-900/80 dark:text-amber-400'
-            : 'border-amber-500/30 bg-white/90 text-amber-600 hover:scale-105 hover:border-amber-500/50 hover:bg-amber-500/10 dark:border-white/20 dark:bg-stone-950/70 dark:text-amber-400 dark:hover:border-amber-400/60 dark:hover:bg-amber-500/20'),
+            ? 'h-8 w-8 border-slate-200/90 bg-white/95 text-amber-600 hover:scale-105 dark:border-white/15 dark:bg-stone-900/80 dark:text-amber-400'
+            : 'h-9 w-9 border-amber-500/30 bg-white/90 text-amber-600 hover:scale-105 hover:border-amber-500/50 hover:bg-amber-500/10 dark:border-white/20 dark:bg-stone-950/70 dark:text-amber-400 dark:hover:border-amber-400/60 dark:hover:bg-amber-500/20'),
         className
       )}
       title={isDark ? 'Switch to Light mode' : 'Switch to Dark mode'}

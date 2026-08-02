@@ -41,6 +41,7 @@ export interface NativeModalProps {
   primaryButton?: NativeModalActionButton;
   secondaryButton?: NativeModalActionButton;
   children?: ReactNode;
+  maxWidthClass?: string;
 }
 
 export function NativeModal({
@@ -54,6 +55,7 @@ export function NativeModal({
   primaryButton,
   secondaryButton,
   children,
+  maxWidthClass = 'sm:max-w-xl md:max-w-2xl',
 }: NativeModalProps) {
   const [mounted, setMounted] = useState(false);
   const [copiedIndex, setCopiedIndex] = useState<number | null>(null);
@@ -91,7 +93,7 @@ export function NativeModal({
           badgeBg:
             'border-rose-500/30 bg-rose-500/10 text-rose-500 dark:border-rose-500/40 dark:bg-rose-500/20 dark:text-rose-400',
           borderColor: 'border-rose-500/30 dark:border-rose-500/40',
-          defaultIcon: <XCircle className="h-10 w-10 text-rose-500" />,
+          defaultIcon: <XCircle className="h-7 w-7 text-rose-500 sm:h-9 sm:w-9" />,
         };
       case 'info':
       case 'warning':
@@ -100,7 +102,7 @@ export function NativeModal({
           badgeBg:
             'border-amber-500/30 bg-amber-500/10 text-amber-600 dark:border-amber-500/40 dark:bg-amber-500/20 dark:text-amber-400',
           borderColor: 'border-amber-500/30 dark:border-amber-500/40',
-          defaultIcon: <Trophy className="h-10 w-10 text-amber-500" />,
+          defaultIcon: <Trophy className="h-7 w-7 text-amber-500 sm:h-9 sm:w-9" />,
         };
       case 'success':
       default:
@@ -109,7 +111,9 @@ export function NativeModal({
           badgeBg:
             'border-emerald-500/30 bg-emerald-500/10 text-emerald-500 shadow-lg shadow-emerald-500/20 dark:border-emerald-500/40 dark:bg-emerald-500/20 dark:text-emerald-400',
           borderColor: 'border-emerald-500/30 dark:border-emerald-500/40',
-          defaultIcon: <CheckCircle2 className="h-10 w-10 animate-bounce text-emerald-500" />,
+          defaultIcon: (
+            <CheckCircle2 className="h-7 w-7 animate-bounce text-emerald-500 sm:h-9 sm:w-9" />
+          ),
         };
     }
   };
@@ -118,8 +122,8 @@ export function NativeModal({
 
   const renderButton = (btn: NativeModalActionButton, isPrimary: boolean) => {
     const baseClasses = isPrimary
-      ? 'inline-flex flex-1 items-center justify-center gap-2 rounded-2xl bg-gradient-to-r from-amber-600 via-amber-500 to-yellow-500 py-3.5 px-4 text-xs font-black tracking-wider text-stone-950 uppercase shadow-md transition-all hover:scale-[1.02] active:scale-[0.98]'
-      : 'inline-flex flex-1 items-center justify-center gap-2 rounded-2xl border border-slate-200 bg-white py-3.5 px-4 text-xs font-bold text-slate-800 shadow-xs transition-all hover:bg-slate-50 active:scale-[0.98] dark:border-white/15 dark:bg-stone-900 dark:text-slate-200 dark:hover:bg-stone-800';
+      ? 'inline-flex flex-1 items-center justify-center gap-2 rounded-2xl bg-gradient-to-r from-amber-600 via-amber-500 to-yellow-500 py-2.5 px-3 text-xs font-black tracking-wider text-stone-950 uppercase shadow-md transition-all hover:scale-[1.02] active:scale-[0.98]'
+      : 'inline-flex flex-1 items-center justify-center gap-2 rounded-2xl border border-slate-200 bg-white py-2.5 px-3 text-xs font-bold text-slate-800 shadow-xs transition-all hover:bg-slate-50 active:scale-[0.98] dark:border-white/15 dark:bg-stone-900 dark:text-slate-200 dark:hover:bg-stone-800';
 
     if (btn.href) {
       return (
@@ -161,11 +165,11 @@ export function NativeModal({
 
           {/* Native Mobile Bottom Sheet / Desktop Dialog */}
           <motion.div
-            initial={{ y: '100%', opacity: 0, scale: 0.95 }}
-            animate={{ y: 0, opacity: 1, scale: 1 }}
-            exit={{ y: '100%', opacity: 0, scale: 0.95 }}
-            transition={{ type: 'spring', damping: 28, stiffness: 350 }}
-            className={`relative z-10 w-full max-w-md overflow-hidden rounded-t-[2.5rem] border ${vStyles.borderColor} bg-white/95 p-6 pb-[calc(1.75rem+env(safe-area-inset-bottom,0px))] text-center shadow-2xl backdrop-blur-2xl sm:rounded-[2.5rem] sm:p-8 sm:pb-8 dark:bg-stone-950/95`}
+            initial={{ y: '100%' }}
+            animate={{ y: 0 }}
+            exit={{ y: '100%' }}
+            transition={{ duration: 0.28, ease: [0.32, 0.72, 0, 1] }}
+            className={`relative z-10 flex max-h-[85vh] w-full ${maxWidthClass} flex-col overflow-hidden rounded-t-[2rem] border ${vStyles.borderColor} bg-white/95 p-4 pb-[calc(1.25rem+env(safe-area-inset-bottom,0px))] text-center shadow-2xl backdrop-blur-2xl sm:rounded-[2.5rem] sm:p-6 sm:pb-6 dark:bg-stone-950/95`}
           >
             <BorderBeam
               size={160}
@@ -175,78 +179,81 @@ export function NativeModal({
             />
 
             {/* Mobile Native Drag Handle Bar */}
-            <div className="mx-auto mb-4 h-1.5 w-12 rounded-full bg-slate-300 sm:hidden dark:bg-slate-700" />
+            <div className="mx-auto mb-3 h-1.5 w-10 shrink-0 rounded-full bg-slate-300 sm:hidden dark:bg-slate-700" />
 
             {/* Badge Icon */}
             <div
-              className={`mx-auto flex h-20 w-20 items-center justify-center rounded-full border ${vStyles.badgeBg}`}
+              className={`mx-auto flex h-12 w-12 shrink-0 items-center justify-center rounded-full border sm:h-16 sm:w-16 ${vStyles.badgeBg}`}
             >
               {badgeIcon || vStyles.defaultIcon}
             </div>
 
             {/* Header Text */}
-            <div className="space-y-1.5 pt-3">
-              <h3 className="font-paytone text-2xl tracking-tight text-slate-900 dark:text-white">
+            <div className="shrink-0 space-y-1 pt-2">
+              <h3 className="font-paytone text-lg tracking-tight text-slate-900 sm:text-2xl dark:text-white">
                 {title}
               </h3>
               {description && (
-                <p className="text-xs font-medium text-slate-600 dark:text-slate-300">
+                <p className="text-[11px] font-medium text-slate-600 sm:text-xs dark:text-slate-300">
                   {description}
                 </p>
               )}
             </div>
 
-            {/* Custom Content Slot */}
-            {children}
+            {/* Scrollable Content Container */}
+            <div className="my-2.5 min-h-0 flex-1 overflow-y-auto pr-0.5 space-y-2">
+              {/* Custom Content Slot */}
+              {children}
 
-            {/* Receipt / Details Box */}
-            {details && details.length > 0 && (
-              <div className="my-4 space-y-3 rounded-2xl border border-slate-200/90 bg-slate-50/90 p-4 text-left text-xs shadow-xs dark:border-white/10 dark:bg-stone-900/80">
-                {details.map((item, idx) => (
-                  <div
-                    key={item.label}
-                    className={`flex items-center justify-between ${
-                      idx !== details.length - 1
-                        ? 'border-b border-slate-200/80 pb-2.5 dark:border-white/10'
-                        : 'pt-0.5'
-                    }`}
-                  >
-                    <span className="text-[10.5px] font-black tracking-wider text-slate-500 uppercase dark:text-slate-400">
-                      {item.label}
-                    </span>
-                    {item.copyable ? (
-                      <div className="flex items-center gap-1.5 font-mono text-xs font-bold text-amber-700 dark:text-amber-300">
-                        <span>{item.value}</span>
-                        <button
-                          type="button"
-                          onClick={() => handleCopy(item.value, idx)}
-                          className="rounded-md p-1 transition-colors hover:bg-slate-200/60 dark:hover:bg-white/10"
-                          title={`Copy ${item.label}`}
-                        >
-                          {copiedIndex === idx ? (
-                            <Check className="h-3.5 w-3.5 text-emerald-500" />
-                          ) : (
-                            <Copy className="h-3.5 w-3.5 text-slate-500 dark:text-slate-400" />
-                          )}
-                        </button>
-                      </div>
-                    ) : item.highlight ? (
-                      <span className="font-paytone text-xl text-emerald-600 dark:text-emerald-400">
-                        {item.value}
+              {/* Receipt / Details Box */}
+              {details && details.length > 0 && (
+                <div className="space-y-2 rounded-2xl border border-slate-200/90 bg-slate-50/90 p-3 text-left text-xs shadow-xs dark:border-white/10 dark:bg-stone-900/80">
+                  {details.map((item, idx) => (
+                    <div
+                      key={item.label}
+                      className={`flex items-center justify-between ${
+                        idx !== details.length - 1
+                          ? 'border-b border-slate-200/80 pb-2 dark:border-white/10'
+                          : 'pt-0.5'
+                      }`}
+                    >
+                      <span className="text-[10px] font-black tracking-wider text-slate-500 uppercase dark:text-slate-400">
+                        {item.label}
                       </span>
-                    ) : (
-                      <span className="font-semibold text-slate-800 dark:text-slate-200">
-                        {item.value}
-                      </span>
-                    )}
-                  </div>
-                ))}
-              </div>
-            )}
+                      {item.copyable ? (
+                        <div className="flex items-center gap-1 font-mono text-[11px] font-bold text-amber-700 dark:text-amber-300">
+                          <span className="truncate max-w-[140px] sm:max-w-none">{item.value}</span>
+                          <button
+                            type="button"
+                            onClick={() => handleCopy(item.value, idx)}
+                            className="rounded-md p-1 transition-colors hover:bg-slate-200/60 dark:hover:bg-white/10"
+                            title={`Copy ${item.label}`}
+                          >
+                            {copiedIndex === idx ? (
+                              <Check className="h-3 w-3 text-emerald-500" />
+                            ) : (
+                              <Copy className="h-3 w-3 text-slate-500 dark:text-slate-400" />
+                            )}
+                          </button>
+                        </div>
+                      ) : item.highlight ? (
+                        <span className="font-paytone text-lg text-emerald-600 dark:text-emerald-400">
+                          {item.value}
+                        </span>
+                      ) : (
+                        <span className="font-semibold text-[11px] sm:text-xs text-slate-800 dark:text-slate-200 truncate max-w-[160px] sm:max-w-none text-right">
+                          {item.value}
+                        </span>
+                      )}
+                    </div>
+                  ))}
+                </div>
+              )}
+            </div>
 
             {/* Action Buttons */}
             {(primaryButton || secondaryButton) && (
-              <div className="flex gap-2.5 pt-2">
+              <div className="flex shrink-0 gap-2.5 pt-1.5">
                 {secondaryButton && renderButton(secondaryButton, false)}
                 {primaryButton && renderButton(primaryButton, true)}
               </div>

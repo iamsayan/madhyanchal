@@ -1,4 +1,4 @@
-import type { Asset, Entity, SingletonEntity } from '@/lib/cockpit';
+import type { Asset, Entity, SingletonEntity, TreeEntity } from '@/lib/cockpit';
 
 export type ImagePreset =
   | 'thumbnail'
@@ -146,6 +146,19 @@ export interface RazorpayFormData {
   name: string;
   phone: string;
   type?: string;
+}
+
+export interface NoticeItem extends TreeEntity {
+  title: string;
+  category: string;
+  issued_by: string;
+  published_at: Date;
+  ref_no: string;
+  summary: string;
+  content: string;
+  event_venue?: string;
+  event_at?: Date;
+  template?: string;
 }
 
 export interface RazorpaySuccessResponse {

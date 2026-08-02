@@ -1,7 +1,6 @@
 import { ComponentType, ReactNode } from 'react';
 import Script from 'next/script';
 import { AnimatedWrapper } from '@/components/shared/animated-wrapper';
-import { Section } from '@/components/shared/section';
 import { PageBreadcrumb } from '@/components/layout/page-breadcrumb';
 import { cn } from '@/lib/utils';
 
@@ -54,7 +53,7 @@ export function PageLayout({
   };
 
   return (
-    <div className="bg-dot-mesh relative min-h-screen overflow-hidden bg-amber-50/60 pb-[calc(2.5rem+env(safe-area-inset-bottom,0px))] transition-colors duration-500 sm:pb-0 dark:bg-stone-950">
+    <div className="bg-dot-mesh relative min-h-screen overflow-hidden bg-amber-50/60 transition-colors duration-500 dark:bg-stone-950">
       {scriptJsonLd && (
         <Script
           id="page-json-ld"
@@ -75,9 +74,9 @@ export function PageLayout({
 
             {/* Emblem / Feature Badge */}
             {badge && (
-              <span className="inline-flex items-center gap-1.5 rounded-full border border-amber-500/30 bg-amber-500/10 px-3 py-0.5 text-[10px] font-black tracking-widest uppercase backdrop-blur-md sm:px-4 sm:py-1 sm:text-[11px] text-amber-700 dark:text-amber-400">
+              <span className="inline-flex items-center gap-1.5 rounded-full border border-amber-500/30 bg-amber-500/10 px-3 py-0.5 text-[10px] font-black tracking-widest text-amber-700 uppercase backdrop-blur-md sm:px-4 sm:py-1 sm:text-[11px] dark:text-amber-400">
                 {BadgeIcon && (
-                  <BadgeIcon className="h-3 w-3 sm:h-3.5 sm:w-3.5 text-amber-500" />
+                  <BadgeIcon className="h-3 w-3 text-amber-500 sm:h-3.5 sm:w-3.5" />
                 )}
                 {badge.text}
               </span>
@@ -100,10 +99,10 @@ export function PageLayout({
         </div>
       </section>
 
-      {/* MAIN CONTENT CONTAINER */}
-      <Section className="pt-5 pb-3 sm:pt-12 sm:pb-12">
+      {/* MAIN CONTENT CONTAINER - Unified Padding Control */}
+      <main className="relative z-10 px-3.5 pt-5 pb-6 sm:px-6 sm:pt-10 sm:pb-12 lg:px-8">
         <div className={cn('mx-auto', maxWidth, className)}>{children}</div>
-      </Section>
+      </main>
     </div>
   );
 }

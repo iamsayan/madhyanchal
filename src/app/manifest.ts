@@ -6,7 +6,8 @@ export default function manifest(): MetadataRoute.Manifest {
     short_name: 'Madhyanchal',
     description:
       'Official Portal for Madhyanchal Sarbajanin, Station Road, Chandannagar.',
-    start_url: '/',
+    id: '/?utm_source=pwa',
+    start_url: '/?utm_source=pwa',
     scope: '/',
     display: 'standalone',
     orientation: 'portrait-primary',
@@ -50,14 +51,14 @@ export default function manifest(): MetadataRoute.Manifest {
         name: 'Durga Puja',
         short_name: 'Durga Puja',
         description: 'Durga Puja Celebrations',
-        url: '/durgapuja',
+        url: '/durgapuja/?utm_source=pwa',
         icons: [{ src: '/circle-logo.png', sizes: '192x192' }],
       },
       {
         name: 'Puja Schedule',
         short_name: 'Schedule',
         description: 'Check live rituals, Anjali timings and festival dates',
-        url: '/schedule',
+        url: '/schedule/?utm_source=pwa',
         icons: [{ src: '/circle-logo.png', sizes: '192x192' }],
       },
       {
@@ -65,7 +66,7 @@ export default function manifest(): MetadataRoute.Manifest {
         short_name: 'Gallery',
         description:
           'Explore pandal art and nocturnal lighting tableau archives',
-        url: '/gallery',
+        url: '/gallery/?utm_source=pwa',
         icons: [{ src: '/circle-logo.png', sizes: '192x192' }],
       },
       // {
