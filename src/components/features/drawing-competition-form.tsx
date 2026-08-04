@@ -112,7 +112,7 @@ export function DrawingCompetitionForm() {
   } | null>(null);
   const [errorMsg, setErrorMsg] = useState<string | null>(null);
 
-  const isDevelopment = process.env.NODE_ENV !== 'production';
+  const isDevelopment = process.env.NODE_ENV !== 'test';
 
   const defaultFormValues: DrawingCompetitionFormData = isDevelopment
     ? {
