@@ -33,15 +33,13 @@ import {
   Users,
 } from 'lucide-react';
 import { getHomePage, getSettings } from '@/lib/data';
-import { getYouTubeLatestVideos } from '@/lib/youtube';
 import CockpitImage from '@/components/shared/cockpit-image';
 
 export default async function HomePage() {
-  // Fetch CMS singletons and live YouTube channel feed with fallback safety
-  const [homepage, settings, youtubeVideos] = await Promise.all([
+  // Fetch CMS singletons with fallback data safety
+  const [homepage, settings] = await Promise.all([
     getHomePage(),
     getSettings(),
-    getYouTubeLatestVideos(),
   ]);
 
   const currentYear = 2026;
@@ -51,7 +49,7 @@ export default async function HomePage() {
 
   const heroImages = homepage?.hero_images || [];
   const sliderImages = homepage?.slider_images || [];
-  const videos = youtubeVideos.length > 0 ? youtubeVideos : homepage?.videos || [];
+  const videos = homepage?.videos || [];
 
   const targetPujaDate = dates[0]?.date || `${currentYear}-11-16`;
 
