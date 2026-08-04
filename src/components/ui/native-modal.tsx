@@ -73,9 +73,6 @@ export function NativeModal({
   useEffect(() => {
     if (!isOpen) return;
 
-    const previousOverflow = document.body.style.overflow;
-    const previousTouchAction = document.body.style.touchAction;
-
     document.body.style.overflow = 'hidden';
     document.body.style.touchAction = 'none';
 
@@ -84,8 +81,8 @@ export function NativeModal({
         '[data-native-modal="open"]'
       );
       if (openModals.length <= 1) {
-        document.body.style.overflow = previousOverflow;
-        document.body.style.touchAction = previousTouchAction;
+        document.body.style.overflow = '';
+        document.body.style.touchAction = '';
       }
     };
   }, [isOpen]);

@@ -129,6 +129,7 @@ export function ServicePaymentForm({ type, year }: ServicePaymentFormProps) {
         ...formData,
         amount: amountInPaise,
         type,
+        accountType: 'jagadhatri',
       });
 
       if (!orderResponse.success) {
@@ -136,7 +137,7 @@ export function ServicePaymentForm({ type, year }: ServicePaymentFormProps) {
       }
 
       const options = {
-        key: process.env.NEXT_PUBLIC_RAZORPAY_KEY_ID!,
+        key: orderResponse.keyId,
         amount: amountInPaise.toString(),
         currency: 'INR',
         name: 'Madhyanchal Sarbajanin',

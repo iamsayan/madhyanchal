@@ -1,23 +1,28 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import Link from 'next/link';
 
 import { submitModel } from '@/app/actions/model';
+import { createRazorpayOrder } from '@/app/actions/razorpay';
 import { BorderBeam } from '@/components/ui/border-beam';
 import { NativeModal } from '@/components/ui/native-modal';
 import { Button } from '@/components/ui/button';
-import { cn } from '@/lib/utils';
+import { loadRazorpay } from '@/lib/load-razorpay';
+import { RazorpaySuccessResponse } from '@/types';
 
 import { useForm, useFieldArray } from 'react-hook-form';
 import { AnimatePresence, motion } from 'framer-motion';
 
 import {
   ChevronRight,
+  CreditCard,
   Eye,
+  IndianRupee,
   Loader2,
   Palette,
   Plus,
+  ShieldCheck,
   Sparkles,
   Trash2,
   User,
@@ -41,7 +46,8 @@ export interface DrawingCompetitionFormData {
   participants: ParticipantItem[];
 }
 
-const competitionDate = new Date('2025-09-21T10:00:00');
+const REGISTRATION_FEE_PER_PARTICIPANT = 50; // ₹50 per participant
+const COMPETITION_DATE = new Date('2026-10-11T10:00:00');
 
 function calculateAgeAndCategory(dobString: string) {
   if (!dobString) return { age: '', category: '' };
@@ -50,11 +56,11 @@ function calculateAgeAndCategory(dobString: string) {
     const birthDate = new Date(dobString);
     if (isNaN(birthDate.getTime())) return { age: '', category: '' };
 
-    const timeDiff = competitionDate.getTime() - birthDate.getTime();
+    const timeDiff = COMPETITION_DATE.getTime() - birthDate.getTime();
     const totalDays = Math.floor(timeDiff / (1000 * 3600 * 24));
 
-    let years = competitionDate.getFullYear() - birthDate.getFullYear();
-    let months = competitionDate.getMonth() - birthDate.getMonth();
+    let years = COMPETITION_DATE.getFullYear() - birthDate.getFullYear();
+    let months = COMPETITION_DATE.getMonth() - birthDate.getMonth();
 
     if (months < 0) {
       months += 12;
@@ -88,6 +94,8 @@ export function DrawingCompetitionForm() {
 
   const [success, setSuccess] = useState<{
     registrations: Array<{ name: string; id: string }>;
+    paymentId?: string;
+    totalAmount?: number;
   } | null>(null);
   const [errorMsg, setErrorMsg] = useState<string | null>(null);
 
@@ -95,9 +103,9 @@ export function DrawingCompetitionForm() {
 
   const defaultFormValues: DrawingCompetitionFormData = isDevelopment
     ? {
-        guardianName: 'Subhasis Banerjee',
-        email: 'subhasis.banerjee@example.com',
-        phone: '9876543210',
+        guardianName: 'Sayan Datta',
+        email: 'sayandatta.in@gmail.com',
+        phone: '7686943894',
         address: '42, Station Road, Near Sporting Club',
         city: 'Chandannagar',
         pinCode: '712136',
@@ -132,7 +140,6 @@ export function DrawingCompetitionForm() {
     register,
     control,
     handleSubmit,
-    watch,
     setValue,
     reset,
     formState: { errors, isSubmitting },
@@ -144,8 +151,6 @@ export function DrawingCompetitionForm() {
     control,
     name: 'participants',
   });
-
-  const watchedParticipants = watch('participants');
 
   const handleDobChange = (index: number, dobValue: string) => {
     const { age, category } = calculateAgeAndCategory(dobValue);
@@ -159,57 +164,131 @@ export function DrawingCompetitionForm() {
     setPreviewData(data);
   };
 
-  // Perform actual API submission from Preview Modal
+  // Perform Razorpay Order creation & API submission from Preview Modal
   const handleFinalSubmit = async () => {
     if (!previewData) return;
     setIsSubmittingFinal(true);
     setErrorMsg(null);
 
+    const totalAmount =
+      previewData.participants.length * REGISTRATION_FEE_PER_PARTICIPANT;
+    const amountInPaise = totalAmount * 100;
+
     try {
-      const results: Array<{ name: string; id: string }> = [];
-
-      for (let i = 0; i < previewData.participants.length; i++) {
-        const p = previewData.participants[i];
-        const regId = `DC/${Date.now().toString().slice(-6)}${i + 1}`;
-
-        const res = await submitModel(
-          `drawingcompetition${new Date().getFullYear()}`,
-          {
-            registration_id: regId,
-            mode: 'online',
-            name: p.participantName,
-            dob: p.dateOfBirth,
-            age: p.age || '',
-            category: p.category || '',
-            guardian_name: previewData.guardianName,
-            email: previewData.email,
-            phone: previewData.phone,
-            address: previewData.address,
-            city: previewData.city,
-            pincode: previewData.pinCode,
-          }
-        );
-
-        if (!res.success) {
-          throw new Error(
-            res.error ||
-              `Submission failed for participant #${i + 1}: ${p.participantName}`
-          );
-        }
-
-        results.push({ name: p.participantName, id: regId });
+      const loaded = await loadRazorpay();
+      if (!loaded || !window.Razorpay) {
+        throw new Error('Failed to load Razorpay payment gateway.');
       }
 
-      setPreviewData(null);
-      setSuccess({ registrations: results });
-      reset(defaultFormValues);
+      const orderResponse = await createRazorpayOrder({
+        amount: amountInPaise,
+        name: previewData.guardianName,
+        email: previewData.email,
+        phone: previewData.phone.replace(/\D+/g, ''),
+        accountType: 'durga',
+      });
+
+      if (!orderResponse.success) {
+        throw new Error(
+          orderResponse.error ?? 'Failed to create payment order'
+        );
+      }
+
+      const options = {
+        key: orderResponse.keyId,
+        amount: amountInPaise.toString(),
+        currency: 'INR',
+        name: 'Madhyanchal Sarbajanin',
+        description: `Drawing Competition Fee (${previewData.participants.length} participant${previewData.participants.length > 1 ? 's' : ''})`,
+        order_id: orderResponse.orderId,
+        notes: {
+          guardian_name: previewData.guardianName,
+          email: previewData.email,
+          phone: previewData.phone.replace(/\D+/g, ''),
+          participants_count: previewData.participants.length.toString(),
+        },
+        handler: async function (response: RazorpaySuccessResponse) {
+          try {
+            const results: Array<{ name: string; id: string }> = [];
+
+            for (let i = 0; i < previewData.participants.length; i++) {
+              const p = previewData.participants[i];
+              const regId = `DC/${Date.now().toString().slice(-6)}${i + 1}`;
+
+              const res = await submitModel(
+                `drawingcompetition${new Date().getFullYear()}`,
+                {
+                  registration_id: regId,
+                  mode: 'online',
+                  name: p.participantName,
+                  dob: p.dateOfBirth,
+                  age: p.age || '',
+                  category: p.category || '',
+                  guardian_name: previewData.guardianName,
+                  email: previewData.email,
+                  phone: previewData.phone,
+                  address: previewData.address,
+                  city: previewData.city,
+                  pincode: previewData.pinCode,
+                  payment_id: response.razorpay_payment_id,
+                  fee_paid: `${REGISTRATION_FEE_PER_PARTICIPANT}`,
+                }
+              );
+
+              if (!res.success) {
+                throw new Error(
+                  res.error || `Registration failed for ${p.participantName}`
+                );
+              }
+
+              results.push({ name: p.participantName, id: regId });
+            }
+
+            setPreviewData(null);
+            setSuccess({
+              registrations: results,
+              paymentId: response.razorpay_payment_id,
+              totalAmount,
+            });
+            reset(defaultFormValues);
+          } catch (err) {
+            setPreviewData(null);
+            setErrorMsg(
+              err instanceof Error
+                ? err.message
+                : 'Failed to record registration. Please contact support with Payment ID: ' +
+                    response.razorpay_payment_id
+            );
+          } finally {
+            setIsSubmittingFinal(false);
+          }
+        },
+        modal: {
+          ondismiss: function () {
+            setIsSubmittingFinal(false);
+          },
+        },
+        prefill: {
+          name: previewData.guardianName,
+          email: previewData.email,
+          contact: previewData.phone.replace(/\D+/g, ''),
+        },
+        readonly: {
+          email: true,
+          contact: true,
+        },
+        send_sms_hash: true,
+      };
+
+      const razorpay = new window.Razorpay(options);
+      razorpay.open();
     } catch (err) {
-      setPreviewData(null);
-      setErrorMsg(
-        err instanceof Error ? err.message : 'Registration failed. Try again.'
-      );
-    } finally {
       setIsSubmittingFinal(false);
+      setErrorMsg(
+        err instanceof Error
+          ? err.message
+          : 'Failed to launch payment gateway. Try again.'
+      );
     }
   };
 
@@ -239,7 +318,8 @@ export function DrawingCompetitionForm() {
             </h2>
 
             <p className="max-w-xl text-xs leading-relaxed text-slate-600 sm:text-sm dark:text-slate-300">
-              Online registration for children’s Sit & Draw competition will open shortly. Please check back soon for schedule details and age category guidelines.
+              Online registration for children’s Sit & Draw competition will
+              open shortly. Registration fee is ₹50 per participant.
             </p>
 
             {/* TOPIC PREVIEW BANNER */}
@@ -276,14 +356,13 @@ export function DrawingCompetitionForm() {
             <li className="flex items-start gap-2">
               <span className="mt-1 h-1.5 w-1.5 shrink-0 rounded-full bg-amber-500" />
               <span>
-                Registration fee & guidelines will be announced when online portal opens.
+                Registration Fee: ₹50 per participant (Payable online via UPI,
+                Cards, Net Banking).
               </span>
             </li>
             <li className="flex items-start gap-2">
               <span className="mt-1 h-1.5 w-1.5 shrink-0 rounded-full bg-amber-500" />
-              <span>
-                Drawing paper will be provided at the venue.
-              </span>
+              <span>Drawing paper will be provided at the venue.</span>
             </li>
             <li className="flex items-start gap-2">
               <span className="mt-1 h-1.5 w-1.5 shrink-0 rounded-full bg-amber-500" />
@@ -293,9 +372,7 @@ export function DrawingCompetitionForm() {
             </li>
             <li className="flex items-start gap-2">
               <span className="mt-1 h-1.5 w-1.5 shrink-0 rounded-full bg-amber-500" />
-              <span>
-                Judges’ decision will be final.
-              </span>
+              <span>Judges’ decision will be final.</span>
             </li>
             <li className="flex items-start gap-2">
               <span className="mt-1 h-1.5 w-1.5 shrink-0 rounded-full bg-amber-500" />
@@ -309,6 +386,8 @@ export function DrawingCompetitionForm() {
     );
   }
 
+  const currentTotalAmount = fields.length * REGISTRATION_FEE_PER_PARTICIPANT;
+
   return (
     <div className="relative mx-auto max-w-4xl space-y-6">
       {/* UNIFIED NATIVE PREVIEW MODAL */}
@@ -319,14 +398,16 @@ export function DrawingCompetitionForm() {
         }}
         variant="info"
         title="Review Registration Details"
-        description="Please review all details for the guardian and participant(s) before final submission."
+        description="Please review all details and payment summary before proceeding to payment."
         primaryButton={{
-          label: isSubmittingFinal ? 'Submitting...' : 'Confirm & Submit',
+          label: isSubmittingFinal
+            ? 'Processing Payment...'
+            : `Pay ₹${(previewData?.participants.length || 1) * REGISTRATION_FEE_PER_PARTICIPANT} & Register`,
           onClick: handleFinalSubmit,
           icon: isSubmittingFinal ? (
             <Loader2 className="h-4 w-4 animate-spin" />
           ) : (
-            <Sparkles className="h-4 w-4" />
+            <CreditCard className="h-4 w-4" />
           ),
         }}
         secondaryButton={{
@@ -337,6 +418,34 @@ export function DrawingCompetitionForm() {
       >
         {previewData && (
           <div className="space-y-3.5 text-left text-xs text-slate-700 dark:text-slate-200">
+            {/* Payment Breakdown Box */}
+            <div className="space-y-1.5 rounded-xl border border-amber-500/40 bg-amber-500/15 p-3.5 text-left">
+              <div className="flex items-center justify-between border-b border-amber-500/20 pb-2 font-bold text-slate-900 dark:text-white">
+                <span className="flex items-center gap-1.5 text-xs text-amber-800 dark:text-amber-300">
+                  <CreditCard className="h-4 w-4 text-amber-600 dark:text-amber-400" />
+                  <span>Registration Fee Summary:</span>
+                </span>
+                <span className="rounded-full bg-amber-500 px-3 py-0.5 text-xs font-black text-slate-950">
+                  Total ₹
+                  {previewData.participants.length *
+                    REGISTRATION_FEE_PER_PARTICIPANT}
+                </span>
+              </div>
+              <div className="flex items-center justify-between text-xs text-slate-600 dark:text-slate-300">
+                <span>Fee Rate per Participant:</span>
+                <span className="font-semibold text-slate-900 dark:text-white">
+                  ₹50
+                </span>
+              </div>
+              <div className="flex items-center justify-between text-xs text-slate-600 dark:text-slate-300">
+                <span>Total Registered Participants:</span>
+                <span className="font-semibold text-slate-900 dark:text-white">
+                  {previewData.participants.length} Child
+                  {previewData.participants.length > 1 ? 'ren' : ''}
+                </span>
+              </div>
+            </div>
+
             {/* Guardian Info Box */}
             <div className="space-y-2 rounded-xl border border-amber-500/30 bg-amber-500/10 p-3.5 text-left">
               <div className="flex items-center gap-1.5 border-b border-amber-500/20 pb-2 text-xs font-bold text-amber-700 dark:text-amber-300">
@@ -364,7 +473,7 @@ export function DrawingCompetitionForm() {
                   <span className="shrink-0 text-slate-500 dark:text-slate-400">
                     Email:
                   </span>
-                  <span className="break-all font-semibold text-slate-900 dark:text-white">
+                  <span className="font-semibold break-all text-slate-900 dark:text-white">
                     {previewData.email}
                   </span>
                 </div>
@@ -431,8 +540,8 @@ export function DrawingCompetitionForm() {
         isOpen={success !== null}
         onClose={() => setSuccess(null)}
         variant="success"
-        title="Registration Successful!"
-        description={`Registration successful for ${success?.registrations.length || 1} participant(s). Registration details are below.`}
+        title="Registration & Payment Successful!"
+        description={`Payment of ₹${success?.totalAmount || 0} received successfully (Payment ID: ${success?.paymentId || 'N/A'}). Registration details for ${success?.registrations.length || 1} participant(s) are below.`}
         details={
           success?.registrations.map((reg) => ({
             label: reg.name,
@@ -477,6 +586,12 @@ export function DrawingCompetitionForm() {
             <h2 className="font-paytone text-lg font-bold text-slate-900 sm:text-2xl dark:text-white">
               Participant Registration Portal
             </h2>
+          </div>
+
+          {/* Fee Badge */}
+          <div className="flex items-center gap-2 rounded-2xl border border-amber-500/40 bg-amber-500/10 px-4 py-2 text-xs font-bold text-amber-800 dark:text-amber-300">
+            <IndianRupee className="h-4 w-4 text-amber-500" />
+            <span>₹50 / Participant</span>
           </div>
         </div>
 
@@ -737,10 +852,17 @@ export function DrawingCompetitionForm() {
                         </label>
                         <input
                           type="date"
+                          max={COMPETITION_DATE.toISOString().split('T')[0]}
                           {...register(
                             `participants.${index}.dateOfBirth` as const,
                             {
                               required: 'Date of birth is required',
+                              max: {
+                                value:
+                                  COMPETITION_DATE.toISOString().split('T')[0],
+                                message:
+                                  'Date of birth cannot be after competition date',
+                              },
                               onChange: (e) =>
                                 handleDobChange(index, e.target.value),
                             }
@@ -810,8 +932,8 @@ export function DrawingCompetitionForm() {
           </div>
         </div>
 
-        {/* SUBMIT BUTTON (OPENS PREVIEW MODAL) */}
-        <div className="pt-4">
+        {/* SUBMIT BUTTON (OPENS PREVIEW & PAY MODAL) */}
+        <div className="space-y-2 pt-4">
           <Button
             type="submit"
             disabled={isSubmitting}
@@ -821,10 +943,17 @@ export function DrawingCompetitionForm() {
           >
             <span className="flex items-center justify-center gap-1.5">
               <Eye className="h-4 w-4 text-amber-950" />
-              Preview & Review Details ({fields.length} Participant
+              Preview & Pay ₹{currentTotalAmount} ({fields.length} Participant
               {fields.length > 1 ? 's' : ''})
             </span>
           </Button>
+
+          <div className="flex items-center justify-center gap-1.5 text-[11px] font-bold text-slate-500 dark:text-slate-400">
+            <ShieldCheck className="h-3.5 w-3.5 text-emerald-500" />
+            <span>
+              Secured via Razorpay (UPI, Credit/Debit Cards, Net Banking)
+            </span>
+          </div>
         </div>
       </form>
 
@@ -834,6 +963,13 @@ export function DrawingCompetitionForm() {
           Rules & Guidelines:
         </h4>
         <ul className="space-y-1.5 text-xs text-slate-600 dark:text-slate-300">
+          <li className="flex items-start gap-2">
+            <span className="mt-1 h-1.5 w-1.5 shrink-0 rounded-full bg-amber-500" />
+            <span>
+              Registration Fee: ₹50 per participant (Payable online via UPI,
+              Cards, Net Banking).
+            </span>
+          </li>
           <li className="flex items-start gap-2">
             <span className="mt-1 h-1.5 w-1.5 shrink-0 rounded-full bg-amber-500" />
             <span>
@@ -857,7 +993,8 @@ export function DrawingCompetitionForm() {
           <li className="flex items-start gap-2">
             <span className="mt-1 h-1.5 w-1.5 shrink-0 rounded-full bg-amber-500" />
             <span>
-              Photocopy of age proof certificate must be produced on competition day.
+              Photocopy of age proof certificate must be produced on competition
+              day.
             </span>
           </li>
         </ul>

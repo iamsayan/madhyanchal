@@ -189,6 +189,7 @@ export function ServiceDressOrder({
         ...formData,
         amount: amountInPaise,
         type: 'dress',
+        accountType: 'jagadhatri',
       });
 
       if (!orderResponse.success) {
@@ -196,7 +197,7 @@ export function ServiceDressOrder({
       }
 
       const options = {
-        key: process.env.NEXT_PUBLIC_RAZORPAY_KEY_ID!,
+        key: orderResponse.keyId,
         amount: amountInPaise.toString(),
         currency: 'INR',
         name: 'Madhyanchal Sarbajanin',

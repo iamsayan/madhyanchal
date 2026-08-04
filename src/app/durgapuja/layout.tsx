@@ -3,18 +3,12 @@ import { ReactNode } from 'react';
 
 export const viewport: Viewport = {
   themeColor: '#0c1930',
-  width: 'device-width',
-  initialScale: 1,
-  maximumScale: 1,
-  userScalable: false,
-  viewportFit: 'cover',
 };
 
 export const metadata: Metadata = {
   title: {
     template: '%s | Durga Puja 2026 - Madhyanchal Sarbajanin',
-    default:
-      'Durga Puja 2026 Celebrations & Festival Hub | Madhyanchal Sarbajanin',
+    default: 'Durga Puja 2026 Celebrations | Madhyanchal Sarbajanin',
   },
   description:
     'Join the Durga Puja 2026 celebrations at Madhyanchal Sarbajanin, Chandannagar. 5-day festival schedule, 108 lotus Sandhi Puja, Youth Drawing Contest, and community feasts.',

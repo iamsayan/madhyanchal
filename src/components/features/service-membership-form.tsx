@@ -156,6 +156,7 @@ export function ServiceMembershipForm({
         phone: formData.phone,
         amount: amountInPaise,
         type: 'membership',
+        accountType: 'jagadhatri',
       });
 
       if (!orderResponse.success) {
@@ -163,7 +164,7 @@ export function ServiceMembershipForm({
       }
 
       const options = {
-        key: process.env.NEXT_PUBLIC_RAZORPAY_KEY_ID!,
+        key: orderResponse.keyId,
         amount: amountInPaise.toString(),
         currency: 'INR',
         name: 'Madhyanchal Sarbajanin',

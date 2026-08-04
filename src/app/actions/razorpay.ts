@@ -1,15 +1,18 @@
 'use server';
 
-import { RazorpayFormData } from '@/src/types';
+import { RazorpayOrder } from '@/types';
 import Razorpay from 'razorpay';
 
-const razorpay = new Razorpay({
-  key_id: process.env.NEXT_PUBLIC_RAZORPAY_KEY_ID!,
-  key_secret: process.env.RAZORPAY_KEY_SECRET!,
-});
-
-export async function createRazorpayOrder(formData: RazorpayFormData) {
+export async function createRazorpayOrder(formData: RazorpayOrder) {
   try {
+    const accountType = formData.accountType;
+    if (!accountType) {
+      return {
+        success: false,
+        error: 'Missing account type',
+      };
+    }
+
     const amount = formData.amount;
     const email = formData.email;
     const name = formData.name;
@@ -21,6 +24,28 @@ export async function createRazorpayOrder(formData: RazorpayFormData) {
         error: 'Missing required fields',
       };
     }
+
+    const isDurga = accountType === 'durga';
+
+    const key_id = isDurga
+      ? process.env.NEXT_PUBLIC_DURGA_RAZORPAY_KEY_ID
+      : process.env.NEXT_PUBLIC_RAZORPAY_KEY_ID;
+
+    const key_secret = isDurga
+      ? process.env.DURGA_RAZORPAY_KEY_SECRET
+      : process.env.RAZORPAY_KEY_SECRET;
+
+    if (!key_id || !key_secret) {
+      return {
+        success: false,
+        error: 'Missing Razorpay keys',
+      };
+    }
+
+    const razorpay = new Razorpay({
+      key_id,
+      key_secret,
+    });
 
     const order = await razorpay.orders.create({
       amount: amount,
@@ -36,13 +61,14 @@ export async function createRazorpayOrder(formData: RazorpayFormData) {
     return {
       success: true,
       orderId: order.id,
+      keyId: key_id,
     };
   } catch (error) {
     console.error('Error creating order:', error);
 
     return {
       success: false,
-      error: 'Error creating order',
+      error: 'Error creating payment order',
     };
   }
 }

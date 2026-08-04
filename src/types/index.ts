@@ -140,7 +140,8 @@ export interface DrawingCompetitionRecord extends Entity {
   pincode: string;
 }
 
-export interface RazorpayFormData {
+export interface RazorpayOrder {
+  accountType: 'durga' | 'jagadhatri';
   amount: number;
   email: string;
   name: string;
