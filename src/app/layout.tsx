@@ -1,6 +1,6 @@
 import { SerwistProvider } from '@serwist/next/react';
 import type { Metadata, Viewport } from 'next';
-import { Outfit, Paytone_One } from 'next/font/google';
+import { Outfit, Paytone_One, Noto_Sans_Bengali } from 'next/font/google';
 
 import { ThemeProvider } from '@/app/providers/theme-provider';
 import { Footer } from '@/components/layout/footer';
@@ -28,6 +28,13 @@ const paytoneOne = Paytone_One({
   subsets: ['latin'],
   display: 'swap',
   variable: '--font-paytone',
+});
+
+const notoSansBengali = Noto_Sans_Bengali({
+  weight: ['400', '500', '600', '700'],
+  subsets: ['bengali'],
+  display: 'swap',
+  variable: '--font-noto-bengali',
 });
 
 export const viewport: Viewport = {
@@ -124,7 +131,7 @@ export default function RootLayout({ children }: { children: ReactNode }) {
     <html
       lang="en"
       suppressHydrationWarning
-      className={`${outfit.variable} ${paytoneOne.variable} scroll-smooth`}
+      className={`${outfit.variable} ${paytoneOne.variable} ${notoSansBengali.variable} scroll-smooth`}
       data-scroll-behavior="smooth"
     >
       {process.env.NODE_ENV === 'production' && (

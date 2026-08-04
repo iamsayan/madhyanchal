@@ -158,9 +158,167 @@ export function DrawingCompetitionForm() {
   };
 
   const isBn = language === 'bn';
+  const isProduction = process.env.NODE_ENV === 'production';
+
+  // In production environment, display coming soon notice card
+  if (!isProduction) {
+    return (
+      <div
+        className={cn(
+          'relative mx-auto max-w-4xl space-y-6',
+          isBn && 'font-bengali'
+        )}
+      >
+        {/* TOP EVENT SUMMARY & COMING SOON BANNER */}
+        <div className="card-glass relative overflow-hidden rounded-2xl border border-slate-200/90 p-6 text-center backdrop-blur-2xl sm:rounded-3xl sm:p-10 dark:border-white/12">
+          <BorderBeam
+            size={220}
+            duration={7}
+            colorFrom="#f59e0b"
+            colorTo="#fef08a"
+          />
+
+          <div className="flex flex-col items-center space-y-4">
+            <span className="inline-flex items-center gap-1.5 rounded-full border border-amber-500/40 bg-amber-500/20 px-3.5 py-1 text-[11px] font-extrabold tracking-widest text-amber-800 uppercase dark:text-amber-300">
+              <Sparkles className="h-3.5 w-3.5 animate-pulse text-amber-500" />
+              {isBn
+                ? 'অনলাইন নাম নথিভুক্তকরণ শীঘ্রই শুরু হচ্ছে'
+                : 'REGISTRATION OPENING SOON'}
+            </span>
+
+            <h2 className="font-paytone text-xl font-bold text-slate-900 sm:text-3xl lg:text-4xl dark:text-white">
+              {isBn
+                ? 'মধ্যঞ্চল বার্ষিক বসে আঁকো প্রতিযোগিতা'
+                : 'Madhyanchal Annual Sit & Draw Competition'}
+            </h2>
+
+            <p className="max-w-xl text-xs leading-relaxed text-slate-600 sm:text-sm dark:text-slate-300">
+              {isBn
+                ? 'প্রতিযোগিতায় শিশুদের নাম নথিভুক্ত করার প্রক্রিয়া খুব শীঘ্রই শুরু হতে চলেছে। স্থান, সময় ও নিয়মাবলীর তথ্যের জন্য নজর রাখুন।'
+                : 'Online registration for children’s Sit & Draw competition will open shortly. Please check back soon for schedule details and age category guidelines.'}
+            </p>
+
+            {/* Language Switcher */}
+            <div className="flex items-center gap-1 rounded-full border border-slate-200/80 bg-slate-100 p-1 dark:border-white/10 dark:bg-stone-900">
+              <Globe className="ml-2 h-3.5 w-3.5 text-amber-600 dark:text-amber-400" />
+              <button
+                type="button"
+                onClick={() => setLanguage('en')}
+                className={cn(
+                  'rounded-full px-3 py-1 text-xs font-bold transition-all',
+                  language === 'en'
+                    ? 'bg-amber-500 text-slate-950 shadow-xs'
+                    : 'text-slate-600 dark:text-slate-400'
+                )}
+              >
+                English
+              </button>
+              <button
+                type="button"
+                onClick={() => setLanguage('bn')}
+                className={cn(
+                  'rounded-full px-3 py-1 text-xs font-bold transition-all',
+                  language === 'bn'
+                    ? 'bg-amber-500 text-slate-950 shadow-xs'
+                    : 'text-slate-600 dark:text-slate-400'
+                )}
+              >
+                বাংলা
+              </button>
+            </div>
+
+            {/* TOPIC PREVIEW BANNER */}
+            <div className="w-full max-w-xl rounded-xl border border-amber-500/30 bg-amber-500/10 p-3 text-center sm:p-4">
+              <span className="text-[10px] font-extrabold tracking-widest text-amber-700 uppercase dark:text-amber-400">
+                {isBn ? 'অঙ্কনের বিষয়' : 'Drawing Topic'}
+              </span>
+              <h4 className="font-paytone text-base font-bold text-slate-900 sm:text-xl dark:text-white">
+                {isBn
+                  ? 'যেমন খুশি আঁকো (Draw As You Like)'
+                  : 'Draw As You Like'}
+              </h4>
+              <p className="mt-0.5 text-[11px] font-medium text-slate-600 dark:text-slate-300">
+                {isBn
+                  ? 'সকল বয়সের প্রতিযোগীদের জন্য (Category A, B & C)'
+                  : 'Open theme for all age groups (Category A, B & C)'}
+              </p>
+            </div>
+
+            <div className="pt-2">
+              <Link
+                href="/durgapuja"
+                className="inline-flex items-center gap-2 rounded-full border border-amber-500/40 bg-amber-500 px-6 py-2.5 text-xs font-extrabold text-slate-950 shadow-md transition-all hover:bg-amber-400 active:scale-95"
+              >
+                <span>
+                  {isBn
+                    ? 'দুর্গাপূজা উৎসবে ফিরে যান'
+                    : 'Explore Durga Puja Events'}
+                </span>
+                <ChevronRight className="h-4 w-4" />
+              </Link>
+            </div>
+          </div>
+        </div>
+
+        {/* RULES & GUIDELINES CARD */}
+        <div className="card-glass relative overflow-hidden rounded-2xl border border-slate-200/90 p-4 backdrop-blur-2xl sm:rounded-3xl sm:p-6 dark:border-white/12">
+          <h4 className="font-paytone mb-2 text-sm font-bold text-slate-900 sm:text-base dark:text-white">
+            {isBn ? 'নিয়মাবলী ও শর্তসমূহ:' : 'Rules & Guidelines:'}
+          </h4>
+          <ul className="space-y-1.5 text-xs text-slate-600 dark:text-slate-300">
+            <li className="flex items-start gap-2">
+              <span className="mt-1 h-1.5 w-1.5 shrink-0 rounded-full bg-amber-500" />
+              <span>
+                {isBn
+                  ? 'অংশগ্রহণের ফি ও রেজিস্ট্রেশনের নিয়মাবলী নাম নথিভুক্তকরণ চালু হলে প্রকাশ করা হবে।'
+                  : 'Registration fee & guidelines will be announced when online portal opens.'}
+              </span>
+            </li>
+            <li className="flex items-start gap-2">
+              <span className="mt-1 h-1.5 w-1.5 shrink-0 rounded-full bg-amber-500" />
+              <span>
+                {isBn
+                  ? 'আয়োজকদের পক্ষ থেকে শুধুমাত্র আর্ট পেপার দেওয়া হবে।'
+                  : 'Drawing paper will be provided at the venue.'}
+              </span>
+            </li>
+            <li className="flex items-start gap-2">
+              <span className="mt-1 h-1.5 w-1.5 shrink-0 rounded-full bg-amber-500" />
+              <span>
+                {isBn
+                  ? 'রং ও অন্যান্য আঁকার সরঞ্জাম প্রতিযোগীদের নিজেদের আনতে হবে।'
+                  : 'Participants must bring their own colors and drawing kits.'}
+              </span>
+            </li>
+            <li className="flex items-start gap-2">
+              <span className="mt-1 h-1.5 w-1.5 shrink-0 rounded-full bg-amber-500" />
+              <span>
+                {isBn
+                  ? 'বিচারকদের সিদ্ধান্তই চূড়ান্ত বলে গণ্য হবে।'
+                  : 'Judges’ decision will be final.'}
+              </span>
+            </li>
+            <li className="flex items-start gap-2">
+              <span className="mt-1 h-1.5 w-1.5 shrink-0 rounded-full bg-amber-500" />
+              <span>
+                {isBn
+                  ? 'প্রতিযোগিতার দিন বয়সের প্রমাণপত্রের ফটোকপি জমা দিতে হবে।'
+                  : 'Please carry a photocopy of age proof on competition day.'}
+              </span>
+            </li>
+          </ul>
+        </div>
+      </div>
+    );
+  }
 
   return (
-    <div className="relative mx-auto max-w-4xl space-y-6">
+    <div
+      className={cn(
+        'relative mx-auto max-w-4xl space-y-6',
+        isBn && 'font-bengali'
+      )}
+    >
       {/* UNIFIED NATIVE SUCCESS MODAL */}
       <NativeModal
         isOpen={success !== null}
@@ -519,8 +677,8 @@ export function DrawingCompetitionForm() {
             <span className="mt-1 h-1.5 w-1.5 shrink-0 rounded-full bg-amber-500" />
             <span>
               {isBn
-                ? 'কোনো প্রবেশ মূল্য নেই (Free Entry).'
-                : 'No entry fee required.'}
+                ? 'অংশগ্রহণের ফি ও রেজিস্ট্রেশনের নিয়মাবলী নাম নথিভুক্তকরণ শুরু হলে জানানো হবে।'
+                : 'Registration fee & details will be specified during online registration.'}
             </span>
           </li>
           <li className="flex items-start gap-2">

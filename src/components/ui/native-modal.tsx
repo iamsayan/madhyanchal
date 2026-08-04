@@ -5,7 +5,7 @@ import { createPortal } from 'react-dom';
 import Link from 'next/link';
 import { AnimatePresence, motion } from 'framer-motion';
 import { BorderBeam } from '@/components/ui/border-beam';
-import { cn } from '@/lib/utils';
+import { cn, hasBengaliText } from '@/lib/utils';
 import { useIsDurgaPuja } from '@/hooks/use-is-durga-puja';
 import {
   Check,
@@ -156,6 +156,8 @@ export function NativeModal({
     );
   };
 
+  const containsBengali = hasBengaliText(title, description);
+
   const modalContent = (
     <AnimatePresence>
       {isOpen && (
@@ -182,7 +184,10 @@ export function NativeModal({
             animate={{ y: 0 }}
             exit={{ y: '100%' }}
             transition={{ duration: 0.28, ease: [0.32, 0.72, 0, 1] }}
-            className={`relative z-10 flex max-h-[85vh] w-full ${maxWidthClass} flex-col overflow-hidden rounded-t-[2rem] border ${vStyles.borderColor} bg-white/95 p-4 pb-[calc(1.25rem+env(safe-area-inset-bottom,0px))] text-center shadow-2xl backdrop-blur-2xl sm:rounded-[2.5rem] sm:p-6 sm:pb-6 dark:bg-stone-950/95`}
+            className={cn(
+              `relative z-10 flex max-h-[85vh] w-full ${maxWidthClass} flex-col overflow-hidden rounded-t-[2rem] border ${vStyles.borderColor} bg-white/95 p-4 pb-[calc(1.25rem+env(safe-area-inset-bottom,0px))] text-center shadow-2xl backdrop-blur-2xl sm:rounded-[2.5rem] sm:p-6 sm:pb-6 dark:bg-stone-950/95`,
+              containsBengali && 'font-bengali'
+            )}
           >
             <BorderBeam
               size={160}

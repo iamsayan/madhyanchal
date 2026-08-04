@@ -5,9 +5,15 @@
 @theme {
   --font-sans: var(--font-outfit), sans-serif;
   --font-paytone: var(--font-paytone), sans-serif;
+  --font-bengali: var(--font-noto-bengali), sans-serif;
+}
+
+@utility font-bengali {
+  font-family: var(--font-noto-bengali), sans-serif;
 }
 
 @layer base {
+
   :root {
     --background: 42 70% 97.5%;
     --foreground: 24 9.8% 10%;
