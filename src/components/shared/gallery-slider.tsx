@@ -130,7 +130,7 @@ export function GallerySlider({
   const currentSlide = selectedIndex !== null ? slides[selectedIndex] : null;
 
   return (
-    <div className="relative mx-auto w-full max-w-7xl">
+    <div className="relative mx-auto w-full max-w-7xl overflow-hidden px-0.5 sm:px-0">
       {/* 1. UNIVERSAL CAROUSEL MODE (Always Carousel everywhere) */}
       {layout === 'carousel' && (
         <div className="group/carousel relative">
@@ -144,14 +144,14 @@ export function GallerySlider({
                 onClick={() => openLightbox(idx)}
                 className="group/item relative aspect-[4/3] w-[82vw] shrink-0 cursor-pointer snap-center overflow-hidden rounded-2xl border border-slate-200/90 bg-slate-900 transition-transform active:scale-[0.98] sm:w-[45vw] md:w-[30vw] dark:border-white/10"
               >
-                  <CockpitImage
-                    asset={asset}
-                    preset="thumbnail"
-                    fill
-                    sizes="(max-width: 640px) 82vw, (max-width: 1024px) 45vw, 30vw"
-                    containerClassName="absolute inset-0 size-full"
-                    className="object-cover transition-transform duration-700 group-hover/item:scale-105"
-                  />
+                <CockpitImage
+                  asset={asset}
+                  preset="thumbnail"
+                  fill
+                  sizes="(max-width: 640px) 82vw, (max-width: 1024px) 45vw, 30vw"
+                  containerClassName="absolute inset-0 size-full"
+                  className="object-cover transition-transform duration-700 group-hover/item:scale-105"
+                />
 
                 {/* Gradient Overlay & Metadata */}
                 <div className="absolute inset-0 z-10 flex flex-col justify-between bg-gradient-to-t from-slate-950/80 via-slate-950/10 to-transparent p-3.5">
@@ -201,7 +201,7 @@ export function GallerySlider({
 
       {/* 2. UNIVERSAL GRID MODE (Always Grid everywhere) */}
       {layout === 'grid' && (
-        <div className="grid grid-cols-2 gap-2.5 sm:grid-cols-3 sm:gap-4 md:grid-cols-4 lg:grid-cols-4">
+        <div className="grid w-full max-w-full grid-cols-2 gap-2.5 sm:grid-cols-3 sm:gap-4 md:grid-cols-4 lg:grid-cols-4">
           {slides.map((asset, idx) => {
             const isFeatured = idx === 0 || idx % 7 === 0;
 
@@ -211,22 +211,22 @@ export function GallerySlider({
                 onClick={() => openLightbox(idx)}
                 className={`group relative cursor-pointer overflow-hidden rounded-xl border border-slate-200/90 bg-slate-100 transition-all duration-500 hover:-translate-y-1 hover:border-amber-500/80 sm:rounded-2xl dark:border-white/12 dark:bg-stone-900/80 ${
                   isFeatured
-                    ? 'col-span-2 row-span-2 aspect-[16/10] min-h-[220px] sm:aspect-auto sm:min-h-[280px]'
+                    ? 'col-span-2 aspect-[16/10] sm:row-span-2 sm:aspect-auto sm:min-h-[280px]'
                     : 'aspect-[4/3]'
                 }`}
               >
-                  <CockpitImage
-                    asset={asset}
-                    preset="thumbnail"
-                    fill
-                    sizes={
-                      isFeatured
-                        ? '(max-width: 1024px) 100vw, 50vw'
-                        : '(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 25vw'
-                    }
-                    containerClassName="absolute inset-0 size-full"
-                    className="object-cover transition-transform duration-700 group-hover:scale-105"
-                  />
+                <CockpitImage
+                  asset={asset}
+                  preset="thumbnail"
+                  fill
+                  sizes={
+                    isFeatured
+                      ? '(max-width: 1024px) 100vw, 50vw'
+                      : '(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 25vw'
+                  }
+                  containerClassName="absolute inset-0 size-full"
+                  className="object-cover transition-transform duration-700 group-hover:scale-105"
+                />
 
                 {/* Top Featured Pill Badge */}
                 {isFeatured && (
@@ -271,14 +271,14 @@ export function GallerySlider({
                   onClick={() => openLightbox(idx)}
                   className="group/item relative aspect-[4/3] w-[82vw] shrink-0 cursor-pointer snap-center overflow-hidden rounded-2xl border border-slate-100/80 bg-slate-900 transition-transform active:scale-[0.98] dark:border-white/10"
                 >
-                    <CockpitImage
-                      asset={asset}
-                      preset="thumbnail"
-                      fill
-                      sizes="82vw"
-                      containerClassName="absolute inset-0 size-full"
-                      className="object-cover transition-transform duration-700 group-hover/item:scale-105"
-                    />
+                  <CockpitImage
+                    asset={asset}
+                    preset="thumbnail"
+                    fill
+                    sizes="82vw"
+                    containerClassName="absolute inset-0 size-full"
+                    className="object-cover transition-transform duration-700 group-hover/item:scale-105"
+                  />
 
                   <div className="absolute inset-0 z-10 flex flex-col justify-between bg-gradient-to-t from-slate-950/70 via-slate-950/10 to-transparent p-3.5">
                     <div className="flex justify-end">
@@ -301,7 +301,7 @@ export function GallerySlider({
           </div>
 
           {/* Desktop Bento Grid (>= 640px) */}
-          <div className="hidden grid-cols-2 gap-4 sm:grid sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-4">
+          <div className="hidden w-full max-w-full grid-cols-2 gap-4 sm:grid sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-4">
             {slides.map((asset, idx) => {
               const isFeatured = idx === 0 || idx % 7 === 0;
 
@@ -311,22 +311,22 @@ export function GallerySlider({
                   onClick={() => openLightbox(idx)}
                   className={`group relative cursor-pointer overflow-hidden rounded-xl border border-slate-200/90 bg-slate-100 transition-all duration-500 hover:-translate-y-1.5 hover:border-amber-500/80 dark:border-white/12 dark:bg-stone-900/80 ${
                     isFeatured
-                      ? 'col-span-2 row-span-2 aspect-[16/10] min-h-[280px] sm:aspect-auto'
+                      ? 'col-span-2 sm:row-span-2 sm:aspect-auto sm:min-h-[280px]'
                       : 'aspect-[4/3]'
                   }`}
                 >
-                    <CockpitImage
-                      asset={asset}
-                      preset="thumbnail"
-                      fill
-                      sizes={
-                        isFeatured
-                          ? '(max-width: 1024px) 100vw, 50vw'
-                          : '(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 25vw'
-                      }
-                      containerClassName="absolute inset-0 size-full"
-                      className="object-cover transition-transform duration-700 group-hover:scale-105"
-                    />
+                  <CockpitImage
+                    asset={asset}
+                    preset="thumbnail"
+                    fill
+                    sizes={
+                      isFeatured
+                        ? '(max-width: 1024px) 100vw, 50vw'
+                        : '(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 25vw'
+                    }
+                    containerClassName="absolute inset-0 size-full"
+                    className="object-cover transition-transform duration-700 group-hover:scale-105"
+                  />
 
                   {isFeatured && (
                     <div className="absolute top-3 left-3 z-20">
@@ -370,7 +370,7 @@ export function GallerySlider({
                 transition={{ duration: 0.25, ease: 'easeOut' }}
                 onClick={closeLightbox}
                 className={cn(
-                  'fixed inset-0 z-[99999] flex flex-col justify-between text-white backdrop-blur-2xl transition-all duration-300 pt-[calc(1rem+env(safe-area-inset-top,0px))] pb-[calc(1rem+env(safe-area-inset-bottom,0px))] pl-[calc(1rem+env(safe-area-inset-left,0px))] pr-[calc(1rem+env(safe-area-inset-right,0px))] sm:pt-[calc(1.5rem+env(safe-area-inset-top,0px))] sm:pb-[calc(1.5rem+env(safe-area-inset-bottom,0px))] sm:px-6',
+                  'fixed inset-0 z-[99999] flex flex-col justify-between pt-[calc(1rem+env(safe-area-inset-top,0px))] pr-[calc(1rem+env(safe-area-inset-right,0px))] pb-[calc(1rem+env(safe-area-inset-bottom,0px))] pl-[calc(1rem+env(safe-area-inset-left,0px))] text-white backdrop-blur-2xl transition-all duration-300 sm:px-6 sm:pt-[calc(1.5rem+env(safe-area-inset-top,0px))] sm:pb-[calc(1.5rem+env(safe-area-inset-bottom,0px))]',
                   isDurgaPuja ? 'bg-[#0c1930]' : 'bg-[#1c1917]'
                 )}
               >
@@ -405,7 +405,7 @@ export function GallerySlider({
                   onClick={(e) => e.stopPropagation()}
                   className="relative flex flex-1 flex-col items-center justify-center py-1"
                 >
-                  <AnimatePresence mode="wait">
+                  <AnimatePresence mode="popLayout">
                     <motion.div
                       key={
                         slides[selectedIndex]._id
@@ -426,22 +426,20 @@ export function GallerySlider({
                           prevImage();
                         }
                       }}
-                      initial={{ opacity: 0, scale: 0.88, y: 15 }}
-                      animate={{ opacity: 1, scale: 1, y: 0 }}
-                      exit={{ opacity: 0, scale: 0.92, y: -10 }}
+                      initial={{ opacity: 0, scale: 0.95 }}
+                      animate={{ opacity: 1, scale: 1 }}
+                      exit={{ opacity: 0, scale: 0.95 }}
                       transition={{
-                        type: 'spring',
-                        damping: 25,
-                        stiffness: 300,
+                        duration: 0.18,
+                        ease: [0.16, 1, 0.3, 1],
                       }}
-                      className="relative flex h-full max-h-[68vh] w-full max-w-[90vw] cursor-grab items-center justify-center touch-pan-y active:cursor-grabbing sm:max-h-[72vh]"
+                      className="relative flex h-full max-h-[68vh] w-full max-w-[90vw] cursor-grab touch-pan-y items-center justify-center active:cursor-grabbing sm:max-h-[72vh]"
                     >
                       <CockpitImage
                         asset={slides[selectedIndex]}
                         preset="large"
                         fill
-                        lazy={false}
-                        loaderPlaceholder={false}
+                        colorMode="dark"
                         containerClassName="relative size-full bg-transparent flex items-center justify-center"
                         className="rounded-2xl border border-white/15 object-contain shadow-[0_0_60px_rgba(0,0,0,0.9)] backdrop-blur-md"
                       />

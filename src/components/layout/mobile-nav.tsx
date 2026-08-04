@@ -237,17 +237,22 @@ export function MobileNavDock() {
       <AnimatePresence>
         {moreOpen && (
           <div className="fixed inset-0 z-50 flex flex-col justify-end lg:hidden">
-            {/* Smooth Backdrop Fade */}
+            {/* Frosted Glass Backdrop Fade matching Header Theme */}
             <motion.div
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
               transition={{ duration: 0.18, ease: 'easeOut' }}
-              className="fixed inset-0 cursor-pointer bg-stone-950/80 backdrop-blur-md"
+              className={cn(
+                'fixed inset-0 cursor-pointer backdrop-blur-md transition-colors duration-300',
+                isDurgaPuja
+                  ? 'bg-gradient-to-b from-[#0c1930]/90 via-[#0c1930]/70 to-[#0c1930]/60'
+                  : 'bg-gradient-to-b from-[#1c1917]/90 via-[#1c1917]/70 to-stone-950/60'
+              )}
               onClick={() => setMoreOpen(false)}
             />
 
-            {/* Native Spring Sheet Container */}
+            {/* Native Spring Sheet Container (Original Styling) */}
             <motion.div
               initial={{ y: '100%' }}
               animate={{ y: 0 }}

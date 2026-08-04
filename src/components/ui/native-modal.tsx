@@ -5,6 +5,8 @@ import { createPortal } from 'react-dom';
 import Link from 'next/link';
 import { AnimatePresence, motion } from 'framer-motion';
 import { BorderBeam } from '@/components/ui/border-beam';
+import { cn } from '@/lib/utils';
+import { useIsDurgaPuja } from '@/hooks/use-is-durga-puja';
 import {
   Check,
   CheckCircle2,
@@ -42,6 +44,7 @@ export interface NativeModalProps {
   secondaryButton?: NativeModalActionButton;
   children?: ReactNode;
   maxWidthClass?: string;
+  backdropClassName?: string;
 }
 
 export function NativeModal({
@@ -56,9 +59,12 @@ export function NativeModal({
   secondaryButton,
   children,
   maxWidthClass = 'sm:max-w-xl md:max-w-2xl',
+  backdropClassName,
 }: NativeModalProps) {
   const [mounted, setMounted] = useState(false);
   const [copiedIndex, setCopiedIndex] = useState<number | null>(null);
+
+  const isDurgaPuja = useIsDurgaPuja();
 
   useEffect(() => {
     setMounted(true);
@@ -154,13 +160,20 @@ export function NativeModal({
     <AnimatePresence>
       {isOpen && (
         <div className="fixed inset-0 z-[9999] flex items-end justify-center p-0 sm:items-center sm:p-4">
-          {/* Backdrop Touch & Blur Overlay */}
+          {/* Backdrop Touch & Blur Overlay matching Header Theme */}
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             onClick={onClose}
-            className="fixed inset-0 bg-slate-950/75 backdrop-blur-xl"
+            className={cn(
+              'fixed inset-0 cursor-pointer backdrop-blur-md transition-colors duration-300',
+              backdropClassName
+                ? backdropClassName
+                : isDurgaPuja
+                  ? 'bg-gradient-to-b from-[#0c1930]/90 via-[#0c1930]/70 to-[#0c1930]/60'
+                  : 'bg-gradient-to-b from-[#1c1917]/90 via-[#1c1917]/70 to-stone-950/60'
+            )}
           />
 
           {/* Native Mobile Bottom Sheet / Desktop Dialog */}

@@ -24,7 +24,8 @@ import {
 } from 'lucide-react';
 
 export const metadata: Metadata = {
-  title: 'Durga Puja Celebrations & Festival Entry Point | Madhyanchal Sarbajanin',
+  title:
+    'Durga Puja Celebrations & Festival Entry Point | Madhyanchal Sarbajanin',
   description:
     'Welcome to Madhyanchal Durga Puja in Chandannagar. Discover sacred autumn rituals, 5-day festival schedule, youth drawing competition, and photo gallery.',
   keywords: [
