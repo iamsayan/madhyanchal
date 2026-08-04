@@ -22,6 +22,7 @@ const nextConfig = {
   poweredByHeader: false,
   reactCompiler: true,
   cacheComponents: true,
+  partialPrefetching: true,
   async headers() {
     return [
       {
