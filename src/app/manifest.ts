@@ -73,7 +73,7 @@ export default function manifest(): MetadataRoute.Manifest {
       //   name: 'Drawing Competition',
       //   short_name: 'Contest',
       //   description:
-      //     'View youth drawing competition directory and participants',
+      //     'View drawing competition directory and participants',
       //   url: '/durgapuja/drawing-competition',
       //   icons: [{ src: '/circle-logo.png', sizes: '192x192' }],
       // },

@@ -124,7 +124,10 @@ export default function DurgaPujaSchedulePage() {
     >
       <div className="space-y-8 sm:space-y-14">
         {/* 4 FEATURE HIGHLIGHT CARDS */}
-        <div id="highlights" className="scroll-mt-24 grid grid-cols-2 gap-2.5 sm:grid-cols-2 sm:gap-5 lg:grid-cols-4">
+        <div
+          id="highlights"
+          className="grid scroll-mt-24 grid-cols-2 gap-2.5 sm:grid-cols-2 sm:gap-5 lg:grid-cols-4"
+        >
           {festivalHighlights.map((item, idx) => {
             const Icon = item.icon;
             return (
@@ -147,7 +150,7 @@ export default function DurgaPujaSchedulePage() {
                     <h3 className="font-paytone text-xs text-slate-900 sm:text-base dark:text-white">
                       {item.title}
                     </h3>
-                    <p className="mt-0.5 text-[10px] font-normal leading-tight text-slate-600 sm:text-xs sm:leading-relaxed dark:text-slate-300">
+                    <p className="mt-0.5 text-[10px] leading-tight font-normal text-slate-600 sm:text-xs sm:leading-relaxed dark:text-slate-300">
                       {item.description}
                     </p>
                   </div>
@@ -157,7 +160,7 @@ export default function DurgaPujaSchedulePage() {
           })}
         </div>
 
-        {/* FEATURED CTA BANNER: YOUTH DRAWING COMPETITION */}
+        {/* FEATURED CTA BANNER: DRAWING COMPETITION */}
         <AnimatedWrapper direction="up">
           <div className="relative overflow-hidden rounded-2xl border border-amber-500/40 bg-gradient-to-br from-amber-500/15 via-amber-500/5 to-amber-500/15 p-4 shadow-sm backdrop-blur-2xl sm:rounded-3xl sm:p-8 dark:border-white/15 dark:bg-stone-900/90">
             <BorderBeam
@@ -168,11 +171,11 @@ export default function DurgaPujaSchedulePage() {
             />
             <div className="flex flex-col items-start justify-between gap-4 sm:flex-row sm:items-center">
               <div className="space-y-1">
-                <span className="inline-flex items-center gap-1 rounded-full border border-amber-500/40 bg-amber-500/20 px-2.5 py-0.5 text-[10px] font-extrabold uppercase tracking-wider text-amber-800 dark:text-amber-300">
+                <span className="inline-flex items-center gap-1 rounded-full border border-amber-500/40 bg-amber-500/20 px-2.5 py-0.5 text-[10px] font-extrabold tracking-wider text-amber-800 uppercase dark:text-amber-300">
                   <Palette className="h-3 w-3" /> Special Event Showcase
                 </span>
                 <h3 className="font-paytone text-lg font-bold text-slate-900 sm:text-2xl dark:text-white">
-                  Youth Drawing Competition
+                  Drawing Competition
                 </h3>
                 <p className="max-w-xl text-xs text-slate-600 sm:text-sm dark:text-slate-300">
                   Encouraging creative expression among children across 3 age
@@ -203,7 +206,7 @@ export default function DurgaPujaSchedulePage() {
         {/* 5-DAY PUJA SCHEDULE CARDS */}
         <div id="schedule" className="scroll-mt-24 space-y-4 sm:space-y-6">
           <div className="space-y-1 text-center">
-            <span className="text-[10px] font-black uppercase tracking-widest text-amber-600 sm:text-xs dark:text-amber-400">
+            <span className="text-[10px] font-black tracking-widest text-amber-600 uppercase sm:text-xs dark:text-amber-400">
               Rituals & Timings
             </span>
             <h2 className="font-paytone text-lg text-slate-900 sm:text-3xl dark:text-white">
@@ -211,20 +214,16 @@ export default function DurgaPujaSchedulePage() {
             </h2>
           </div>
 
-          <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-3 sm:gap-5">
+          <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 sm:gap-5 lg:grid-cols-3">
             {pujaSchedule.map((item, idx) => (
-              <AnimatedWrapper
-                key={item.day}
-                direction="up"
-                delay={idx * 0.05}
-              >
+              <AnimatedWrapper key={item.day} direction="up" delay={idx * 0.05}>
                 <div className="card-glass card-hover-glow relative flex h-full flex-col justify-between space-y-3 overflow-hidden rounded-xl border border-slate-200/90 p-4 backdrop-blur-2xl transition-all duration-300 sm:rounded-2xl sm:p-6 dark:border-white/12">
                   <div className="space-y-2">
                     <div className="flex items-center justify-between">
                       <span className="inline-flex items-center gap-1 rounded-full border border-amber-500/30 bg-amber-500/10 px-2.5 py-0.5 text-[10px] font-bold text-amber-700 dark:text-amber-300">
                         <Calendar className="h-3 w-3" /> {item.day}
                       </span>
-                      <span className="rounded-md border border-slate-200/80 bg-slate-100/80 px-2 py-0.5 text-[9.5px] font-extrabold uppercase text-slate-600 dark:border-white/10 dark:bg-stone-900 dark:text-slate-400">
+                      <span className="rounded-md border border-slate-200/80 bg-slate-100/80 px-2 py-0.5 text-[9.5px] font-extrabold text-slate-600 uppercase dark:border-white/10 dark:bg-stone-900 dark:text-slate-400">
                         {item.badge}
                       </span>
                     </div>

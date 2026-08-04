@@ -60,6 +60,7 @@ export interface DrawingCompetitionFormData {
 }
 
 const REGISTRATION_FEE_PER_PARTICIPANT = 50; // ₹50 per participant
+const MAX_PARTICIPANTS_PER_GUARDIAN = 5;
 const COMPETITION_DATE = new Date('2026-10-11T10:00:00');
 
 function calculateAgeAndCategory(dobString: string) {
@@ -579,7 +580,7 @@ export function DrawingCompetitionForm() {
                   Madhyanchal Mandap
                 </div>
                 <div className="text-[10px] text-slate-500 dark:text-slate-400">
-                  Chandannagar
+                  Chandannagar, Hooghly
                 </div>
               </div>
             </div>
@@ -636,7 +637,7 @@ export function DrawingCompetitionForm() {
                 Participation Certificate & Gift Hamper
               </div>
               <div className="text-[10px] text-slate-600 dark:text-slate-400">
-                Includes Stationery Kit & Snack/Tiffin Box
+                Complimentary Refreshments & Special Gift Package for All
               </div>
             </div>
           </div>
@@ -654,7 +655,7 @@ export function DrawingCompetitionForm() {
                 Saturday, 17th October 2026 at 5:00 PM
               </div>
               <div className="text-[10px] text-slate-600 dark:text-slate-400">
-                Venue: Madhyanchal Sarbajanin Puja Mandap
+                Venue: Madhyanchal Sarbajanin Puja Mandap, Chandannangar
               </div>
             </div>
           </div>
@@ -815,28 +816,32 @@ export function DrawingCompetitionForm() {
             <div>
               <h3 className="font-paytone flex items-center gap-1.5 text-xs font-bold text-slate-900 sm:gap-2 sm:text-lg dark:text-white">
                 <User className="h-3.5 w-3.5 text-amber-500 sm:h-4 sm:w-4" />
-                Participant Details
+                Participant Details ({fields.length}/
+                {MAX_PARTICIPANTS_PER_GUARDIAN})
               </h3>
               <p className="text-[10.5px] text-slate-500 sm:text-[11px] dark:text-slate-400">
-                Add details for all participants registered under this guardian.
+                Add details for up to 5 participants registered under this
+                guardian.
               </p>
             </div>
 
-            <button
-              type="button"
-              onClick={() =>
-                append({
-                  participantName: '',
-                  dateOfBirth: '',
-                  age: '',
-                  category: '',
-                })
-              }
-              className="hidden items-center gap-1.5 rounded-full border border-amber-500/40 bg-amber-500/15 px-3 py-1.5 text-xs font-bold text-amber-700 transition-all hover:bg-amber-500 hover:text-slate-950 active:scale-95 sm:inline-flex dark:text-amber-300 dark:hover:text-slate-950"
-            >
-              <Plus className="h-4 w-4" />
-              <span>Add Participant</span>
-            </button>
+            {fields.length < MAX_PARTICIPANTS_PER_GUARDIAN && (
+              <button
+                type="button"
+                onClick={() =>
+                  append({
+                    participantName: '',
+                    dateOfBirth: '',
+                    age: '',
+                    category: '',
+                  })
+                }
+                className="hidden items-center gap-1.5 rounded-full border border-amber-500/40 bg-amber-500/15 px-3 py-1.5 text-xs font-bold text-amber-700 transition-all hover:bg-amber-500 hover:text-slate-950 active:scale-95 sm:inline-flex dark:text-amber-300 dark:hover:text-slate-950"
+              >
+                <Plus className="h-4 w-4" />
+                <span>Add Participant</span>
+              </button>
+            )}
           </div>
 
           <div className="space-y-3 sm:space-y-4">
@@ -964,23 +969,30 @@ export function DrawingCompetitionForm() {
             </AnimatePresence>
 
             {/* Bottom Add Participant Button */}
-            <div className="pt-0.5 text-center">
-              <button
-                type="button"
-                onClick={() =>
-                  append({
-                    participantName: '',
-                    dateOfBirth: '',
-                    age: '',
-                    category: '',
-                  })
-                }
-                className="inline-flex items-center gap-1.5 rounded-full border border-dashed border-amber-500/50 bg-amber-500/10 px-4 py-1.5 text-xs font-bold text-amber-700 transition-all hover:border-amber-500 hover:bg-amber-500 hover:text-slate-950 active:scale-95 sm:gap-2 sm:px-5 sm:py-2 dark:text-amber-300 dark:hover:text-slate-950"
-              >
-                <Plus className="h-3.5 w-3.5 sm:h-4 sm:w-4" />
-                <span>Add Another Participant</span>
-              </button>
-            </div>
+            {fields.length < MAX_PARTICIPANTS_PER_GUARDIAN ? (
+              <div className="pt-0.5 text-center">
+                <button
+                  type="button"
+                  onClick={() =>
+                    append({
+                      participantName: '',
+                      dateOfBirth: '',
+                      age: '',
+                      category: '',
+                    })
+                  }
+                  className="inline-flex items-center gap-1.5 rounded-full border border-dashed border-amber-500/50 bg-amber-500/10 px-4 py-1.5 text-xs font-bold text-amber-700 transition-all hover:border-amber-500 hover:bg-amber-500 hover:text-slate-950 active:scale-95 sm:gap-2 sm:px-5 sm:py-2 dark:text-amber-300 dark:hover:text-slate-950"
+                >
+                  <Plus className="h-3.5 w-3.5 sm:h-4 sm:w-4" />
+                  <span>Add Another Participant</span>
+                </button>
+              </div>
+            ) : (
+              <div className="pt-1 text-center text-[11px] font-bold text-amber-600 dark:text-amber-400">
+                ⚠️ Maximum limit of 5 participants reached for a single guardian
+                registration.
+              </div>
+            )}
           </div>
         </div>
 
@@ -1008,6 +1020,13 @@ export function DrawingCompetitionForm() {
           <span>Rules & Guidelines:</span>
         </h4>
         <ul className="space-y-1.5 text-[11px] text-slate-600 sm:space-y-2.5 sm:text-xs dark:text-slate-300">
+          <li className="flex items-start gap-2">
+            <span className="mt-1 h-1.5 w-1.5 shrink-0 rounded-full bg-amber-500" />
+            <span>
+              <strong>Registration Limit:</strong> Maximum of 5 participants are
+              allowed per guardian registration.
+            </span>
+          </li>
           <li className="flex items-start gap-2">
             <span className="mt-1 h-1.5 w-1.5 shrink-0 rounded-full bg-amber-500" />
             <span>

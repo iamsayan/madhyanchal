@@ -9,7 +9,7 @@ import { Users } from 'lucide-react';
 export const metadata: Metadata = {
   title: 'Drawing Competition Participants List | Madhyanchal Sarbajanin',
   description:
-    'Official list of registered participants for Madhyanchal Sarbajanin Youth Drawing Competition.',
+    'Official list of registered participants for Madhyanchal Sarbajanin Drawing Competition.',
   robots: {
     index: false,
     follow: false,
@@ -54,7 +54,7 @@ export default async function DrawingCompetitionListPage() {
   return (
     <PageLayout
       title="Participants Directory"
-      subtitle="Official list of registered participants for Madhyanchal Youth Drawing Competition."
+      subtitle="Official list of registered participants for Madhyanchal Drawing Competition."
       badge={{
         text: 'Confirmed Registrations',
         icon: Users,

@@ -104,7 +104,7 @@ export default function PrivacyPolicyPage() {
       title: '7. Children’s Privacy Protection',
       icon: Baby,
       content:
-        'Our website is intended for general public access and community participation. For youth drawing competitions or child participant registrations, entries must be submitted with consent from a parent or legal guardian. We do not knowingly collect personal data directly from children under 13 without guardian supervision.',
+        'Our website is intended for general public access and community participation. For drawing competitions or child participant registrations, entries must be submitted with consent from a parent or legal guardian. We do not knowingly collect personal data directly from children under 13 without guardian supervision.',
     },
     {
       id: 'rights',

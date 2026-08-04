@@ -342,7 +342,7 @@ export function getDurgaPujaEntrySchema() {
           },
           {
             '@type': 'Question',
-            name: 'How can children register for the Youth Drawing Competition?',
+            name: 'How can children register for the Drawing Competition?',
             acceptedAnswer: {
               '@type': 'Answer',
               text: 'Parents can register their children online via the Drawing Contest portal under the Durga Puja section or at the club office.',
@@ -428,7 +428,7 @@ export function getDurgaPujaScheduleSchema() {
 }
 
 /**
- * Youth Drawing Competition Schema (/durgapuja/drawing-competition)
+ * Drawing Competition Schema (/durgapuja/drawing-competition)
  */
 export function getDrawingCompetitionSchema() {
   const contestUrl = `${SITE_URL}/durgapuja/drawing-competition`;
@@ -441,13 +441,13 @@ export function getDrawingCompetitionSchema() {
         { name: 'Home', url: '/' },
         { name: 'Durga Puja', url: '/durgapuja' },
         {
-          name: 'Youth Drawing Competition',
+          name: 'Drawing Competition',
           url: '/durgapuja/drawing-competition',
         },
       ]),
       {
         '@type': 'Event',
-        name: 'Madhyanchal Annual Youth Drawing Competition 2026',
+        name: 'Madhyanchal Annual Drawing Competition 2026',
         description:
           'Sit & Draw art contest for kids & youth during Durga Puja across 3 age categories with certificates and trophies.',
         startDate: '2026-10-18T10:00:00+05:30',

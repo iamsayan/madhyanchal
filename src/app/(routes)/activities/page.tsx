@@ -69,7 +69,7 @@ export default function ActivitiesPage() {
           name: 'Madhyanchal Sarbajanin',
         },
         description:
-          'Health camps, blood & eye donation, COVID-19 vaccination drives, youth drawing competitions, and orphanage care.',
+          'Health camps, blood & eye donation, COVID-19 vaccination drives and orphanage care.',
       },
     ],
   };

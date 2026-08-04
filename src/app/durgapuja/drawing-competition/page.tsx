@@ -10,7 +10,7 @@ import { getDrawingCompetitionSchema } from '@/lib/seo-schemas';
 export const metadata: Metadata = {
   title: 'Drawing Competition Registration | Madhyanchal Sarbajanin',
   description:
-    'Register for the annual youth drawing competition organized by Madhyanchal Sarbajanin. Free entry for all age categories with exciting trophies.',
+    'Register for the annual drawing competition organized by Madhyanchal Sarbajanin. Free entry for all age categories with exciting trophies.',
   keywords: [
     'madhyanchal drawing competition',
     'drawing competition registration chandannagar',
@@ -34,7 +34,7 @@ export default function DrawingCompetitionPage() {
 
   return (
     <PageLayout
-      title="Youth Drawing Competition"
+      title="Drawing Competition"
       subtitle="Unleash your artistic expression! Open to children and youth across 3 age categories with free entry and trophies."
       badge={{
         text: 'Art & Creativity Contest',

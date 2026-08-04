@@ -44,7 +44,9 @@ export function DrawingCompetitionList({
 
       const matchCategory =
         selectedCategory === 'all' ||
-        (item.category || '').toLowerCase().includes(selectedCategory.toLowerCase()) ||
+        (item.category || '')
+          .toLowerCase()
+          .includes(selectedCategory.toLowerCase()) ||
         (selectedCategory === 'A' && (item.category || '').includes('A')) ||
         (selectedCategory === 'B' && (item.category || '').includes('B')) ||
         (selectedCategory === 'C' && (item.category || '').includes('C'));
@@ -74,26 +76,26 @@ export function DrawingCompetitionList({
                 Registered Participants ({filteredData.length})
               </h3>
               <p className="text-xs text-slate-600 dark:text-slate-300">
-                Official Directory for Youth Drawing Competition
+                Official Directory for Drawing Competition
               </p>
             </div>
           </div>
 
           {/* Search Input */}
           <div className="relative w-full md:w-72">
-            <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-slate-400" />
+            <Search className="absolute top-1/2 left-3 h-4 w-4 -translate-y-1/2 text-slate-400" />
             <input
               type="text"
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
               placeholder="Search by name, ID, or guardian..."
-              className="h-10 w-full rounded-xl border border-slate-300/80 bg-white/80 pl-9 pr-3.5 text-xs text-slate-900 transition-all focus:border-amber-500 focus:outline-none focus:ring-2 focus:ring-amber-500/20 dark:border-white/15 dark:bg-stone-900 dark:text-white"
+              className="h-10 w-full rounded-xl border border-slate-300/80 bg-white/80 pr-3.5 pl-9 text-xs text-slate-900 transition-all focus:border-amber-500 focus:ring-2 focus:ring-amber-500/20 focus:outline-none dark:border-white/15 dark:bg-stone-900 dark:text-white"
             />
           </div>
         </div>
 
         {/* Category Pills */}
-        <div className="mt-4 flex flex-wrap items-center gap-1.5 pt-3 border-t border-slate-200/80 dark:border-white/10">
+        <div className="mt-4 flex flex-wrap items-center gap-1.5 border-t border-slate-200/80 pt-3 dark:border-white/10">
           <span className="mr-1 inline-flex items-center gap-1 text-[11px] font-bold text-slate-500 dark:text-slate-400">
             <Filter className="h-3 w-3" /> Category:
           </span>
@@ -133,7 +135,7 @@ export function DrawingCompetitionList({
           <div className="overflow-x-auto">
             <table className="w-full text-left text-xs">
               <thead>
-                <tr className="border-b border-slate-200/80 bg-slate-100/70 text-[10.5px] font-extrabold uppercase tracking-wider text-slate-600 dark:border-white/10 dark:bg-stone-950/80 dark:text-slate-400">
+                <tr className="border-b border-slate-200/80 bg-slate-100/70 text-[10.5px] font-extrabold tracking-wider text-slate-600 uppercase dark:border-white/10 dark:bg-stone-950/80 dark:text-slate-400">
                   <th className="px-4 py-3">Registration ID</th>
                   <th className="px-4 py-3">Participant Name</th>
                   <th className="px-4 py-3">Age & DOB</th>
