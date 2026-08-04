@@ -163,7 +163,7 @@ export default function RootLayout({ children }: { children: ReactNode }) {
           swUrl="/sw.js"
           disable={process.env.NODE_ENV !== 'production'}
         >
-          <ThemeProvider attribute="class" defaultTheme="light" enableSystem>
+          <ThemeProvider attribute="class" defaultTheme="light" enableSystem disableTransitionOnChange>
             <AppProvider settingsPromise={settings}>
               <Suspense fallback={<PageLoader />}>
                 <Header />
