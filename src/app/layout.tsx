@@ -15,6 +15,7 @@ import { ReactNode, Suspense } from 'react';
 
 import './globals.css';
 import Script from 'next/script';
+import { SITE_URL } from '@/lib/seo-schemas';
 
 const outfit = Outfit({
   subsets: ['latin'],
@@ -42,9 +43,7 @@ const curYear = new Date().getFullYear();
 const curYearInTradition = curYear - 1971 + 1;
 
 export const metadata: Metadata = {
-  metadataBase: new URL(
-    process.env.NEXT_PUBLIC_SITE_URL || 'https://www.madhyanchalsarbajanin.co.in'
-  ),
+  metadataBase: new URL(SITE_URL),
   alternates: {
     canonical: '/',
   },
