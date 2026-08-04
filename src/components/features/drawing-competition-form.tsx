@@ -60,9 +60,14 @@ export interface DrawingCompetitionFormData {
   participants: ParticipantItem[];
 }
 
-const REGISTRATION_FEE_PER_PARTICIPANT = 50; // ₹50 per participant
-const MAX_PARTICIPANTS_PER_GUARDIAN = 5;
-const COMPETITION_DATE = new Date('2026-10-11T10:00:00');
+import {
+  DRAWING_COMPETITION_CONFIG,
+  isRegistrationClosed,
+} from '@/config/drawing-competition';
+
+const REGISTRATION_FEE_PER_PARTICIPANT = DRAWING_COMPETITION_CONFIG.registrationFee;
+const MAX_PARTICIPANTS_PER_GUARDIAN = DRAWING_COMPETITION_CONFIG.maxParticipantsPerGuardian;
+const COMPETITION_DATE = new Date(DRAWING_COMPETITION_CONFIG.competitionDateISO);
 
 function calculateAgeAndCategory(dobString: string) {
   if (!dobString) return { age: '', category: '' };
@@ -103,6 +108,9 @@ function calculateAgeAndCategory(dobString: string) {
 }
 
 export function DrawingCompetitionForm() {
+  const isClosed = isRegistrationClosed();
+  const config = DRAWING_COMPETITION_CONFIG;
+
   const [previewData, setPreviewData] =
     useState<DrawingCompetitionFormData | null>(null);
   const [isSubmittingFinal, setIsSubmittingFinal] = useState(false);
@@ -537,6 +545,28 @@ export function DrawingCompetitionForm() {
           onClick: () => setErrorMsg(null),
         }}
       />
+
+      {/* EXPIRED / REGISTRATION CLOSED ALERT */}
+      {isClosed && (
+        <div className="card-glass relative overflow-hidden rounded-2xl border border-amber-500/40 bg-amber-500/15 p-4 text-center backdrop-blur-2xl sm:rounded-3xl sm:p-5 dark:border-amber-500/30 dark:bg-stone-900/90">
+          <div className="flex flex-col items-center justify-center gap-2 text-amber-900 dark:text-amber-300">
+            <AlertCircle className="h-6 w-6 text-amber-500" />
+            <h3 className="font-paytone text-base font-bold sm:text-lg">
+              Registrations Closed for {config.year}
+            </h3>
+            <p className="max-w-xl text-xs text-slate-600 dark:text-slate-300">
+              Online registration for the {config.year} Drawing Competition is officially closed as the competition date has passed. Thank you for your support! We look forward to seeing you in {config.year + 1}.
+            </p>
+            <Link
+              href="/durgapuja/drawing-competition/list"
+              className="mt-1 inline-flex items-center gap-1.5 rounded-full bg-amber-500 px-4 py-2 text-xs font-bold text-slate-950 transition-all hover:bg-amber-400"
+            >
+              <Users className="h-3.5 w-3.5" />
+              <span>View Registered Participants List</span>
+            </Link>
+          </div>
+        </div>
+      )}
 
       {/* TOP EVENT SUMMARY BAR */}
       <div className="card-glass relative overflow-hidden rounded-2xl border border-slate-200/90 p-3.5 backdrop-blur-2xl sm:rounded-3xl sm:p-6 dark:border-white/12">
@@ -1048,14 +1078,14 @@ export function DrawingCompetitionForm() {
         <div className="space-y-2 pt-2 sm:pt-4">
           <Button
             type="submit"
-            disabled={isSubmitting}
+            disabled={isSubmitting || isClosed}
             variant="primary"
             size="lg"
             className="h-10 w-full rounded-full border border-amber-400/60 text-xs font-extrabold shadow-sm sm:h-11 sm:text-sm"
           >
             <span className="flex items-center justify-center gap-1.5">
               <Eye className="h-3.5 w-3.5 text-amber-950 sm:h-4 sm:w-4" />
-              Preview Submission
+              <span>{isClosed ? `Registrations Closed for ${config.year}` : 'Preview Submission'}</span>
             </span>
           </Button>
         </div>

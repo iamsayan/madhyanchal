@@ -5,6 +5,13 @@ import Link from 'next/link';
 
 import { BorderBeam } from '@/components/ui/border-beam';
 import {
+  DRAWING_COMPETITION_CONFIG,
+  getAgeCategoryLimits,
+  getOrdinalSuffix,
+  isRegistrationClosed,
+} from '@/config/drawing-competition';
+import {
+  AlertCircle,
   ArrowRight,
   Award,
   Calendar,
@@ -24,44 +31,10 @@ import {
 } from 'lucide-react';
 
 export function DrawingCompetitionLanding() {
-  const ageCategories = [
-    {
-      group: 'Group A',
-      title: 'Budding Stars',
-      age: 'Up to 6 Years',
-      dob: 'Born on or after 12.10.2020',
-      topic: 'Draw As You Like',
-      badgeColor:
-        'border-amber-500/30 bg-amber-500/10 text-amber-700 dark:text-amber-300',
-      prizes: '3 Trophies (1st, 2nd, 3rd) + 2 Medals (4th, 5th)',
-      description:
-        'Nurturing early imagination, color discovery, and joyful creative expression.',
-    },
-    {
-      group: 'Group B',
-      title: 'Rising Creators',
-      age: '7 to 10 Years',
-      dob: 'Born between 12.10.2016 & 11.10.2020',
-      topic: 'Draw As You Like',
-      badgeColor:
-        'border-emerald-500/30 bg-emerald-500/10 text-emerald-700 dark:text-emerald-300',
-      prizes: '3 Trophies (1st, 2nd, 3rd) + 2 Medals (4th, 5th)',
-      description:
-        'Fostering technical skills, spatial awareness, and visual storytelling.',
-    },
-    {
-      group: 'Group C',
-      title: 'Master Artists',
-      age: '11 to 15 Years',
-      dob: 'Born between 12.10.2011 & 11.10.2016',
-      topic: 'Draw As You Like',
-      badgeColor:
-        'border-sky-500/30 bg-sky-500/10 text-sky-700 dark:text-sky-300',
-      prizes: '3 Trophies (1st, 2nd, 3rd) + 2 Medals (4th, 5th)',
-      description:
-        'Showcasing advanced artistic vision, composition, and individual mastery.',
-    },
-  ];
+  const isClosed = isRegistrationClosed();
+  const config = DRAWING_COMPETITION_CONFIG;
+  const ageCategories = getAgeCategoryLimits(config.year);
+  const editionOrdinal = getOrdinalSuffix(config.edition);
 
   const pridePillars = [
     {
@@ -91,8 +64,8 @@ export function DrawingCompetitionLanding() {
   ];
 
   const rules = [
-    'Registration Limit: Maximum of 5 participants are allowed per guardian registration.',
-    'Registration Fee: ₹50 per participant (Payable online via UPI, Credit/Debit Cards, Net Banking).',
+    `Registration Limit: Maximum of ${config.maxParticipantsPerGuardian} participants are allowed per guardian registration.`,
+    `Registration Fee: ₹${config.registrationFee} per participant (Payable online via UPI, Credit/Debit Cards, Net Banking).`,
     'Drawing paper will be provided by the organizers only.',
     'Participants must bring their own colors and other required materials.',
     'Any type of color can be used for drawing, but sketch pen or scale cannot be used.',
@@ -105,6 +78,34 @@ export function DrawingCompetitionLanding() {
 
   return (
     <div className="relative mx-auto max-w-4xl space-y-6 sm:space-y-10">
+      {/* REGISTRATION CLOSED NOTICE BANNER (IF EXPIRED) */}
+      {isClosed && (
+        <div className="flex flex-col items-center justify-between gap-3 rounded-2xl border border-amber-500/40 bg-amber-500/15 p-4 text-center sm:flex-row sm:text-left dark:border-amber-500/30 dark:bg-stone-900/90">
+          <div className="flex items-center gap-3">
+            <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-amber-500 text-slate-950">
+              <AlertCircle className="h-5 w-5" />
+            </div>
+            <div>
+              <h4 className="font-paytone text-sm font-bold text-slate-900 sm:text-base dark:text-white">
+                Registrations Closed for {config.year}
+              </h4>
+              <p className="text-xs text-slate-600 dark:text-slate-300">
+                Thank you for the overwhelming response! Online registrations
+                for the {config.year} edition are officially closed. We look
+                forward to welcoming you in {config.year + 1}!
+              </p>
+            </div>
+          </div>
+          <Link
+            href="/durgapuja/drawing-competition/list"
+            className="inline-flex shrink-0 items-center gap-1.5 rounded-full bg-amber-500 px-4 py-2 text-xs font-bold text-slate-950 shadow-xs transition-all hover:bg-amber-400"
+          >
+            <Users className="h-3.5 w-3.5" />
+            <span>View Registered List</span>
+          </Link>
+        </div>
+      )}
+
       {/* HERO BANNER SECTION */}
       <div className="card-glass relative overflow-hidden rounded-2xl border border-slate-200/90 p-4 text-center backdrop-blur-2xl sm:rounded-3xl sm:p-10 dark:border-white/12">
         <BorderBeam
@@ -117,7 +118,7 @@ export function DrawingCompetitionLanding() {
         <div className="flex flex-col items-center space-y-3.5 sm:space-y-5">
           <span className="inline-flex items-center gap-1.5 rounded-full border border-amber-500/40 bg-amber-500/15 px-3.5 py-1 text-[10.5px] font-extrabold tracking-wider text-amber-800 uppercase sm:px-4 sm:py-1.5 sm:text-xs dark:text-amber-300">
             <Sparkles className="h-3.5 w-3.5 animate-pulse text-amber-500" />
-            CHANDANNAGAR’S MOST CELEBRATED ART FESTIVAL
+            {editionOrdinal} ANNUAL SIT & DRAW COMPETITION {config.year}
           </span>
 
           <h1 className="font-paytone text-xl font-bold tracking-tight text-slate-900 sm:text-4xl lg:text-5xl dark:text-white">
@@ -127,8 +128,8 @@ export function DrawingCompetitionLanding() {
           <p className="max-w-2xl text-xs leading-relaxed text-slate-600 sm:text-base dark:text-slate-300">
             More than a competition—a grand platform created to inspire
             confidence, celebrate artistic expression, and honor every young
-            artist. Join 300+ proud families celebrating 3 years of creative
-            excellence!
+            artist. Join 300+ proud families celebrating {config.edition} years
+            of creative excellence!
           </p>
 
           {/* TOPIC BANNER HIGHLIGHT */}
@@ -137,7 +138,7 @@ export function DrawingCompetitionLanding() {
               Official Drawing Theme
             </span>
             <h3 className="font-paytone text-base font-bold text-slate-900 sm:text-2xl dark:text-white">
-              Draw As You Like
+              {config.topic}
             </h3>
             <p className="mt-0.5 text-[11px] font-medium text-slate-600 sm:text-xs dark:text-slate-300">
               Open creative freedom for all age categories (Group A, B & C)
@@ -146,13 +147,23 @@ export function DrawingCompetitionLanding() {
 
           {/* ACTION BUTTONS */}
           <div className="flex flex-col items-center justify-center gap-2.5 pt-2 sm:flex-row sm:gap-4">
-            <Link
-              href="/durgapuja/drawing-competition/register"
-              className="inline-flex items-center justify-center gap-2 rounded-full border border-amber-400/60 bg-gradient-to-r from-amber-500 via-amber-400 to-yellow-400 px-7 py-3 text-xs font-black tracking-wide text-slate-950 shadow-md transition-all hover:scale-105 active:scale-95 sm:px-8 sm:py-3.5 sm:text-sm"
-            >
-              <span>Register Your Child (₹50)</span>
-              <ArrowRight className="h-4 w-4" />
-            </Link>
+            {!isClosed ? (
+              <Link
+                href="/durgapuja/drawing-competition/register"
+                className="inline-flex items-center justify-center gap-2 rounded-full border border-amber-400/60 bg-gradient-to-r from-amber-500 via-amber-400 to-yellow-400 px-7 py-3 text-xs font-black tracking-wide text-slate-950 shadow-md transition-all hover:scale-105 active:scale-95 sm:px-8 sm:py-3.5 sm:text-sm"
+              >
+                <span>Register Now</span>
+                <ArrowRight className="h-4 w-4" />
+              </Link>
+            ) : (
+              <div className="inline-flex items-center justify-center gap-2 rounded-full border border-amber-500/40 bg-amber-500/15 px-6 py-3 text-xs font-bold text-amber-700 dark:text-amber-300">
+                <AlertCircle className="h-4 w-4" />
+                <span>
+                  Registrations Closed for {config.year} (See You in{' '}
+                  {config.year + 1}!)
+                </span>
+              </div>
+            )}
 
             <Link
               href="/durgapuja/drawing-competition/list"
@@ -174,7 +185,7 @@ export function DrawingCompetitionLanding() {
       <div className="card-glass relative overflow-hidden rounded-2xl border border-slate-200/90 p-4 backdrop-blur-2xl sm:rounded-3xl sm:p-6 dark:border-white/12">
         <div className="text-center sm:text-left">
           <span className="inline-flex items-center gap-1 rounded-full border border-amber-500/30 bg-amber-500/10 px-2.5 py-0.5 text-[10px] font-extrabold tracking-wider text-amber-800 uppercase dark:text-amber-300">
-            <Heart className="h-3 w-3 fill-rose-500 text-rose-500" />A PROUD
+            <Heart className="h-3 w-3 fill-rose-500 text-rose-500" /> A PROUD
             MOMENT FOR EVERY FAMILY
           </span>
           <h2 className="font-paytone mt-1 text-lg font-bold text-slate-900 sm:text-2xl dark:text-white">
@@ -222,7 +233,7 @@ export function DrawingCompetitionLanding() {
             Competition Date
           </span>
           <span className="mt-0.5 text-xs font-bold text-slate-900 sm:text-sm dark:text-white">
-            Sunday, 11th Oct 2026
+            {config.competitionDateDisplay}
           </span>
         </div>
 
@@ -235,7 +246,7 @@ export function DrawingCompetitionLanding() {
             Reporting Time
           </span>
           <span className="mt-0.5 text-xs font-bold text-slate-900 sm:text-sm dark:text-white">
-            10:00 AM (Report 9:30 AM)
+            {config.reportingTimeDisplay}
           </span>
         </div>
 
@@ -261,7 +272,7 @@ export function DrawingCompetitionLanding() {
             Venue Location
           </span>
           <span className="mt-0.5 truncate text-xs font-bold text-slate-900 sm:text-sm dark:text-white">
-            Madhyanchal Durga Puja Mandap
+            {config.venueName}
           </span>
         </div>
       </div>
@@ -272,15 +283,16 @@ export function DrawingCompetitionLanding() {
           <div>
             <span className="inline-flex items-center gap-1 rounded-full border border-amber-500/30 bg-amber-500/10 px-2.5 py-0.5 text-[10px] font-extrabold tracking-wider text-amber-800 uppercase dark:text-amber-300">
               <Sparkles className="h-3 w-3 text-amber-500" />
-              CELEBRATING 3 YEARS OF CREATIVE TRADITION
+              CELEBRATING {config.edition} YEARS OF CREATIVE TRADITION
             </span>
             <h2 className="font-paytone mt-1 text-lg font-bold text-slate-900 sm:text-2xl dark:text-white">
-              3 Years of Trust & Young Talent
+              {config.edition} Years of Trust & Young Talent
             </h2>
             <p className="text-xs text-slate-600 sm:text-sm dark:text-slate-300">
               Started in 2024, our annual Sit & Draw competition has grown into
               a trusted community festival of art and youth talent in
-              Chandannagar. 2026 marks our 3rd successful edition.
+              Chandannagar. {config.year} marks our {editionOrdinal} successful
+              edition.
             </p>
           </div>
         </div>
@@ -289,10 +301,10 @@ export function DrawingCompetitionLanding() {
         <div className="mt-4 grid grid-cols-2 gap-2 sm:grid-cols-4 sm:gap-3">
           <div className="rounded-xl border border-amber-500/20 bg-amber-500/10 p-2.5 text-center sm:p-3">
             <div className="font-paytone text-lg font-extrabold text-amber-700 sm:text-2xl dark:text-amber-300">
-              3rd Year
+              {editionOrdinal} Year
             </div>
             <div className="text-[10px] font-bold text-slate-600 dark:text-slate-400">
-              2024, 2025 & 2026
+              2024 - {config.year}
             </div>
           </div>
           <div className="rounded-xl border border-amber-500/20 bg-amber-500/10 p-2.5 text-center sm:p-3">
@@ -373,11 +385,11 @@ export function DrawingCompetitionLanding() {
       <div className="space-y-3 sm:space-y-4">
         <div className="text-center sm:text-left">
           <h2 className="font-paytone text-lg font-bold text-slate-900 sm:text-2xl dark:text-white">
-            Age Groups & Categories
+            Age Groups & Categories ({config.year})
           </h2>
           <p className="text-xs text-slate-500 sm:text-sm dark:text-slate-400">
-            Check the age criteria for each category as on competition date
-            (11th Oct 2026).
+            Check the age criteria for each category as on competition date (
+            {config.competitionDateDisplay}).
           </p>
         </div>
 
@@ -479,10 +491,10 @@ export function DrawingCompetitionLanding() {
                 Grand Stage Prize Distribution Ceremony
               </div>
               <div className="text-xs font-bold text-slate-900 sm:text-sm dark:text-white">
-                Saturday, 17th October 2026 at 5:00 PM
+                {config.prizeCeremonyDisplay}
               </div>
               <div className="text-[11px] text-slate-600 dark:text-slate-400">
-                Venue: Madhyanchal Durga Puja Mandap, Chandannagar, Hooghly
+                Venue: {config.venueName}, {config.venueLocation}
               </div>
             </div>
           </div>
@@ -517,10 +529,10 @@ export function DrawingCompetitionLanding() {
                 Competition Venue
               </div>
               <h4 className="font-paytone text-sm font-bold text-slate-900 sm:text-lg dark:text-white">
-                Madhyanchal Durga Puja Mandap
+                {config.venueName}
               </h4>
               <p className="text-xs text-slate-500 dark:text-slate-400">
-                Chandannagar, Hooghly, West Bengal
+                {config.venueLocation}
               </p>
             </div>
           </div>
@@ -548,22 +560,34 @@ export function DrawingCompetitionLanding() {
 
         <div className="mx-auto max-w-xl space-y-3">
           <h3 className="font-paytone text-lg font-bold text-slate-900 sm:text-2xl dark:text-white">
-            Give Your Child the Gift of Recognition
+            {!isClosed
+              ? 'Give Your Child the Gift of Recognition'
+              : `Thank You for Your Support for ${config.year}`}
           </h3>
           <p className="text-xs text-slate-600 sm:text-sm dark:text-slate-300">
-            Seating capacity is limited to ensure personal care for every
-            participant. Register your child online today to guarantee their
-            spot on this prestigious stage!
+            {!isClosed
+              ? `Seating capacity is limited to ensure personal care for every participant. Register your child online today for the ${config.year} edition!`
+              : `Registrations for the ${config.year} edition are now closed. Check the registered participants list below or join us next year in ${config.year + 1}!`}
           </p>
 
           <div className="pt-2">
-            <Link
-              href="/durgapuja/drawing-competition/register"
-              className="inline-flex items-center justify-center gap-2 rounded-full border border-amber-400/60 bg-amber-500 px-7 py-3 text-xs font-black tracking-wide text-slate-950 shadow-md transition-all hover:scale-105 active:scale-95 sm:px-8 sm:py-3.5 sm:text-sm"
-            >
-              <span>Proceed to Registration Form</span>
-              <ArrowRight className="h-4 w-4" />
-            </Link>
+            {!isClosed ? (
+              <Link
+                href="/durgapuja/drawing-competition/register"
+                className="inline-flex items-center justify-center gap-2 rounded-full border border-amber-400/60 bg-amber-500 px-7 py-3 text-xs font-black tracking-wide text-slate-950 shadow-md transition-all hover:scale-105 active:scale-95 sm:px-8 sm:py-3.5 sm:text-sm"
+              >
+                <span>Proceed to Registration Form</span>
+                <ArrowRight className="h-4 w-4" />
+              </Link>
+            ) : (
+              <Link
+                href="/durgapuja/drawing-competition/list"
+                className="inline-flex items-center justify-center gap-2 rounded-full border border-amber-400/60 bg-amber-500 px-7 py-3 text-xs font-black tracking-wide text-slate-950 shadow-md transition-all hover:scale-105 active:scale-95 sm:px-8 sm:py-3.5 sm:text-sm"
+              >
+                <Users className="h-4 w-4" />
+                <span>View Registered Participants List</span>
+              </Link>
+            )}
           </div>
         </div>
       </div>
