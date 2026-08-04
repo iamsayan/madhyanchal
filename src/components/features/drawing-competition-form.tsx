@@ -16,6 +16,7 @@ import { AnimatePresence, motion } from 'framer-motion';
 
 import {
   AlertCircle,
+  Award,
   Calendar,
   ChevronRight,
   Clock,
@@ -23,6 +24,7 @@ import {
   ExternalLink,
   Eye,
   FileText,
+  Gift,
   IndianRupee,
   Info,
   Loader2,
@@ -35,6 +37,7 @@ import {
   ShieldCheck,
   Sparkles,
   Trash2,
+  Trophy,
   User,
   Users,
 } from 'lucide-react';
@@ -109,7 +112,7 @@ export function DrawingCompetitionForm() {
   } | null>(null);
   const [errorMsg, setErrorMsg] = useState<string | null>(null);
 
-  const isDevelopment = process.env.NODE_ENV !== 'test';
+  const isDevelopment = process.env.NODE_ENV !== 'production';
 
   const defaultFormValues: DrawingCompetitionFormData = isDevelopment
     ? {
@@ -301,254 +304,6 @@ export function DrawingCompetitionForm() {
       );
     }
   };
-
-  const isProduction = process.env.NODE_ENV === 'production';
-
-  // In production environment, display coming soon notice card
-  if (isProduction) {
-    return (
-      <div className="relative mx-auto max-w-4xl space-y-4 sm:space-y-6">
-        {/* TOP EVENT SUMMARY & COMING SOON BANNER */}
-        <div className="card-glass relative overflow-hidden rounded-2xl border border-slate-200/90 p-4 text-center backdrop-blur-2xl sm:rounded-3xl sm:p-10 dark:border-white/12">
-          <BorderBeam
-            size={220}
-            duration={7}
-            colorFrom="#f59e0b"
-            colorTo="#fef08a"
-          />
-
-          <div className="flex flex-col items-center space-y-3 sm:space-y-4">
-            <span className="inline-flex items-center gap-1.5 rounded-full border border-amber-500/40 bg-amber-500/20 px-3 py-0.5 text-[10px] font-extrabold tracking-widest text-amber-800 uppercase sm:px-3.5 sm:py-1 sm:text-[11px] dark:text-amber-300">
-              <Sparkles className="h-3 w-3 animate-pulse text-amber-500 sm:h-3.5 sm:w-3.5" />
-              REGISTRATION OPENING SOON
-            </span>
-
-            <h2 className="font-paytone text-lg font-bold text-slate-900 sm:text-3xl lg:text-4xl dark:text-white">
-              Madhyanchal Annual Sit & Draw Competition
-            </h2>
-
-            <p className="max-w-xl text-xs leading-relaxed text-slate-600 sm:text-sm dark:text-slate-300">
-              Online registration for children’s Sit & Draw competition will
-              open shortly. Registration fee is ₹50 per participant.
-            </p>
-
-            {/* TOPIC PREVIEW BANNER */}
-            <div className="w-full max-w-xl rounded-xl border border-amber-500/30 bg-amber-500/10 p-3 text-center sm:p-4">
-              <span className="text-[10px] font-extrabold tracking-widest text-amber-700 uppercase dark:text-amber-400">
-                Drawing Topic
-              </span>
-              <h4 className="font-paytone text-base font-bold text-slate-900 sm:text-xl dark:text-white">
-                Draw As You Like
-              </h4>
-              <p className="mt-0.5 text-[11px] font-medium text-slate-600 dark:text-slate-300">
-                Open theme for all age groups (Group A, B & C)
-              </p>
-            </div>
-
-            <div className="pt-1 sm:pt-2">
-              <Link
-                href="/durgapuja"
-                className="inline-flex items-center gap-2 rounded-full border border-amber-500/40 bg-amber-500 px-5 py-2 text-xs font-extrabold text-slate-950 shadow-md transition-all hover:bg-amber-400 active:scale-95 sm:px-6 sm:py-2.5"
-              >
-                <span>Explore Durga Puja Events</span>
-                <ChevronRight className="h-3.5 w-3.5 sm:h-4 sm:w-4" />
-              </Link>
-            </div>
-          </div>
-        </div>
-
-        {/* EVENT SCHEDULE & LOCATION DETAILS CARD */}
-        <div className="card-glass relative overflow-hidden rounded-2xl border border-slate-200/90 p-3.5 backdrop-blur-2xl sm:rounded-3xl sm:p-5 dark:border-white/12">
-          <div className="grid grid-cols-1 divide-y divide-slate-200/80 sm:grid-cols-3 sm:divide-x sm:divide-y-0 dark:divide-white/10">
-            {/* Date */}
-            <div className="flex items-center gap-3 pb-2.5 sm:pr-4 sm:pb-0">
-              <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-amber-500/20 text-amber-600 dark:text-amber-400">
-                <Calendar className="h-4 w-4" />
-              </div>
-              <div className="min-w-0 space-y-0.5">
-                <div className="text-[9.5px] font-extrabold tracking-wider text-slate-400 uppercase sm:text-[10px]">
-                  Date
-                </div>
-                <div className="text-xs font-bold text-slate-900 dark:text-white">
-                  Sunday, 11th Oct 2026
-                </div>
-              </div>
-            </div>
-
-            {/* Time */}
-            <div className="flex items-center gap-3 py-2.5 sm:px-4 sm:py-0">
-              <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-amber-500/20 text-amber-600 dark:text-amber-400">
-                <Clock className="h-4 w-4" />
-              </div>
-              <div className="min-w-0 space-y-0.5">
-                <div className="text-[9.5px] font-extrabold tracking-wider text-slate-400 uppercase sm:text-[10px]">
-                  Time
-                </div>
-                <div className="text-xs font-bold text-slate-900 dark:text-white">
-                  10:00 AM Onwards
-                </div>
-                <div className="text-[10px] text-slate-500 dark:text-slate-400">
-                  (Reporting: 9:30 AM)
-                </div>
-              </div>
-            </div>
-
-            {/* Venue & Map Link */}
-            <div className="flex items-center justify-between gap-2 pt-2.5 sm:pt-0 sm:pl-4">
-              <div className="flex min-w-0 items-center gap-3">
-                <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-amber-500/20 text-amber-600 dark:text-amber-400">
-                  <MapPin className="h-4 w-4" />
-                </div>
-                <div className="min-w-0 space-y-0.5">
-                  <div className="text-[9.5px] font-extrabold tracking-wider text-slate-400 uppercase sm:text-[10px]">
-                    Venue
-                  </div>
-                  <div className="truncate text-xs font-bold text-slate-900 dark:text-white">
-                    Madhyanchal Mandap
-                  </div>
-                  <div className="text-[10px] text-slate-500 dark:text-slate-400">
-                    Chandannagar
-                  </div>
-                </div>
-              </div>
-
-              <a
-                href="https://maps.google.com/?q=Madhyanchal+Sarbajanin+Chandannagar"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-flex shrink-0 items-center gap-1 rounded-full border border-amber-500/40 bg-amber-500/15 px-3 py-1.5 text-[10.5px] font-extrabold text-amber-700 transition-all hover:bg-amber-500 hover:text-slate-950 dark:text-amber-300 dark:hover:text-slate-950"
-              >
-                <span>Map</span>
-                <ExternalLink className="h-3 w-3" />
-              </a>
-            </div>
-          </div>
-        </div>
-
-        {/* RULES & GUIDELINES CARD */}
-        <div className="card-glass relative overflow-hidden rounded-2xl border border-slate-200/90 p-3.5 backdrop-blur-2xl sm:rounded-3xl sm:p-6 dark:border-white/12">
-          <h4 className="font-paytone mb-2.5 flex items-center gap-1.5 text-xs font-bold text-slate-900 sm:mb-3 sm:gap-2 sm:text-base dark:text-white">
-            <FileText className="h-3.5 w-3.5 text-amber-500 sm:h-4 sm:w-4" />
-            <span>Rules & Guidelines:</span>
-          </h4>
-          <ul className="space-y-2 text-[11px] text-slate-600 sm:space-y-2.5 sm:text-xs dark:text-slate-300">
-            <li className="flex items-start gap-2">
-              <span className="mt-1 h-1.5 w-1.5 shrink-0 rounded-full bg-amber-500" />
-              <span>
-                Registration Fee: ₹50 per participant (Payable online via UPI,
-                Cards, Net Banking).
-              </span>
-            </li>
-            <li className="flex items-start gap-2">
-              <span className="mt-1 h-1.5 w-1.5 shrink-0 rounded-full bg-amber-500" />
-              <span>
-                Drawing paper will be provided by the organizers only.
-              </span>
-            </li>
-            <li className="flex items-start gap-2">
-              <span className="mt-1 h-1.5 w-1.5 shrink-0 rounded-full bg-amber-500" />
-              <span>
-                Participants must bring their own colors and other required
-                materials.
-              </span>
-            </li>
-            <li className="flex items-start gap-2">
-              <span className="mt-1 h-1.5 w-1.5 shrink-0 rounded-full bg-amber-500" />
-              <span>
-                Any type of color can be used for drawing, but sketch pen or
-                scale cannot be used.
-              </span>
-            </li>
-            <li className="flex items-start gap-2">
-              <span className="mt-1 h-1.5 w-1.5 shrink-0 rounded-full bg-amber-500" />
-              <span>The decision of the judges will be final.</span>
-            </li>
-            <li className="flex items-start gap-2">
-              <span className="mt-1 h-1.5 w-1.5 shrink-0 rounded-full bg-amber-500" />
-              <span>
-                Age proof certificate photocopy must be brought on the
-                competition day.
-              </span>
-            </li>
-            <li className="flex items-start gap-2">
-              <span className="mt-1 h-1.5 w-1.5 shrink-0 rounded-full bg-amber-500" />
-              <span>Wrong information will lead to disqualification.</span>
-            </li>
-            <li className="flex items-start gap-2">
-              <span className="mt-1 h-1.5 w-1.5 shrink-0 rounded-full bg-amber-500" />
-              <span>
-                An email with the registration ID will be sent, to be shown on
-                registration day.
-              </span>
-            </li>
-            <li className="flex items-start gap-2">
-              <span className="mt-1 h-1.5 w-1.5 shrink-0 rounded-full bg-amber-500" />
-              <span>
-                Our seating capacity is limited, so it will be accepted on a
-                priority basis.
-              </span>
-            </li>
-            <li className="flex items-start gap-2">
-              <span className="mt-1 h-1.5 w-1.5 shrink-0 rounded-full bg-amber-500" />
-              <span>
-                No applications will be accepted after the seating capacity is
-                full before the specified date.
-              </span>
-            </li>
-          </ul>
-        </div>
-
-        {/* CONTACT INFORMATION CARD */}
-        <div className="card-glass relative overflow-hidden rounded-2xl border border-slate-200/90 p-3.5 backdrop-blur-2xl sm:rounded-3xl sm:p-6 dark:border-white/12">
-          <h4 className="font-paytone mb-1 text-xs font-bold text-slate-900 sm:text-base dark:text-white">
-            Contact Information
-          </h4>
-          <p className="mb-3 text-[11px] text-slate-500 sm:mb-4 sm:text-xs dark:text-slate-400">
-            For any queries about the drawing competition, please contact us:
-          </p>
-          <div className="grid grid-cols-1 gap-2.5 sm:grid-cols-2 sm:gap-3.5">
-            <a
-              href="mailto:madhyanchalsarbajanin@gmail.com"
-              className="flex items-center gap-2.5 rounded-xl border border-slate-200/80 bg-white/70 p-2.5 transition-all hover:border-amber-500/50 hover:bg-amber-500/10 sm:gap-3.5 sm:p-3.5 dark:border-white/10 dark:bg-stone-900/70"
-            >
-              <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-amber-500/20 text-amber-600 sm:h-10 sm:w-10 sm:rounded-xl dark:text-amber-400">
-                <Mail className="h-4 w-4 sm:h-5 sm:w-5" />
-              </div>
-              <div className="min-w-0">
-                <div className="text-[9px] font-extrabold text-slate-400 uppercase sm:text-[10px]">
-                  Email
-                </div>
-                <div className="truncate text-xs font-bold text-slate-900 dark:text-white">
-                  madhyanchalsarbajanin@gmail.com
-                </div>
-              </div>
-            </a>
-
-            <a
-              href="https://wa.me/917686943894"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="flex items-center gap-2.5 rounded-xl border border-slate-200/80 bg-white/70 p-2.5 transition-all hover:border-emerald-500/50 hover:bg-emerald-500/10 sm:gap-3.5 sm:p-3.5 dark:border-white/10 dark:bg-stone-900/70"
-            >
-              <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-emerald-500/20 text-emerald-600 sm:h-10 sm:w-10 sm:rounded-xl dark:text-emerald-400">
-                <MessageCircle className="h-4 w-4 sm:h-5 sm:w-5" />
-              </div>
-              <div className="min-w-0">
-                <div className="text-[9px] font-extrabold text-slate-400 uppercase sm:text-[10px]">
-                  WhatsApp / Phone
-                </div>
-                <div className="truncate text-xs font-bold text-slate-900 dark:text-white">
-                  +91 76869 43894
-                </div>
-              </div>
-            </a>
-          </div>
-        </div>
-      </div>
-    );
-  }
-
-  const currentTotalAmount = fields.length * REGISTRATION_FEE_PER_PARTICIPANT;
 
   return (
     <div className="relative mx-auto max-w-4xl space-y-4 sm:space-y-6">
@@ -752,7 +507,6 @@ export function DrawingCompetitionForm() {
 
           {/* Fee Badge */}
           <div className="flex items-center gap-1.5 rounded-xl border border-amber-500/40 bg-amber-500/10 px-3 py-1.5 text-xs font-bold text-amber-800 sm:rounded-2xl sm:px-4 sm:py-2 dark:text-amber-300">
-            <IndianRupee className="h-3.5 w-3.5 text-amber-500 sm:h-4 sm:w-4" />
             <span>₹50 / Participant</span>
           </div>
         </div>
@@ -835,6 +589,70 @@ export function DrawingCompetitionForm() {
               <span>Map</span>
               <ExternalLink className="h-3 w-3" />
             </a>
+          </div>
+        </div>
+      </div>
+
+      {/* PRIZES, GIFTS & CEREMONY HIGHLIGHTS CARD */}
+      <div className="card-glass relative overflow-hidden rounded-2xl border border-slate-200/90 p-3.5 backdrop-blur-2xl sm:rounded-3xl sm:p-5 dark:border-white/12">
+        <h4 className="font-paytone mb-3 flex items-center gap-2 text-xs font-bold text-slate-900 sm:text-base dark:text-white">
+          <Trophy className="h-4 w-4 text-amber-500" />
+          <span>Prizes, Gifts & Ceremony Details:</span>
+        </h4>
+
+        <div className="grid grid-cols-1 gap-2.5 sm:grid-cols-2 sm:gap-3.5">
+          {/* Category Prizes */}
+          <div className="flex items-start gap-3 rounded-xl border border-amber-500/20 bg-amber-500/10 p-3">
+            <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-amber-500/20 text-amber-600 dark:text-amber-400">
+              <Trophy className="h-4.5 w-4.5" />
+            </div>
+            <div className="min-w-0 space-y-0.5 text-left">
+              <div className="text-[10px] font-extrabold text-amber-800 uppercase dark:text-amber-300">
+                5 Prizes Per Group
+              </div>
+              <div className="text-xs font-bold text-slate-900 dark:text-white">
+                3 Mementos (1st, 2nd, 3rd) + 2 Medals (4th, 5th)
+              </div>
+              <div className="text-[10px] text-slate-600 dark:text-slate-400">
+                Awarded across Group A, B & C
+              </div>
+            </div>
+          </div>
+
+          {/* Certificate & Gift Kit */}
+          <div className="flex items-start gap-3 rounded-xl border border-amber-500/20 bg-amber-500/10 p-3">
+            <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-amber-500/20 text-amber-600 dark:text-amber-400">
+              <Gift className="h-4.5 w-4.5" />
+            </div>
+            <div className="min-w-0 space-y-0.5 text-left">
+              <div className="text-[10px] font-extrabold text-amber-800 uppercase dark:text-amber-300">
+                Gifts & Refreshments for All
+              </div>
+              <div className="text-xs font-bold text-slate-900 dark:text-white">
+                Participation Certificate & Gift Hamper
+              </div>
+              <div className="text-[10px] text-slate-600 dark:text-slate-400">
+                Includes Stationery Kit & Snack/Tiffin Box
+              </div>
+            </div>
+          </div>
+
+          {/* Prize Distribution Ceremony */}
+          <div className="col-span-1 flex items-start gap-3 rounded-xl border border-amber-500/20 bg-amber-500/10 p-3 sm:col-span-2">
+            <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-amber-500/20 text-amber-600 dark:text-amber-400">
+              <Award className="h-4.5 w-4.5" />
+            </div>
+            <div className="min-w-0 space-y-0.5 text-left">
+              <div className="text-[10px] font-extrabold text-amber-800 uppercase dark:text-amber-300">
+                Prize Distribution Ceremony
+              </div>
+              <div className="text-xs font-bold text-slate-900 dark:text-white">
+                Saturday, 17th October 2026 at 5:00 PM
+              </div>
+              <div className="text-[10px] text-slate-600 dark:text-slate-400">
+                Venue: Madhyanchal Sarbajanin Puja Mandap
+              </div>
+            </div>
           </div>
         </div>
       </div>
