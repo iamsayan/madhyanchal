@@ -220,6 +220,10 @@ export function DrawingCompetitionForm() {
           phone: previewData.phone.replace(/\D+/g, ''),
           participants_count: previewData.participants.length.toString(),
         },
+        theme: {
+          color: '#0C1930',
+          backdrop_color: '#0C1930',
+        },
         handler: async function (response: RazorpaySuccessResponse) {
           try {
             const results: Array<{ name: string; id: string }> = [];
@@ -349,7 +353,7 @@ export function DrawingCompetitionForm() {
                 </span>
               </div>
               <div className="flex items-center justify-between text-[11.5px] text-slate-600 dark:text-slate-300">
-                <span>Fee Rate per Participant:</span>
+                <span>Fee per Participant:</span>
                 <span className="font-semibold text-slate-900 dark:text-white">
                   ₹50
                 </span>
