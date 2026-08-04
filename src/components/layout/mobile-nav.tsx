@@ -22,6 +22,7 @@ import {
   Palette,
   ArrowLeft,
   Sparkles,
+  Download,
 } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { sendGTMEvent } from '@next/third-parties/google';
@@ -37,6 +38,31 @@ export function MobileNavDock() {
 
   const currentYear = new Date().getFullYear();
   const isDurgaPuja = useIsDurgaPuja();
+  const [isStandalone, setIsStandalone] = useState(false);
+
+  // Check if app is running in Standalone PWA mode or already installed using pwa-install properties
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      const checkStandalone = () => {
+        const pwaInstall = document.getElementsByTagName(
+          'pwa-install'
+        )[0] as unknown as {
+          isUnderStandaloneMode?: boolean;
+          isInstallAvailable?: boolean;
+        };
+        const isUnderStandalone =
+          pwaInstall?.isUnderStandaloneMode ??
+          (window.matchMedia('(display-mode: standalone)').matches ||
+            (window.navigator as any).standalone === true);
+        setIsStandalone(Boolean(isUnderStandalone));
+      };
+
+      checkStandalone();
+      const mediaQuery = window.matchMedia('(display-mode: standalone)');
+      mediaQuery.addEventListener?.('change', checkStandalone);
+      return () => mediaQuery.removeEventListener?.('change', checkStandalone);
+    }
+  }, [moreOpen]);
 
   // Load saved member profiles list from localStorage
   useEffect(() => {
@@ -320,6 +346,41 @@ export function MobileNavDock() {
                     ))}
                   </div>
                 </div>
+              )}
+
+              {/* PWA INSTALL DIRECT ACTION CARD (Only shown when not already running as standalone PWA) */}
+              {!isStandalone && (
+                <button
+                  type="button"
+                  onClick={() => {
+                    setMoreOpen(false);
+                    if (
+                      typeof window !== 'undefined' &&
+                      window.openPwaInstallPrompt
+                    ) {
+                      window.openPwaInstallPrompt();
+                    }
+                  }}
+                  className="flex w-full items-center justify-between rounded-2xl border border-amber-500/40 bg-gradient-to-r from-amber-500/20 via-amber-500/10 to-amber-500/20 p-3 text-left transition-all hover:scale-[1.01] active:scale-[0.98]"
+                >
+                  <div className="flex items-center gap-3">
+                    <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-amber-500 text-slate-950 shadow-xs">
+                      <Download className="h-4.5 w-4.5" />
+                    </div>
+                    <div>
+                      <div className="flex items-center gap-1.5 text-xs font-black text-slate-900 dark:text-white">
+                        <span>Install Official App</span>
+                        <span className="py-0.2 rounded-full bg-amber-500 px-1.5 text-[8.5px] font-black tracking-widest text-slate-950 uppercase">
+                          NEW
+                        </span>
+                      </div>
+                      <div className="text-[10px] font-medium text-slate-600 dark:text-slate-300">
+                        Add to home screen for quick offline access
+                      </div>
+                    </div>
+                  </div>
+                  <ChevronRight className="h-4 w-4 text-amber-600 dark:text-amber-400" />
+                </button>
               )}
 
               {/* Menu List */}
