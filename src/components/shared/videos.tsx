@@ -7,7 +7,8 @@ import Image from 'next/image';
 import { cn } from '@/lib/utils';
 import type { HomepageVideo } from '@/types';
 import { YouTubeEmbed } from '@next/third-parties/google';
-import { Film, Play } from 'lucide-react';
+import { ExternalLink, Film, Play } from 'lucide-react';
+import { YOUTUBE_CHANNEL_ID } from '@/lib/youtube';
 
 interface VideosProps {
   items?: HomepageVideo[];
@@ -18,6 +19,8 @@ export function Videos({ items = [] }: VideosProps) {
   const [activeIdx, setActiveIdx] = useState<number>(0);
 
   const activeVideo = videoList[activeIdx] || videoList[0];
+
+  const youtubeChannelUrl = `https://www.youtube.com/channel/${YOUTUBE_CHANNEL_ID}`;
 
   return (
     <div className="grid grid-cols-1 gap-4 pt-2 sm:gap-6 sm:pt-4 lg:grid-cols-12">
@@ -38,7 +41,7 @@ export function Videos({ items = [] }: VideosProps) {
           <div className="flex min-w-0 items-center gap-2.5 pr-2">
             <span className="flex h-2.5 w-2.5 shrink-0 animate-pulse rounded-full bg-rose-500" />
             <h4 className="font-paytone truncate text-xs font-bold text-slate-900 sm:text-base dark:text-slate-100">
-              {activeVideo.title}
+              {activeVideo?.title}
             </h4>
           </div>
           <span className="shrink-0 rounded-full border border-rose-500/20 bg-rose-500/10 px-2.5 py-0.5 text-[9px] font-extrabold tracking-wider text-rose-600 uppercase sm:text-xs dark:text-rose-400">
@@ -49,14 +52,20 @@ export function Videos({ items = [] }: VideosProps) {
 
       {/* INTERACTIVE PLAYLIST DRAWER (4-col on desktop) */}
       <div className="flex flex-col space-y-2.5 lg:col-span-4">
-        <div className="flex items-center justify-between px-1 pb-1">
+        <div className="flex flex-wrap items-center justify-between gap-1 px-1 pb-1">
           <span className="flex items-center gap-1.5 text-[10px] font-extrabold tracking-widest text-slate-500 uppercase sm:text-xs dark:text-slate-400">
-            <Film className="h-3.5 w-3.5 text-amber-500" /> Video Archive
-            Playlist
+            <Film className="h-3.5 w-3.5 text-amber-500" /> YouTube
           </span>
-          <span className="text-[10px] font-bold text-amber-600 sm:text-xs dark:text-amber-400">
-            {videoList.length} Videos
-          </span>
+          <div className="flex items-center gap-2">
+            <a
+              href={youtubeChannelUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex items-center gap-1 rounded-full border border-red-500/30 bg-red-500/10 px-2 py-0.5 text-[10px] font-bold text-red-600 hover:bg-red-500/20 dark:text-red-400"
+            >
+              View All <ExternalLink className="h-2.5 w-2.5" />
+            </a>
+          </div>
         </div>
 
         <div className="flex max-h-[460px] scrollbar-none flex-col gap-2 overflow-y-auto pr-0.5">
