@@ -277,8 +277,8 @@ export function MobileNavDock() {
                   </h3>
                   <p className="text-xs text-slate-500 dark:text-slate-400">
                     {isDurgaPuja
-                      ? 'Sacred Autumn Festival & Youth Contest'
-                      : 'Tradition, Unity, and Celebration'}
+                      ? 'Autumn Festival & Youth Drawing Contest'
+                      : 'Culture, Sports & Community Services'}
                   </p>
                 </div>
                 <button

@@ -142,7 +142,7 @@ export default function ActivitiesPage() {
         'bg-purple-500/15 border-purple-500/30 text-purple-700 dark:text-purple-300',
       iconColor: 'text-purple-500',
       description:
-        'Fostering young artistic talent through annual Sit & Draw competitions for children, encouraging creativity, cultural expression, and community camaraderie.',
+        'Annual Sit & Draw art competition for children, giving local young artists a platform to showcase their creativity with exciting prizes and certificates.',
       slides: [
         { name: 'Annual Children Art Competition', path: '/hero-pandal.png' },
         {

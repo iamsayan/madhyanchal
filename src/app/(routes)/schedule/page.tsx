@@ -155,7 +155,7 @@ const DETAILED_DAILY_TIMINGS = [
       { time: '08:30 AM', text: 'Mahanabami Puja & Chandi Path' },
       { time: '11:00 AM', text: 'Maha Yajna & Sacred Fire Homa Ritual' },
       { time: '01:30 PM', text: 'Grand Community Feast (Mahaprasad)' },
-      { time: '07:30 PM', text: 'Chandannagar Master Light Tapestry Display' },
+      { time: '07:30 PM', text: 'Chandannagar Master Light Illumination Display' },
     ],
   },
   {

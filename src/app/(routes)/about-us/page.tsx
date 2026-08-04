@@ -16,7 +16,7 @@ import {
 export const metadata: Metadata = {
   title: 'About Us | Madhyanchal Sarbajanin Chandannagar',
   description:
-    'Discover the heart of Madhyanchal Sarbajanin, a beacon of cultural, sports, and social heritage since 1971 in Chandannagar.',
+    'Celebrating culture, sports, and community service in Chandannagar since 1971.',
   keywords: [
     'madhyanchal history',
     'jagadhatri puja samity chandannagar',
@@ -28,7 +28,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: 'About Us | Madhyanchal Sarbajanin Chandannagar',
     description:
-      'Discover the heart of Madhyanchal Sarbajanin, promoting sports, culture, and community welfare since 1971.',
+      'Discover Madhyanchal Sarbajanin — organizing grand Pujas, youth sports, and year-round social work in Chandannagar since 1971.',
     url: '/about-us',
     type: 'website',
   },
@@ -106,25 +106,25 @@ export default function AboutUsPage() {
   const coreHighlights = [
     {
       title: 'Established 1971',
-      description: `${yearsActive} glorious years of unbroken cultural legacy and social harmony.`,
+      description: `${yearsActive} years of continuous community celebrations, sports, and social work.`,
       icon: ShieldCheck,
     },
     {
-      title: '1.2M+ Footfall',
+      title: '1.2M+ Visitors',
       description:
-        'Devotees and international tourists flocking to Station Road every year.',
+        'Pandal hoppers and visitors from across Bengal gathering on Station Road during Puja.',
       icon: Globe2,
     },
     {
-      title: '100+ Prestigious Awards',
+      title: '100+ Awards & Honors',
       description:
-        'Recognized for road lighting, idol craftsmanship, and theme architecture.',
+        'Recognized for exceptional light displays, idol craftsmanship, and pandal design.',
       icon: Trophy,
     },
     {
-      title: 'Sports & Community Club',
+      title: 'Sports & Cultural Club',
       description:
-        'Own playground, modern sports, and year-round youth welfare initiatives.',
+        'Our own playground, local sports tournaments, and year-round youth activities.',
       icon: HeartHandshake,
     },
   ];
@@ -132,7 +132,7 @@ export default function AboutUsPage() {
   return (
     <PageLayout
       title="About Madhyanchal"
-      subtitle="A beacon of cultural heritage, sports excellence, and community welfare in Chandannagar for over five decades."
+      subtitle="Bringing people together through grand Jagadhatri & Durga Pujas, sports, and year-round social welfare in Chandannagar."
       badge={{
         text: `Heritage Since 1971 (${yearsActive} Years)`,
         icon: Sparkles,
@@ -176,45 +176,34 @@ export default function AboutUsPage() {
           <div className="card-glass relative space-y-3 overflow-hidden rounded-xl border border-slate-200/90 p-3.5 text-[11px] leading-relaxed text-slate-700 backdrop-blur-2xl sm:space-y-4 sm:rounded-3xl sm:p-10 sm:text-base dark:border-white/12 dark:text-slate-300">
             <div className="border-b border-slate-200/80 pb-2.5 dark:border-white/10">
               <span className="text-[9px] font-black tracking-widest text-amber-600 uppercase sm:text-xs dark:text-amber-400">
-                Our Story & Purpose
+                Our Journey & Community Spirit
               </span>
               <h2 className="font-paytone text-base text-slate-900 sm:text-3xl dark:text-white">
-                Preserving Tradition, Empowering Community
+                Preserving Local Culture, Serving People
               </h2>
             </div>
 
             <p className="text-justify">
-              <strong>Jagadhatri Puja</strong>, the festival of Chandannagar, is
-              as famous as Kolkata’s Durga Puja. Situated with all its glory and
-              pride amidst West Bengal’s densely populated district of Hooghly
-              and the recognized French Colony of Chandannagar, just one
-              kilometer away from the railway station, is the renowned{' '}
-              <strong>Madhyanchal Sarbajanin</strong>. Since its inception in
-              1971, a remarkable {yearsActive} years ago, the committee’s
-              benevolent presence has been ever-expanding.
+              <strong>Jagadhatri Puja</strong> is the soul of Chandannagar.
+              Located just one kilometer from Chandannagar railway station along
+              Station Road, <strong>Madhyanchal Sarbajanin</strong> has been at
+              the heart of this grand festival since 1971. Over the past{' '}
+              {yearsActive} years, our committee has grown into a vibrant family
+              of local residents, youth volunteers, and organizers.
             </p>
 
             <p className="text-justify">
-              Thousands of spectators from all over India and abroad flock to
-              this grand festival, drawn by its unique arts, culture,
-              decorations, pandals, and idols. The Madhyanchal Jagadhatri Puja
-              has become a major attraction for people from all walks of life.
+              Every year, thousands of visitors from across Bengal and India come
+              to experience our unique pandal artwork, traditional idols, and the
+              world-famous light illumination of Chandannagar.
             </p>
 
             <p className="text-justify">
-              <strong>Madhyanchal</strong>, a renowned sports and cultural club
-              located in Chandannagar (Hooghly – 712136), boasts its own
-              playground and modern facilities. Over the past {yearsActive}{' '}
-              years, Madhyanchal Sporting Club has become a cornerstone of the
-              community, fostering a spirit of camaraderie, peace, and unity.
-            </p>
-
-            <p className="text-justify">
-              What sets the Jagadhatri Puja organized by Madhyanchal Sporting
-              Club apart is the sense of inclusivity and harmony it brings to
-              the community. The festival is a symbol of unity, attracting
-              people from all walks of life, irrespective of their faiths and
-              beliefs.
+              <strong>Madhyanchal Sporting Club</strong> is not just a Puja
+              organizer — it is a local sports and cultural hub with its own
+              playground. Throughout the year, we host sports tournaments,
+              blood donation camps, youth competitions, and social welfare programs
+              for our neighborhood.
             </p>
           </div>
         </AnimatedWrapper>

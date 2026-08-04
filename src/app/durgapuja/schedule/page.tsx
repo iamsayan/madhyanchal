@@ -56,7 +56,7 @@ export default function DurgaPujaSchedulePage() {
     {
       title: 'Youth Drawing Contest',
       description:
-        'Annual Sit & Draw competition fostering young artistic talent across 3 age categories.',
+        'Annual Sit & Draw competition for young artists across 3 age categories.',
       icon: Palette,
     },
     {

@@ -17,7 +17,7 @@ export const metadata: Metadata = {
       'Durga Puja 2026 Celebrations & Festival Hub | Madhyanchal Sarbajanin',
   },
   description:
-    'Experience the sacred autumn homecoming of Goddess Durga at Madhyanchal Sarbajanin, Chandannagar. 5-day festival schedule, 108 lotus Sandhi Puja, Youth Drawing Contest, and community feasts.',
+    'Join the Durga Puja 2026 celebrations at Madhyanchal Sarbajanin, Chandannagar. 5-day festival schedule, 108 lotus Sandhi Puja, Youth Drawing Contest, and community feasts.',
   keywords: [
     'durga puja chandannagar',
     'madhyanchal durga puja',

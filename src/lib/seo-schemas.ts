@@ -5,7 +5,7 @@
  */
 
 export const SITE_URL =
-  process.env.NEXT_PUBLIC_SITE_URL || 'https://www.madhyanchalsarbajanin.co.in';
+  process.env.NEXT_PUBLIC_SITE_URL || 'http://localhost:3000';
 
 export const ORGANIZATION_SCHEMA = {
   '@type': 'NGO',
@@ -121,7 +121,8 @@ export function getJagadhatriPujaEntrySchema() {
             startDate: '2026-11-16T07:00:00+05:30',
             endDate: '2026-11-16T22:00:00+05:30',
             eventStatus: 'https://schema.org/EventScheduled',
-            eventAttendanceMode: 'https://schema.org/OfflineEventAttendanceMode',
+            eventAttendanceMode:
+              'https://schema.org/OfflineEventAttendanceMode',
             isAccessibleForFree: true,
             location: { '@type': 'Place', name: 'Madhyanchal Puja Ground' },
           },
@@ -131,7 +132,8 @@ export function getJagadhatriPujaEntrySchema() {
             startDate: '2026-11-17T07:30:00+05:30',
             endDate: '2026-11-17T22:30:00+05:30',
             eventStatus: 'https://schema.org/EventScheduled',
-            eventAttendanceMode: 'https://schema.org/OfflineEventAttendanceMode',
+            eventAttendanceMode:
+              'https://schema.org/OfflineEventAttendanceMode',
             isAccessibleForFree: true,
             location: { '@type': 'Place', name: 'Madhyanchal Puja Ground' },
           },
@@ -141,7 +143,8 @@ export function getJagadhatriPujaEntrySchema() {
             startDate: '2026-11-18T08:00:00+05:30',
             endDate: '2026-11-18T23:30:00+05:30',
             eventStatus: 'https://schema.org/EventScheduled',
-            eventAttendanceMode: 'https://schema.org/OfflineEventAttendanceMode',
+            eventAttendanceMode:
+              'https://schema.org/OfflineEventAttendanceMode',
             isAccessibleForFree: true,
             location: { '@type': 'Place', name: 'Madhyanchal Puja Ground' },
           },
@@ -151,7 +154,8 @@ export function getJagadhatriPujaEntrySchema() {
             startDate: '2026-11-19T10:00:00+05:30',
             endDate: '2026-11-20T04:00:00+05:30',
             eventStatus: 'https://schema.org/EventScheduled',
-            eventAttendanceMode: 'https://schema.org/OfflineEventAttendanceMode',
+            eventAttendanceMode:
+              'https://schema.org/OfflineEventAttendanceMode',
             isAccessibleForFree: true,
             location: {
               '@type': 'Place',
@@ -222,7 +226,7 @@ export function getDurgaPujaEntrySchema() {
         name: 'Madhyanchal Sarbajanin Durga Puja 2026',
         alternateName: 'Madhyanchal Durga Puja Celebrations',
         description:
-          'Experience the sacred autumn homecoming of Goddess Durga in Chandannagar at Madhyanchal Sarbajanin — traditional Vedic rituals, 108 lotus Sandhi Puja, Youth Drawing Contest, and community feasts.',
+          'Join the grand Durga Puja celebrations at Madhyanchal Sarbajanin in Chandannagar — traditional rituals, Pushpanjali, 108 lotus Sandhi Puja, Youth Drawing Contest, and community feasts.',
         url: durgaPujaUrl,
         startDate: '2026-10-16T06:00:00+05:30',
         endDate: '2026-10-20T22:00:00+05:30',
@@ -257,7 +261,8 @@ export function getDurgaPujaEntrySchema() {
             startDate: '2026-10-16T07:30:00+05:30',
             endDate: '2026-10-16T21:00:00+05:30',
             eventStatus: 'https://schema.org/EventScheduled',
-            eventAttendanceMode: 'https://schema.org/OfflineEventAttendanceMode',
+            eventAttendanceMode:
+              'https://schema.org/OfflineEventAttendanceMode',
             isAccessibleForFree: true,
             location: { '@type': 'Place', name: 'Madhyanchal Puja Grounds' },
           },
@@ -267,7 +272,8 @@ export function getDurgaPujaEntrySchema() {
             startDate: '2026-10-17T06:00:00+05:30',
             endDate: '2026-10-17T22:00:00+05:30',
             eventStatus: 'https://schema.org/EventScheduled',
-            eventAttendanceMode: 'https://schema.org/OfflineEventAttendanceMode',
+            eventAttendanceMode:
+              'https://schema.org/OfflineEventAttendanceMode',
             isAccessibleForFree: true,
             location: { '@type': 'Place', name: 'Madhyanchal Puja Grounds' },
           },
@@ -277,7 +283,8 @@ export function getDurgaPujaEntrySchema() {
             startDate: '2026-10-18T08:00:00+05:30',
             endDate: '2026-10-18T22:30:00+05:30',
             eventStatus: 'https://schema.org/EventScheduled',
-            eventAttendanceMode: 'https://schema.org/OfflineEventAttendanceMode',
+            eventAttendanceMode:
+              'https://schema.org/OfflineEventAttendanceMode',
             isAccessibleForFree: true,
             location: { '@type': 'Place', name: 'Madhyanchal Puja Grounds' },
           },
@@ -287,7 +294,8 @@ export function getDurgaPujaEntrySchema() {
             startDate: '2026-10-19T09:00:00+05:30',
             endDate: '2026-10-19T23:00:00+05:30',
             eventStatus: 'https://schema.org/EventScheduled',
-            eventAttendanceMode: 'https://schema.org/OfflineEventAttendanceMode',
+            eventAttendanceMode:
+              'https://schema.org/OfflineEventAttendanceMode',
             isAccessibleForFree: true,
             location: { '@type': 'Place', name: 'Madhyanchal Puja Grounds' },
           },
@@ -297,7 +305,8 @@ export function getDurgaPujaEntrySchema() {
             startDate: '2026-10-20T10:00:00+05:30',
             endDate: '2026-10-20T22:00:00+05:30',
             eventStatus: 'https://schema.org/EventScheduled',
-            eventAttendanceMode: 'https://schema.org/OfflineEventAttendanceMode',
+            eventAttendanceMode:
+              'https://schema.org/OfflineEventAttendanceMode',
             isAccessibleForFree: true,
             location: { '@type': 'Place', name: 'Madhyanchal Puja Grounds' },
           },
@@ -431,7 +440,10 @@ export function getDrawingCompetitionSchema() {
       getBreadcrumbSchema([
         { name: 'Home', url: '/' },
         { name: 'Durga Puja', url: '/durgapuja' },
-        { name: 'Youth Drawing Competition', url: '/durgapuja/drawing-competition' },
+        {
+          name: 'Youth Drawing Competition',
+          url: '/durgapuja/drawing-competition',
+        },
       ]),
       {
         '@type': 'Event',

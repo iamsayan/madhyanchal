@@ -242,7 +242,7 @@ export default async function HomePage() {
 
                 <p className="line-clamp-3 max-w-xl text-xs leading-relaxed font-normal text-slate-300 sm:line-clamp-none sm:text-sm">
                   Chandannagar is globally renowned for its revolutionary light
-                  bulb tapestry art. Every year, Madhyanchal presents
+                  dynamic 3D light illumination art. Every year, Madhyanchal presents
                   spectacular moving light tableaux created by master light
                   artisans of Bengal.
                 </p>

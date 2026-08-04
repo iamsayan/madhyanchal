@@ -91,7 +91,7 @@ export default function AwardsPage() {
       title: 'Social Initiatives',
       subtitle: 'Community Unity & Inclusivity',
       description:
-        'Recognizing efforts in fostering unity, accessibility, and community harmony.',
+        'Recognizing work in community service, senior citizen support, and accessible pandal layout.',
       icon: HeartHandshake,
       badge: 'Community',
     },

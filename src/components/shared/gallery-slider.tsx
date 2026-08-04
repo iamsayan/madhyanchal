@@ -232,7 +232,7 @@ export function GallerySlider({
                 {isFeatured && (
                   <div className="absolute top-2.5 left-2.5 z-20 sm:top-3 sm:left-3">
                     <span className="inline-flex items-center gap-1 rounded-full border border-amber-400/50 bg-amber-500/20 px-2.5 py-0.5 text-[9px] font-black tracking-widest text-amber-300 uppercase shadow-md backdrop-blur-md sm:px-3 sm:py-1 sm:text-[10px]">
-                      <Sparkles className="h-3 w-3" /> Featured Art
+                      <Sparkles className="h-3 w-3" /> Featured
                     </span>
                   </div>
                 )}
@@ -331,7 +331,7 @@ export function GallerySlider({
                   {isFeatured && (
                     <div className="absolute top-3 left-3 z-20">
                       <span className="inline-flex items-center gap-1 rounded-full border border-amber-400/50 bg-amber-500/20 px-3 py-1 text-[10px] font-black tracking-widest text-amber-300 uppercase shadow-md backdrop-blur-md">
-                        <Sparkles className="h-3 w-3" /> Featured Art
+                        <Sparkles className="h-3 w-3" /> Featured
                       </span>
                     </div>
                   )}

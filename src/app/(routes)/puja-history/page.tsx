@@ -142,7 +142,7 @@ export default function PujaHistoryPage() {
       icon: Lightbulb,
       image: '',
       imageCaption:
-        'Master Light Artisans Sridhar Das & Kashinath Neogie Tapestry',
+        'Light Displays by Master Artisans Sridhar Das & Kashinath Neogie',
       tag: '5,000+ Artisans',
       highlights: [
         { label: 'Artisans', value: '5,000+ Light Craftsmen' },
@@ -150,9 +150,9 @@ export default function PujaHistoryPage() {
         { label: 'Innovation', value: '3D Dynamic Illumination' },
       ],
       content: [
-        'The Sanskrit invocation "Tamaso ma jyotirgamaya" ("Oh Mother! Lead me from darkness to light") finds its ultimate artistic expression in Chandannagar. Over 5,000 light artisans thrive in this region, creating dynamic 3D illuminations that depict moving trains, cars, current affairs, and global icons.',
-        'Pioneering master light artists such as Sridhar Das and Kashinath Neogie transformed simple bulbs into animated LED tapestries that are now commissioned worldwide for national events, royal weddings, and international carnivals.',
-        'The illuminated tableaux that precede the immersion procession stand as a testament to Chandannagar’s unmatched innovation, passion, and light craftsmanship.',
+        'The Sanskrit invocation "Tamaso ma jyotirgamaya" ("Lead me from darkness to light") finds its ultimate artistic expression in Chandannagar. Over 5,000 light artisans work in this region, creating dynamic 3D light panels that depict moving trains, current events, and cultural stories.',
+        'Pioneering master light artists such as Sridhar Das and Kashinath Neogie transformed simple bulbs into animated light displays that are now commissioned worldwide for major events and carnivals.',
+        'The illuminated light panels shown during the immersion procession highlight the deep skill and dedication of Chandannagar’s light craftsmen.',
       ],
     },
   ];
@@ -160,9 +160,9 @@ export default function PujaHistoryPage() {
   return (
     <PageLayout
       title="History of Jagadhatri Puja"
-      subtitle="An interactive historical chronicle of Chandannagar’s divine festival—from 18th-century French colonial roots to iconic LED light tapestries."
+      subtitle="An interactive historical chronicle of Chandannagar’s divine festival—from 18th-century French colonial origins to modern 3D light displays."
       badge={{
-        text: 'Heritage & Legacy Timeline',
+        text: 'Heritage Timeline',
         icon: Sparkles,
       }}
       breadcrumbCurrent="Puja History"

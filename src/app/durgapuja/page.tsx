@@ -27,7 +27,7 @@ export const metadata: Metadata = {
   title:
     'Durga Puja Celebrations & Festival Entry Point | Madhyanchal Sarbajanin',
   description:
-    'Welcome to Madhyanchal Durga Puja in Chandannagar. Discover sacred autumn rituals, 5-day festival schedule, youth drawing competition, and photo gallery.',
+    'Welcome to Madhyanchal Durga Puja in Chandannagar. Explore our 5-day festival schedule, traditional rituals, youth drawing competition, and photo gallery.',
   keywords: [
     'durga puja chandannagar',
     'madhyanchal durga puja',
@@ -160,7 +160,7 @@ export default function DurgaPujaLandingPage() {
             <div className="flex flex-col items-center space-y-4 text-center sm:space-y-6">
               <span className="inline-flex items-center gap-1.5 rounded-full border border-amber-500/40 bg-amber-500/20 px-3.5 py-1 text-[11px] font-extrabold tracking-widest text-amber-900 uppercase dark:text-amber-300">
                 <Flame className="h-3.5 w-3.5 animate-pulse text-amber-600" />
-                Sacred Autumn Homecoming
+                Sharadotsav Celebrations
               </span>
 
               <h1 className="font-paytone text-2xl leading-tight text-slate-900 sm:text-4xl lg:text-5xl dark:text-white">
@@ -356,8 +356,7 @@ export default function DurgaPujaLandingPage() {
                   Youth Sit & Draw Competition
                 </h3>
                 <p className="max-w-xl text-xs text-slate-600 sm:text-sm dark:text-slate-300">
-                  Fostering young artistic talent across 3 age categories
-                  (Category A, B & C) with trophies, medals, and certificates.
+                  Annual Sit & Draw contest with trophies, medals, and certificates across 3 age categories (Category A, B & C).
                 </p>
               </div>
 
