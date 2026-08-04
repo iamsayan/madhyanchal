@@ -3,7 +3,6 @@
 import { MouseEvent, useCallback, useEffect, useRef, useState } from 'react';
 
 import { createPortal } from 'react-dom';
-import { usePathname } from 'next/navigation';
 import { motion, AnimatePresence } from 'motion/react';
 
 import CockpitImage from '@/components/shared/cockpit-image';
@@ -19,6 +18,8 @@ import {
   ZoomIn,
 } from 'lucide-react';
 
+import { useIsDurgaPuja } from '@/hooks/use-is-durga-puja';
+
 interface GallerySliderProps {
   slides?: Asset[];
   layout?: 'carousel' | 'grid' | 'responsive';
@@ -28,8 +29,7 @@ export function GallerySlider({
   slides = [],
   layout = 'responsive',
 }: GallerySliderProps) {
-  const pathname = usePathname();
-  const isDurgaPuja = pathname.startsWith('/durgapuja');
+  const isDurgaPuja = useIsDurgaPuja();
 
   const [selectedIndex, setSelectedIndex] = useState<number | null>(null);
   const [isMounted, setIsMounted] = useState(false);
@@ -371,7 +371,7 @@ export function GallerySlider({
                 onClick={closeLightbox}
                 className={cn(
                   'fixed inset-0 z-[99999] flex flex-col justify-between text-white backdrop-blur-2xl transition-all duration-300 pt-[calc(1rem+env(safe-area-inset-top,0px))] pb-[calc(1rem+env(safe-area-inset-bottom,0px))] pl-[calc(1rem+env(safe-area-inset-left,0px))] pr-[calc(1rem+env(safe-area-inset-right,0px))] sm:pt-[calc(1.5rem+env(safe-area-inset-top,0px))] sm:pb-[calc(1.5rem+env(safe-area-inset-bottom,0px))] sm:px-6',
-                  isDurgaPuja ? 'bg-[#0c1930]/95' : 'bg-[#1c1917]/95'
+                  isDurgaPuja ? 'bg-[#0c1930]' : 'bg-[#1c1917]'
                 )}
               >
                 {/* Top Toolbar */}

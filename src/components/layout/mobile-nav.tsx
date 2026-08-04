@@ -26,6 +26,8 @@ import {
 import { cn } from '@/lib/utils';
 import { sendGTMEvent } from '@next/third-parties/google';
 
+import { useIsDurgaPuja } from '@/hooks/use-is-durga-puja';
+
 export function MobileNavDock() {
   const pathname = usePathname();
   const [moreOpen, setMoreOpen] = useState(false);
@@ -34,7 +36,7 @@ export function MobileNavDock() {
   >([]);
 
   const currentYear = new Date().getFullYear();
-  const isDurgaPuja = pathname.startsWith('/durgapuja');
+  const isDurgaPuja = useIsDurgaPuja();
 
   // Load saved member profiles list from localStorage
   useEffect(() => {

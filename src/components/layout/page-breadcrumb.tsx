@@ -4,13 +4,15 @@ import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { ChevronRight } from 'lucide-react';
 
+import { useIsDurgaPuja } from '@/hooks/use-is-durga-puja';
+
 interface PageBreadcrumbProps {
   currentNav: string;
 }
 
 export function PageBreadcrumb({ currentNav }: PageBreadcrumbProps) {
   const pathname = usePathname();
-  const isDurgaPuja = pathname.startsWith('/durgapuja');
+  const isDurgaPuja = useIsDurgaPuja();
 
   if (pathname === '/durgapuja') {
     return null;
