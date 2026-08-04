@@ -348,6 +348,30 @@ export function MobileNavDock() {
                 </div>
               )}
 
+              {/* DURGA PUJA MODE: RETURN TO MAIN WEBSITE ACTION CARD */}
+              {isDurgaPuja && (
+                <Link
+                  href="/"
+                  onClick={() => setMoreOpen(false)}
+                  className="flex w-full items-center justify-between rounded-2xl border border-amber-500/40 bg-gradient-to-r from-amber-500/20 via-amber-500/10 to-amber-500/20 p-3 text-left transition-all hover:scale-[1.01] active:scale-[0.98]"
+                >
+                  <div className="flex items-center gap-3">
+                    <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-amber-500 text-slate-950 shadow-xs">
+                      <ArrowLeft className="h-4.5 w-4.5" />
+                    </div>
+                    <div>
+                      <div className="text-xs font-black text-slate-900 dark:text-white">
+                        Return to Jagadhatri Puja
+                      </div>
+                      <div className="text-[10px] font-medium text-slate-600 dark:text-slate-300">
+                        Main App & Club Activities
+                      </div>
+                    </div>
+                  </div>
+                  <ChevronRight className="h-4 w-4 text-amber-600 dark:text-amber-400" />
+                </Link>
+              )}
+
               {/* PWA INSTALL DIRECT ACTION CARD (Only shown when not already running as standalone PWA) */}
               {!isStandalone && (
                 <button
@@ -450,7 +474,7 @@ export function MobileNavDock() {
                           <div className="flex items-center gap-1.5 text-xs font-bold text-slate-900 dark:text-white">
                             <span>{item.label}</span>
                             {isHighlighted && (
-                              <span className="py-0.2 rounded-full bg-amber-500 px-1.5 text-[9px] font-black tracking-wider text-slate-950 uppercase">
+                              <span className="py-0.2 rounded-full bg-amber-500 px-1.5 text-[8.5px] font-black tracking-widest text-slate-950 uppercase">
                                 Featured
                               </span>
                             )}

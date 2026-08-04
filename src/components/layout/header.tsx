@@ -188,19 +188,8 @@ export function Header() {
             : 'border-b border-stone-800 bg-[#1c1917] text-white'
         )}
       >
-        {/* Left: (< Logo) Back Button & Brand Logo */}
+        {/* Left: Brand Logo */}
         <div className="flex shrink-0 items-center gap-2">
-          {isDurgaPuja && (
-            <Link
-              href="/"
-              className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full border border-white/15 bg-[#132342]/90 text-amber-400 shadow-xs backdrop-blur-xl transition-all hover:bg-[#1a2d52] active:scale-90"
-              aria-label="Back to Main Site"
-              title="Back to Main Site"
-            >
-              <ChevronLeft className="h-4.5 w-4.5" />
-            </Link>
-          )}
-
           <Link
             href={isDurgaPuja ? '/durgapuja' : '/'}
             className="flex shrink-0 items-center focus-visible:outline-none"
