@@ -76,15 +76,17 @@ export function Header() {
             <Link
               href="/"
               className={cn(
-                'flex items-center justify-center rounded-full transition-all focus-visible:outline-none active:scale-95',
+                'flex shrink-0 items-center justify-center rounded-full border shadow-xs backdrop-blur-2xl transition-all duration-300 hover:scale-105 active:scale-95 focus-visible:outline-none',
                 scrolled
-                  ? 'h-8 w-8 border border-slate-300/80 bg-slate-100/80 text-slate-800 hover:bg-amber-500 hover:text-slate-950 dark:border-white/15 dark:bg-stone-900/80 dark:text-slate-100 dark:hover:bg-amber-500'
-                  : 'h-9 w-9 border border-white/15 bg-[#132342]/90 text-amber-400 backdrop-blur-md hover:bg-[#1a2d52] dark:text-amber-400'
+                  ? 'h-8 w-8 border-slate-200/90 bg-white/95 text-amber-600 hover:bg-amber-500/10 dark:border-white/15 dark:bg-[#132342] dark:text-amber-400 dark:hover:bg-[#1a2d52]'
+                  : 'h-9 w-9 border-amber-500/30 bg-white/90 text-amber-600 hover:border-amber-500/50 hover:bg-amber-500/10 dark:border-white/20 dark:bg-[#132342] dark:text-amber-400 dark:hover:bg-[#1a2d52]'
               )}
-              title="Back to Main Website"
-              aria-label="Back to Main Website"
+              title="Return to Main Website"
+              aria-label="Return to Main Website"
             >
-              <ChevronLeft className="h-5 w-5" />
+              <ChevronLeft
+                className={cn('stroke-[2.5]', scrolled ? 'h-4 w-4' : 'h-5 w-5')}
+              />
             </Link>
           )}
 
