@@ -32,6 +32,7 @@ import {
   MapPin,
   MessageCircle,
   Palette,
+  Pencil,
   Phone,
   Plus,
   ShieldCheck,
@@ -334,32 +335,46 @@ export function DrawingCompetitionForm() {
         }}
         secondaryButton={{
           label: 'Edit Details',
-          onClick: () => setPreviewData(null),
+          onClick: () => {
+            setPreviewData(null);
+            setTimeout(() => {
+              const formElement = document.getElementById(
+                'drawing-form-container'
+              );
+              if (formElement) {
+                formElement.scrollIntoView({
+                  behavior: 'smooth',
+                  block: 'start',
+                });
+              }
+            }, 100);
+          },
+          icon: <Pencil className="h-3.5 w-3.5" />,
           variant: 'secondary',
         }}
       >
         {previewData && (
-          <div className="space-y-3 text-left text-xs text-slate-700 dark:text-slate-200">
+          <div className="space-y-2 text-left text-xs text-slate-700 sm:space-y-3 dark:text-slate-200">
             {/* Payment Breakdown Box */}
-            <div className="space-y-1 rounded-xl border border-amber-500/40 bg-amber-500/15 p-3 text-left">
-              <div className="flex items-center justify-between border-b border-amber-500/20 pb-1.5 font-bold text-slate-900 dark:text-white">
+            <div className="space-y-1 rounded-xl border border-amber-500/40 bg-amber-500/15 p-2.5 text-left sm:p-3">
+              <div className="flex items-center justify-between border-b border-amber-500/20 pb-1 font-bold text-slate-900 sm:pb-1.5 dark:text-white">
                 <span className="flex items-center gap-1.5 text-xs text-amber-800 dark:text-amber-300">
                   <CreditCard className="h-3.5 w-3.5 text-amber-600 dark:text-amber-400" />
                   <span>Registration Fee Summary:</span>
                 </span>
-                <span className="rounded-full bg-amber-500 px-2.5 py-0.5 text-xs font-black text-slate-950">
+                <span className="rounded-full bg-amber-500 px-2 py-0.5 text-xs font-black text-slate-950 sm:px-2.5">
                   Total ₹
                   {previewData.participants.length *
                     REGISTRATION_FEE_PER_PARTICIPANT}
                 </span>
               </div>
-              <div className="flex items-center justify-between text-[11.5px] text-slate-600 dark:text-slate-300">
+              <div className="flex items-center justify-between text-[10.5px] text-slate-600 sm:text-[11.5px] dark:text-slate-300">
                 <span>Fee per Participant:</span>
                 <span className="font-semibold text-slate-900 dark:text-white">
                   ₹50
                 </span>
               </div>
-              <div className="flex items-center justify-between text-[11.5px] text-slate-600 dark:text-slate-300">
+              <div className="flex items-center justify-between text-[10.5px] text-slate-600 sm:text-[11.5px] dark:text-slate-300">
                 <span>Total Registered Participants:</span>
                 <span className="font-semibold text-slate-900 dark:text-white">
                   {previewData.participants.length} Child
@@ -368,51 +383,76 @@ export function DrawingCompetitionForm() {
               </div>
             </div>
 
-            {/* Guardian Info Box */}
-            <div className="space-y-1.5 rounded-xl border border-amber-500/30 bg-amber-500/10 p-3 text-left">
-              <div className="flex items-center gap-1.5 border-b border-amber-500/20 pb-1.5 text-xs font-bold text-amber-700 dark:text-amber-300">
-                <User className="h-3.5 w-3.5 shrink-0 text-amber-500" />
-                <span>Guardian Information:</span>
+            {/* Guardian Info Card */}
+            <div className="space-y-1.5 rounded-xl border border-amber-500/30 bg-amber-500/10 p-2.5 text-left sm:space-y-2 sm:p-3">
+              <div className="flex items-center justify-between border-b border-amber-500/20 pb-1 sm:pb-1.5">
+                <span className="flex items-center gap-1.5 text-xs font-bold text-amber-800 dark:text-amber-300">
+                  <User className="h-3.5 w-3.5 text-amber-600 dark:text-amber-400" />
+                  <span>Guardian Details</span>
+                </span>
+                <span className="rounded-full border border-amber-500/30 bg-amber-500/20 px-2 py-0.5 text-[9px] font-extrabold text-amber-800 sm:text-[9.5px] dark:text-amber-200">
+                  Primary Contact
+                </span>
               </div>
-              <div className="grid grid-cols-1 gap-1.5 text-xs sm:grid-cols-2">
-                <div className="flex items-baseline gap-1.5 text-left">
-                  <span className="shrink-0 text-slate-500 dark:text-slate-400">
-                    Name:
-                  </span>
-                  <span className="font-semibold text-slate-900 dark:text-white">
-                    {previewData.guardianName}
-                  </span>
+
+              <div className="grid grid-cols-2 gap-1.5 text-xs sm:gap-2">
+                {/* Name */}
+                <div className="col-span-1 flex items-start gap-1.5 rounded-lg bg-white/60 p-1.5 sm:gap-2 sm:p-2 dark:bg-stone-900/60">
+                  <User className="mt-0.5 h-3.5 w-3.5 shrink-0 text-amber-500" />
+                  <div className="min-w-0 space-y-0.5">
+                    <div className="text-[8.5px] font-extrabold text-slate-400 uppercase sm:text-[9.5px]">
+                      Guardian Name
+                    </div>
+                    <div className="truncate text-[11px] font-bold text-slate-900 sm:text-xs dark:text-white">
+                      {previewData.guardianName}
+                    </div>
+                  </div>
                 </div>
-                <div className="flex items-baseline gap-1.5 text-left">
-                  <span className="shrink-0 text-slate-500 dark:text-slate-400">
-                    Phone:
-                  </span>
-                  <span className="font-semibold text-slate-900 dark:text-white">
-                    {previewData.phone}
-                  </span>
+
+                {/* Phone */}
+                <div className="col-span-1 flex items-start gap-1.5 rounded-lg bg-white/60 p-1.5 sm:gap-2 sm:p-2 dark:bg-stone-900/60">
+                  <Phone className="mt-0.5 h-3.5 w-3.5 shrink-0 text-amber-500" />
+                  <div className="min-w-0 space-y-0.5">
+                    <div className="text-[8.5px] font-extrabold text-slate-400 uppercase sm:text-[9.5px]">
+                      Phone Number
+                    </div>
+                    <div className="truncate text-[11px] font-bold text-slate-900 sm:text-xs dark:text-white">
+                      {previewData.phone}
+                    </div>
+                  </div>
                 </div>
-                <div className="col-span-1 flex items-baseline gap-1.5 text-left sm:col-span-2">
-                  <span className="shrink-0 text-slate-500 dark:text-slate-400">
-                    Email:
-                  </span>
-                  <span className="font-semibold break-all text-slate-900 dark:text-white">
-                    {previewData.email}
-                  </span>
+
+                {/* Email */}
+                <div className="col-span-2 flex items-start gap-1.5 rounded-lg bg-white/60 p-1.5 sm:gap-2 sm:p-2 dark:bg-stone-900/60">
+                  <Mail className="mt-0.5 h-3.5 w-3.5 shrink-0 text-amber-500" />
+                  <div className="min-w-0 space-y-0.5">
+                    <div className="text-[8.5px] font-extrabold text-slate-400 uppercase sm:text-[9.5px]">
+                      Email Address
+                    </div>
+                    <div className="truncate text-[11px] font-bold text-slate-900 sm:text-xs dark:text-white">
+                      {previewData.email}
+                    </div>
+                  </div>
                 </div>
-                <div className="col-span-1 flex items-baseline gap-1.5 text-left sm:col-span-2">
-                  <span className="shrink-0 text-slate-500 dark:text-slate-400">
-                    Address:
-                  </span>
-                  <span className="font-semibold text-slate-900 dark:text-white">
-                    {previewData.address}, {previewData.city} -{' '}
-                    {previewData.pinCode}
-                  </span>
+
+                {/* Address */}
+                <div className="col-span-2 flex items-start gap-1.5 rounded-lg bg-white/60 p-1.5 sm:gap-2 sm:p-2 dark:bg-stone-900/60">
+                  <MapPin className="mt-0.5 h-3.5 w-3.5 shrink-0 text-amber-500" />
+                  <div className="min-w-0 space-y-0.5">
+                    <div className="text-[8.5px] font-extrabold text-slate-400 uppercase sm:text-[9.5px]">
+                      Address
+                    </div>
+                    <div className="text-[11px] font-semibold text-slate-900 sm:text-xs dark:text-white">
+                      {previewData.address}, {previewData.city} -{' '}
+                      {previewData.pinCode}
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>
 
             {/* Participants Summary List */}
-            <div className="space-y-1.5 text-left">
+            <div className="space-y-1 text-left sm:space-y-1.5">
               <div className="flex items-center gap-1.5 text-xs font-bold text-slate-900 dark:text-white">
                 <Users className="h-3.5 w-3.5 shrink-0 text-amber-500" />
                 <span>
@@ -420,20 +460,22 @@ export function DrawingCompetitionForm() {
                 </span>
               </div>
 
-              <div className="max-h-52 space-y-1.5 overflow-y-auto pr-1">
+              <div className="max-h-48 space-y-1.5 overflow-y-auto pr-1">
                 {previewData.participants.map((p, idx) => (
                   <div
                     key={idx}
-                    className="flex flex-col gap-1.5 rounded-xl border border-slate-200/80 bg-white/80 p-2.5 text-left shadow-2xs sm:flex-row sm:items-center sm:justify-between dark:border-white/10 dark:bg-stone-900/80"
+                    className="flex flex-row items-center justify-between gap-2 rounded-xl border border-slate-200/80 bg-white/80 p-2 text-left shadow-2xs dark:border-white/10 dark:bg-stone-900/80"
                   >
-                    <div className="space-y-0.5 text-left">
+                    <div className="min-w-0 space-y-0.5 text-left">
                       <div className="flex items-center gap-1.5 font-extrabold text-slate-900 dark:text-white">
-                        <span className="flex h-4.5 w-4.5 shrink-0 items-center justify-center rounded-full bg-amber-500 text-[9.5px] font-black text-slate-950">
+                        <span className="flex h-4 w-4 shrink-0 items-center justify-center rounded-full bg-amber-500 text-[9px] font-black text-slate-950">
                           {idx + 1}
                         </span>
-                        <span className="text-xs">{p.participantName}</span>
+                        <span className="truncate text-[11px] sm:text-xs">
+                          {p.participantName}
+                        </span>
                       </div>
-                      <div className="pl-6 text-[10px] text-slate-500 dark:text-slate-400">
+                      <div className="pl-5 text-[9.5px] text-slate-500 sm:text-[10px] dark:text-slate-400">
                         DOB:{' '}
                         <span className="font-semibold text-slate-700 dark:text-slate-300">
                           {p.dateOfBirth}
@@ -441,17 +483,23 @@ export function DrawingCompetitionForm() {
                       </div>
                     </div>
 
-                    <div className="flex items-center gap-1.5 self-start text-[10px] font-bold sm:self-center">
-                      <span className="rounded-md border border-amber-500/30 bg-amber-500/10 px-2 py-0.5 text-amber-700 dark:text-amber-300">
+                    <div className="flex shrink-0 items-center gap-1 text-[9.5px] font-bold sm:gap-1.5 sm:text-[10px]">
+                      <span className="rounded-md border border-amber-500/30 bg-amber-500/10 px-1.5 py-0.5 text-amber-700 dark:text-amber-300">
                         {p.age}
                       </span>
-                      <span className="rounded-md border border-amber-500/40 bg-amber-500/20 px-2.5 py-0.5 text-amber-800 dark:text-amber-200">
+                      <span className="rounded-md border border-amber-500/40 bg-amber-500/20 px-2 py-0.5 text-amber-800 dark:text-amber-200">
                         {p.category}
                       </span>
                     </div>
                   </div>
                 ))}
               </div>
+            </div>
+
+            {/* Razorpay Trust & Security Badge */}
+            <div className="flex items-center justify-center gap-1.5 rounded-xl border border-emerald-500/30 bg-emerald-500/10 px-3 py-1.5 text-center text-[10.5px] font-semibold text-emerald-800 dark:text-emerald-300">
+              <ShieldCheck className="h-3.5 w-3.5 shrink-0 text-emerald-600 dark:text-emerald-400" />
+              <span>256-bit Encrypted • Secured by Razorpay</span>
             </div>
           </div>
         )}
@@ -577,7 +625,7 @@ export function DrawingCompetitionForm() {
                   Venue
                 </div>
                 <div className="truncate text-xs font-bold text-slate-900 dark:text-white">
-                  Madhyanchal Mandap
+                  Madhyanchal Durga Puja Mandap
                 </div>
                 <div className="text-[10px] text-slate-500 dark:text-slate-400">
                   Chandannagar, Hooghly
@@ -655,7 +703,7 @@ export function DrawingCompetitionForm() {
                 Saturday, 17th October 2026 at 5:00 PM
               </div>
               <div className="text-[10px] text-slate-600 dark:text-slate-400">
-                Venue: Madhyanchal Sarbajanin Puja Mandap, Chandannangar
+                Venue: Madhyanchal Durga Puja Mandap, Chandannagar
               </div>
             </div>
           </div>
@@ -664,6 +712,7 @@ export function DrawingCompetitionForm() {
 
       {/* REGISTRATION FORM */}
       <form
+        id="drawing-form-container"
         onSubmit={handleSubmit(onFormSubmit)}
         className="card-glass relative space-y-4 rounded-2xl border border-slate-200/90 p-3.5 backdrop-blur-2xl sm:space-y-8 sm:rounded-3xl sm:p-8 dark:border-white/12"
       >
@@ -989,8 +1038,7 @@ export function DrawingCompetitionForm() {
               </div>
             ) : (
               <div className="pt-1 text-center text-[11px] font-bold text-amber-600 dark:text-amber-400">
-                ⚠️ Maximum limit of 5 participants reached for a single guardian
-                registration.
+                ⚠️ Maximum 5 participants allowed per guardian.
               </div>
             )}
           </div>
@@ -1020,13 +1068,6 @@ export function DrawingCompetitionForm() {
           <span>Rules & Guidelines:</span>
         </h4>
         <ul className="space-y-1.5 text-[11px] text-slate-600 sm:space-y-2.5 sm:text-xs dark:text-slate-300">
-          <li className="flex items-start gap-2">
-            <span className="mt-1 h-1.5 w-1.5 shrink-0 rounded-full bg-amber-500" />
-            <span>
-              <strong>Registration Limit:</strong> Maximum of 5 participants are
-              allowed per guardian registration.
-            </span>
-          </li>
           <li className="flex items-start gap-2">
             <span className="mt-1 h-1.5 w-1.5 shrink-0 rounded-full bg-amber-500" />
             <span>

@@ -142,8 +142,8 @@ export function NativeModal({
 
   const renderButton = (btn: NativeModalActionButton, isPrimary: boolean) => {
     const baseClasses = isPrimary
-      ? 'inline-flex flex-1 items-center justify-center gap-2 rounded-2xl bg-gradient-to-r from-amber-600 via-amber-500 to-yellow-500 py-2.5 px-3 text-xs font-black tracking-wider text-stone-950 uppercase shadow-md transition-all hover:scale-[1.02] active:scale-[0.98]'
-      : 'inline-flex flex-1 items-center justify-center gap-2 rounded-2xl border border-slate-200 bg-white py-2.5 px-3 text-xs font-bold text-slate-800 shadow-xs transition-all hover:bg-slate-50 active:scale-[0.98] dark:border-white/15 dark:bg-stone-900 dark:text-slate-200 dark:hover:bg-stone-800';
+      ? 'inline-flex flex-1 items-center justify-center gap-1.5 rounded-2xl bg-gradient-to-r from-amber-600 via-amber-500 to-yellow-500 py-2.5 px-2 text-[11px] font-black tracking-wide text-stone-950 uppercase shadow-md whitespace-nowrap transition-all hover:scale-[1.02] active:scale-[0.98] sm:gap-2 sm:px-3 sm:text-xs'
+      : 'inline-flex flex-1 items-center justify-center gap-1.5 rounded-2xl border border-slate-200 bg-white py-2.5 px-2 text-[11px] font-bold text-slate-800 shadow-xs whitespace-nowrap transition-all hover:bg-slate-50 active:scale-[0.98] sm:gap-2 sm:px-3 sm:text-xs dark:border-white/15 dark:bg-stone-900 dark:text-slate-200 dark:hover:bg-stone-800';
 
     if (btn.href) {
       return (

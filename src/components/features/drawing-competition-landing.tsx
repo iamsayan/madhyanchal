@@ -261,7 +261,7 @@ export function DrawingCompetitionLanding() {
             Venue Location
           </span>
           <span className="mt-0.5 truncate text-xs font-bold text-slate-900 sm:text-sm dark:text-white">
-            Madhyanchal Mandap
+            Madhyanchal Durga Puja Mandap
           </span>
         </div>
       </div>
@@ -482,7 +482,7 @@ export function DrawingCompetitionLanding() {
                 Saturday, 17th October 2026 at 5:00 PM
               </div>
               <div className="text-[11px] text-slate-600 dark:text-slate-400">
-                Venue: Madhyanchal Sarbajanin Puja Mandap, Chandannagar, Hooghly
+                Venue: Madhyanchal Durga Puja Mandap, Chandannagar, Hooghly
               </div>
             </div>
           </div>
@@ -517,7 +517,7 @@ export function DrawingCompetitionLanding() {
                 Competition Venue
               </div>
               <h4 className="font-paytone text-sm font-bold text-slate-900 sm:text-lg dark:text-white">
-                Madhyanchal Sarbajanin Puja Mandap
+                Madhyanchal Durga Puja Mandap
               </h4>
               <p className="text-xs text-slate-500 dark:text-slate-400">
                 Chandannagar, Hooghly, West Bengal

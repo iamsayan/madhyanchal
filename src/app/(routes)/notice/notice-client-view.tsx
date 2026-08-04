@@ -542,8 +542,7 @@ export default function NoticeClientView({
                       <span className="inline-flex items-center gap-1.5">
                         <Clock className="h-3.5 w-3.5 text-amber-500" />
                         <span>
-                          <strong>Time:</strong>{' '}
-                          {getEventTime(featuredNotice)}
+                          <strong>Time:</strong> {getEventTime(featuredNotice)}
                         </span>
                       </span>
                     )}
@@ -783,7 +782,7 @@ export default function NoticeClientView({
             : []
         }
         primaryButton={{
-          label: 'Print Circular',
+          label: 'Print',
           onClick: () =>
             activeNoticeModal && handlePrintNotice(activeNoticeModal),
           icon: <Printer className="h-3.5 w-3.5" />,
