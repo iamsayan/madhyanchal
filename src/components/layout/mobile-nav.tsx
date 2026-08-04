@@ -215,7 +215,7 @@ export function MobileNavDock() {
                   })
                 }
                 className={cn(
-                  'flex h-11 w-[64px] shrink-0 flex-col items-center justify-center rounded-full px-1 py-1 text-center transition-all duration-150 outline-none select-none [webkit-tap-highlight-color:transparent] focus:outline-none focus-visible:outline-none active:scale-95 sm:w-[72px]',
+                  'flex h-11 w-16 shrink-0 flex-col items-center justify-center rounded-full px-1 py-1 text-center transition-all duration-150 outline-none select-none [webkit-tap-highlight-color:transparent] focus:outline-none focus-visible:outline-none active:scale-95 sm:w-18',
                   isActive
                     ? 'bg-amber-500 font-extrabold text-slate-950 shadow-xs'
                     : 'text-slate-700 hover:text-amber-600 dark:text-slate-300 dark:hover:text-amber-400'
@@ -241,7 +241,7 @@ export function MobileNavDock() {
               });
             }}
             className={cn(
-              'relative flex h-11 w-[64px] shrink-0 cursor-pointer flex-col items-center justify-center rounded-full px-1 py-1 text-center transition-all duration-150 outline-none select-none [webkit-tap-highlight-color:transparent] focus:outline-none focus-visible:outline-none active:scale-95 sm:w-[72px]',
+              'relative flex h-11 w-16 shrink-0 cursor-pointer flex-col items-center justify-center rounded-full px-1 py-1 text-center transition-all duration-150 outline-none select-none [webkit-tap-highlight-color:transparent] focus:outline-none focus-visible:outline-none active:scale-95 sm:w-18',
               isMoreActive
                 ? 'bg-amber-500 font-extrabold text-slate-950 shadow-xs'
                 : 'text-slate-700 hover:text-amber-600 dark:text-slate-300 dark:hover:text-amber-400'
@@ -272,10 +272,10 @@ export function MobileNavDock() {
               className={cn(
                 'fixed inset-0 cursor-pointer backdrop-blur-md transition-colors duration-300',
                 isCommon
-                  ? 'bg-gradient-to-b from-[#4a0e17]/90 via-[#4a0e17]/70 to-[#4a0e17]/60'
+                  ? 'bg-linear-to-b from-[#4a0e17]/90 via-[#4a0e17]/70 to-[#4a0e17]/60'
                   : isDurgaPuja
-                  ? 'bg-gradient-to-b from-[#0c1930]/90 via-[#0c1930]/70 to-[#0c1930]/60'
-                  : 'bg-gradient-to-b from-[#1c1917]/90 via-[#1c1917]/70 to-stone-950/60'
+                    ? 'bg-linear-to-b from-[#0c1930]/90 via-[#0c1930]/70 to-[#0c1930]/60'
+                    : 'bg-linear-to-b from-[#1c1917]/90 via-[#1c1917]/70 to-stone-950/60'
               )}
               onClick={() => setMoreOpen(false)}
             />
@@ -312,7 +312,7 @@ export function MobileNavDock() {
                 <button
                   type="button"
                   onClick={() => setMoreOpen(false)}
-                  className="flex h-9 min-h-[44px] w-9 min-w-[44px] items-center justify-center rounded-full bg-slate-100 text-slate-700 active:scale-[0.98] dark:bg-slate-900 dark:text-slate-300"
+                  className="flex h-9 min-h-11 w-9 min-w-11 items-center justify-center rounded-full bg-slate-100 text-slate-700 active:scale-[0.98] dark:bg-slate-900 dark:text-slate-300"
                 >
                   <X className="h-4 w-4" />
                 </button>
@@ -320,7 +320,7 @@ export function MobileNavDock() {
 
               {/* SAVED MEMBERSHIPS ON THIS DEVICE SECTION */}
               {!isDurgaPuja && savedMembers.length > 0 && (
-                <div className="space-y-2 rounded-2xl border border-amber-500/30 bg-gradient-to-r from-amber-500/10 via-amber-500/5 to-amber-500/10 p-3">
+                <div className="space-y-2 rounded-2xl border border-amber-500/30 bg-linear-to-r from-amber-500/10 via-amber-500/5 to-amber-500/10 p-3">
                   <div className="flex items-center gap-1.5">
                     <UserCheck className="h-4 w-4 text-amber-600 dark:text-amber-400" />
                     <span className="text-xs font-bold text-slate-900 dark:text-white">
@@ -355,7 +355,7 @@ export function MobileNavDock() {
                 <Link
                   href="/"
                   onClick={() => setMoreOpen(false)}
-                  className="flex w-full items-center justify-between rounded-2xl border border-amber-500/40 bg-gradient-to-r from-amber-500/20 via-amber-500/10 to-amber-500/20 p-3 text-left transition-all hover:scale-[1.01] active:scale-[0.98]"
+                  className="flex w-full items-center justify-between rounded-2xl border border-amber-500/40 bg-linear-to-r from-amber-500/20 via-amber-500/10 to-amber-500/20 p-3 text-left transition-all hover:scale-[1.01] active:scale-[0.98]"
                 >
                   <div className="flex items-center gap-3">
                     <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-amber-500 text-slate-950 shadow-xs">
@@ -387,7 +387,7 @@ export function MobileNavDock() {
                       window.openPwaInstallPrompt();
                     }
                   }}
-                  className="flex w-full items-center justify-between rounded-2xl border border-amber-500/40 bg-gradient-to-r from-amber-500/20 via-amber-500/10 to-amber-500/20 p-3 text-left transition-all hover:scale-[1.01] active:scale-[0.98]"
+                  className="flex w-full items-center justify-between rounded-2xl border border-amber-500/40 bg-linear-to-r from-amber-500/20 via-amber-500/10 to-amber-500/20 p-3 text-left transition-all hover:scale-[1.01] active:scale-[0.98]"
                 >
                   <div className="flex items-center gap-3">
                     <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-amber-500 text-slate-950 shadow-xs">

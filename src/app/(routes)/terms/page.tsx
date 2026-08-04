@@ -1,4 +1,4 @@
-import type { Metadata } from 'next';
+import type { Metadata, Viewport } from 'next';
 import Link from 'next/link';
 
 import { PageLayout } from '@/components/layout/page-layout';
@@ -45,6 +45,10 @@ export const metadata: Metadata = {
   alternates: {
     canonical: '/terms',
   },
+};
+
+export const viewport: Viewport = {
+  themeColor: '#4a0e17',
 };
 
 export default function TermsPage() {

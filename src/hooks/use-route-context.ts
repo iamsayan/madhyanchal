@@ -7,7 +7,6 @@ export const COMMON_ROUTES = [
   '/contact-us',
   '/privacy-policy',
   '/terms',
-  '/services',
 ];
 
 export interface RouteContext {

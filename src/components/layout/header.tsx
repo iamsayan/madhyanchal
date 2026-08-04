@@ -100,7 +100,7 @@ export function Header() {
             <div
               className={cn(
                 'relative w-auto transition-all duration-300 group-hover:scale-105',
-                scrolled ? 'h-8 min-w-[130px]' : 'h-10 min-w-[150px]'
+                scrolled ? 'h-8 min-w-32.5' : 'h-10 min-w-37.5'
               )}
             >
               <Image
@@ -143,8 +143,8 @@ export function Header() {
                   className={cn(
                     'flex shrink-0 items-center justify-center rounded-full text-center font-bold whitespace-nowrap transition-all',
                     scrolled
-                      ? 'min-h-[28px] px-2.5 py-1 text-[11px] xl:px-3 xl:text-xs'
-                      : 'min-h-[32px] px-2.5 py-1 text-[11.5px] xl:px-3.5 xl:text-xs',
+                      ? 'min-h-7 px-2.5 py-1 text-[11px] xl:px-3 xl:text-xs'
+                      : 'min-h-8 px-2.5 py-1 text-[11.5px] xl:px-3.5 xl:text-xs',
                     isActive
                       ? 'bg-amber-500 font-black text-slate-950 shadow-xs'
                       : isHighlighted
@@ -274,7 +274,13 @@ export function Header() {
                   ? 'border-white/15 bg-[#132342]/90 text-amber-400 hover:bg-[#1a2d52]'
                   : 'border-stone-700 bg-stone-800/80 text-amber-400 hover:bg-stone-800'
             )}
-            iconClassName={isCommon ? 'text-amber-300' : isDurgaPuja ? 'text-amber-400' : 'text-amber-400'}
+            iconClassName={
+              isCommon
+                ? 'text-amber-300'
+                : isDurgaPuja
+                  ? 'text-amber-400'
+                  : 'text-amber-400'
+            }
           />
         </div>
       </div>

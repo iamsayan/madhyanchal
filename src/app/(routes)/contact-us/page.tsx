@@ -1,9 +1,4 @@
 import type { Metadata, Viewport } from 'next';
-
-export const viewport: Viewport = {
-  themeColor: '#4a0e17',
-};
-
 import { ContactForm } from '@/components/features/contact-form';
 import { PageLayout } from '@/components/layout/page-layout';
 import { AnimatedWrapper } from '@/components/shared/animated-wrapper';
@@ -43,6 +38,10 @@ export const metadata: Metadata = {
   alternates: {
     canonical: '/contact-us',
   },
+};
+
+export const viewport: Viewport = {
+  themeColor: '#4a0e17',
 };
 
 export default function ContactUsPage() {
@@ -106,7 +105,7 @@ export default function ContactUsPage() {
                     <h3 className="font-paytone text-xs text-slate-900 sm:text-base dark:text-white">
                       {card.title}
                     </h3>
-                    <p className="text-[11px] leading-relaxed font-medium break-words text-slate-600 sm:text-xs dark:text-slate-300">
+                    <p className="text-[11px] leading-relaxed font-medium wrap-break-word text-slate-600 sm:text-xs dark:text-slate-300">
                       {card.value}
                     </p>
                   </div>
@@ -171,7 +170,7 @@ export default function ContactUsPage() {
               </div>
 
               {/* Google Maps Visual Embed Frame */}
-              <div className="group relative aspect-[16/9] overflow-hidden rounded-xl border border-slate-200/90 bg-stone-900 dark:border-white/12">
+              <div className="group relative aspect-video overflow-hidden rounded-xl border border-slate-200/90 bg-stone-900 dark:border-white/12">
                 <iframe
                   title="Madhyanchal Sarbajanin Location Map"
                   src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3678.892398514108!2d88.36033547590895!3d22.864798579284245!2m3!1f0!f0!f0!m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x39f8931167448ebf%3A0x8e82d3e1a613589b!2sMadhyanchal%20Sarbajanin%20Jagadhatri%20Puja%20Samity!5e0!3m2!1sen!2sin!4v1700000000000!5m2!1sen!2sin"

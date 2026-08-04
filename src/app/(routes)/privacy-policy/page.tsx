@@ -1,4 +1,4 @@
-import type { Metadata } from 'next';
+import type { Metadata, Viewport } from 'next';
 
 import { PageLayout } from '@/components/layout/page-layout';
 import { AnimatedWrapper } from '@/components/shared/animated-wrapper';
@@ -42,6 +42,10 @@ export const metadata: Metadata = {
   alternates: {
     canonical: '/privacy-policy',
   },
+};
+
+export const viewport: Viewport = {
+  themeColor: '#4a0e17',
 };
 
 export default function PrivacyPolicyPage() {

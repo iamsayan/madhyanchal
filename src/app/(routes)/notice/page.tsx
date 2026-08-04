@@ -1,7 +1,8 @@
-import type { Metadata } from 'next';
+import type { Metadata, Viewport } from 'next';
 import NoticeClientView from './notice-client-view';
 
 import { getBreadcrumbSchema } from '@/lib/seo-schemas';
+import { getNotices } from '@/lib/data';
 
 export const metadata: Metadata = {
   title:
@@ -28,8 +29,9 @@ export const metadata: Metadata = {
   },
 };
 
-import { Suspense } from 'react';
-import { getNotices } from '@/lib/data';
+export const viewport: Viewport = {
+  themeColor: '#4a0e17',
+};
 
 export default async function NoticePage() {
   const notices = await getNotices().catch(() => []);

@@ -99,7 +99,9 @@ export function NativeModal({
           badgeBg:
             'border-rose-500/30 bg-rose-500/10 text-rose-500 dark:border-rose-500/40 dark:bg-rose-500/20 dark:text-rose-400',
           borderColor: 'border-rose-500/30 dark:border-rose-500/40',
-          defaultIcon: <XCircle className="h-7 w-7 text-rose-500 sm:h-9 sm:w-9" />,
+          defaultIcon: (
+            <XCircle className="h-7 w-7 text-rose-500 sm:h-9 sm:w-9" />
+          ),
         };
       case 'info':
       case 'warning':
@@ -108,7 +110,9 @@ export function NativeModal({
           badgeBg:
             'border-amber-500/30 bg-amber-500/10 text-amber-600 dark:border-amber-500/40 dark:bg-amber-500/20 dark:text-amber-400',
           borderColor: 'border-amber-500/30 dark:border-amber-500/40',
-          defaultIcon: <Trophy className="h-7 w-7 text-amber-500 sm:h-9 sm:w-9" />,
+          defaultIcon: (
+            <Trophy className="h-7 w-7 text-amber-500 sm:h-9 sm:w-9" />
+          ),
         };
       case 'success':
       default:
@@ -133,7 +137,12 @@ export function NativeModal({
 
     if (btn.href) {
       return (
-        <Link key={btn.label} href={btn.href} className={baseClasses} onClick={onClose}>
+        <Link
+          key={btn.label}
+          href={btn.href}
+          className={baseClasses}
+          onClick={onClose}
+        >
           {btn.icon}
           <span>{btn.label}</span>
         </Link>
@@ -219,7 +228,7 @@ export function NativeModal({
             </div>
 
             {/* Scrollable Content Container */}
-            <div className="my-2.5 min-h-0 flex-1 overflow-y-auto pr-0.5 space-y-2">
+            <div className="my-2.5 min-h-0 flex-1 space-y-2 overflow-y-auto pr-0.5">
               {/* Custom Content Slot */}
               {children}
 
@@ -240,7 +249,9 @@ export function NativeModal({
                       </span>
                       {item.copyable ? (
                         <div className="flex items-center gap-1 font-mono text-[11px] font-bold text-amber-700 dark:text-amber-300">
-                          <span className="truncate max-w-[140px] sm:max-w-none">{item.value}</span>
+                          <span className="max-w-[140px] truncate sm:max-w-none">
+                            {item.value}
+                          </span>
                           <button
                             type="button"
                             onClick={() => handleCopy(item.value, idx)}
@@ -259,7 +270,7 @@ export function NativeModal({
                           {item.value}
                         </span>
                       ) : (
-                        <span className="font-semibold text-[11px] sm:text-xs text-slate-800 dark:text-slate-200 truncate max-w-[160px] sm:max-w-none text-right">
+                        <span className="max-w-[160px] truncate text-right text-[11px] font-semibold text-slate-800 sm:max-w-none sm:text-xs dark:text-slate-200">
                           {item.value}
                         </span>
                       )}
