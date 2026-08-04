@@ -71,13 +71,22 @@ export function NativeModal({
   }, []);
 
   useEffect(() => {
-    if (isOpen) {
-      document.body.style.overflow = 'hidden';
-    } else {
-      document.body.style.overflow = '';
-    }
+    if (!isOpen) return;
+
+    const previousOverflow = document.body.style.overflow;
+    const previousTouchAction = document.body.style.touchAction;
+
+    document.body.style.overflow = 'hidden';
+    document.body.style.touchAction = 'none';
+
     return () => {
-      document.body.style.overflow = '';
+      const openModals = document.querySelectorAll(
+        '[data-native-modal="open"]'
+      );
+      if (openModals.length <= 1) {
+        document.body.style.overflow = previousOverflow;
+        document.body.style.touchAction = previousTouchAction;
+      }
     };
   }, [isOpen]);
 
@@ -170,7 +179,10 @@ export function NativeModal({
   const modalContent = (
     <AnimatePresence>
       {isOpen && (
-        <div className="fixed inset-0 z-[9999] flex items-end justify-center p-0 sm:items-center sm:p-4">
+        <div
+          data-native-modal="open"
+          className="fixed inset-0 z-[9999] flex items-end justify-center p-0 sm:items-center sm:p-4"
+        >
           {/* Backdrop Touch & Blur Overlay matching Header Theme */}
           <motion.div
             initial={{ opacity: 0 }}
