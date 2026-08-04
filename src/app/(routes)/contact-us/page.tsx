@@ -15,6 +15,8 @@ import {
   Sparkles,
 } from 'lucide-react';
 
+import { getContactSchema } from '@/lib/seo-schemas';
+
 export const metadata: Metadata = {
   title: 'Contact Us | Madhyanchal Sarbajanin Chandannagar',
   description:
@@ -40,57 +42,7 @@ export const metadata: Metadata = {
 };
 
 export default function ContactUsPage() {
-  const contactJsonLd = {
-    '@context': 'https://schema.org',
-    '@graph': [
-      {
-        '@type': 'BreadcrumbList',
-        itemListElement: [
-          {
-            '@type': 'ListItem',
-            position: 1,
-            name: 'Home',
-            item: 'https://www.madhyanchalsarbajanin.co.in',
-          },
-          {
-            '@type': 'ListItem',
-            position: 2,
-            name: 'Contact Us',
-            item: 'https://www.madhyanchalsarbajanin.co.in/contact-us',
-          },
-        ],
-      },
-      {
-        '@type': 'LocalBusiness',
-        '@id': 'https://www.madhyanchalsarbajanin.co.in/#localbusiness',
-        name: 'Madhyanchal Sarbajanin',
-        description:
-          'Cultural and religious organization celebrating Jagadhatri Puja since 1971 in Chandannagar, West Bengal.',
-        url: 'https://www.madhyanchalsarbajanin.co.in',
-        telephone: '+916291355010',
-        email: 'jagatdhatri.madhyanchal@gmail.com',
-        address: {
-          '@type': 'PostalAddress',
-          streetAddress: 'Station Road, Madhyanchal',
-          addressLocality: 'Chandannagar',
-          addressRegion: 'West Bengal',
-          postalCode: '712136',
-          addressCountry: 'IN',
-        },
-        geo: {
-          '@type': 'GeoCoordinates',
-          latitude: 22.8647986,
-          longitude: 88.3629104,
-        },
-        sameAs: [
-          'https://www.facebook.com/madhyanchalsarbajanin/',
-          'https://www.instagram.com/madhyanchal_sarbajanin',
-          'https://www.youtube.com/@madhyanchalsarbajanin',
-          'https://x.com/msjpsofficial',
-        ],
-      },
-    ],
-  };
+  const contactJsonLd = getContactSchema();
 
   const contactCards = [
     {

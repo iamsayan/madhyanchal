@@ -1,7 +1,7 @@
 import { ComponentType, ReactNode } from 'react';
-import Script from 'next/script';
 import { AnimatedWrapper } from '@/components/shared/animated-wrapper';
 import { PageBreadcrumb } from '@/components/layout/page-breadcrumb';
+import { JsonLd } from '@/components/shared/json-ld';
 import { cn } from '@/lib/utils';
 
 export interface PageLayoutProps {
@@ -54,13 +54,7 @@ export function PageLayout({
 
   return (
     <div className="bg-dot-mesh relative min-h-screen overflow-hidden bg-amber-50/60 transition-colors duration-500 dark:bg-stone-950">
-      {scriptJsonLd && (
-        <Script
-          id="page-json-ld"
-          type="application/ld+json"
-          dangerouslySetInnerHTML={{ __html: JSON.stringify(scriptJsonLd) }}
-        />
-      )}
+      {scriptJsonLd && <JsonLd schema={scriptJsonLd} />}
 
       {/* HERO HEADER BANNER (Standardized Mobile-First Spacing) */}
       <section className="relative overflow-hidden border-b border-amber-500/20 bg-amber-50/60 pt-[calc(5rem+env(safe-area-inset-top,0px))] pb-5 transition-colors duration-500 sm:pt-32 sm:pb-10 dark:bg-stone-950">

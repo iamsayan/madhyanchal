@@ -17,6 +17,8 @@ import {
   Sparkles,
 } from 'lucide-react';
 
+import { getPujaHistorySchema } from '@/lib/seo-schemas';
+
 export const metadata: Metadata = {
   title: 'History of Jagadhatri Puja | Madhyanchal Sarbajanin Chandannagar',
   description:
@@ -44,39 +46,7 @@ export const metadata: Metadata = {
 };
 
 export default function PujaHistoryPage() {
-  const jsonLd = {
-    '@context': 'https://schema.org',
-    '@graph': [
-      {
-        '@type': 'BreadcrumbList',
-        itemListElement: [
-          {
-            '@type': 'ListItem',
-            position: 1,
-            name: 'Home',
-            item: 'https://www.madhyanchalsarbajanin.co.in',
-          },
-          {
-            '@type': 'ListItem',
-            position: 2,
-            name: 'Puja History',
-            item: 'https://www.madhyanchalsarbajanin.co.in/puja-history',
-          },
-        ],
-      },
-      {
-        '@type': 'Article',
-        headline: 'History of Jagadhatri Puja in Chandannagar',
-        description:
-          'Comprehensive timeline account of Chandannagar Jagadhatri Puja, French colonial influence, iconography, Anandamath literary ties, and master light artisans.',
-        publisher: {
-          '@type': 'Organization',
-          name: 'Madhyanchal Sarbajanin',
-          url: 'https://www.madhyanchalsarbajanin.co.in',
-        },
-      },
-    ],
-  };
+  const jsonLd = getPujaHistorySchema();
 
   const timelineChapters = [
     {

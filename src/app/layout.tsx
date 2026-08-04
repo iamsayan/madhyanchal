@@ -42,7 +42,9 @@ const curYear = new Date().getFullYear();
 const curYearInTradition = curYear - 1971 + 1;
 
 export const metadata: Metadata = {
-  metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL!),
+  metadataBase: new URL(
+    process.env.NEXT_PUBLIC_SITE_URL || 'https://www.madhyanchalsarbajanin.co.in'
+  ),
   alternates: {
     canonical: '/',
   },

@@ -5,6 +5,8 @@ import { PageLayout } from '@/components/layout/page-layout';
 
 import { Palette } from 'lucide-react';
 
+import { getDrawingCompetitionSchema } from '@/lib/seo-schemas';
+
 export const metadata: Metadata = {
   title: 'Drawing Competition Registration | Madhyanchal Sarbajanin',
   description:
@@ -28,45 +30,7 @@ export const metadata: Metadata = {
 };
 
 export default function DrawingCompetitionPage() {
-  const jsonLd = {
-    '@context': 'https://schema.org',
-    '@graph': [
-      {
-        '@type': 'BreadcrumbList',
-        itemListElement: [
-          {
-            '@type': 'ListItem',
-            position: 1,
-            name: 'Home',
-            item: 'https://www.madhyanchalsarbajanin.co.in',
-          },
-          {
-            '@type': 'ListItem',
-            position: 2,
-            name: 'Durga Puja',
-            item: 'https://www.madhyanchalsarbajanin.co.in/durgapuja',
-          },
-          {
-            '@type': 'ListItem',
-            position: 3,
-            name: 'Drawing Competition',
-            item: 'https://www.madhyanchalsarbajanin.co.in/durgapuja/drawing-competition',
-          },
-        ],
-      },
-      {
-        '@type': 'Event',
-        name: 'Madhyanchal Annual Youth Drawing Competition',
-        description:
-          'Sit & Draw competition for children and youth across Group A, B and C categories.',
-        location: {
-          '@type': 'Place',
-          name: 'Madhyanchal Puja Premises',
-          address: 'Station Road, Chandannagar, Hooghly - 712136',
-        },
-      },
-    ],
-  };
+  const jsonLd = getDrawingCompetitionSchema();
 
   return (
     <PageLayout

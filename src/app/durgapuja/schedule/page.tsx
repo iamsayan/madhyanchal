@@ -18,6 +18,8 @@ import {
   Sun,
 } from 'lucide-react';
 
+import { getDurgaPujaScheduleSchema } from '@/lib/seo-schemas';
+
 export const metadata: Metadata = {
   title: 'Durga Puja Festival Schedule & Timings | Madhyanchal Sarbajanin',
   description:
@@ -42,50 +44,7 @@ export const metadata: Metadata = {
 };
 
 export default function DurgaPujaSchedulePage() {
-  const jsonLd = {
-    '@context': 'https://schema.org',
-    '@graph': [
-      {
-        '@type': 'BreadcrumbList',
-        itemListElement: [
-          {
-            '@type': 'ListItem',
-            position: 1,
-            name: 'Home',
-            item: 'https://www.madhyanchalsarbajanin.co.in',
-          },
-          {
-            '@type': 'ListItem',
-            position: 2,
-            name: 'Durga Puja',
-            item: 'https://www.madhyanchalsarbajanin.co.in/durgapuja',
-          },
-          {
-            '@type': 'ListItem',
-            position: 3,
-            name: 'Schedule',
-            item: 'https://www.madhyanchalsarbajanin.co.in/durgapuja/schedule',
-          },
-        ],
-      },
-      {
-        '@type': 'Event',
-        name: 'Madhyanchal Durga Puja 5-Day Festival Schedule',
-        description:
-          'Five days of divine worship, traditional rituals, cultural music, and youth drawing competition.',
-        location: {
-          '@type': 'Place',
-          name: 'Madhyanchal Puja Premises',
-          address: {
-            '@type': 'PostalAddress',
-            streetAddress: 'Station Road',
-            addressLocality: 'Chandannagar',
-            postalCode: '712136',
-          },
-        },
-      },
-    ],
-  };
+  const jsonLd = getDurgaPujaScheduleSchema();
 
   const festivalHighlights = [
     {

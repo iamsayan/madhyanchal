@@ -1,6 +1,8 @@
 import Image from 'next/image';
 import Link from 'next/link';
-import Script from 'next/script';
+
+import { JsonLd } from '@/components/shared/json-ld';
+import { getJagadhatriPujaEntrySchema } from '@/lib/seo-schemas';
 
 import {
   AnimatedWrapper,
@@ -86,51 +88,11 @@ export default async function HomePage() {
     },
   ];
 
-  const jsonLd = {
-    '@context': 'https://schema.org',
-    '@graph': [
-      {
-        '@type': 'Organization',
-        '@id': 'https://www.madhyanchalsarbajanin.co.in/#organization',
-        name: 'Madhyanchal Sarbajanin',
-        url: 'https://www.madhyanchalsarbajanin.co.in',
-        logo: 'https://www.madhyanchalsarbajanin.co.in/circle-logo.png',
-        email: 'madhyanchalsarbajanin@gmail.com',
-      },
-      {
-        '@type': 'WebSite',
-        '@id': 'https://www.madhyanchalsarbajanin.co.in/#website',
-        url: 'https://www.madhyanchalsarbajanin.co.in',
-        name: 'Madhyanchal Sarbajanin',
-      },
-      {
-        '@type': 'Event',
-        name: `Jagadhatri Puja ${currentYear} - Madhyanchal Sarbajanin`,
-        description: `Annual Jagadhatri Puja celebration by Madhyanchal Sarbajanin in Chandannagar.`,
-        location: {
-          '@type': 'Place',
-          name: 'Madhyanchal Puja Ground',
-          address: {
-            '@type': 'PostalAddress',
-            streetAddress: 'Station Road, Madhyanchal',
-            addressLocality: 'Chandannagar',
-            addressRegion: 'West Bengal',
-            postalCode: '712136',
-            addressCountry: 'IN',
-          },
-        },
-        startDate: targetPujaDate,
-      },
-    ],
-  };
+  const jsonLd = getJagadhatriPujaEntrySchema();
 
   return (
     <div className="bg-dot-mesh relative overflow-hidden pb-4 sm:pb-0">
-      <Script
-        id="home-json-ld"
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
-      />
+      <JsonLd schema={jsonLd} />
 
       {/* HERO SECTION WITH PHOTO SLIDER & SHIMMER TITLE */}
       <HeroSlider images={heroImages}>

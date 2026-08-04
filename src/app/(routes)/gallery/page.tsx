@@ -6,6 +6,8 @@ import { getGalleryItems } from '@/lib/data';
 
 import { Sparkles } from 'lucide-react';
 
+import { getGallerySchema } from '@/lib/seo-schemas';
+
 export const metadata: Metadata = {
   title: 'Photo Gallery | Madhyanchal Sarbajanin Chandannagar',
   description:
@@ -32,36 +34,7 @@ export const metadata: Metadata = {
 
 export default async function GalleryPage() {
   const items = await getGalleryItems();
-
-  const jsonLd = {
-    '@context': 'https://schema.org',
-    '@graph': [
-      {
-        '@type': 'BreadcrumbList',
-        itemListElement: [
-          {
-            '@type': 'ListItem',
-            position: 1,
-            name: 'Home',
-            item: 'https://www.madhyanchalsarbajanin.co.in',
-          },
-          {
-            '@type': 'ListItem',
-            position: 2,
-            name: 'Gallery',
-            item: 'https://www.madhyanchalsarbajanin.co.in/gallery',
-          },
-        ],
-      },
-      {
-        '@type': 'ImageGallery',
-        name: 'Madhyanchal Sarbajanin Jagadhatri Puja Photo Gallery',
-        description:
-          'Photo archive collection of Madhyanchal Sarbajanin in Chandannagar.',
-        url: 'https://www.madhyanchalsarbajanin.co.in/gallery',
-      },
-    ],
-  };
+  const jsonLd = getGallerySchema();
 
   return (
     <PageLayout

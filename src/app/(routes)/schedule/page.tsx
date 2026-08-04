@@ -24,6 +24,8 @@ import {
   Train,
 } from 'lucide-react';
 
+import { getJagadhatriScheduleSchema } from '@/lib/seo-schemas';
+
 export const metadata: Metadata = {
   title: 'Puja Schedule & Event Timings | Madhyanchal Sarbajanin',
   description:
@@ -213,35 +215,7 @@ export default async function SchedulePage() {
 
   const targetPujaDate = dates[0]?.date || `${currentYear}-11-16`;
 
-  const jsonLd = {
-    '@context': 'https://schema.org',
-    '@graph': [
-      {
-        '@type': 'BreadcrumbList',
-        itemListElement: [
-          {
-            '@type': 'ListItem',
-            position: 1,
-            name: 'Home',
-            item: 'https://www.madhyanchalsarbajanin.co.in',
-          },
-          {
-            '@type': 'ListItem',
-            position: 2,
-            name: 'Schedule',
-            item: 'https://www.madhyanchalsarbajanin.co.in/schedule',
-          },
-        ],
-      },
-      {
-        '@type': 'Schedule',
-        name: 'Madhyanchal Sarbajanin Jagadhatri Puja Official Schedule',
-        description:
-          'Official 5-day event timetable, morning pushpanjali hours, bhog distribution schedule, and night immersion procession timings.',
-        startDate: targetPujaDate,
-      },
-    ],
-  };
+  const jsonLd = getJagadhatriScheduleSchema();
 
   return (
     <PageLayout

@@ -3,33 +3,73 @@ import { ReactNode } from 'react';
 
 export const viewport: Viewport = {
   themeColor: '#0c1930',
+  width: 'device-width',
+  initialScale: 1,
+  maximumScale: 1,
+  userScalable: false,
+  viewportFit: 'cover',
 };
 
 export const metadata: Metadata = {
   title: {
-    template: '%s - Durga Puja | Madhyanchal Sarbajanin',
-    default: 'Durga Puja Celebrations | Madhyanchal Sarbajanin',
+    template: '%s | Durga Puja 2026 - Madhyanchal Sarbajanin',
+    default:
+      'Durga Puja 2026 Celebrations & Festival Hub | Madhyanchal Sarbajanin',
   },
   description:
-    'Experience the divine celebration of Durga Puja at Madhyanchal Sarbajanin, Chandannagar. Traditional rituals, youth drawing competition, cultural programs, and community feasts.',
+    'Experience the sacred autumn homecoming of Goddess Durga at Madhyanchal Sarbajanin, Chandannagar. 5-day festival schedule, 108 lotus Sandhi Puja, Youth Drawing Contest, and community feasts.',
   keywords: [
     'durga puja chandannagar',
     'madhyanchal durga puja',
+    'durga puja 2026',
     'durga puja schedule chandannagar',
     'madhyanchal drawing competition',
-    'chandannagar festival',
-    'durga puja 2026',
+    'sandhi puja chandannagar',
+    'chandannagar festival 2026',
+    'madhyanchal sarbajanin durga puja',
+    'hooghly durga puja',
+    'bengal autumn festival',
   ],
-  openGraph: {
-    siteName: 'Madhyanchal Sarbajanin Durga Puja',
-    title: 'Durga Puja Celebrations | Madhyanchal Sarbajanin',
-    description:
-      'Experience traditional rituals, cultural events, and spiritual festivities at Madhyanchal Durga Puja in Chandannagar.',
-    url: '/durgapuja',
-    type: 'website',
-  },
+  category: 'Culture & Religion',
   alternates: {
     canonical: '/durgapuja',
+  },
+  openGraph: {
+    siteName: 'Madhyanchal Sarbajanin Durga Puja',
+    title: 'Durga Puja 2026 Celebrations | Madhyanchal Sarbajanin',
+    description:
+      'Experience traditional Vedic rituals, 108 lotus Sandhi Puja, youth drawing contest, and community festivities at Madhyanchal Durga Puja in Chandannagar.',
+    url: '/durgapuja',
+    type: 'website',
+    locale: 'en_IN',
+    images: [
+      {
+        url: '/logo.png',
+        width: 1200,
+        height: 630,
+        alt: 'Madhyanchal Sarbajanin Durga Puja Logo',
+      },
+    ],
+  },
+  twitter: {
+    card: 'summary_large_image',
+    site: '@msjpsofficial',
+    creator: '@msjpsofficial',
+    title: 'Durga Puja 2026 Celebrations | Madhyanchal Sarbajanin',
+    description:
+      'Experience traditional Vedic rituals, 108 lotus Sandhi Puja, youth drawing contest, and community festivities at Madhyanchal Durga Puja in Chandannagar.',
+    images: ['/logo.png'],
+  },
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      'max-video-preview': -1,
+      'max-image-preview': 'large',
+      'max-snippet': -1,
+    },
   },
 };
 

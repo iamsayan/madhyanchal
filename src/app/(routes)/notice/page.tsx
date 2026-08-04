@@ -1,6 +1,8 @@
 import type { Metadata } from 'next';
 import NoticeClientView from './notice-client-view';
 
+import { getBreadcrumbSchema } from '@/lib/seo-schemas';
+
 export const metadata: Metadata = {
   title:
     'Public Notices & Announcements | AGM & Official Updates - Madhyanchal Sarbajanin',
@@ -35,35 +37,10 @@ export default async function NoticePage() {
   const jsonLd = {
     '@context': 'https://schema.org',
     '@graph': [
-      {
-        '@type': 'BreadcrumbList',
-        itemListElement: [
-          {
-            '@type': 'ListItem',
-            position: 1,
-            name: 'Home',
-            item: 'https://www.madhyanchalsarbajanin.co.in',
-          },
-          {
-            '@type': 'ListItem',
-            position: 2,
-            name: 'Notice Board',
-            item: 'https://www.madhyanchalsarbajanin.co.in/notice',
-          },
-        ],
-      },
-      {
-        '@type': 'Organization',
-        name: 'Madhyanchal Sarbajanin',
-        url: 'https://www.madhyanchalsarbajanin.co.in',
-        logo: 'https://www.madhyanchalsarbajanin.co.in/logo.png',
-        knowsAbout: [
-          'Annual General Meeting',
-          'Community Announcements',
-          'Audited Accounts',
-          'Jagadhatri & Durga Puja Celebrations',
-        ],
-      },
+      getBreadcrumbSchema([
+        { name: 'Home', url: '/' },
+        { name: 'Notice Board', url: '/notice' },
+      ]),
     ],
   };
 

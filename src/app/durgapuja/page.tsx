@@ -1,11 +1,12 @@
 import type { Metadata } from 'next';
 import Link from 'next/link';
-import Script from 'next/script';
 
 import { PageLayout } from '@/components/layout/page-layout';
 import { AnimatedWrapper } from '@/components/shared/animated-wrapper';
 import { BorderBeam } from '@/components/ui/border-beam';
 import { Button } from '@/components/ui/button';
+import { JsonLd } from '@/components/shared/json-ld';
+import { getDurgaPujaEntrySchema, SITE_URL } from '@/lib/seo-schemas';
 
 import {
   Calendar,
@@ -23,13 +24,13 @@ import {
 } from 'lucide-react';
 
 export const metadata: Metadata = {
-  title: 'Durga Puja Celebrations & Festival Hub | Madhyanchal Sarbajanin',
+  title: 'Durga Puja Celebrations & Festival Entry Point | Madhyanchal Sarbajanin',
   description:
     'Welcome to Madhyanchal Durga Puja in Chandannagar. Discover sacred autumn rituals, 5-day festival schedule, youth drawing competition, and photo gallery.',
   keywords: [
     'durga puja chandannagar',
     'madhyanchal durga puja',
-    'durga puja landing page',
+    'durga puja entry point',
     'chandannagar durga puja 2026',
     'madhyanchal drawing competition',
     'sandhi puja chandannagar',
@@ -47,44 +48,7 @@ export const metadata: Metadata = {
 };
 
 export default function DurgaPujaLandingPage() {
-  const jsonLd = {
-    '@context': 'https://schema.org',
-    '@graph': [
-      {
-        '@type': 'BreadcrumbList',
-        itemListElement: [
-          {
-            '@type': 'ListItem',
-            position: 1,
-            name: 'Home',
-            item: 'https://www.madhyanchalsarbajanin.co.in',
-          },
-          {
-            '@type': 'ListItem',
-            position: 2,
-            name: 'Durga Puja',
-            item: 'https://www.madhyanchalsarbajanin.co.in/durgapuja',
-          },
-        ],
-      },
-      {
-        '@type': 'Event',
-        name: 'Madhyanchal Durga Puja Celebrations',
-        description:
-          'Experience the divine autumn homecoming of Goddess Durga in Chandannagar with Vedic rituals, cultural galas, and youth drawing competition.',
-        location: {
-          '@type': 'Place',
-          name: 'Madhyanchal Puja Grounds',
-          address: {
-            '@type': 'PostalAddress',
-            streetAddress: 'Station Road',
-            addressLocality: 'Chandannagar',
-            postalCode: '712136',
-          },
-        },
-      },
-    ],
-  };
+  const jsonLd = getDurgaPujaEntrySchema();
 
   const festivalPillars = [
     {
