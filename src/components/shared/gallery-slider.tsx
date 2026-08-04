@@ -412,6 +412,20 @@ export function GallerySlider({
                           ? `${slides[selectedIndex]._id}-${selectedIndex}`
                           : selectedIndex
                       }
+                      drag="x"
+                      dragConstraints={{ left: 0, right: 0 }}
+                      dragElastic={0.25}
+                      onDragEnd={(_e, { offset, velocity }) => {
+                        const swipeThreshold = 40;
+                        if (offset.x < -swipeThreshold || velocity.x < -300) {
+                          nextImage();
+                        } else if (
+                          offset.x > swipeThreshold ||
+                          velocity.x > 300
+                        ) {
+                          prevImage();
+                        }
+                      }}
                       initial={{ opacity: 0, scale: 0.88, y: 15 }}
                       animate={{ opacity: 1, scale: 1, y: 0 }}
                       exit={{ opacity: 0, scale: 0.92, y: -10 }}
@@ -420,7 +434,7 @@ export function GallerySlider({
                         damping: 25,
                         stiffness: 300,
                       }}
-                      className="relative flex h-full max-h-[68vh] w-full max-w-[90vw] items-center justify-center sm:max-h-[72vh]"
+                      className="relative flex h-full max-h-[68vh] w-full max-w-[90vw] cursor-grab items-center justify-center touch-pan-y active:cursor-grabbing sm:max-h-[72vh]"
                     >
                       <CockpitImage
                         asset={slides[selectedIndex]}
