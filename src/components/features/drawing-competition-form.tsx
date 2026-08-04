@@ -13,11 +13,8 @@ import { useForm, useFieldArray } from 'react-hook-form';
 import { AnimatePresence, motion } from 'framer-motion';
 
 import {
-  AlertCircle,
-  CheckCircle2,
   ChevronRight,
   Eye,
-  Globe,
   Loader2,
   Palette,
   Plus,
@@ -46,7 +43,7 @@ export interface DrawingCompetitionFormData {
 
 const competitionDate = new Date('2025-09-21T10:00:00');
 
-function calculateAgeAndCategory(dobString: string, language: 'en' | 'bn') {
+function calculateAgeAndCategory(dobString: string) {
   if (!dobString) return { age: '', category: '' };
 
   try {
@@ -67,19 +64,15 @@ function calculateAgeAndCategory(dobString: string, language: 'en' | 'bn') {
     if (years < 0) years = 0;
     if (months < 0) months = 0;
 
-    let ageStr = `${years} yrs ${months} mos`;
-    if (language === 'bn') {
-      ageStr = `${years} বছর ${months} মাস`;
-    }
+    const ageStr = `${years} yrs ${months} mos`;
 
     let category = '';
     if (totalDays <= 2922) {
-      category = language === 'en' ? 'Group A (0-8 yrs)' : 'বিভাগ ক (০-৮ বছর)';
+      category = 'Group A (0-8 yrs)';
     } else if (totalDays <= 4383) {
-      category =
-        language === 'en' ? 'Group B (8-12 yrs)' : 'বিভাগ খ (৮-১২ বছর)';
+      category = 'Group B (8-12 yrs)';
     } else {
-      category = language === 'en' ? 'Group C (12+ yrs)' : 'বিভাগ গ (১২+ বছর)';
+      category = 'Group C (12+ yrs)';
     }
 
     return { age: ageStr, category };
@@ -89,7 +82,6 @@ function calculateAgeAndCategory(dobString: string, language: 'en' | 'bn') {
 }
 
 export function DrawingCompetitionForm() {
-  const [language, setLanguage] = useState<'en' | 'bn'>('en');
   const [previewData, setPreviewData] =
     useState<DrawingCompetitionFormData | null>(null);
   const [isSubmittingFinal, setIsSubmittingFinal] = useState(false);
@@ -98,8 +90,6 @@ export function DrawingCompetitionForm() {
     registrations: Array<{ name: string; id: string }>;
   } | null>(null);
   const [errorMsg, setErrorMsg] = useState<string | null>(null);
-
-
 
   const isDevelopment = process.env.NODE_ENV !== 'production';
 
@@ -115,14 +105,14 @@ export function DrawingCompetitionForm() {
           {
             participantName: 'Aarav Banerjee',
             dateOfBirth: '2018-05-14',
-            age: '',
-            category: '',
+            age: '7 yrs 4 mos',
+            category: 'Group A (0-8 yrs)',
           },
           {
             participantName: 'Ananya Banerjee',
             dateOfBirth: '2014-08-20',
-            age: '',
-            category: '',
+            age: '11 yrs 1 mos',
+            category: 'Group B (8-12 yrs)',
           },
         ],
       }
@@ -157,25 +147,8 @@ export function DrawingCompetitionForm() {
 
   const watchedParticipants = watch('participants');
 
-  // Recalculate ages and categories when language changes
-  useEffect(() => {
-    if (!watchedParticipants) return;
-    watchedParticipants.forEach((p, idx) => {
-      if (p?.dateOfBirth) {
-        const { age, category } = calculateAgeAndCategory(
-          p.dateOfBirth,
-          language
-        );
-        setValue(`participants.${idx}.age`, age, { shouldValidate: false });
-        setValue(`participants.${idx}.category`, category, {
-          shouldValidate: false,
-        });
-      }
-    });
-  }, [language, setValue]);
-
   const handleDobChange = (index: number, dobValue: string) => {
-    const { age, category } = calculateAgeAndCategory(dobValue, language);
+    const { age, category } = calculateAgeAndCategory(dobValue);
     setValue(`participants.${index}.age`, age);
     setValue(`participants.${index}.category`, category);
   };
@@ -240,18 +213,12 @@ export function DrawingCompetitionForm() {
     }
   };
 
-  const isBn = language === 'bn';
   const isProduction = process.env.NODE_ENV === 'production';
 
   // In production environment, display coming soon notice card
   if (isProduction) {
     return (
-      <div
-        className={cn(
-          'relative mx-auto max-w-4xl space-y-6',
-          isBn && 'font-bengali'
-        )}
-      >
+      <div className="relative mx-auto max-w-4xl space-y-6">
         {/* TOP EVENT SUMMARY & COMING SOON BANNER */}
         <div className="card-glass relative overflow-hidden rounded-2xl border border-slate-200/90 p-6 text-center backdrop-blur-2xl sm:rounded-3xl sm:p-10 dark:border-white/12">
           <BorderBeam
@@ -264,78 +231,27 @@ export function DrawingCompetitionForm() {
           <div className="flex flex-col items-center space-y-4">
             <span className="inline-flex items-center gap-1.5 rounded-full border border-amber-500/40 bg-amber-500/20 px-3.5 py-1 text-[11px] font-extrabold tracking-widest text-amber-800 uppercase dark:text-amber-300">
               <Sparkles className="h-3.5 w-3.5 animate-pulse text-amber-500" />
-              {isBn
-                ? 'অনলাইন নাম নথিভুক্তকরণ শীঘ্রই শুরু হচ্ছে'
-                : 'REGISTRATION OPENING SOON'}
+              REGISTRATION OPENING SOON
             </span>
 
-            <h2
-              className={cn(
-                'text-xl font-bold text-slate-900 sm:text-3xl lg:text-4xl dark:text-white',
-                isBn
-                  ? 'font-bengali leading-snug font-extrabold sm:leading-tight'
-                  : 'font-paytone'
-              )}
-            >
-              {isBn
-                ? 'মধ্যঞ্চল বার্ষিক বসে আঁকো প্রতিযোগিতা'
-                : 'Madhyanchal Annual Sit & Draw Competition'}
+            <h2 className="font-paytone text-xl font-bold text-slate-900 sm:text-3xl lg:text-4xl dark:text-white">
+              Madhyanchal Annual Sit & Draw Competition
             </h2>
 
             <p className="max-w-xl text-xs leading-relaxed text-slate-600 sm:text-sm dark:text-slate-300">
-              {isBn
-                ? 'প্রতিযোগিতায় শিশুদের নাম নথিভুক্ত করার প্রক্রিয়া খুব শীঘ্রই শুরু হতে চলেছে। স্থান, সময় ও নিয়মাবলীর তথ্যের জন্য নজর রাখুন।'
-                : 'Online registration for children’s Sit & Draw competition will open shortly. Please check back soon for schedule details and age category guidelines.'}
+              Online registration for children’s Sit & Draw competition will open shortly. Please check back soon for schedule details and age category guidelines.
             </p>
-
-            {/* Language Switcher */}
-            <div className="flex items-center gap-1 rounded-full border border-slate-200/80 bg-slate-100 p-1 dark:border-white/10 dark:bg-stone-900">
-              <Globe className="ml-2 h-3.5 w-3.5 text-amber-600 dark:text-amber-400" />
-              <button
-                type="button"
-                onClick={() => setLanguage('en')}
-                className={cn(
-                  'rounded-full px-3 py-1 text-xs font-bold transition-all',
-                  language === 'en'
-                    ? 'bg-amber-500 text-slate-950 shadow-xs'
-                    : 'text-slate-600 dark:text-slate-400'
-                )}
-              >
-                English
-              </button>
-              <button
-                type="button"
-                onClick={() => setLanguage('bn')}
-                className={cn(
-                  'rounded-full px-3 py-1 text-xs font-bold transition-all',
-                  language === 'bn'
-                    ? 'bg-amber-500 text-slate-950 shadow-xs'
-                    : 'text-slate-600 dark:text-slate-400'
-                )}
-              >
-                বাংলা
-              </button>
-            </div>
 
             {/* TOPIC PREVIEW BANNER */}
             <div className="w-full max-w-xl rounded-xl border border-amber-500/30 bg-amber-500/10 p-3 text-center sm:p-4">
               <span className="text-[10px] font-extrabold tracking-widest text-amber-700 uppercase dark:text-amber-400">
-                {isBn ? 'অঙ্কনের বিষয়' : 'Drawing Topic'}
+                Drawing Topic
               </span>
-              <h4
-                className={cn(
-                  'text-base font-bold text-slate-900 sm:text-xl dark:text-white',
-                  isBn ? 'font-bengali font-extrabold' : 'font-paytone'
-                )}
-              >
-                {isBn
-                  ? 'যেমন খুশি আঁকো (Draw As You Like)'
-                  : 'Draw As You Like'}
+              <h4 className="font-paytone text-base font-bold text-slate-900 sm:text-xl dark:text-white">
+                Draw As You Like
               </h4>
               <p className="mt-0.5 text-[11px] font-medium text-slate-600 dark:text-slate-300">
-                {isBn
-                  ? 'সকল বয়সের প্রতিযোগীদের জন্য (Group A, B & C)'
-                  : 'Open theme for all age groups (Group A, B & C)'}
+                Open theme for all age groups (Group A, B & C)
               </p>
             </div>
 
@@ -344,11 +260,7 @@ export function DrawingCompetitionForm() {
                 href="/durgapuja"
                 className="inline-flex items-center gap-2 rounded-full border border-amber-500/40 bg-amber-500 px-6 py-2.5 text-xs font-extrabold text-slate-950 shadow-md transition-all hover:bg-amber-400 active:scale-95"
               >
-                <span>
-                  {isBn
-                    ? 'দুর্গাপূজা উৎসবে ফিরে যান'
-                    : 'Explore Durga Puja Events'}
-                </span>
+                <span>Explore Durga Puja Events</span>
                 <ChevronRight className="h-4 w-4" />
               </Link>
             </div>
@@ -358,47 +270,37 @@ export function DrawingCompetitionForm() {
         {/* RULES & GUIDELINES CARD */}
         <div className="card-glass relative overflow-hidden rounded-2xl border border-slate-200/90 p-4 backdrop-blur-2xl sm:rounded-3xl sm:p-6 dark:border-white/12">
           <h4 className="font-paytone mb-2 text-sm font-bold text-slate-900 sm:text-base dark:text-white">
-            {isBn ? 'নিয়মাবলী ও শর্তসমূহ:' : 'Rules & Guidelines:'}
+            Rules & Guidelines:
           </h4>
           <ul className="space-y-1.5 text-xs text-slate-600 dark:text-slate-300">
             <li className="flex items-start gap-2">
               <span className="mt-1 h-1.5 w-1.5 shrink-0 rounded-full bg-amber-500" />
               <span>
-                {isBn
-                  ? 'অংশগ্রহণের ফি ও রেজিস্ট্রেশনের নিয়মাবলী নাম নথিভুক্তকরণ চালু হলে প্রকাশ করা হবে।'
-                  : 'Registration fee & guidelines will be announced when online portal opens.'}
+                Registration fee & guidelines will be announced when online portal opens.
               </span>
             </li>
             <li className="flex items-start gap-2">
               <span className="mt-1 h-1.5 w-1.5 shrink-0 rounded-full bg-amber-500" />
               <span>
-                {isBn
-                  ? 'আয়োজকদের পক্ষ থেকে শুধুমাত্র আর্ট পেপার দেওয়া হবে।'
-                  : 'Drawing paper will be provided at the venue.'}
+                Drawing paper will be provided at the venue.
               </span>
             </li>
             <li className="flex items-start gap-2">
               <span className="mt-1 h-1.5 w-1.5 shrink-0 rounded-full bg-amber-500" />
               <span>
-                {isBn
-                  ? 'রং ও অন্যান্য আঁকার সরঞ্জাম প্রতিযোগীদের নিজেদের আনতে হবে।'
-                  : 'Participants must bring their own colors and drawing kits.'}
+                Participants must bring their own colors and drawing kits.
               </span>
             </li>
             <li className="flex items-start gap-2">
               <span className="mt-1 h-1.5 w-1.5 shrink-0 rounded-full bg-amber-500" />
               <span>
-                {isBn
-                  ? 'বিচারকদের সিদ্ধান্তই চূড়ান্ত বলে গণ্য হবে।'
-                  : 'Judges’ decision will be final.'}
+                Judges’ decision will be final.
               </span>
             </li>
             <li className="flex items-start gap-2">
               <span className="mt-1 h-1.5 w-1.5 shrink-0 rounded-full bg-amber-500" />
               <span>
-                {isBn
-                  ? 'প্রতিযোগিতার দিন বয়সের প্রমাণপত্রের ফটোকপি জমা দিতে হবে।'
-                  : 'Please carry a photocopy of age proof on competition day.'}
+                Please carry a photocopy of age proof on competition day.
               </span>
             </li>
           </ul>
@@ -408,12 +310,7 @@ export function DrawingCompetitionForm() {
   }
 
   return (
-    <div
-      className={cn(
-        'relative mx-auto max-w-4xl space-y-6',
-        isBn && 'font-bengali'
-      )}
-    >
+    <div className="relative mx-auto max-w-4xl space-y-6">
       {/* UNIFIED NATIVE PREVIEW MODAL */}
       <NativeModal
         isOpen={previewData !== null}
@@ -421,22 +318,10 @@ export function DrawingCompetitionForm() {
           if (!isSubmittingFinal) setPreviewData(null);
         }}
         variant="info"
-        title={
-          isBn ? 'রেজিস্ট্রেশনের বিবরণ রিভিউ করুন' : 'Review Registration Details'
-        }
-        description={
-          isBn
-            ? 'চূড়ান্ত জমা দেওয়ার আগে অভিভাবক ও সকল প্রতিযোগীর তথ্যগুলো ভালো করে দেখে নিন।'
-            : 'Please review all details for the guardian and participant(s) before final submission.'
-        }
+        title="Review Registration Details"
+        description="Please review all details for the guardian and participant(s) before final submission."
         primaryButton={{
-          label: isSubmittingFinal
-            ? isBn
-              ? 'জমা হচ্ছে...'
-              : 'Submitting...'
-            : isBn
-              ? 'কনফার্ম করুন ও জমা দিন'
-              : 'Confirm & Submit',
+          label: isSubmittingFinal ? 'Submitting...' : 'Confirm & Submit',
           onClick: handleFinalSubmit,
           icon: isSubmittingFinal ? (
             <Loader2 className="h-4 w-4 animate-spin" />
@@ -445,7 +330,7 @@ export function DrawingCompetitionForm() {
           ),
         }}
         secondaryButton={{
-          label: isBn ? 'সংশোধন করুন' : 'Edit Details',
+          label: 'Edit Details',
           onClick: () => setPreviewData(null),
           variant: 'secondary',
         }}
@@ -456,12 +341,12 @@ export function DrawingCompetitionForm() {
             <div className="space-y-2 rounded-xl border border-amber-500/30 bg-amber-500/10 p-3.5 text-left">
               <div className="flex items-center gap-1.5 border-b border-amber-500/20 pb-2 text-xs font-bold text-amber-700 dark:text-amber-300">
                 <User className="h-4 w-4 shrink-0 text-amber-500" />
-                <span>{isBn ? 'অভিভাবকের বিবরণ:' : 'Guardian Information:'}</span>
+                <span>Guardian Information:</span>
               </div>
               <div className="grid grid-cols-1 gap-2 text-xs sm:grid-cols-2">
                 <div className="flex items-baseline gap-1.5 text-left">
                   <span className="shrink-0 text-slate-500 dark:text-slate-400">
-                    {isBn ? 'নাম:' : 'Name:'}
+                    Name:
                   </span>
                   <span className="font-semibold text-slate-900 dark:text-white">
                     {previewData.guardianName}
@@ -469,7 +354,7 @@ export function DrawingCompetitionForm() {
                 </div>
                 <div className="flex items-baseline gap-1.5 text-left">
                   <span className="shrink-0 text-slate-500 dark:text-slate-400">
-                    {isBn ? 'ফোন:' : 'Phone:'}
+                    Phone:
                   </span>
                   <span className="font-semibold text-slate-900 dark:text-white">
                     {previewData.phone}
@@ -477,7 +362,7 @@ export function DrawingCompetitionForm() {
                 </div>
                 <div className="col-span-1 flex items-baseline gap-1.5 text-left sm:col-span-2">
                   <span className="shrink-0 text-slate-500 dark:text-slate-400">
-                    {isBn ? 'ইমেইল:' : 'Email:'}
+                    Email:
                   </span>
                   <span className="break-all font-semibold text-slate-900 dark:text-white">
                     {previewData.email}
@@ -485,7 +370,7 @@ export function DrawingCompetitionForm() {
                 </div>
                 <div className="col-span-1 flex items-baseline gap-1.5 text-left sm:col-span-2">
                   <span className="shrink-0 text-slate-500 dark:text-slate-400">
-                    {isBn ? 'ঠিকানা:' : 'Address:'}
+                    Address:
                   </span>
                   <span className="font-semibold text-slate-900 dark:text-white">
                     {previewData.address}, {previewData.city} -{' '}
@@ -500,9 +385,7 @@ export function DrawingCompetitionForm() {
               <div className="flex items-center gap-1.5 text-xs font-bold text-slate-900 dark:text-white">
                 <Users className="h-4 w-4 shrink-0 text-amber-500" />
                 <span>
-                  {isBn
-                    ? `প্রতিযোগী তালিকা (${previewData.participants.length} জন):`
-                    : `Participants List (${previewData.participants.length}):`}
+                  Participants List ({previewData.participants.length}):
                 </span>
               </div>
 
@@ -520,7 +403,7 @@ export function DrawingCompetitionForm() {
                         <span className="text-xs">{p.participantName}</span>
                       </div>
                       <div className="pl-6 text-[10.5px] text-slate-500 dark:text-slate-400">
-                        {isBn ? 'জন্ম তারিখ: ' : 'DOB: '}{' '}
+                        DOB:{' '}
                         <span className="font-semibold text-slate-700 dark:text-slate-300">
                           {p.dateOfBirth}
                         </span>
@@ -548,12 +431,8 @@ export function DrawingCompetitionForm() {
         isOpen={success !== null}
         onClose={() => setSuccess(null)}
         variant="success"
-        title={isBn ? 'রেজিস্ট্রেশন সফল হয়েছে!' : 'Registration Successful!'}
-        description={
-          isBn
-            ? `${success?.registrations.length || 1} জন প্রতিযোগীর রেজিস্ট্রেশন সফলভাবে সম্পন্ন হয়েছে। একটি নিশ্চিতকরণ আইডি নিচে দেওয়া হলো।`
-            : `Registration successful for ${success?.registrations.length || 1} participant(s). Registration details are below.`
-        }
+        title="Registration Successful!"
+        description={`Registration successful for ${success?.registrations.length || 1} participant(s). Registration details are below.`}
         details={
           success?.registrations.map((reg) => ({
             label: reg.name,
@@ -562,7 +441,7 @@ export function DrawingCompetitionForm() {
           })) || []
         }
         primaryButton={{
-          label: isBn ? 'ঠিক আছে' : 'Done',
+          label: 'Done',
           onClick: () => setSuccess(null),
         }}
       />
@@ -572,15 +451,15 @@ export function DrawingCompetitionForm() {
         isOpen={errorMsg !== null}
         onClose={() => setErrorMsg(null)}
         variant="error"
-        title={isBn ? 'রেজিস্ট্রেশন ব্যর্থ হয়েছে' : 'Registration Failed'}
+        title="Registration Failed"
         description={errorMsg || ''}
         primaryButton={{
-          label: isBn ? 'বন্ধ করুন' : 'Close',
+          label: 'Close',
           onClick: () => setErrorMsg(null),
         }}
       />
 
-      {/* TOP EVENT SUMMARY BAR & LANGUAGE SWITCHER */}
+      {/* TOP EVENT SUMMARY BAR */}
       <div className="card-glass relative overflow-hidden rounded-2xl border border-slate-200/90 p-4 backdrop-blur-2xl sm:rounded-3xl sm:p-6 dark:border-white/12">
         <BorderBeam
           size={180}
@@ -593,59 +472,24 @@ export function DrawingCompetitionForm() {
           <div className="space-y-1">
             <span className="inline-flex items-center gap-1.5 rounded-full border border-amber-500/30 bg-amber-500/10 px-3 py-0.5 text-[10px] font-extrabold text-amber-700 dark:text-amber-400">
               <Palette className="h-3 w-3" />
-              {isBn
-                ? 'বার্ষিক অঙ্কন প্রতিযোগিতা'
-                : 'ANNUAL DRAWING COMPETITION'}
+              ANNUAL DRAWING COMPETITION
             </span>
             <h2 className="font-paytone text-lg font-bold text-slate-900 sm:text-2xl dark:text-white">
-              {isBn
-                ? 'অনলাইন রেজিস্ট্রেশন ফরম'
-                : 'Participant Registration Portal'}
+              Participant Registration Portal
             </h2>
-          </div>
-
-          {/* Language Switcher */}
-          <div className="flex items-center gap-1 rounded-full border border-slate-200/80 bg-slate-100 p-1 dark:border-white/10 dark:bg-stone-900">
-            <Globe className="ml-2 h-3.5 w-3.5 text-amber-600 dark:text-amber-400" />
-            <button
-              type="button"
-              onClick={() => setLanguage('en')}
-              className={cn(
-                'rounded-full px-3 py-1 text-xs font-bold transition-all',
-                language === 'en'
-                  ? 'bg-amber-500 text-slate-950 shadow-xs'
-                  : 'text-slate-600 dark:text-slate-400'
-              )}
-            >
-              English
-            </button>
-            <button
-              type="button"
-              onClick={() => setLanguage('bn')}
-              className={cn(
-                'rounded-full px-3 py-1 text-xs font-bold transition-all',
-                language === 'bn'
-                  ? 'bg-amber-500 text-slate-950 shadow-xs'
-                  : 'text-slate-600 dark:text-slate-400'
-              )}
-            >
-              বাংলা
-            </button>
           </div>
         </div>
 
         {/* TOPIC BANNER */}
         <div className="mt-4 rounded-xl border border-amber-500/30 bg-amber-500/10 p-3 text-center sm:p-4">
           <span className="text-[10px] font-extrabold tracking-widest text-amber-700 uppercase dark:text-amber-400">
-            {isBn ? 'অঙ্কনের বিষয়' : 'Drawing Topic'}
+            Drawing Topic
           </span>
           <h4 className="font-paytone text-base font-bold text-slate-900 sm:text-xl dark:text-white">
-            {isBn ? 'যেমন খুশি আঁকো (Draw As You Like)' : 'Draw As You Like'}
+            Draw As You Like
           </h4>
           <p className="mt-0.5 text-[11px] font-medium text-slate-600 dark:text-slate-300">
-            {isBn
-              ? 'সকল বিভাগের জন্য প্রযোজ্য (Open to all categories)'
-              : 'Open theme for all age groups (Group A, B & C)'}
+            Open theme for all age groups (Group A, B & C)
           </p>
         </div>
       </div>
@@ -660,12 +504,10 @@ export function DrawingCompetitionForm() {
           <div className="border-b border-slate-200/80 pb-3 dark:border-white/10">
             <h3 className="font-paytone flex items-center gap-2 text-sm font-bold text-slate-900 sm:text-lg dark:text-white">
               <User className="h-4 w-4 text-amber-500" />
-              {isBn ? 'অভিভাবকের বিবরণ' : 'Guardian Details'}
+              Guardian Details
             </h3>
             <p className="text-[11px] text-slate-500 dark:text-slate-400">
-              {isBn
-                ? 'যোগাযোগ ও নিশ্চিতকরণের জন্য অভিভাবকের প্রয়োজনীয় তথ্য লিখুন।'
-                : 'Provide guardian contact details for confirmation and updates.'}
+              Provide guardian contact details for confirmation and updates.
             </p>
           </div>
 
@@ -673,18 +515,14 @@ export function DrawingCompetitionForm() {
             {/* Guardian Name */}
             <div className="col-span-1 space-y-1 sm:col-span-2">
               <label className="text-xs font-bold text-slate-700 dark:text-slate-200">
-                {isBn ? 'অভিভাবকের নাম' : 'Guardian Full Name'} *
+                Guardian Full Name *
               </label>
               <input
                 type="text"
                 {...register('guardianName', {
-                  required: isBn
-                    ? 'অভিভাবকের নাম আবশ্যক'
-                    : 'Guardian name is required',
+                  required: 'Guardian name is required',
                 })}
-                placeholder={
-                  isBn ? 'অভিভাবকের নাম লিখুন' : 'Enter guardian full name'
-                }
+                placeholder="Enter guardian full name"
                 className="h-10 w-full rounded-xl border border-slate-300/80 bg-white/80 px-3.5 text-xs text-slate-900 transition-all focus:border-amber-500 focus:ring-2 focus:ring-amber-500/20 focus:outline-none dark:border-white/15 dark:bg-stone-950/70 dark:text-white"
               />
               {errors.guardianName && (
@@ -697,12 +535,12 @@ export function DrawingCompetitionForm() {
             {/* Email */}
             <div className="space-y-1">
               <label className="text-xs font-bold text-slate-700 dark:text-slate-200">
-                {isBn ? 'ইমেইল' : 'Email Address'} *
+                Email Address *
               </label>
               <input
                 type="email"
                 {...register('email', {
-                  required: isBn ? 'ইমেইল আবশ্যক' : 'Email is required',
+                  required: 'Email is required',
                   pattern: {
                     value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
                     message: 'Invalid email address',
@@ -721,12 +559,12 @@ export function DrawingCompetitionForm() {
             {/* Phone */}
             <div className="space-y-1">
               <label className="text-xs font-bold text-slate-700 dark:text-slate-200">
-                {isBn ? 'ফোন নম্বর' : 'Phone Number'} *
+                Phone Number *
               </label>
               <input
                 type="tel"
                 {...register('phone', {
-                  required: isBn ? 'ফোন নম্বর আবশ্যক' : 'Phone is required',
+                  required: 'Phone is required',
                   minLength: {
                     value: 10,
                     message: 'Must be 10 digits',
@@ -745,16 +583,14 @@ export function DrawingCompetitionForm() {
             {/* Address */}
             <div className="col-span-1 space-y-1 sm:col-span-2">
               <label className="text-xs font-bold text-slate-700 dark:text-slate-200">
-                {isBn ? 'ঠিকানা' : 'Address'} *
+                Address *
               </label>
               <input
                 type="text"
                 {...register('address', {
-                  required: isBn ? 'ঠিকানা আবশ্যক' : 'Address is required',
+                  required: 'Address is required',
                 })}
-                placeholder={
-                  isBn ? 'সম্পূর্ণ ঠিকানা লিখুন' : 'Enter street address'
-                }
+                placeholder="Enter street address"
                 className="h-10 w-full rounded-xl border border-slate-300/80 bg-white/80 px-3.5 text-xs text-slate-900 transition-all focus:border-amber-500 focus:ring-2 focus:ring-amber-500/20 focus:outline-none dark:border-white/15 dark:bg-stone-950/70 dark:text-white"
               />
               {errors.address && (
@@ -767,12 +603,12 @@ export function DrawingCompetitionForm() {
             {/* City */}
             <div className="space-y-1">
               <label className="text-xs font-bold text-slate-700 dark:text-slate-200">
-                {isBn ? 'শহর' : 'City'} *
+                City *
               </label>
               <input
                 type="text"
                 {...register('city', {
-                  required: isBn ? 'শহর আবশ্যক' : 'City is required',
+                  required: 'City is required',
                 })}
                 placeholder="Chandannagar"
                 className="h-10 w-full rounded-xl border border-slate-300/80 bg-white/80 px-3.5 text-xs text-slate-900 transition-all focus:border-amber-500 focus:ring-2 focus:ring-amber-500/20 focus:outline-none dark:border-white/15 dark:bg-stone-950/70 dark:text-white"
@@ -787,12 +623,12 @@ export function DrawingCompetitionForm() {
             {/* Pin Code */}
             <div className="space-y-1">
               <label className="text-xs font-bold text-slate-700 dark:text-slate-200">
-                {isBn ? 'পিন কোড' : 'Pin Code'} *
+                Pin Code *
               </label>
               <input
                 type="text"
                 {...register('pinCode', {
-                  required: isBn ? 'পিন কোড আবশ্যক' : 'Pin code is required',
+                  required: 'Pin code is required',
                 })}
                 placeholder="712136"
                 className="h-10 w-full rounded-xl border border-slate-300/80 bg-white/80 px-3.5 text-xs text-slate-900 transition-all focus:border-amber-500 focus:ring-2 focus:ring-amber-500/20 focus:outline-none dark:border-white/15 dark:bg-stone-950/70 dark:text-white"
@@ -812,14 +648,10 @@ export function DrawingCompetitionForm() {
             <div>
               <h3 className="font-paytone flex items-center gap-2 text-sm font-bold text-slate-900 sm:text-lg dark:text-white">
                 <Users className="h-4 w-4 text-amber-500" />
-                {isBn
-                  ? 'প্রতিযোগীদের (শিশুদের) বিবরণ'
-                  : 'Participant(s) / Children Details'}
+                Participant(s) / Children Details
               </h3>
               <p className="text-[11px] text-slate-500 dark:text-slate-400">
-                {isBn
-                  ? 'এই অভিভাবকের অধীনে অংশগ্রহণকারী সকল শিশুর তথ্য যোগ করুন।'
-                  : 'Add details for all children participating under this guardian.'}
+                Add details for all children participating under this guardian.
               </p>
             </div>
 
@@ -836,7 +668,7 @@ export function DrawingCompetitionForm() {
               className="inline-flex items-center gap-1.5 self-start rounded-full border border-amber-500/40 bg-amber-500/15 px-3 py-1.5 text-xs font-bold text-amber-700 transition-all hover:bg-amber-500 hover:text-slate-950 active:scale-95 sm:self-auto dark:text-amber-300 dark:hover:text-slate-950"
             >
               <Plus className="h-4 w-4" />
-              <span>{isBn ? '+ নতুন শিশু যোগ করুন' : '+ Add Child'}</span>
+              <span>+ Add Child</span>
             </button>
           </div>
 
@@ -858,9 +690,7 @@ export function DrawingCompetitionForm() {
                     <div className="flex items-center justify-between border-b border-slate-200/60 pb-2.5 dark:border-white/10">
                       <span className="inline-flex items-center gap-1.5 text-xs font-extrabold tracking-wide text-amber-700 uppercase dark:text-amber-400">
                         <Sparkles className="h-3.5 w-3.5 text-amber-500" />
-                        {isBn
-                          ? `প্রতিযোগী #${index + 1}`
-                          : `Child / Participant #${index + 1}`}
+                        Child / Participant #{index + 1}
                       </span>
 
                       {fields.length > 1 && (
@@ -871,9 +701,7 @@ export function DrawingCompetitionForm() {
                           title="Remove this participant"
                         >
                           <Trash2 className="h-3.5 w-3.5" />
-                          <span className="hidden sm:inline">
-                            {isBn ? 'রিমুভ করুন' : 'Remove'}
-                          </span>
+                          <span className="hidden sm:inline">Remove</span>
                         </button>
                       )}
                     </div>
@@ -882,23 +710,17 @@ export function DrawingCompetitionForm() {
                       {/* Participant Full Name */}
                       <div className="col-span-1 space-y-1 sm:col-span-2">
                         <label className="text-xs font-bold text-slate-700 dark:text-slate-200">
-                          {isBn ? 'প্রতিযোগীর নাম' : 'Participant Full Name'} *
+                          Participant Full Name *
                         </label>
                         <input
                           type="text"
                           {...register(
                             `participants.${index}.participantName` as const,
                             {
-                              required: isBn
-                                ? 'নাম আবশ্যক'
-                                : 'Full name is required',
+                              required: 'Full name is required',
                             }
                           )}
-                          placeholder={
-                            isBn
-                              ? 'শিশুর সম্পূর্ণ নাম লিখুন'
-                              : 'Enter child full name'
-                          }
+                          placeholder="Enter child full name"
                           className="h-10 w-full rounded-xl border border-slate-300/80 bg-white/80 px-3.5 text-xs text-slate-900 transition-all focus:border-amber-500 focus:ring-2 focus:ring-amber-500/20 focus:outline-none dark:border-white/15 dark:bg-stone-950/70 dark:text-white"
                         />
                         {pError?.participantName && (
@@ -911,16 +733,14 @@ export function DrawingCompetitionForm() {
                       {/* Date of Birth */}
                       <div className="space-y-1">
                         <label className="text-xs font-bold text-slate-700 dark:text-slate-200">
-                          {isBn ? 'জন্ম তারিখ' : 'Date of Birth'} *
+                          Date of Birth *
                         </label>
                         <input
                           type="date"
                           {...register(
                             `participants.${index}.dateOfBirth` as const,
                             {
-                              required: isBn
-                                ? 'জন্ম তারিখ আবশ্যক'
-                                : 'Date of birth is required',
+                              required: 'Date of birth is required',
                               onChange: (e) =>
                                 handleDobChange(index, e.target.value),
                             }
@@ -938,7 +758,7 @@ export function DrawingCompetitionForm() {
                       <div className="grid grid-cols-2 gap-2">
                         <div className="space-y-1">
                           <label className="text-xs font-bold text-slate-700 dark:text-slate-200">
-                            {isBn ? 'বয়স' : 'Age'}
+                            Age
                           </label>
                           <input
                             type="text"
@@ -950,7 +770,7 @@ export function DrawingCompetitionForm() {
                         </div>
                         <div className="space-y-1">
                           <label className="text-xs font-bold text-slate-700 dark:text-slate-200">
-                            {isBn ? 'বিভাগ' : 'Category'}
+                            Category
                           </label>
                           <input
                             type="text"
@@ -984,11 +804,7 @@ export function DrawingCompetitionForm() {
                 className="inline-flex items-center gap-2 rounded-full border border-dashed border-amber-500/50 bg-amber-500/10 px-5 py-2 text-xs font-bold text-amber-700 transition-all hover:border-amber-500 hover:bg-amber-500 hover:text-slate-950 active:scale-95 dark:text-amber-300 dark:hover:text-slate-950"
               >
                 <Plus className="h-4 w-4" />
-                <span>
-                  {isBn
-                    ? '+ আরও একজন শিশু / প্রতিযোগী যোগ করুন'
-                    : '+ Add Another Child / Participant'}
-                </span>
+                <span>+ Add Another Child / Participant</span>
               </button>
             </div>
           </div>
@@ -1005,9 +821,8 @@ export function DrawingCompetitionForm() {
           >
             <span className="flex items-center justify-center gap-1.5">
               <Eye className="h-4 w-4 text-amber-950" />
-              {isBn
-                ? `বিবরণ প্রিভিউ করুন (${fields.length} জন প্রতিযোগী)`
-                : `Preview & Review Details (${fields.length} Participant${fields.length > 1 ? 's' : ''})`}
+              Preview & Review Details ({fields.length} Participant
+              {fields.length > 1 ? 's' : ''})
             </span>
           </Button>
         </div>
@@ -1016,47 +831,33 @@ export function DrawingCompetitionForm() {
       {/* RULES & GUIDELINES CARD */}
       <div className="card-glass relative overflow-hidden rounded-2xl border border-slate-200/90 p-4 backdrop-blur-2xl sm:rounded-3xl sm:p-6 dark:border-white/12">
         <h4 className="font-paytone mb-2 text-sm font-bold text-slate-900 sm:text-base dark:text-white">
-          {isBn ? 'নিয়মাবলী ও শর্তসমূহ:' : 'Rules & Guidelines:'}
+          Rules & Guidelines:
         </h4>
         <ul className="space-y-1.5 text-xs text-slate-600 dark:text-slate-300">
           <li className="flex items-start gap-2">
             <span className="mt-1 h-1.5 w-1.5 shrink-0 rounded-full bg-amber-500" />
             <span>
-              {isBn
-                ? 'একই অভিভাবক একাধিক শিশুর নাম নথিভুক্ত করতে পারবেন।'
-                : 'Single guardian can register multiple children in one submission.'}
+              Single guardian can register multiple children in one submission.
             </span>
           </li>
           <li className="flex items-start gap-2">
             <span className="mt-1 h-1.5 w-1.5 shrink-0 rounded-full bg-amber-500" />
-            <span>
-              {isBn
-                ? 'আয়োজকদের পক্ষ থেকে শুধুমাত্র আর্ট পেপার দেওয়া হবে।'
-                : 'Drawing paper will be provided by the organizers.'}
-            </span>
+            <span>Drawing paper will be provided by the organizers.</span>
           </li>
           <li className="flex items-start gap-2">
             <span className="mt-1 h-1.5 w-1.5 shrink-0 rounded-full bg-amber-500" />
             <span>
-              {isBn
-                ? 'রং ও অন্যান্য সামগ্রী প্রতিযোগীদের নিজেদের আনতে হবে।'
-                : 'Participants must bring their own colors and drawing materials.'}
+              Participants must bring their own colors and drawing materials.
             </span>
           </li>
           <li className="flex items-start gap-2">
             <span className="mt-1 h-1.5 w-1.5 shrink-0 rounded-full bg-amber-500" />
-            <span>
-              {isBn
-                ? 'বিচারকমণ্ডলীর সিদ্ধান্ত চূড়ান্ত বলে গণ্য হবে।'
-                : 'The decision of the judges will be final.'}
-            </span>
+            <span>The decision of the judges will be final.</span>
           </li>
           <li className="flex items-start gap-2">
             <span className="mt-1 h-1.5 w-1.5 shrink-0 rounded-full bg-amber-500" />
             <span>
-              {isBn
-                ? 'প্রতিযোগিতার দিন বয়সের প্রমাণপত্রের ফটোকপি আনতে হবে।'
-                : 'Photocopy of age proof certificate must be produced on competition day.'}
+              Photocopy of age proof certificate must be produced on competition day.
             </span>
           </li>
         </ul>
