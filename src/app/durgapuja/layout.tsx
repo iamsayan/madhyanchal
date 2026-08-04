@@ -2,7 +2,7 @@ import type { Metadata, Viewport } from 'next';
 import { ReactNode } from 'react';
 
 export const viewport: Viewport = {
-  themeColor: '#f59e0b',
+  themeColor: '#0c1930',
 };
 
 export const metadata: Metadata = {

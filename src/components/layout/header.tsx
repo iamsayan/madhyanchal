@@ -54,7 +54,7 @@ export function Header() {
       className={cn(
         'fixed inset-x-0 top-0 z-50 w-full transition-all duration-300',
         isDurgaPuja
-          ? 'border-b border-amber-600/20 bg-[#f59e0b] text-slate-950 lg:border-transparent lg:bg-transparent'
+          ? 'border-b border-amber-500/20 bg-[#0c1930] text-white lg:border-transparent lg:bg-transparent'
           : 'border-b border-stone-800 bg-[#1c1917] text-white lg:border-transparent lg:bg-transparent',
         scrolled
           ? 'lg:border-b lg:border-slate-200/60 lg:bg-white/90 lg:backdrop-blur-2xl lg:dark:border-white/10 lg:dark:bg-stone-950/90'
@@ -77,7 +77,7 @@ export function Header() {
                 'flex items-center justify-center rounded-full transition-all focus-visible:outline-none active:scale-95',
                 scrolled
                   ? 'h-8 w-8 border border-slate-300/80 bg-slate-100/80 text-slate-800 hover:bg-amber-500 hover:text-slate-950 dark:border-white/15 dark:bg-stone-900/80 dark:text-slate-100 dark:hover:bg-amber-500'
-                  : 'h-9 w-9 border border-amber-700/35 bg-amber-600/20 text-slate-950 backdrop-blur-md hover:bg-amber-600/30 dark:text-slate-950'
+                  : 'h-9 w-9 border border-amber-500/30 bg-amber-500/15 text-amber-300 backdrop-blur-md hover:bg-amber-500/25 dark:text-amber-300'
               )}
               title="Back to Main Website"
               aria-label="Back to Main Website"
@@ -182,7 +182,7 @@ export function Header() {
         className={cn(
           'flex h-[calc(3.5rem+env(safe-area-inset-top,0px))] items-center justify-between px-4 pt-[env(safe-area-inset-top,0px)] shadow-sm transition-all duration-300 lg:hidden',
           isDurgaPuja
-            ? 'border-b border-amber-600/20 bg-[#f59e0b] text-slate-950'
+            ? 'border-b border-amber-500/20 bg-[#0c1930] text-white'
             : 'border-b border-stone-800 bg-[#1c1917] text-white'
         )}
       >
@@ -191,7 +191,7 @@ export function Header() {
           {isDurgaPuja && (
             <Link
               href="/"
-              className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full border border-amber-700/35 bg-amber-600/20 text-slate-950 shadow-xs backdrop-blur-xl transition-all hover:bg-amber-600/30 active:scale-90"
+              className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full border border-amber-500/30 bg-amber-500/15 text-amber-300 shadow-xs backdrop-blur-xl transition-all hover:bg-amber-500/25 active:scale-90"
               aria-label="Back to Main Site"
               title="Back to Main Site"
             >
@@ -223,7 +223,7 @@ export function Header() {
             className={cn(
               'flex h-8 w-8 shrink-0 items-center justify-center rounded-full border shadow-xs backdrop-blur-xl transition-all active:scale-90',
               isDurgaPuja
-                ? 'border-amber-700/35 bg-amber-600/20 text-slate-950 hover:bg-amber-600/30'
+                ? 'border-amber-500/30 bg-amber-500/15 text-amber-300 hover:bg-amber-500/25'
                 : 'border-stone-700 bg-stone-800/80 text-amber-400 hover:bg-stone-800'
             )}
             aria-label="Map Location"
@@ -235,7 +235,7 @@ export function Header() {
             className={cn(
               'flex h-8 w-8 shrink-0 items-center justify-center rounded-full border shadow-xs backdrop-blur-xl transition-all active:scale-90',
               isDurgaPuja
-                ? 'border-amber-700/35 bg-amber-600/20 text-slate-950 hover:bg-amber-600/30'
+                ? 'border-amber-500/30 bg-amber-500/15 text-amber-300 hover:bg-amber-500/25'
                 : 'border-stone-700 bg-stone-800/80 text-amber-400 hover:bg-stone-800'
             )}
             aria-label="Puja Schedule"
@@ -247,7 +247,7 @@ export function Header() {
             className={cn(
               'relative flex h-8 w-8 shrink-0 items-center justify-center rounded-full border shadow-xs backdrop-blur-xl transition-all active:scale-90',
               isDurgaPuja
-                ? 'border-amber-700/35 bg-amber-600/20 text-slate-950 hover:bg-amber-600/30'
+                ? 'border-amber-500/30 bg-amber-500/15 text-amber-300 hover:bg-amber-500/25'
                 : 'border-stone-700 bg-stone-800/80 text-amber-400 hover:bg-stone-800',
               pathname === '/notice' &&
                 'border-amber-500 bg-amber-500 text-slate-950 dark:bg-amber-500 dark:text-slate-950'
@@ -265,10 +265,10 @@ export function Header() {
             className={cn(
               'h-8 w-8 shadow-xs backdrop-blur-xl active:scale-90',
               isDurgaPuja
-                ? 'border-amber-700/35 bg-amber-600/20 text-slate-950 hover:bg-amber-600/30'
+                ? 'border-amber-500/30 bg-amber-500/15 text-amber-300 hover:bg-amber-500/25'
                 : 'border-stone-700 bg-stone-800/80 text-amber-400 hover:bg-stone-800'
             )}
-            iconClassName={isDurgaPuja ? 'text-slate-950' : 'text-amber-400'}
+            iconClassName={isDurgaPuja ? 'text-amber-300' : 'text-amber-400'}
           />
         </div>
       </div>

@@ -45,7 +45,7 @@ export function PageLayout({
     return (
       <>
         {words.join(' ')}{' '}
-        <span className="font-paytone bg-gradient-to-r from-amber-600 via-amber-500 to-yellow-500 bg-clip-text text-transparent">
+        <span className="font-paytone bg-linear-to-r from-amber-600 via-amber-500 to-yellow-500 bg-clip-text text-transparent">
           {lastWord}
         </span>
       </>
