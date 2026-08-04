@@ -161,7 +161,7 @@ export function DrawingCompetitionForm() {
   const isProduction = process.env.NODE_ENV === 'production';
 
   // In production environment, display coming soon notice card
-  if (!isProduction) {
+  if (isProduction) {
     return (
       <div
         className={cn(
@@ -186,7 +186,14 @@ export function DrawingCompetitionForm() {
                 : 'REGISTRATION OPENING SOON'}
             </span>
 
-            <h2 className="font-paytone text-xl font-bold text-slate-900 sm:text-3xl lg:text-4xl dark:text-white">
+            <h2
+              className={cn(
+                'text-xl font-bold text-slate-900 sm:text-3xl lg:text-4xl dark:text-white',
+                isBn
+                  ? 'font-bengali font-extrabold leading-snug sm:leading-tight'
+                  : 'font-paytone'
+              )}
+            >
               {isBn
                 ? 'মধ্যঞ্চল বার্ষিক বসে আঁকো প্রতিযোগিতা'
                 : 'Madhyanchal Annual Sit & Draw Competition'}
@@ -232,7 +239,12 @@ export function DrawingCompetitionForm() {
               <span className="text-[10px] font-extrabold tracking-widest text-amber-700 uppercase dark:text-amber-400">
                 {isBn ? 'অঙ্কনের বিষয়' : 'Drawing Topic'}
               </span>
-              <h4 className="font-paytone text-base font-bold text-slate-900 sm:text-xl dark:text-white">
+              <h4
+                className={cn(
+                  'text-base font-bold text-slate-900 sm:text-xl dark:text-white',
+                  isBn ? 'font-bengali font-extrabold' : 'font-paytone'
+                )}
+              >
                 {isBn
                   ? 'যেমন খুশি আঁকো (Draw As You Like)'
                   : 'Draw As You Like'}

@@ -10,6 +10,7 @@
 
 @utility font-bengali {
   font-family: var(--font-noto-bengali), sans-serif;
+  line-height: 1.6;
 }
 
 @layer base {
