@@ -38,7 +38,7 @@ export function Header() {
     { label: 'History', href: '/puja-history' },
     { label: 'Schedule', href: '/schedule' },
     { label: 'Gallery', href: '/gallery' },
-    { label: 'Activities', href: '/activities' },
+    { label: 'Awards', href: '/awards' },
     { label: 'About Us', href: '/about-us' },
     { label: '🌺 Durga Puja', href: '/durgapuja', highlighted: true },
   ];
@@ -76,14 +76,17 @@ export function Header() {
             <Link
               href="/"
               className={cn(
-                'flex shrink-0 items-center justify-center rounded-full border border-slate-200/60 bg-slate-100/50 text-slate-600 backdrop-blur-md transition-all duration-200 hover:scale-110 hover:border-amber-500/40 hover:bg-amber-500/10 hover:text-amber-600 active:scale-90 focus-visible:outline-none dark:border-white/10 dark:bg-stone-900/50 dark:text-slate-300 dark:hover:border-amber-400/40 dark:hover:bg-amber-500/20 dark:hover:text-amber-400',
+                'flex shrink-0 items-center justify-center rounded-full border border-slate-200/60 bg-slate-100/50 text-slate-600 backdrop-blur-md transition-all duration-200 hover:scale-110 hover:border-amber-500/40 hover:bg-amber-500/10 hover:text-amber-600 focus-visible:outline-none active:scale-90 dark:border-white/10 dark:bg-stone-900/50 dark:text-slate-300 dark:hover:border-amber-400/40 dark:hover:bg-amber-500/20 dark:hover:text-amber-400',
                 scrolled ? 'h-6 w-6' : 'h-7 w-7'
               )}
               title="Return to Main Website"
               aria-label="Return to Main Website"
             >
               <ChevronLeft
-                className={cn('stroke-[2.5]', scrolled ? 'h-3.5 w-3.5' : 'h-4 w-4')}
+                className={cn(
+                  'stroke-[2.5]',
+                  scrolled ? 'h-3.5 w-3.5' : 'h-4 w-4'
+                )}
               />
             </Link>
           )}
