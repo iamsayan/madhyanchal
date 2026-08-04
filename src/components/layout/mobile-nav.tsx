@@ -185,14 +185,17 @@ export function MobileNavDock() {
 
   return (
     <>
+      {/* Samsung One UI Ambient Bottom Sheet Gradient Backdrop */}
+      <div className="pointer-events-none fixed inset-x-0 bottom-0 z-40 h-28 bg-gradient-to-t from-slate-100/90 via-slate-100/40 to-transparent lg:hidden dark:from-stone-950 dark:via-stone-950/70 dark:to-transparent" />
+
       {/* Bottom Floating Navigation Dock (Safe-area inset compliant) */}
       <div className="pointer-events-auto fixed inset-x-0 bottom-[max(0.75rem,env(safe-area-inset-bottom,0px))] z-50 flex justify-center px-4 lg:hidden">
         <nav
           className={cn(
             'flex w-fit max-w-[calc(100vw-1.5rem)] items-center justify-center gap-0.5 rounded-full p-1 shadow-lg backdrop-blur-2xl transition-all duration-300 sm:gap-1 sm:p-1.5',
             isDurgaPuja
-              ? 'border border-amber-500/40 bg-white/95 dark:border-white/15 dark:bg-stone-950/95'
-              : 'border border-slate-200/90 bg-white/95 dark:border-white/15 dark:bg-stone-950/95'
+              ? 'border border-amber-500/40 bg-white/95 dark:border-amber-500/30 dark:bg-stone-900/90 dark:shadow-[0_4px_20px_rgba(0,0,0,0.5)]'
+              : 'border border-slate-200/90 bg-white/95 dark:border-white/15 dark:bg-stone-900/90 dark:shadow-[0_4px_20px_rgba(0,0,0,0.5)]'
           )}
         >
           {primaryTabs.map((item, index) => {

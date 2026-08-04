@@ -1,26 +1,25 @@
 import type { Metadata } from 'next';
 
-import { DrawingCompetitionForm } from '@/components/features/drawing-competition-form';
+import { DrawingCompetitionLanding } from '@/components/features/drawing-competition-landing';
 import { PageLayout } from '@/components/layout/page-layout';
-
 import { Palette } from 'lucide-react';
-
 import { getDrawingCompetitionSchema } from '@/lib/seo-schemas';
 
 export const metadata: Metadata = {
-  title: 'Drawing Competition Registration | Madhyanchal Sarbajanin',
+  title: 'Annual Sit & Draw Competition 2026 | Madhyanchal Sarbajanin',
   description:
-    'Register for the annual drawing competition organized by Madhyanchal Sarbajanin. Free entry for all age categories with exciting trophies.',
+    'Join Madhyanchal Sarbajanin Annual Sit & Draw Competition in Chandannagar. Open for 3 age categories with 15+ trophies, medals, certificates, gifts, and snacks for all participants.',
   keywords: [
     'madhyanchal drawing competition',
     'drawing competition registration chandannagar',
     'children drawing contest hooghly',
     'durga puja art competition',
+    'sit and draw competition 2026',
   ],
   openGraph: {
-    title: 'Drawing Competition Registration | Madhyanchal Sarbajanin',
+    title: 'Annual Sit & Draw Competition 2026 | Madhyanchal Sarbajanin',
     description:
-      'Register online for the annual drawing competition open to all children and youth age groups.',
+      'Join Chandannagar’s grandest children drawing competition. Trophies, medals, certificates, and gifts for all children!',
     url: '/durgapuja/drawing-competition',
     type: 'website',
   },
@@ -29,21 +28,21 @@ export const metadata: Metadata = {
   },
 };
 
-export default function DrawingCompetitionPage() {
+export default function DrawingCompetitionLandingPage() {
   const jsonLd = getDrawingCompetitionSchema();
 
   return (
     <PageLayout
-      title="Drawing Competition"
-      subtitle="Unleash your artistic expression! Open to children and youth across 3 age categories with free entry and trophies."
+      title="Annual Drawing Competition"
+      subtitle="Unleash your child’s creative imagination! Open across 3 age categories with exciting trophies, medals, certificates, and gifts."
       badge={{
-        text: 'Art & Creativity Contest',
+        text: 'Art & Creativity Festival',
         icon: Palette,
       }}
       breadcrumbCurrent="Drawing Competition"
       scriptJsonLd={jsonLd}
     >
-      <DrawingCompetitionForm />
+      <DrawingCompetitionLanding />
     </PageLayout>
   );
 }
