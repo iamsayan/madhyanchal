@@ -1,4 +1,5 @@
-import { Flame, Loader2, Sparkles } from 'lucide-react';
+import Image from 'next/image';
+import { Loader2, Sparkles } from 'lucide-react';
 import { cn } from '@/lib/utils';
 
 interface PageLoaderProps {
@@ -14,33 +15,34 @@ export function PageLoader({ className, showText = true }: PageLoaderProps) {
         className
       )}
     >
-      {/* Native App Minimal Emblem Container */}
-      <div className="relative flex items-center justify-center">
+      {/* Native App Emblem & Logo Container */}
+      <div className="relative flex flex-col items-center justify-center">
         {/* Soft Ambient Golden Glow Halo */}
-        <div className="absolute h-20 w-20 rounded-full bg-amber-500/25 blur-2xl dark:bg-amber-500/15" />
+        <div className="absolute h-24 w-48 rounded-full bg-amber-500/25 blur-3xl dark:bg-amber-500/15" />
 
-        {/* Outer Frosted Pill Ring */}
-        <div className="relative flex h-16 w-16 items-center justify-center rounded-2xl border border-amber-500/30 bg-white/80 shadow-md backdrop-blur-2xl dark:border-white/15 dark:bg-stone-900/90">
-          {/* Subtle Outer Spinner Ring */}
-          <Loader2 className="h-9 w-9 animate-spin text-amber-500/90" />
+        {/* Logo Card Container */}
+        <div className="relative flex flex-col items-center justify-center rounded-2xl border border-amber-500/20 bg-white/80 px-6 py-4 shadow-lg backdrop-blur-2xl dark:border-white/10 dark:bg-stone-900/90">
+          <Image
+            src="/logo.png"
+            alt="Madhyanchal Sarbajanin Logo"
+            width={160}
+            height={48}
+            className="h-10 w-auto object-contain transition-all duration-300 animate-pulse"
+            priority
+          />
+        </div>
 
-          {/* Center Brand Flame Icon */}
-          <Flame className="absolute h-4 w-4 animate-pulse text-amber-600 dark:text-amber-400" />
+        {/* Subtle Outer Spinner & Subtitle */}
+        <div className="mt-4 flex items-center justify-center gap-2">
+          <Loader2 className="h-4 w-4 animate-spin text-amber-500" />
+          {showText && (
+            <span className="flex items-center gap-1.5 text-[11px] font-black uppercase tracking-widest text-amber-700 dark:text-amber-400">
+              <Sparkles className="h-3 w-3 animate-pulse text-amber-500" />
+              Loading Experience...
+            </span>
+          )}
         </div>
       </div>
-
-      {/* Minimal Native Subtitle */}
-      {showText && (
-        <div className="flex flex-col items-center space-y-1">
-          <span className="flex items-center gap-1.5 text-[11px] font-black uppercase tracking-widest text-amber-900/80 dark:text-amber-400/90">
-            <Sparkles className="h-3 w-3 animate-pulse text-amber-500" />
-            MADHYANCHAL
-          </span>
-          <span className="text-[10px] font-bold text-slate-500 dark:text-slate-400">
-            Loading Experience...
-          </span>
-        </div>
-      )}
     </div>
   );
 }
