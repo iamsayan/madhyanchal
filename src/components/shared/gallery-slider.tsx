@@ -18,7 +18,7 @@ import {
   ZoomIn,
 } from 'lucide-react';
 
-import { useIsDurgaPuja } from '@/hooks/use-is-durga-puja';
+import { useRouteContext } from '@/hooks/use-route-context';
 
 interface GallerySliderProps {
   slides?: Asset[];
@@ -29,7 +29,7 @@ export function GallerySlider({
   slides = [],
   layout = 'responsive',
 }: GallerySliderProps) {
-  const isDurgaPuja = useIsDurgaPuja();
+  const { isDurgaPuja } = useRouteContext();
 
   const [selectedIndex, setSelectedIndex] = useState<number | null>(null);
   const [isMounted, setIsMounted] = useState(false);

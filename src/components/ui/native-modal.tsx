@@ -6,7 +6,7 @@ import Link from 'next/link';
 import { AnimatePresence, motion } from 'framer-motion';
 import { BorderBeam } from '@/components/ui/border-beam';
 import { cn, hasBengaliText } from '@/lib/utils';
-import { useIsDurgaPuja } from '@/hooks/use-is-durga-puja';
+import { useRouteContext } from '@/hooks/use-route-context';
 import {
   Check,
   CheckCircle2,
@@ -64,7 +64,7 @@ export function NativeModal({
   const [mounted, setMounted] = useState(false);
   const [copiedIndex, setCopiedIndex] = useState<number | null>(null);
 
-  const isDurgaPuja = useIsDurgaPuja();
+  const { isDurgaPuja } = useRouteContext();
 
   useEffect(() => {
     setMounted(true);

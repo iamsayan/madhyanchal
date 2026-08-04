@@ -27,7 +27,7 @@ import {
 import { cn } from '@/lib/utils';
 import { sendGTMEvent } from '@next/third-parties/google';
 
-import { useIsDurgaPuja } from '@/hooks/use-is-durga-puja';
+import { useRouteContext } from '@/hooks/use-route-context';
 
 export function MobileNavDock() {
   const pathname = usePathname();
@@ -37,7 +37,7 @@ export function MobileNavDock() {
   >([]);
 
   const currentYear = new Date().getFullYear();
-  const isDurgaPuja = useIsDurgaPuja();
+  const { isDurgaPuja, isCommon } = useRouteContext();
   const [isStandalone, setIsStandalone] = useState(false);
 
   // Check if app is running in Standalone PWA mode or already installed using pwa-install properties
@@ -271,7 +271,9 @@ export function MobileNavDock() {
               transition={{ duration: 0.18, ease: 'easeOut' }}
               className={cn(
                 'fixed inset-0 cursor-pointer backdrop-blur-md transition-colors duration-300',
-                isDurgaPuja
+                isCommon
+                  ? 'bg-gradient-to-b from-[#4a0e17]/90 via-[#4a0e17]/70 to-[#4a0e17]/60'
+                  : isDurgaPuja
                   ? 'bg-gradient-to-b from-[#0c1930]/90 via-[#0c1930]/70 to-[#0c1930]/60'
                   : 'bg-gradient-to-b from-[#1c1917]/90 via-[#1c1917]/70 to-stone-950/60'
               )}

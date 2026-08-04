@@ -9,13 +9,13 @@ import { cn } from '@/lib/utils';
 import { sendGTMEvent } from '@next/third-parties/google';
 import { Calendar, MapPin, ChevronLeft, Bell } from 'lucide-react';
 
-import { useIsDurgaPuja } from '@/hooks/use-is-durga-puja';
+import { useRouteContext } from '@/hooks/use-route-context';
 
 export function Header() {
   const pathname = usePathname();
   const [scrolled, setScrolled] = useState(false);
 
-  const isDurgaPuja = useIsDurgaPuja();
+  const { isDurgaPuja, isCommon } = useRouteContext();
 
   useEffect(() => {
     sendGTMEvent({ event: 'page_view', value: pathname });
@@ -55,9 +55,11 @@ export function Header() {
     <header
       className={cn(
         'fixed inset-x-0 top-0 z-50 w-full transition-all duration-300',
-        isDurgaPuja
-          ? 'border-b border-white/10 bg-[#0c1930] text-white lg:border-transparent lg:bg-transparent'
-          : 'border-b border-stone-800 bg-[#1c1917] text-white lg:border-transparent lg:bg-transparent',
+        isCommon
+          ? 'border-b border-amber-950/40 bg-[#4a0e17] text-white lg:border-transparent lg:bg-transparent'
+          : isDurgaPuja
+            ? 'border-b border-white/10 bg-[#0c1930] text-white lg:border-transparent lg:bg-transparent'
+            : 'border-b border-stone-800 bg-[#1c1917] text-white lg:border-transparent lg:bg-transparent',
         scrolled
           ? 'lg:border-b lg:border-slate-200/60 lg:bg-white/90 lg:backdrop-blur-2xl lg:dark:border-white/10 lg:dark:bg-stone-950/90'
           : 'lg:border-transparent lg:bg-transparent'
@@ -186,9 +188,11 @@ export function Header() {
       <div
         className={cn(
           'flex h-[calc(3.5rem+env(safe-area-inset-top,0px))] items-center justify-between px-4 pt-[env(safe-area-inset-top,0px)] shadow-sm transition-all duration-300 lg:hidden',
-          isDurgaPuja
-            ? 'border-b border-white/10 bg-[#0c1930] text-white'
-            : 'border-b border-stone-800 bg-[#1c1917] text-white'
+          isCommon
+            ? 'border-b border-amber-950/40 bg-[#4a0e17] text-white'
+            : isDurgaPuja
+              ? 'border-b border-white/10 bg-[#0c1930] text-white'
+              : 'border-b border-stone-800 bg-[#1c1917] text-white'
         )}
       >
         {/* Left: Brand Logo */}
@@ -216,9 +220,11 @@ export function Header() {
             rel="noopener noreferrer"
             className={cn(
               'flex h-8 w-8 shrink-0 items-center justify-center rounded-full border shadow-xs backdrop-blur-xl transition-all active:scale-90',
-              isDurgaPuja
-                ? 'border-white/15 bg-[#132342]/90 text-amber-400 hover:bg-[#1a2d52]'
-                : 'border-stone-700 bg-stone-800/80 text-amber-400 hover:bg-stone-800'
+              isCommon
+                ? 'border-rose-900/50 bg-[#631422]/90 text-amber-300 hover:bg-[#781a2b]'
+                : isDurgaPuja
+                  ? 'border-white/15 bg-[#132342]/90 text-amber-400 hover:bg-[#1a2d52]'
+                  : 'border-stone-700 bg-stone-800/80 text-amber-400 hover:bg-stone-800'
             )}
             aria-label="Map Location"
           >
@@ -228,9 +234,11 @@ export function Header() {
             href={isDurgaPuja ? '/durgapuja/schedule' : '/schedule'}
             className={cn(
               'flex h-8 w-8 shrink-0 items-center justify-center rounded-full border shadow-xs backdrop-blur-xl transition-all active:scale-90',
-              isDurgaPuja
-                ? 'border-white/15 bg-[#132342]/90 text-amber-400 hover:bg-[#1a2d52]'
-                : 'border-stone-700 bg-stone-800/80 text-amber-400 hover:bg-stone-800'
+              isCommon
+                ? 'border-rose-900/50 bg-[#631422]/90 text-amber-300 hover:bg-[#781a2b]'
+                : isDurgaPuja
+                  ? 'border-white/15 bg-[#132342]/90 text-amber-400 hover:bg-[#1a2d52]'
+                  : 'border-stone-700 bg-stone-800/80 text-amber-400 hover:bg-stone-800'
             )}
             aria-label="Puja Schedule"
           >
@@ -240,9 +248,11 @@ export function Header() {
             href="/notice"
             className={cn(
               'relative flex h-8 w-8 shrink-0 items-center justify-center rounded-full border shadow-xs backdrop-blur-xl transition-all active:scale-90',
-              isDurgaPuja
-                ? 'border-white/15 bg-[#132342]/90 text-amber-400 hover:bg-[#1a2d52]'
-                : 'border-stone-700 bg-stone-800/80 text-amber-400 hover:bg-stone-800',
+              isCommon
+                ? 'border-rose-900/50 bg-[#631422]/90 text-amber-300 hover:bg-[#781a2b]'
+                : isDurgaPuja
+                  ? 'border-white/15 bg-[#132342]/90 text-amber-400 hover:bg-[#1a2d52]'
+                  : 'border-stone-700 bg-stone-800/80 text-amber-400 hover:bg-stone-800',
               pathname === '/notice' &&
                 'border-amber-500 bg-amber-500 text-slate-950 dark:bg-amber-500 dark:text-slate-950'
             )}
@@ -258,11 +268,13 @@ export function Header() {
           <ThemeToggle
             className={cn(
               'h-8 w-8 shadow-xs backdrop-blur-xl active:scale-90',
-              isDurgaPuja
-                ? 'border-white/15 bg-[#132342]/90 text-amber-400 hover:bg-[#1a2d52]'
-                : 'border-stone-700 bg-stone-800/80 text-amber-400 hover:bg-stone-800'
+              isCommon
+                ? 'border-rose-900/50 bg-[#631422]/90 text-amber-300 hover:bg-[#781a2b]'
+                : isDurgaPuja
+                  ? 'border-white/15 bg-[#132342]/90 text-amber-400 hover:bg-[#1a2d52]'
+                  : 'border-stone-700 bg-stone-800/80 text-amber-400 hover:bg-stone-800'
             )}
-            iconClassName={isDurgaPuja ? 'text-amber-400' : 'text-amber-400'}
+            iconClassName={isCommon ? 'text-amber-300' : isDurgaPuja ? 'text-amber-400' : 'text-amber-400'}
           />
         </div>
       </div>

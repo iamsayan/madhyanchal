@@ -1,4 +1,8 @@
-import type { Metadata } from 'next';
+import type { Metadata, Viewport } from 'next';
+
+export const viewport: Viewport = {
+  themeColor: '#4a0e17',
+};
 
 import { ContactForm } from '@/components/features/contact-form';
 import { PageLayout } from '@/components/layout/page-layout';
