@@ -150,6 +150,10 @@ export function ServicePaymentForm({ type, year }: ServicePaymentFormProps) {
           year,
           type,
         },
+        theme: {
+          color: '#1c1917',
+          backdrop_color: '#1c1917',
+        },
         handler: function (response: RazorpaySuccessResponse) {
           setSuccess({
             paymentId: response.razorpay_payment_id,

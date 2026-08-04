@@ -2,6 +2,7 @@ import { Fragment } from 'react';
 
 import Image from 'next/image';
 import Link from 'next/link';
+import { Space_Grotesk } from 'next/font/google';
 
 import {
   AtSign,
@@ -9,9 +10,17 @@ import {
   Heart,
   Instagram,
   MessageCircle,
+  Sparkles,
   Twitter,
   Youtube,
 } from 'lucide-react';
+import { cn } from '@/lib/utils';
+
+const spaceGrotesk = Space_Grotesk({
+  subsets: ['latin'],
+  weight: ['700'],
+  display: 'swap',
+});
 
 const currentYear = new Date().getFullYear();
 
@@ -53,12 +62,12 @@ export function Footer() {
   ];
 
   return (
-    <footer className="relative overflow-hidden border-t border-slate-200/80 bg-slate-100/60 pt-5 pb-24 text-slate-700 transition-colors sm:pt-10 sm:pb-10 dark:border-white/10 dark:bg-[#0c0a09] dark:text-slate-300">
+    <footer className="relative overflow-hidden border-t border-slate-200/80 bg-slate-100/60 pt-3 pb-20 text-slate-700 transition-colors sm:pt-10 sm:pb-10 dark:border-white/10 dark:bg-[#0c0a09] dark:text-slate-300">
       {/* Ambient Halo & Radial Glow */}
       <div className="absolute top-0 left-1/2 h-px w-3/4 max-w-4xl -translate-x-1/2 bg-gradient-to-r from-transparent via-amber-500/50 to-transparent" />
-      <div className="pointer-events-none absolute -top-24 left-1/2 h-[200px] w-[400px] -translate-x-1/2 rounded-full bg-amber-500/10 blur-[100px] sm:h-[250px] sm:w-[500px]" />
+      <div className="pointer-events-none absolute -top-24 left-1/2 h-[150px] w-[300px] -translate-x-1/2 rounded-full bg-amber-500/10 blur-[90px] sm:h-[250px] sm:w-[500px]" />
 
-      <div className="relative z-10 mx-auto flex max-w-7xl flex-col items-center space-y-3 px-4 pt-2 pb-4 text-center sm:space-y-5 sm:px-6 lg:px-8">
+      <div className="relative z-10 mx-auto flex max-w-7xl flex-col items-center space-y-2 px-3 pt-1 pb-2 text-center sm:space-y-5 sm:px-6 lg:px-8">
         {/* Prominent Brand Logo */}
         <Link
           href="/"
@@ -69,17 +78,17 @@ export function Footer() {
             alt="Madhyanchal Sarbajanin Jagadhatri Puja Logo"
             width={240}
             height={60}
-            className="mx-auto h-8 w-auto object-contain sm:h-14"
+            className="mx-auto h-6 w-auto object-contain sm:h-14"
             priority
           />
         </Link>
 
         {/* Compact Navigation Links with Dot Separators */}
-        <nav className="flex flex-wrap items-center justify-center gap-x-2 gap-y-1 text-[11px] font-semibold text-slate-600 sm:gap-x-3 sm:text-xs dark:text-slate-300">
+        <nav className="flex flex-wrap items-center justify-center gap-x-2 gap-y-0.5 text-[10px] font-semibold text-slate-600 sm:gap-x-3 sm:text-xs dark:text-slate-300">
           {navLinks.map((link, idx) => (
             <Fragment key={link.href}>
               {idx > 0 && (
-                <span className="text-[10px] text-amber-500/40 select-none">
+                <span className="text-[9px] text-amber-500/40 select-none">
                   •
                 </span>
               )}
@@ -94,7 +103,7 @@ export function Footer() {
         </nav>
 
         {/* Social Media Micro Icon Row */}
-        <div className="flex items-center justify-center gap-2 sm:gap-3">
+        <div className="flex items-center justify-center gap-1.5 sm:gap-3">
           {socialLinks.map((item, idx) => {
             const Icon = item.icon;
             return (
@@ -104,29 +113,34 @@ export function Footer() {
                 target="_blank"
                 rel="noopener noreferrer"
                 aria-label={item.label}
-                className="flex h-7 w-7 items-center justify-center rounded-full border border-slate-300/80 bg-white/80 text-slate-600 shadow-xs transition-all hover:scale-110 hover:border-amber-500/50 hover:bg-amber-500 hover:text-slate-950 sm:h-8 sm:w-8 dark:border-white/10 dark:bg-stone-900/80 dark:text-slate-300 dark:hover:bg-amber-500 dark:hover:text-slate-950"
+                className="flex h-6 w-6 items-center justify-center rounded-full border border-slate-300/80 bg-white/80 text-slate-600 shadow-2xs transition-all hover:scale-110 hover:border-amber-500/50 hover:bg-amber-500 hover:text-slate-950 sm:h-8 sm:w-8 dark:border-white/10 dark:bg-stone-900/80 dark:text-slate-300 dark:hover:bg-amber-500 dark:hover:text-slate-950"
               >
-                <Icon className="h-3.5 w-3.5" />
+                <Icon className="h-3 w-3 sm:h-3.5 sm:w-3.5" />
               </a>
             );
           })}
         </div>
 
         {/* Legal & Copyright Info */}
-        <div className="space-y-1 text-[10px] text-slate-500 sm:text-xs dark:text-slate-400">
+        <div className="space-y-1 text-[9.5px] text-slate-500 sm:space-y-1 sm:text-xs dark:text-slate-400">
           <p>
             Copyright © {currentYear} Madhyanchal Sarbajanin. All Rights
             Reserved.
           </p>
-          <p className="flex items-center justify-center gap-1 text-[9.5px] text-slate-400 sm:text-[10px] dark:text-slate-500">
-            Developed with{' '}
-            <Heart className="h-3 w-3 fill-rose-500 text-rose-500" /> by{' '}
+          <p className="flex items-center justify-center gap-1 text-[9px] text-slate-400 sm:text-[10px] dark:text-slate-500">
+            Designed & Developed by{' '}
             <Link
               href="https://www.sayandatta.co.in"
               target="_blank"
-              className="font-semibold transition-colors hover:text-amber-600 dark:hover:text-amber-400"
+              className={cn(
+                spaceGrotesk.className,
+                'inline-flex items-center gap-1 rounded border border-amber-500/25 bg-amber-500/10 px-1.5 py-0.5 text-[6px] font-bold tracking-widest transition-all hover:scale-105 hover:border-amber-500/50 hover:bg-amber-500/20 sm:text-[9px]'
+              )}
             >
-              Sayan Datta
+              <Sparkles className="h-2 w-2 animate-pulse text-amber-500 sm:h-2.5 sm:w-2.5" />
+              <span className="bg-gradient-to-r from-amber-600 via-amber-500 to-yellow-500 bg-clip-text text-transparent uppercase dark:from-amber-400 dark:to-yellow-300">
+                SAYAN DATTA
+              </span>
             </Link>
           </p>
         </div>
