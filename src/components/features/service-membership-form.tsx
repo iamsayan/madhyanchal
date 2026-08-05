@@ -309,7 +309,7 @@ export function ServiceMembershipForm({
 
           <div className="pt-2">
             <Link
-              href={`/services/${year}/membership/${memberData._id}/status`}
+              href={`/services/membership/${memberData._id}/status`}
               className="inline-flex items-center gap-2 rounded-xl bg-gradient-to-r from-amber-600 via-amber-500 to-yellow-500 px-6 py-3 text-xs font-black tracking-wider text-stone-950 uppercase shadow-md transition-transform hover:scale-[1.02]"
             >
               <History className="h-4 w-4" /> View Payment History
@@ -337,7 +337,7 @@ export function ServiceMembershipForm({
               </h2>
             </div>
             <Link
-              href={`/services/${year}/membership/${memberData._id}/status`}
+              href={`/services/membership/${memberData._id}/status`}
               className="inline-flex items-center gap-1.5 rounded-lg border border-amber-500/30 bg-amber-500/10 px-3 py-1.5 text-xs font-bold text-amber-600 transition-colors hover:bg-amber-500/20 dark:text-amber-400"
             >
               <History className="h-3.5 w-3.5" /> History

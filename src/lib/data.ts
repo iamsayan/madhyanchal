@@ -11,6 +11,10 @@ import type {
   Settings,
 } from '@/types';
 
+export const currentYear = new Date().getFullYear();
+
+export const celebratingYear = currentYear - 1971 + 1;
+
 export async function getSettings(): Promise<Settings> {
   'use cache';
   cacheLife('weeks');
@@ -19,6 +23,25 @@ export async function getSettings(): Promise<Settings> {
     populate: 1,
   });
   return settings;
+}
+
+export async function getMembershipYear(
+  yearParam?: string | null
+): Promise<string> {
+  let yearNum: number;
+
+  if (yearParam) {
+    yearNum = Number(yearParam);
+  } else {
+    const settings = await getSettings();
+    yearNum = Number(settings?.membership_year || process.env.MEMBERSHIP_YEAR);
+  }
+
+  if (isNaN(yearNum) || yearNum > currentYear) {
+    yearNum = currentYear;
+  }
+
+  return String(yearNum);
 }
 
 export async function getHomePage(): Promise<Homepage> {
@@ -84,7 +107,7 @@ export async function getMemberById(id: string, year: string): Promise<Member> {
   return res;
 }
 
-export async function getDressOrders(year: string): Promise<DressOrder[]> {
+export async function getDressOrders(year: number): Promise<DressOrder[]> {
   const res = await cockpit.listContentItems<DressOrder[]>(`dress${year}`);
   return res;
 }

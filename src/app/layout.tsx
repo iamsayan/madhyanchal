@@ -9,7 +9,7 @@ import { MobileNavDock } from '@/components/layout/mobile-nav';
 import { PwaInstallPrompt } from '@/components/shared/pwa-install';
 import { PageLoader } from '@/components/shared/page-loader';
 import { GoogleTagManager } from '@next/third-parties/google';
-import { getSettings } from '@/lib/data';
+import { celebratingYear, currentYear, getSettings } from '@/lib/data';
 import AppProvider from '@/app/providers/app-provider';
 import { ReactNode, Suspense } from 'react';
 
@@ -46,19 +46,16 @@ export const viewport: Viewport = {
   viewportFit: 'cover',
 };
 
-const curYear = new Date().getFullYear();
-const curYearInTradition = curYear - 1971 + 1;
-
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
   alternates: {
     canonical: '/',
   },
   title: {
-    template: `%s - Madhyanchal Sarbajanin | ${curYearInTradition} Years of Tradition, Unity, and Celebration since 1971!`,
-    default: `Madhyanchal Sarbajanin | ${curYearInTradition} Years of Tradition, Unity, and Celebration since 1971!`,
+    template: `%s - Madhyanchal Sarbajanin | ${celebratingYear} Years of Tradition, Unity, and Celebration since 1971!`,
+    default: `Madhyanchal Sarbajanin | ${celebratingYear} Years of Tradition, Unity, and Celebration since 1971!`,
   },
-  description: `Welcome to the official website of Madhyanchal Sarbajanin Jagadhatri Puja Samity! In ${curYear}, we proudly celebrate ${curYearInTradition} years of devotion, tradition, and togetherness.`,
+  description: `Welcome to the official website of Madhyanchal Sarbajanin Jagadhatri Puja Samity! In ${currentYear}, we proudly celebrate ${celebratingYear} years of devotion, tradition, and togetherness.`,
   keywords: [
     'madhyanchal',
     'jagadhatri',
@@ -102,8 +99,8 @@ export const metadata: Metadata = {
     card: 'summary_large_image',
     site: '@msjpsofficial',
     creator: '@msjpsofficial',
-    title: `Madhyanchal Sarbajanin | ${curYearInTradition} Years of Tradition, Unity, and Celebration since 1971!`,
-    description: `Welcome to the official website of Madhyanchal Sarbajanin Jagadhatri Puja Samity! In ${curYear}, we proudly celebrate ${curYearInTradition} years of devotion, tradition, and togetherness.`,
+    title: `Madhyanchal Sarbajanin | ${celebratingYear} Years of Tradition, Unity, and Celebration since 1971!`,
+    description: `Welcome to the official website of Madhyanchal Sarbajanin Jagadhatri Puja Samity! In ${currentYear}, we proudly celebrate ${celebratingYear} years of devotion, tradition, and togetherness.`,
   },
   verification: {
     google: 'SYZt9rv7_qvB3hl-_KzC5lcd-yrB4C2hr4tb2q6RyBA',
@@ -163,7 +160,12 @@ export default function RootLayout({ children }: { children: ReactNode }) {
           swUrl="/sw.js"
           disable={process.env.NODE_ENV !== 'production'}
         >
-          <ThemeProvider attribute="class" defaultTheme="light" enableSystem disableTransitionOnChange>
+          <ThemeProvider
+            attribute="class"
+            defaultTheme="light"
+            enableSystem
+            disableTransitionOnChange
+          >
             <AppProvider settingsPromise={settings}>
               <Suspense fallback={<PageLoader />}>
                 <Header />

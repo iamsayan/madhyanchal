@@ -12,6 +12,7 @@ import {
   Sparkles,
   Trophy,
 } from 'lucide-react';
+import { celebratingYear } from '@/src/lib/data';
 
 export const metadata: Metadata = {
   title: 'About Us | Madhyanchal Sarbajanin Chandannagar',
@@ -42,11 +43,7 @@ interface Person {
   designation: string;
 }
 
-const curYear = new Date().getFullYear();
-
 export default function AboutUsPage() {
-  const yearsActive = curYear - 1971 + 1;
-
   const members: Person[] = [
     { name: 'Shri Swapan Kumar Bayen', designation: 'President' },
     {
@@ -106,7 +103,7 @@ export default function AboutUsPage() {
   const coreHighlights = [
     {
       title: 'Established 1971',
-      description: `${yearsActive} years of continuous community celebrations, sports, and social work.`,
+      description: `${celebratingYear} years of continuous community celebrations, sports, and social work.`,
       icon: ShieldCheck,
     },
     {
@@ -134,7 +131,7 @@ export default function AboutUsPage() {
       title="About Madhyanchal"
       subtitle="Bringing people together through grand Jagadhatri & Durga Pujas, sports, and year-round social welfare in Chandannagar."
       badge={{
-        text: `Heritage Since 1971 (${yearsActive} Years)`,
+        text: `Heritage Since 1971 (${celebratingYear} Years)`,
         icon: Sparkles,
       }}
       breadcrumbCurrent="About Us"
@@ -188,21 +185,21 @@ export default function AboutUsPage() {
               Located just one kilometer from Chandannagar railway station along
               Station Road, <strong>Madhyanchal Sarbajanin</strong> has been at
               the heart of this grand festival since 1971. Over the past{' '}
-              {yearsActive} years, our committee has grown into a vibrant family
-              of local residents, youth volunteers, and organizers.
+              {celebratingYear} years, our committee has grown into a vibrant
+              family of local residents, youth volunteers, and organizers.
             </p>
 
             <p className="text-justify">
-              Every year, thousands of visitors from across Bengal and India come
-              to experience our unique pandal artwork, traditional idols, and the
-              world-famous light illumination of Chandannagar.
+              Every year, thousands of visitors from across Bengal and India
+              come to experience our unique pandal artwork, traditional idols,
+              and the world-famous light illumination of Chandannagar.
             </p>
 
             <p className="text-justify">
               <strong>Madhyanchal Sporting Club</strong> is not just a Puja
               organizer — it is a local sports and cultural hub with its own
-              playground. Throughout the year, we host sports tournaments,
-              blood donation camps, youth competitions, and social welfare programs
+              playground. Throughout the year, we host sports tournaments, blood
+              donation camps, youth competitions, and social welfare programs
               for our neighborhood.
             </p>
           </div>

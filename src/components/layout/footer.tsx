@@ -1,3 +1,5 @@
+'use client';
+
 import { Fragment } from 'react';
 
 import Image from 'next/image';
@@ -21,8 +23,6 @@ const spaceGrotesk = Space_Grotesk({
   weight: ['700'],
   display: 'swap',
 });
-
-const currentYear = new Date().getFullYear();
 
 export function Footer() {
   const navLinks = [
@@ -124,8 +124,8 @@ export function Footer() {
         {/* Legal & Copyright Info */}
         <div className="space-y-1 text-[9.5px] text-slate-500 sm:space-y-1 sm:text-xs dark:text-slate-400">
           <p>
-            Copyright © {currentYear} Madhyanchal Sarbajanin. All Rights
-            Reserved.
+            Copyright © {new Date().getFullYear()} Madhyanchal Sarbajanin. All
+            Rights Reserved.
           </p>
           <p className="flex items-center justify-center gap-1 text-[9px] text-slate-400 sm:text-[10px] dark:text-slate-500">
             Designed & Developed by{' '}

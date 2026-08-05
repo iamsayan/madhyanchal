@@ -3,14 +3,20 @@ import { notFound } from 'next/navigation';
 
 import { ServiceMembershipForm } from '@/components/features/service-membership-form';
 import { ServiceLayout } from '@/components/layout/service-layout';
-import { getMemberById } from '@/lib/data';
+import { getMemberById, getMembershipYear } from '@/lib/data';
+import type { PageProps } from '@/types';
 
-interface Props {
-  params: Promise<{ year: string; id: string }>;
-}
+type Props = PageProps<{ id: string }, { year?: string }>;
 
-export async function generateMetadata({ params }: Props): Promise<Metadata> {
-  const { year, id } = await params;
+export const instant = false;
+
+export async function generateMetadata({
+  params,
+  searchParams,
+}: Props): Promise<Metadata> {
+  const { id } = await params;
+  const { year: yearParam } = await searchParams;
+  const year = await getMembershipYear(yearParam);
 
   return {
     title: `Membership ${year} | Madhyanchal Sarbajanin`,
@@ -21,13 +27,16 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       nocache: true,
     },
     alternates: {
-      canonical: `/services/${year}/membership/${id}`,
+      canonical: `/services/membership/${id}`,
     },
   };
 }
 
-export default async function Page({ params }: Props) {
-  const { year, id } = await params;
+export default async function Page({ params, searchParams }: Props) {
+  const { id } = await params;
+  const { year: yearParam } = await searchParams;
+  const year = await getMembershipYear(yearParam);
+
   const memberData = await getMemberById(id, year);
 
   if (!memberData) {

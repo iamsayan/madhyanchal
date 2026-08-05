@@ -77,7 +77,7 @@ const DRESS_DATA = {
 
 interface ServiceDressOrderProps {
   stockTotals: { [key: string]: number };
-  year: string;
+  year: number;
 }
 
 export function ServiceDressOrder({

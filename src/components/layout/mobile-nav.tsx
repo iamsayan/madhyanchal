@@ -21,7 +21,6 @@ import {
   Flame,
   Palette,
   ArrowLeft,
-  Sparkles,
   Download,
 } from 'lucide-react';
 import { cn } from '@/lib/utils';
@@ -36,7 +35,6 @@ export function MobileNavDock() {
     Array<{ id: string; name: string }>
   >([]);
 
-  const currentYear = new Date().getFullYear();
   const { isDurgaPuja, isCommon } = useRouteContext();
   const [isStandalone, setIsStandalone] = useState(false);
 
@@ -334,7 +332,7 @@ export function MobileNavDock() {
                     {savedMembers.map((m) => (
                       <Link
                         key={m.id}
-                        href={`/services/${currentYear}/membership/${m.id}/status`}
+                        href={`/services/membership/${m.id}/status`}
                         onClick={() => setMoreOpen(false)}
                         className="flex items-center justify-between rounded-xl border border-amber-500/30 bg-white/80 p-2.5 transition-colors hover:bg-amber-500/20 active:scale-[0.98] dark:bg-stone-900/80"
                       >
