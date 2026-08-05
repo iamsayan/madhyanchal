@@ -225,6 +225,8 @@ export function DrawingCompetitionForm() {
         (orderResponse.orderId || '').replace(/\D+/g, '').slice(-4) ||
         Date.now().toString().slice(-4);
 
+      console.log(orderCode);
+
       const compactParticipants = previewData.participants.map((p, i) => ({
         id: `DC/${orderCode}${i + 1}`,
         n: p.participantName,
