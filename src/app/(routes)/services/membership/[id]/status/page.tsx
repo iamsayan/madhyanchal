@@ -8,6 +8,8 @@ import type { PageProps } from '@/types';
 
 type Props = PageProps<{ id: string }, { year?: string }>;
 
+export const instant = false;
+
 export async function generateMetadata({
   params,
   searchParams,

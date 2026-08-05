@@ -61,7 +61,7 @@ export function PageBreadcrumb({ currentNav }: PageBreadcrumbProps) {
   });
 
   return (
-    <nav className="flex flex-wrap items-center justify-center gap-1.5 text-[11px] font-semibold text-slate-500 sm:text-xs dark:text-slate-400">
+    <nav className="hidden flex-wrap items-center justify-center gap-1.5 text-[11px] font-semibold text-slate-500 sm:flex sm:text-xs dark:text-slate-400">
       <Link
         href={baseHref}
         className="transition-colors hover:text-amber-600 dark:hover:text-amber-400"
