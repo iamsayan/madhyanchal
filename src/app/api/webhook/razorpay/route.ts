@@ -137,37 +137,58 @@ async function handleDrawingPayment(
     return { messageResult: null, duplicate: true };
   }
 
-  const orderId = payment.order_id || payment.notes?.order_id;
-  const pendingItems = await cockpit.listContentItems<
-    DrawingCompetitionRecord[]
-  >(collectionName, { filter: { order_id: orderId } });
+  const notes = payment.notes || {};
+  const count = Number(notes.participants_count) || 1;
 
-  if (!Array.isArray(pendingItems) || pendingItems.length === 0) {
-    return { messageResult: null, duplicate: false };
+  const participants: Array<{
+    id: string;
+    name: string;
+    dob: string;
+    age: string;
+    category: string;
+  }> = [];
+
+  for (let i = 1; i <= count; i++) {
+    const rawP = notes[`p${i}`] || '';
+    const parts = typeof rawP === 'string' && rawP ? rawP.split('|') : [];
+
+    const name = parts[0]?.trim() || '';
+    const dob = parts[1]?.trim() || '';
+    const age = parts[2]?.trim() || '';
+    const category = parts[3]?.trim() || '';
+    const id = parts[4]?.trim() || '';
+
+    if (name || id) {
+      participants.push({ name, dob, age, category, id });
+    }
   }
 
-  for (const item of pendingItems) {
+  const feePerParticipant = Math.round(
+    paymentAmount / (participants.length || 1)
+  );
+
+  for (const p of participants) {
     await cockpit.saveContentItem(collectionName, {
-      _id: item._id,
-      _state: 1,
+      registration_id: p.id,
+      mode: 'online',
+      name: p.name,
+      dob: p.dob,
+      age: p.age,
+      category: p.category,
+      guardian_name: notes.guardian_name || '',
+      email: notes.email || payment.email || '',
+      phone: phone || '',
+      address: notes.address || '',
+      city: notes.city || '',
+      pincode: notes.pincode || '',
       payment_id: payment.id,
+      order_id: payment.order_id,
+      amount: String(feePerParticipant),
       timestamp: formatTimestamp(),
     });
   }
 
-  let messageResult: TwilioMessageResult | null = null;
-  const templateSid = process.env.TWILIO_TEMPLATE_DRAWING_COMPETITION;
-  const guardianName =
-    pendingItems[0]?.guardian_name || payment.notes?.guardian_name || '';
-
-  if (phone && templateSid) {
-    messageResult = await sendWhatsAppMessage(phone, templateSid, {
-      Name: String(guardianName).trim(),
-      Amount: String(paymentAmount),
-    });
-  }
-
-  return { messageResult, duplicate: false };
+  return { messageResult: null, duplicate: false };
 }
 
 export async function POST(req: NextRequest) {

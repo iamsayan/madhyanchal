@@ -3,7 +3,6 @@
 import { useState } from 'react';
 import Link from 'next/link';
 
-import { submitModel } from '@/app/actions/model';
 import { createRazorpayOrder } from '@/app/actions/razorpay';
 import { BorderBeam } from '@/components/ui/border-beam';
 import { NativeModal } from '@/components/ui/native-modal';
@@ -18,15 +17,12 @@ import {
   AlertCircle,
   Award,
   Calendar,
-  ChevronRight,
   Clock,
   CreditCard,
   ExternalLink,
   Eye,
   FileText,
   Gift,
-  IndianRupee,
-  Info,
   Loader2,
   Mail,
   MapPin,
@@ -36,7 +32,6 @@ import {
   Phone,
   Plus,
   ShieldCheck,
-  Sparkles,
   Trash2,
   Trophy,
   User,
@@ -64,6 +59,7 @@ import {
   DRAWING_COMPETITION_CONFIG,
   isRegistrationClosed,
 } from '@/config/drawing-competition';
+const currentYear = new Date().getFullYear();
 
 const REGISTRATION_FEE_PER_PARTICIPANT =
   DRAWING_COMPETITION_CONFIG.registrationFee;
@@ -191,7 +187,7 @@ export function DrawingCompetitionForm() {
     setPreviewData(data);
   };
 
-  // Perform Razorpay Order creation & API submission from Preview Modal
+  // Perform Razorpay Order creation & popup from Preview Modal
   const handleFinalSubmit = async () => {
     if (!previewData) return;
     setIsSubmittingFinal(true);
@@ -221,61 +217,37 @@ export function DrawingCompetitionForm() {
         );
       }
 
-      const orderCode =
-        (orderResponse.orderId || '').replace(/\D+/g, '').slice(-4) ||
-        Date.now().toString().slice(-4);
+      const dateSuffix = Date.now().toString().slice(-4);
+
+      const participantNotes: Record<string, string> = {
+        type: 'drawing',
+        guardian_name: previewData.guardianName,
+        email: previewData.email,
+        phone: previewData.phone.replace(/\D+/g, ''),
+        address: previewData.address,
+        city: previewData.city,
+        pincode: previewData.pinCode,
+        participants_count: previewData.participants.length.toString(),
+      };
 
       const registrations: Array<{ name: string; id: string }> = [];
 
-      for (let i = 0; i < previewData.participants.length; i++) {
-        const p = previewData.participants[i];
-        const regId = `DC/${orderCode}${i + 1}`;
-
-        const res = await submitModel(
-          `drawingcompetition${new Date().getFullYear()}`,
-          {
-            _state: 0,
-            registration_id: regId,
-            mode: 'online',
-            name: p.participantName,
-            dob: p.dateOfBirth,
-            age: p.age || '',
-            category: p.category || '',
-            guardian_name: previewData.guardianName,
-            email: previewData.email,
-            phone: previewData.phone,
-            address: previewData.address,
-            city: previewData.city,
-            pincode: previewData.pinCode,
-            order_id: orderResponse.orderId,
-            amount: `${REGISTRATION_FEE_PER_PARTICIPANT}`,
-          }
-        );
-
-        if (!res.success) {
-          throw new Error(
-            res.error ||
-              `Failed to initiate registration for ${p.participantName}`
-          );
-        }
-
+      previewData.participants.forEach((p, i) => {
+        const idx = i + 1;
+        const regId = `DC/${dateSuffix}${idx}`;
+        participantNotes[`p${idx}`] =
+          `${p.participantName}|${p.dateOfBirth}|${p.age}|${p.category}|${regId}`;
         registrations.push({ name: p.participantName, id: regId });
-      }
+      });
 
       const options = {
         key: orderResponse.keyId,
         amount: amountInPaise.toString(),
         currency: 'INR',
         name: 'Madhyanchal Sarbajanin',
-        description: `Drawing Competition Fee (${previewData.participants.length} participant${previewData.participants.length > 1 ? 's' : ''})`,
+        description: `Drawing Competition Fee ${currentYear} (${previewData.participants.length} participant${previewData.participants.length > 1 ? 's' : ''})`,
         order_id: orderResponse.orderId,
-        notes: {
-          type: 'drawing',
-          order_id: orderResponse.orderId,
-          guardian_name: previewData.guardianName,
-          email: previewData.email,
-          phone: previewData.phone.replace(/\D+/g, ''),
-        },
+        notes: participantNotes,
         theme: {
           color: '#0C1930',
           backdrop_color: '#0C1930',
