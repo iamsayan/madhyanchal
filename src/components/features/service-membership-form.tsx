@@ -238,7 +238,7 @@ export function ServiceMembershipForm({
         ]}
         secondaryButton={{
           label: 'Check Status',
-          href: `/services/${year}/membership/${memberData._id}/status`,
+          href: `/services/membership/${memberData._id}/status`,
           icon: <History className="h-4 w-4" />,
         }}
         primaryButton={{

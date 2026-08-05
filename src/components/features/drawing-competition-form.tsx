@@ -225,15 +225,42 @@ export function DrawingCompetitionForm() {
         (orderResponse.orderId || '').replace(/\D+/g, '').slice(-4) ||
         Date.now().toString().slice(-4);
 
-      console.log(orderCode);
+      const registrations: Array<{ name: string; id: string }> = [];
 
-      const compactParticipants = previewData.participants.map((p, i) => ({
-        id: `DC/${orderCode}${i + 1}`,
-        n: p.participantName,
-        d: p.dateOfBirth,
-        a: p.age || '',
-        c: p.category || '',
-      }));
+      for (let i = 0; i < previewData.participants.length; i++) {
+        const p = previewData.participants[i];
+        const regId = `DC/${orderCode}${i + 1}`;
+
+        const res = await submitModel(
+          `drawingcompetition${new Date().getFullYear()}`,
+          {
+            _state: 0,
+            registration_id: regId,
+            mode: 'online',
+            name: p.participantName,
+            dob: p.dateOfBirth,
+            age: p.age || '',
+            category: p.category || '',
+            guardian_name: previewData.guardianName,
+            email: previewData.email,
+            phone: previewData.phone,
+            address: previewData.address,
+            city: previewData.city,
+            pincode: previewData.pinCode,
+            order_id: orderResponse.orderId,
+            amount: `${REGISTRATION_FEE_PER_PARTICIPANT}`,
+          }
+        );
+
+        if (!res.success) {
+          throw new Error(
+            res.error ||
+              `Failed to initiate registration for ${p.participantName}`
+          );
+        }
+
+        registrations.push({ name: p.participantName, id: regId });
+      }
 
       const options = {
         key: orderResponse.keyId,
@@ -244,27 +271,19 @@ export function DrawingCompetitionForm() {
         order_id: orderResponse.orderId,
         notes: {
           type: 'drawing',
+          order_id: orderResponse.orderId,
           guardian_name: previewData.guardianName,
           email: previewData.email,
           phone: previewData.phone.replace(/\D+/g, ''),
-          address: previewData.address,
-          city: previewData.city,
-          pincode: previewData.pinCode,
-          participants: JSON.stringify(compactParticipants),
         },
         theme: {
           color: '#0C1930',
           backdrop_color: '#0C1930',
         },
         handler: function (response: RazorpaySuccessResponse) {
-          const results = compactParticipants.map((p) => ({
-            name: p.n,
-            id: p.id,
-          }));
-
           setPreviewData(null);
           setSuccess({
-            registrations: results,
+            registrations,
             paymentId: response.razorpay_payment_id,
             totalAmount,
           });

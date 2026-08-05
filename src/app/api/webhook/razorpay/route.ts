@@ -128,62 +128,41 @@ async function handleDrawingPayment(
   phone: string
 ): Promise<{ messageResult: TwilioMessageResult | null; duplicate: boolean }> {
   const collectionName = `drawingcompetition${paymentYear}`;
-  const existing = await cockpit.listContentItems<DrawingCompetitionRecord[]>(
-    collectionName,
-    { filter: { payment_id: payment.id } }
-  );
 
-  if (Array.isArray(existing) && existing.length > 0) {
+  const alreadyProcessed = await cockpit.listContentItems<
+    DrawingCompetitionRecord[]
+  >(collectionName, { filter: { payment_id: payment.id } });
+
+  if (Array.isArray(alreadyProcessed) && alreadyProcessed.length > 0) {
     return { messageResult: null, duplicate: true };
   }
 
-  const notes = payment.notes || {};
-  let participants: Array<Record<string, string>> = [];
+  const orderId = payment.order_id || payment.notes?.order_id;
+  const pendingItems = await cockpit.listContentItems<
+    DrawingCompetitionRecord[]
+  >(collectionName, { filter: { order_id: orderId } });
 
-  try {
-    if (notes.participants) {
-      participants = JSON.parse(notes.participants);
-    }
-  } catch {
-    participants = [];
+  if (!Array.isArray(pendingItems) || pendingItems.length === 0) {
+    return { messageResult: null, duplicate: false };
   }
 
-  if (!Array.isArray(participants) || participants.length === 0) {
-    participants = [{ participantName: notes.guardian_name || '' }];
-  }
-
-  const feePerParticipant = Math.round(
-    paymentAmount / (participants.length || 1)
-  );
-
-  for (let i = 0; i < participants.length; i++) {
-    const p = participants[i];
-
+  for (const item of pendingItems) {
     await cockpit.saveContentItem(collectionName, {
-      registration_id: p.id,
-      mode: 'online',
-      name: p.participantName || p.name || p.n || '',
-      dob: p.dateOfBirth || p.dob || p.d || '',
-      age: p.age || p.a || '',
-      category: p.category || p.c || '',
-      guardian_name: notes.guardian_name || '',
-      email: notes.email || '',
-      phone: phone || notes.phone || '',
-      address: notes.address || '',
-      city: notes.city || '',
-      pincode: notes.pincode || '',
+      _id: item._id,
+      _state: 1,
       payment_id: payment.id,
-      order_id: payment.order_id,
-      fee_paid: String(feePerParticipant),
       timestamp: formatTimestamp(),
     });
   }
 
   let messageResult: TwilioMessageResult | null = null;
   const templateSid = process.env.TWILIO_TEMPLATE_DRAWING_COMPETITION;
+  const guardianName =
+    pendingItems[0]?.guardian_name || payment.notes?.guardian_name || '';
+
   if (phone && templateSid) {
     messageResult = await sendWhatsAppMessage(phone, templateSid, {
-      Name: (notes.guardian_name || '').trim(),
+      Name: String(guardianName).trim(),
       Amount: String(paymentAmount),
     });
   }

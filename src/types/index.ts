@@ -142,6 +142,10 @@ export interface DrawingCompetitionRecord extends Entity {
   address: string;
   city: string;
   pincode: string;
+  order_id?: string;
+  payment_id?: string;
+  amount?: string;
+  timestamp?: string;
 }
 
 export interface RazorpayOrder {
