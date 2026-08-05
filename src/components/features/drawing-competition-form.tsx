@@ -65,9 +65,13 @@ import {
   isRegistrationClosed,
 } from '@/config/drawing-competition';
 
-const REGISTRATION_FEE_PER_PARTICIPANT = DRAWING_COMPETITION_CONFIG.registrationFee;
-const MAX_PARTICIPANTS_PER_GUARDIAN = DRAWING_COMPETITION_CONFIG.maxParticipantsPerGuardian;
-const COMPETITION_DATE = new Date(DRAWING_COMPETITION_CONFIG.competitionDateISO);
+const REGISTRATION_FEE_PER_PARTICIPANT =
+  DRAWING_COMPETITION_CONFIG.registrationFee;
+const MAX_PARTICIPANTS_PER_GUARDIAN =
+  DRAWING_COMPETITION_CONFIG.maxParticipantsPerGuardian;
+const COMPETITION_DATE = new Date(
+  DRAWING_COMPETITION_CONFIG.competitionDateISO
+);
 
 function calculateAgeAndCategory(dobString: string) {
   if (!dobString) return { age: '', category: '' };
@@ -217,6 +221,18 @@ export function DrawingCompetitionForm() {
         );
       }
 
+      const orderCode =
+        (orderResponse.orderId || '').replace(/\D+/g, '').slice(-4) ||
+        Date.now().toString().slice(-4);
+
+      const compactParticipants = previewData.participants.map((p, i) => ({
+        id: `DC/${orderCode}${i + 1}`,
+        n: p.participantName,
+        d: p.dateOfBirth,
+        a: p.age || '',
+        c: p.category || '',
+      }));
+
       const options = {
         key: orderResponse.keyId,
         amount: amountInPaise.toString(),
@@ -225,70 +241,33 @@ export function DrawingCompetitionForm() {
         description: `Drawing Competition Fee (${previewData.participants.length} participant${previewData.participants.length > 1 ? 's' : ''})`,
         order_id: orderResponse.orderId,
         notes: {
+          type: 'drawing',
           guardian_name: previewData.guardianName,
           email: previewData.email,
           phone: previewData.phone.replace(/\D+/g, ''),
-          participants_count: previewData.participants.length.toString(),
+          address: previewData.address,
+          city: previewData.city,
+          pincode: previewData.pinCode,
+          participants: JSON.stringify(compactParticipants),
         },
         theme: {
           color: '#0C1930',
           backdrop_color: '#0C1930',
         },
-        handler: async function (response: RazorpaySuccessResponse) {
-          try {
-            const results: Array<{ name: string; id: string }> = [];
+        handler: function (response: RazorpaySuccessResponse) {
+          const results = compactParticipants.map((p) => ({
+            name: p.n,
+            id: p.id,
+          }));
 
-            for (let i = 0; i < previewData.participants.length; i++) {
-              const p = previewData.participants[i];
-              const regId = `DC/${Date.now().toString().slice(-6)}${i + 1}`;
-
-              const res = await submitModel(
-                `drawingcompetition${new Date().getFullYear()}`,
-                {
-                  registration_id: regId,
-                  mode: 'online',
-                  name: p.participantName,
-                  dob: p.dateOfBirth,
-                  age: p.age || '',
-                  category: p.category || '',
-                  guardian_name: previewData.guardianName,
-                  email: previewData.email,
-                  phone: previewData.phone,
-                  address: previewData.address,
-                  city: previewData.city,
-                  pincode: previewData.pinCode,
-                  payment_id: response.razorpay_payment_id,
-                  fee_paid: `${REGISTRATION_FEE_PER_PARTICIPANT}`,
-                }
-              );
-
-              if (!res.success) {
-                throw new Error(
-                  res.error || `Registration failed for ${p.participantName}`
-                );
-              }
-
-              results.push({ name: p.participantName, id: regId });
-            }
-
-            setPreviewData(null);
-            setSuccess({
-              registrations: results,
-              paymentId: response.razorpay_payment_id,
-              totalAmount,
-            });
-            reset(defaultFormValues);
-          } catch (err) {
-            setPreviewData(null);
-            setErrorMsg(
-              err instanceof Error
-                ? err.message
-                : 'Failed to record registration. Please contact support with Payment ID: ' +
-                    response.razorpay_payment_id
-            );
-          } finally {
-            setIsSubmittingFinal(false);
-          }
+          setPreviewData(null);
+          setSuccess({
+            registrations: results,
+            paymentId: response.razorpay_payment_id,
+            totalAmount,
+          });
+          reset(defaultFormValues);
+          setIsSubmittingFinal(false);
         },
         modal: {
           ondismiss: function () {
@@ -555,7 +534,10 @@ export function DrawingCompetitionForm() {
               Registrations Closed for {config.year}
             </h3>
             <p className="max-w-xl text-xs text-slate-600 dark:text-slate-300">
-              Online registration for the {config.year} Drawing Competition is officially closed as the competition date has passed. Thank you for your support! We look forward to seeing you in {config.year + 1}.
+              Online registration for the {config.year} Drawing Competition is
+              officially closed as the competition date has passed. Thank you
+              for your support! We look forward to seeing you in{' '}
+              {config.year + 1}.
             </p>
             <Link
               href="/durgapuja/drawing-competition/list"
@@ -1085,7 +1067,11 @@ export function DrawingCompetitionForm() {
           >
             <span className="flex items-center justify-center gap-1.5">
               <Eye className="h-3.5 w-3.5 text-amber-950 sm:h-4 sm:w-4" />
-              <span>{isClosed ? `Registrations Closed for ${config.year}` : 'Preview Submission'}</span>
+              <span>
+                {isClosed
+                  ? `Registrations Closed for ${config.year}`
+                  : 'Preview Submission'}
+              </span>
             </span>
           </Button>
         </div>

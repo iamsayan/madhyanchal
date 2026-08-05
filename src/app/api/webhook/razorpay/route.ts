@@ -5,7 +5,11 @@ import cockpit from '@/lib/client';
 import { currentYear, getMemberById } from '@/lib/data';
 import { calculateAmountDue, normalizePhone } from '@/lib/member-utils';
 import { sendWhatsAppMessage, type TwilioMessageResult } from '@/lib/twilio';
-import type { DressOrder, MembershipPayment } from '@/types';
+import type {
+  DrawingCompetitionRecord,
+  DressOrder,
+  MembershipPayment,
+} from '@/types';
 
 function formatTimestamp(): string {
   const d = new Date();
@@ -13,6 +17,178 @@ function formatTimestamp(): string {
   return `${d.getFullYear()}-${pad(d.getMonth() + 1)}-${pad(d.getDate())} ${pad(
     d.getHours()
   )}:${pad(d.getMinutes())}`;
+}
+
+async function handleMembershipPayment(
+  payment: Record<string, any>,
+  paymentYear: string,
+  paymentAmount: number,
+  phone: string
+): Promise<{
+  messageResult: TwilioMessageResult | null;
+  duplicate: boolean;
+  error?: string;
+}> {
+  const collectionName = `membershippayments${paymentYear}`;
+  const existing = await cockpit.listContentItems<MembershipPayment[]>(
+    collectionName,
+    { filter: { payment_id: payment.id } }
+  );
+
+  if (Array.isArray(existing) && existing.length > 0) {
+    return { messageResult: null, duplicate: true };
+  }
+
+  await cockpit.saveContentItem(collectionName, {
+    member: { _id: payment.notes?.member_id, model: 'members' },
+    amount: paymentAmount,
+    timestamp: formatTimestamp(),
+    mode: 'razorpay',
+    payment_id: payment.id,
+    order_id: payment.order_id,
+    phone,
+    email: payment.notes?.email || '',
+  });
+
+  const memberId = payment.notes?.member_id;
+  const member = await getMemberById(memberId, paymentYear);
+
+  if (!member) {
+    return { messageResult: null, duplicate: false, error: 'Member not found' };
+  }
+
+  const amountDue = calculateAmountDue(member.amount, member.payments);
+  const memberName = (payment.notes?.name || member.name || '').trim();
+
+  const contentVariables: Record<string, string> = {
+    memberName,
+    paymentAmount: String(paymentAmount),
+    memberId: String(memberId).trim(),
+  };
+
+  let contentSid = process.env.TWILIO_TEMPLATE_ACKNOWLEDGEMENT_NO_DUE!;
+  if (amountDue > 0) {
+    contentVariables.dueAmount = String(amountDue);
+    contentSid = process.env.TWILIO_TEMPLATE_ACKNOWLEDGEMENT_DUE!;
+  }
+
+  let messageResult: TwilioMessageResult | null = null;
+  if (phone) {
+    messageResult = await sendWhatsAppMessage(
+      phone,
+      contentSid,
+      contentVariables
+    );
+  }
+
+  return { messageResult, duplicate: false };
+}
+
+async function handleDressPayment(
+  payment: Record<string, any>,
+  paymentYear: string,
+  paymentAmount: number,
+  phone: string
+): Promise<{ duplicate: boolean }> {
+  const collectionName = `dress${paymentYear}`;
+  const existing = await cockpit.listContentItems<DressOrder[]>(
+    collectionName,
+    { filter: { payment_id: payment.id } }
+  );
+
+  if (Array.isArray(existing) && existing.length > 0) {
+    return { duplicate: true };
+  }
+
+  const notes = payment.notes || {};
+  const sizes = ['kid', 'small', 'medium', 'large', 'xl', 'xxl'];
+  const quantities = sizes
+    .filter((size) => Number(notes[size]) > 0)
+    .map((size) => `${size.toUpperCase()} - ${notes[size]}`);
+
+  await cockpit.saveContentItem(collectionName, {
+    name: notes.name || '',
+    amount: paymentAmount,
+    timestamp: formatTimestamp(),
+    mode: 'razorpay',
+    payment_id: payment.id,
+    order_id: payment.order_id,
+    phone,
+    email: notes.email || '',
+    quantity: quantities,
+  });
+
+  return { duplicate: false };
+}
+
+async function handleDrawingPayment(
+  payment: Record<string, any>,
+  paymentYear: string,
+  paymentAmount: number,
+  phone: string
+): Promise<{ messageResult: TwilioMessageResult | null; duplicate: boolean }> {
+  const collectionName = `drawingcompetition${paymentYear}`;
+  const existing = await cockpit.listContentItems<DrawingCompetitionRecord[]>(
+    collectionName,
+    { filter: { payment_id: payment.id } }
+  );
+
+  if (Array.isArray(existing) && existing.length > 0) {
+    return { messageResult: null, duplicate: true };
+  }
+
+  const notes = payment.notes || {};
+  let participants: Array<Record<string, string>> = [];
+
+  try {
+    if (notes.participants) {
+      participants = JSON.parse(notes.participants);
+    }
+  } catch {
+    participants = [];
+  }
+
+  if (!Array.isArray(participants) || participants.length === 0) {
+    participants = [{ participantName: notes.guardian_name || '' }];
+  }
+
+  const feePerParticipant = Math.round(
+    paymentAmount / (participants.length || 1)
+  );
+
+  for (let i = 0; i < participants.length; i++) {
+    const p = participants[i];
+
+    await cockpit.saveContentItem(collectionName, {
+      registration_id: p.id,
+      mode: 'online',
+      name: p.participantName || p.name || p.n || '',
+      dob: p.dateOfBirth || p.dob || p.d || '',
+      age: p.age || p.a || '',
+      category: p.category || p.c || '',
+      guardian_name: notes.guardian_name || '',
+      email: notes.email || '',
+      phone: phone || notes.phone || '',
+      address: notes.address || '',
+      city: notes.city || '',
+      pincode: notes.pincode || '',
+      payment_id: payment.id,
+      order_id: payment.order_id,
+      fee_paid: String(feePerParticipant),
+      timestamp: formatTimestamp(),
+    });
+  }
+
+  let messageResult: TwilioMessageResult | null = null;
+  const templateSid = process.env.TWILIO_TEMPLATE_DRAWING_COMPETITION;
+  if (phone && templateSid) {
+    messageResult = await sendWhatsAppMessage(phone, templateSid, {
+      Name: (notes.guardian_name || '').trim(),
+      Amount: String(paymentAmount),
+    });
+  }
+
+  return { messageResult, duplicate: false };
 }
 
 export async function POST(req: NextRequest) {
@@ -60,68 +236,28 @@ export async function POST(req: NextRequest) {
 
     if (event === 'payment.captured') {
       if (paymentType === 'membership') {
-        const collectionName = `membershippayments${paymentYear}`;
-
-        const existing = await cockpit.listContentItems<MembershipPayment[]>(
-          collectionName,
-          { filter: { payment_id: payment.id } }
+        const res = await handleMembershipPayment(
+          payment,
+          paymentYear,
+          paymentAmount,
+          phone
         );
-
-        if (Array.isArray(existing) && existing.length > 0) {
+        if (res.duplicate) {
           return NextResponse.json({
             success: true,
             message: 'Payment already processed (duplicate webhook)',
             payment_id: payment.id,
           });
         }
-
-        await cockpit.saveContentItem(collectionName, {
-          member: { _id: payment.notes?.member_id, model: 'members' },
-          amount: paymentAmount,
-          timestamp: formatTimestamp(),
-          mode: 'razorpay',
-          payment_id: payment.id,
-          order_id: payment.order_id,
-          phone,
-          email: payment.notes?.email || '',
-        });
-
-        const memberId = payment.notes?.member_id;
-        const member = await getMemberById(memberId, paymentYear);
-
-        if (!member) {
+        if (res.error) {
           return NextResponse.json(
-            { success: false, error: 'Member not found' },
+            { success: false, error: res.error },
             { status: 404 }
           );
         }
-
-        const amountDue = calculateAmountDue(member.amount, member.payments);
-        const memberName = (payment.notes?.name || member.name || '').trim();
-
-        const contentVariables: Record<string, string> = {
-          memberName,
-          paymentAmount: String(paymentAmount),
-          memberId: String(memberId).trim(),
-        };
-
-        let contentSid = process.env.TWILIO_TEMPLATE_ACKNOWLEDGEMENT_NO_DUE!;
-
-        if (amountDue > 0) {
-          contentVariables.dueAmount = String(amountDue);
-          contentSid = process.env.TWILIO_TEMPLATE_ACKNOWLEDGEMENT_DUE!;
-        }
-
-        if (phone) {
-          messageResult = await sendWhatsAppMessage(
-            phone,
-            contentSid,
-            contentVariables
-          );
-        }
+        messageResult = res.messageResult;
       } else if (paymentType === 'monthly-subscription') {
         const contentSid = process.env.TWILIO_TEMPLATE_MONTHLY_SUBSCRIPTION!;
-
         if (phone) {
           messageResult = await sendWhatsAppMessage(phone, contentSid, {
             Payment: String(paymentAmount),
@@ -129,42 +265,38 @@ export async function POST(req: NextRequest) {
           });
         }
       } else if (paymentType === 'dress') {
-        const collectionName = `dress${paymentYear}`;
-
-        const existing = await cockpit.listContentItems<DressOrder[]>(
-          collectionName,
-          { filter: { payment_id: payment.id } }
+        const res = await handleDressPayment(
+          payment,
+          paymentYear,
+          paymentAmount,
+          phone
         );
-
-        if (Array.isArray(existing) && existing.length > 0) {
+        if (res.duplicate) {
           return NextResponse.json({
             success: true,
             message: 'Dress order already processed (duplicate webhook)',
             payment_id: payment.id,
           });
         }
-
-        const notes = payment.notes || {};
-        const sizes = ['kid', 'small', 'medium', 'large', 'xl', 'xxl'];
-        const quantities = sizes
-          .filter((size) => Number(notes[size]) > 0)
-          .map((size) => `${size.toUpperCase()} - ${notes[size]}`);
-
-        await cockpit.saveContentItem(collectionName, {
-          name: notes.name || '',
-          amount: paymentAmount,
-          timestamp: formatTimestamp(),
-          mode: 'razorpay',
-          payment_id: payment.id,
-          order_id: payment.order_id,
-          phone,
-          email: notes.email || '',
-          quantity: quantities,
-        });
+      } else if (paymentType === 'drawing') {
+        const res = await handleDrawingPayment(
+          payment,
+          paymentYear,
+          paymentAmount,
+          phone
+        );
+        if (res.duplicate) {
+          return NextResponse.json({
+            success: true,
+            message:
+              'Drawing competition order already processed (duplicate webhook)',
+            payment_id: payment.id,
+          });
+        }
+        messageResult = res.messageResult;
       }
     } else if (event === 'payment.failed') {
       const contentSid = process.env.TWILIO_TEMPLATE_FAILED_PAYMENT!;
-
       if (phone) {
         messageResult = await sendWhatsAppMessage(phone, contentSid, {});
       }
