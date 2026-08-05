@@ -7,6 +7,7 @@ import type {
   GalleryItem,
   Homepage,
   Member,
+  MemberWithPayments,
   NoticeItem,
   Settings,
 } from '@/types';
@@ -100,10 +101,17 @@ export async function getMembersStatus(year: string): Promise<Member[]> {
   return res;
 }
 
-export async function getMemberById(id: string, year: string): Promise<Member> {
-  const res = await cockpit.getContentItemById<Member>('members', id, {
-    payments: year,
-  });
+export async function getMemberById(
+  id: string,
+  year: string
+): Promise<MemberWithPayments> {
+  const res = await cockpit.getContentItemById<MemberWithPayments>(
+    'members',
+    id,
+    {
+      payments: year,
+    }
+  );
   return res;
 }
 

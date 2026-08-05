@@ -1,0 +1,190 @@
+import { NextRequest, NextResponse } from 'next/server';
+import Razorpay from 'razorpay';
+
+import cockpit from '@/lib/client';
+import { currentYear, getMemberById } from '@/lib/data';
+import { calculateAmountDue, normalizePhone } from '@/lib/member-utils';
+import { sendWhatsAppMessage, type TwilioMessageResult } from '@/lib/twilio';
+import type { DressOrder, MembershipPayment } from '@/types';
+
+function formatTimestamp(): string {
+  const d = new Date();
+  const pad = (n: number) => String(n).padStart(2, '0');
+  return `${d.getFullYear()}-${pad(d.getMonth() + 1)}-${pad(d.getDate())} ${pad(
+    d.getHours()
+  )}:${pad(d.getMinutes())}`;
+}
+
+export async function POST(req: NextRequest) {
+  try {
+    const rawPayload = await req.text();
+    const webhookSignature = req.headers.get('x-razorpay-signature') || '';
+
+    if (!rawPayload || !webhookSignature) {
+      return NextResponse.json(
+        { success: false, error: 'Missing payload or signature' },
+        { status: 400 }
+      );
+    }
+
+    const isValidSignature = Razorpay.validateWebhookSignature(
+      rawPayload,
+      webhookSignature,
+      process.env.RAZORPAY_WEBHOOK_SECRET!
+    );
+
+    if (!isValidSignature) {
+      return NextResponse.json(
+        { success: false, error: 'Invalid webhook signature' },
+        { status: 400 }
+      );
+    }
+
+    const webhookData = JSON.parse(rawPayload);
+    const event = webhookData.event;
+    const payment = webhookData.payload?.payment?.entity;
+
+    if (!payment) {
+      return NextResponse.json(
+        { success: false, error: 'Payment entity missing' },
+        { status: 400 }
+      );
+    }
+
+    const paymentAmount = Math.round((payment.amount / 100) * 100) / 100;
+    const paymentType = payment.notes?.type || null;
+    const paymentYear = payment.notes?.year || currentYear;
+    const phone = normalizePhone(payment.notes?.phone || payment.contact);
+
+    let messageResult: TwilioMessageResult | null = null;
+
+    if (event === 'payment.captured') {
+      if (paymentType === 'membership') {
+        const collectionName = `membershippayments${paymentYear}`;
+
+        const existing = await cockpit.listContentItems<MembershipPayment[]>(
+          collectionName,
+          { filter: { payment_id: payment.id } }
+        );
+
+        if (Array.isArray(existing) && existing.length > 0) {
+          return NextResponse.json({
+            success: true,
+            message: 'Payment already processed (duplicate webhook)',
+            payment_id: payment.id,
+          });
+        }
+
+        await cockpit.saveContentItem(collectionName, {
+          member: { _id: payment.notes?.member_id, model: 'members' },
+          amount: paymentAmount,
+          timestamp: formatTimestamp(),
+          mode: 'razorpay',
+          payment_id: payment.id,
+          order_id: payment.order_id,
+          phone,
+          email: payment.notes?.email || '',
+        });
+
+        const memberId = payment.notes?.member_id;
+        const member = await getMemberById(memberId, paymentYear);
+
+        if (!member) {
+          return NextResponse.json(
+            { success: false, error: 'Member not found' },
+            { status: 404 }
+          );
+        }
+
+        const amountDue = calculateAmountDue(member.amount, member.payments);
+        const memberName = (payment.notes?.name || member.name || '').trim();
+
+        const contentVariables: Record<string, string> = {
+          memberName,
+          paymentAmount: String(paymentAmount),
+          memberId: String(memberId).trim(),
+        };
+
+        let contentSid = process.env.TWILIO_TEMPLATE_ACKNOWLEDGEMENT_NO_DUE!;
+
+        if (amountDue > 0) {
+          contentVariables.dueAmount = String(amountDue);
+          contentSid = process.env.TWILIO_TEMPLATE_ACKNOWLEDGEMENT_DUE!;
+        }
+
+        if (phone) {
+          messageResult = await sendWhatsAppMessage(
+            phone,
+            contentSid,
+            contentVariables
+          );
+        }
+      } else if (paymentType === 'monthly-subscription') {
+        const contentSid = process.env.TWILIO_TEMPLATE_MONTHLY_SUBSCRIPTION!;
+
+        if (phone) {
+          messageResult = await sendWhatsAppMessage(phone, contentSid, {
+            Payment: String(paymentAmount),
+            Name: (payment.notes?.name || '').trim(),
+          });
+        }
+      } else if (paymentType === 'dress') {
+        const collectionName = `dress${paymentYear}`;
+
+        const existing = await cockpit.listContentItems<DressOrder[]>(
+          collectionName,
+          { filter: { payment_id: payment.id } }
+        );
+
+        if (Array.isArray(existing) && existing.length > 0) {
+          return NextResponse.json({
+            success: true,
+            message: 'Dress order already processed (duplicate webhook)',
+            payment_id: payment.id,
+          });
+        }
+
+        const notes = payment.notes || {};
+        const sizes = ['kid', 'small', 'medium', 'large', 'xl', 'xxl'];
+        const quantities = sizes
+          .filter((size) => Number(notes[size]) > 0)
+          .map((size) => `${size.toUpperCase()} - ${notes[size]}`);
+
+        await cockpit.saveContentItem(collectionName, {
+          name: notes.name || '',
+          amount: paymentAmount,
+          timestamp: formatTimestamp(),
+          mode: 'razorpay',
+          payment_id: payment.id,
+          order_id: payment.order_id,
+          phone,
+          email: notes.email || '',
+          quantity: quantities,
+        });
+      }
+    } else if (event === 'payment.failed') {
+      const contentSid = process.env.TWILIO_TEMPLATE_FAILED_PAYMENT!;
+
+      if (phone) {
+        messageResult = await sendWhatsAppMessage(phone, contentSid, {});
+      }
+    }
+
+    return NextResponse.json({
+      success: true,
+      message: 'Webhook processed successfully',
+      payment_id: payment.id || null,
+      amount: paymentAmount,
+      message_sid: messageResult?.sid || null,
+    });
+  } catch (error: unknown) {
+    console.error('Error processing Razorpay webhook:', error);
+    return NextResponse.json(
+      {
+        success: false,
+        error: error instanceof Error ? error.message : 'Webhook error',
+      },
+      { status: 400 }
+    );
+  }
+}

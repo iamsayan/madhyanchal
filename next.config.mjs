@@ -66,7 +66,7 @@ const nextConfig = {
             key: 'id',
           },
         ],
-        destination: `https://web.madhyanchalsarbajanin.co.in/services/redirect.php?t=reminder&id=:id`,
+        destination: '/services/membership/:id',
         permanent: true,
       },
       {
@@ -77,7 +77,7 @@ const nextConfig = {
             key: 'id',
           },
         ],
-        destination: `https://web.madhyanchalsarbajanin.co.in/services/redirect.php?t=status&id=:id`,
+        destination: '/services/membership/:id/status',
         permanent: true,
       },
     ];

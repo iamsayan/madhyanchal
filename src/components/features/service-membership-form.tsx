@@ -27,13 +27,13 @@ import {
   XCircle,
 } from 'lucide-react';
 import type {
-  Member,
   MembershipPayment,
+  MemberWithPayments,
   RazorpaySuccessResponse,
 } from '@/types';
 
 interface ServiceMembershipFormProps {
-  memberData: Member & { payments?: MembershipPayment[] };
+  memberData: MemberWithPayments;
   year: string;
 }
 

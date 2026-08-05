@@ -17,6 +17,7 @@ import {
   Receipt,
   Search,
 } from 'lucide-react';
+import type { MemberWithPayments } from '@/types';
 
 interface PaymentRecord {
   amount: number | string;
@@ -34,7 +35,7 @@ interface Member {
 }
 
 interface ServiceMembershipStatusProps {
-  data: (Record<string, unknown> | Member)[];
+  data: MemberWithPayments[];
   year: string;
 }
 

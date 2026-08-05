@@ -1,19 +1,11 @@
 import { revalidateTag } from 'next/cache';
 import { NextRequest, NextResponse } from 'next/server';
 
+import { verifySecret } from '@/src/lib/verify';
+
 function handleRevalidate(tag: string) {
   console.log(`Revalidating Next.js cache tag: ${tag}`);
   revalidateTag(tag, 'max');
-}
-
-function verifySecret(req: NextRequest): boolean {
-  const expectedSecret = process.env.REVALIDATE_SECRET;
-  if (!expectedSecret) return true; // Bypass security if no secret is configured in env
-
-  const secret =
-    req.nextUrl.searchParams.get('secret') ||
-    req.headers.get('x-revalidate-secret');
-  return secret === expectedSecret;
 }
 
 export async function POST(req: NextRequest) {
@@ -26,7 +18,6 @@ export async function POST(req: NextRequest) {
     }
 
     const body = await req.json().catch(() => null);
-
     if (!body) {
       return NextResponse.json(
         { success: false, error: 'Empty or invalid JSON payload' },
@@ -34,19 +25,13 @@ export async function POST(req: NextRequest) {
       );
     }
 
-    // Cockpit webhooks can send an array payload (e.g. ["gears", {...}, true, "content/collections/gears"])
-    // or an object payload (e.g. { model: "gears", event: "content.save.after" })
-    let model = '';
-    if (Array.isArray(body)) {
-      model = body[0];
-    } else if (typeof body === 'object') {
-      model =
-        body.model ||
-        body.event?.split('.')?.[2] ||
-        body.event?.split('.')?.[1];
-    }
+    const model = Array.isArray(body)
+      ? body[0]
+      : body?.model ||
+        body?.event?.split('.')?.[2] ||
+        body?.event?.split('.')?.[1];
 
-    if (!model) {
+    if (!model || typeof model !== 'string') {
       return NextResponse.json(
         { success: false, error: 'Model name not found in request payload' },
         { status: 400 }
@@ -54,9 +39,8 @@ export async function POST(req: NextRequest) {
     }
 
     handleRevalidate(model);
-
     return NextResponse.json({ success: true, revalidatedTag: model });
-  } catch (error) {
+  } catch (error: unknown) {
     console.error('Error handling revalidation webhook:', error);
     return NextResponse.json(
       {
@@ -69,32 +53,30 @@ export async function POST(req: NextRequest) {
 }
 
 export async function GET(req: NextRequest) {
+  const { searchParams } = req.nextUrl;
+  const tag = searchParams.get('tag') || searchParams.get('model');
+
+  if (!verifySecret(req)) {
+    return NextResponse.json(
+      { success: false, error: 'Unauthorized' },
+      { status: 401 }
+    );
+  }
+
+  if (!tag) {
+    return NextResponse.json(
+      {
+        success: false,
+        error: 'Query parameter "tag" or "model" is required',
+      },
+      { status: 400 }
+    );
+  }
+
   try {
-    if (!verifySecret(req)) {
-      return NextResponse.json(
-        { success: false, error: 'Unauthorized' },
-        { status: 401 }
-      );
-    }
-
-    const tag =
-      req.nextUrl.searchParams.get('tag') ||
-      req.nextUrl.searchParams.get('model');
-
-    if (!tag) {
-      return NextResponse.json(
-        {
-          success: false,
-          error: 'Query parameter "tag" or "model" is required',
-        },
-        { status: 400 }
-      );
-    }
-
     handleRevalidate(tag);
-
     return NextResponse.json({ success: true, revalidatedTag: tag });
-  } catch (error) {
+  } catch (error: unknown) {
     console.error('Error executing GET revalidation:', error);
     return NextResponse.json(
       {

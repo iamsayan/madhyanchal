@@ -72,6 +72,10 @@ export interface MembershipPayment extends PaymentRecordData {
   notes: string | null;
 }
 
+export interface MemberWithPayments extends Member {
+  payments?: MembershipPayment[];
+}
+
 export interface DressOrder extends PaymentRecordData {
   name: string;
   quantity: string[];
