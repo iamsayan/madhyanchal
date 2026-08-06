@@ -41,32 +41,11 @@ export const viewport: Viewport = {
 
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
-  alternates: {
-    canonical: '/',
-  },
   title: {
     default: 'Madhyanchal Sarbajanin',
     template: '%s | Madhyanchal Sarbajanin',
   },
-  description: `Official website of Madhyanchal Sarbajanin Jagadhatri Puja, Chandannagar. Celebrating ${celebratingYear} years since 1971. Explore the puja schedule, gallery, events, committee details, and latest updates for ${currentYear}.`,
-  keywords: [
-    'madhyanchal',
-    'jagadhatri',
-    'puja',
-    'jagadhatri puja',
-    'chandannagar',
-    'jagadhatri puja chandannagar',
-    'chandannagar jagadhatri puja',
-    'west bengal festival',
-    'madhyanchal sarbajanin',
-    'madhyanchal sporting club',
-    'jagadhatri puja 2026',
-    'chandannagar puja committee',
-    'hooghly festival',
-    'bengal cultural festival',
-    'chandannagar lighting',
-    'jagadhatri puja procession',
-  ],
+  description: `Official website of Madhyanchal Sarbajanin`,
   category: 'Religion & Culture',
   authors: [{ name: 'Sayan Datta', url: 'https://www.sayandatta.co.in' }],
   creator: 'Sayan Datta',
@@ -86,18 +65,11 @@ export const metadata: Metadata = {
     siteName: 'Madhyanchal Sarbajanin',
     locale: 'en_IN',
     type: 'website',
-    url: '/',
-    title: `Madhyanchal Sarbajanin Jagadhatri Puja ${currentYear} | Chandannagar`,
-    description:
-      'Official website of Madhyanchal Sarbajanin Jagadhatri Puja, Chandannagar.',
   },
   twitter: {
     card: 'summary_large_image',
     site: '@msjpsofficial',
     creator: '@msjpsofficial',
-    title: `Madhyanchal Sarbajanin Jagadhatri Puja ${currentYear} | Chandannagar`,
-    description:
-      'Official website of Madhyanchal Sarbajanin Jagadhatri Puja, Chandannagar.',
   },
   verification: {
     google: 'SYZt9rv7_qvB3hl-_KzC5lcd-yrB4C2hr4tb2q6RyBA',

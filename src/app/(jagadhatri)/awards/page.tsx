@@ -1,6 +1,5 @@
 import type { Metadata } from 'next';
 
-import { AdvertiserSlider } from '@/components/features/advertiser-slider';
 import { AwardsFilterView } from '@/components/features/awards-filter-view';
 import { PageLayout } from '@/components/layout/page-layout';
 import { AnimatedWrapper } from '@/components/shared/animated-wrapper';
@@ -14,11 +13,15 @@ import {
   Palette,
   Sparkles,
 } from 'lucide-react';
+import { createMetadata } from '@/src/lib/metadata';
 
 export const metadata: Metadata = {
-  title: 'Our Awards & Accolades',
-  description:
-    'Explore the 100+ Prestigious Awards and recognitions earned by Madhyanchal Sarbajanin in Chandannagar—from Best Road Lighting to Idol Mukhasree and Cultural Heritage.',
+  ...createMetadata({
+    title: 'Our Awards & Accolades',
+    description:
+      'Explore the 100+ Prestigious Awards and recognitions earned by Madhyanchal Sarbajanin in Chandannagar—from Best Road Lighting to Idol Mukhasree and Cultural Heritage.',
+    canonical: '/awards',
+  }),
   keywords: [
     'madhyanchal awards',
     'jagadhatri puja awards chandannagar',
@@ -27,16 +30,6 @@ export const metadata: Metadata = {
     'best jagadhatri puja awards',
     'road lighting awards chandannagar',
   ],
-  openGraph: {
-    title: 'Our Awards & Accolades | Madhyanchal Sarbajanin Chandannagar',
-    description:
-      'Recognized for excellence in creativity, road lighting, and cultural heritage with 100+ awards since 2016.',
-    url: '/awards',
-    type: 'website',
-  },
-  alternates: {
-    canonical: '/awards',
-  },
 };
 
 export default function AwardsPage() {

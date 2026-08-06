@@ -32,12 +32,37 @@ import {
   TrendingUp,
   Users,
 } from 'lucide-react';
-import { currentYear, getHomePage, getSettings } from '@/lib/data';
+import {
+  celebratingYear,
+  currentYear,
+  getHomePage,
+  getSettings,
+} from '@/lib/data';
 import CockpitImage from '@/components/shared/cockpit-image';
 import { Metadata } from 'next';
 
 export const metadata: Metadata = {
   title: `Madhyanchal Sarbajanin Jagadhatri Puja ${currentYear} | Chandannagar`,
+  description: `Official website of Madhyanchal Sarbajanin Jagadhatri Puja, Chandannagar. Celebrating ${celebratingYear} years since 1971. Explore the puja schedule, gallery, events, committee details, and latest updates for ${currentYear}.`,
+  alternates: { canonical: '/' },
+  keywords: [
+    'madhyanchal',
+    'jagadhatri',
+    'puja',
+    'jagadhatri puja',
+    'chandannagar',
+    'jagadhatri puja chandannagar',
+    'chandannagar jagadhatri puja',
+    'west bengal festival',
+    'madhyanchal sarbajanin',
+    'madhyanchal sporting club',
+    'jagadhatri puja 2026',
+    'chandannagar puja committee',
+    'hooghly festival',
+    'bengal cultural festival',
+    'chandannagar lighting',
+    'jagadhatri puja procession',
+  ],
 };
 
 export default async function HomePage() {

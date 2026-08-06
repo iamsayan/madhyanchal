@@ -15,11 +15,15 @@ import {
   Stethoscope,
   Users,
 } from 'lucide-react';
+import { createMetadata } from '@/src/lib/metadata';
 
 export const metadata: Metadata = {
-  title: 'Social Activities & Community Initiatives',
-  description:
-    'Discover the year-round social initiatives of Madhyanchal Sarbajanin—from orphanage Kali Puja celebrations to COVID vaccination camps and blood donation drives.',
+  ...createMetadata({
+    title: 'Social Activities & Community Initiatives',
+    description:
+      'Discover the year-round social initiatives of Madhyanchal Sarbajanin—from orphanage Kali Puja celebrations to COVID vaccination camps and blood donation drives.',
+    canonical: '/activities',
+  }),
   keywords: [
     'madhyanchal social activities',
     'chandannagar community service',
@@ -28,16 +32,6 @@ export const metadata: Metadata = {
     'health camp chandannagar',
     'prabartak seba niketan',
   ],
-  openGraph: {
-    title: 'Social Activities | Madhyanchal Sarbajanin Chandannagar',
-    description:
-      'Year-round social initiatives including healthcare camps, blood donation, youth art competitions, and orphanage outreach.',
-    url: '/activities',
-    type: 'website',
-  },
-  alternates: {
-    canonical: '/activities',
-  },
 };
 
 export default function ActivitiesPage() {

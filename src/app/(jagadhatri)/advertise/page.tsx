@@ -25,11 +25,15 @@ import {
   Users,
   Zap,
 } from 'lucide-react';
+import { createMetadata } from '@/src/lib/metadata';
 
 export const metadata: Metadata = {
-  title: 'Advertise with Us',
-  description:
-    'Partner with Madhyanchal Sarbajanin in Chandannagar. Elevate your brand with 1.2M+ footfall and prime Station Road festival branding.',
+  ...createMetadata({
+    title: 'Advertise with Us',
+    description:
+      'Partner with Madhyanchal Sarbajanin in Chandannagar. Elevate your brand with 1.2M+ footfall and prime Station Road festival branding.',
+    canonical: '/advertise',
+  }),
   keywords: [
     'advertise jagadhatri puja',
     'chandannagar puja sponsorship',
@@ -38,16 +42,6 @@ export const metadata: Metadata = {
     'chandannagar festival advertising',
     'station road sponsorship',
   ],
-  openGraph: {
-    title: 'Advertise with Us | Madhyanchal Sarbajanin Chandannagar',
-    description:
-      'Partner with Madhyanchal Sarbajanin to reach 1.2M+ visitors on Chandannagar’s busiest festival corridor.',
-    url: '/advertise',
-    type: 'website',
-  },
-  alternates: {
-    canonical: '/advertise',
-  },
 };
 
 export default function AdvertisePage() {

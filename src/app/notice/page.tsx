@@ -16,13 +16,6 @@ export const metadata: Metadata = {
     'jagadhatri puja meeting notice',
     'madhyanchal general body meeting',
   ],
-  openGraph: {
-    title: 'Public Notices & Announcements | Madhyanchal Sarbajanin',
-    description:
-      'Official public announcements, AGM notices, audited financial statements, and press releases of Madhyanchal Sarbajanin Chandannagar.',
-    url: '/notice',
-    type: 'website',
-  },
   alternates: {
     canonical: '/notice',
   },

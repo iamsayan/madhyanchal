@@ -18,11 +18,15 @@ import {
 } from 'lucide-react';
 
 import { getPujaHistorySchema } from '@/lib/seo-schemas';
+import { createMetadata } from '@/src/lib/metadata';
 
 export const metadata: Metadata = {
-  title: 'History of Jagadhatri Puja',
-  description:
-    'Discover the centuries-old history of Chandannagar Jagadhatri Puja through an interactive golden timeline—from French colonial origins to Bankim Chandra’s Anandamath and master LED light craftsmanship.',
+  ...createMetadata({
+    title: 'History of Jagadhatri Puja',
+    description:
+      'Discover the centuries-old history of Chandannagar Jagadhatri Puja through an interactive golden timeline—from French colonial origins to Bankim Chandra’s Anandamath and master LED light craftsmanship.',
+    canonical: '/puja-history',
+  }),
   keywords: [
     'jagadhatri puja history',
     'chandannagar jagadhatri puja origin',
@@ -33,16 +37,6 @@ export const metadata: Metadata = {
     'sridhar das light artist',
     'history of chandannagar puja',
   ],
-  openGraph: {
-    title: 'History of Jagadhatri Puja | Madhyanchal Sarbajanin Chandannagar',
-    description:
-      'Discover the centuries-old history of Chandannagar Jagadhatri Puja through an interactive golden timeline chronicle.',
-    url: '/puja-history',
-    type: 'article',
-  },
-  alternates: {
-    canonical: '/puja-history',
-  },
 };
 
 export default function PujaHistoryPage() {

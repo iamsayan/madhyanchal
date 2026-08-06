@@ -35,13 +35,6 @@ export const metadata: Metadata = {
     'jagadhatri puja terms and conditions',
     'chandannagar puja rules',
   ],
-  openGraph: {
-    title: 'Terms & Conditions | Madhyanchal Sarbajanin Chandannagar',
-    description:
-      'Official terms and conditions for using the Madhyanchal Sarbajanin website, digital services, and event participation.',
-    url: '/terms',
-    type: 'website',
-  },
   alternates: {
     canonical: '/terms',
   },

@@ -32,13 +32,6 @@ export const metadata: Metadata = {
     'jagadhatri puja data protection',
     'chandannagar privacy statement',
   ],
-  openGraph: {
-    title: 'Privacy Policy | Madhyanchal Sarbajanin Chandannagar',
-    description:
-      'Detailed privacy policy outlining data collection, security measures, cookies, and user rights at Madhyanchal Sarbajanin.',
-    url: '/privacy-policy',
-    type: 'website',
-  },
   alternates: {
     canonical: '/privacy-policy',
   },

@@ -18,11 +18,15 @@ import {
 } from '@/components/shared/schedule-utilities';
 
 import { getJagadhatriScheduleSchema } from '@/lib/seo-schemas';
+import { createMetadata } from '@/src/lib/metadata';
 
 export const metadata: Metadata = {
-  title: 'Festival Timeline & Puja Guide',
-  description:
-    'Official festival timeline for Jagadhatri Puja at Madhyanchal Sarbajanin in Chandannagar—including daily worship, Pushpanjali, Nabami Bhog distribution, and world-famous night immersion procession.',
+  ...createMetadata({
+    title: 'Festival Timeline & Puja Guide',
+    description:
+      'Official festival timeline for Jagadhatri Puja at Madhyanchal Sarbajanin in Chandannagar—including daily worship, Pushpanjali, Nabami Bhog distribution, and world-famous night immersion procession.',
+    canonical: '/schedule',
+  }),
   keywords: [
     'jagadhatri puja schedule chandannagar',
     'madhyanchal puja timing',
@@ -31,16 +35,6 @@ export const metadata: Metadata = {
     'pushpanjali timings madhyanchal',
     'chandannagar light procession schedule',
   ],
-  openGraph: {
-    title: 'Festival Timeline & Puja Guide | Madhyanchal Sarbajanin',
-    description:
-      'Explore the official Jagadhatri Puja festival timeline, daily worship, Nabami Bhog distribution, and grand shobhajatra procession.',
-    url: '/schedule',
-    type: 'website',
-  },
-  alternates: {
-    canonical: '/schedule',
-  },
 };
 
 const DEFAULT_SCHEDULE_DATES: EventDate[] = [

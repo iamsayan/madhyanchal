@@ -13,11 +13,15 @@ import {
   Trophy,
 } from 'lucide-react';
 import { celebratingYear } from '@/src/lib/data';
+import { createMetadata } from '@/src/lib/metadata';
 
 export const metadata: Metadata = {
-  title: 'About Us',
-  description:
-    'Celebrating culture, sports, and community service in Chandannagar since 1971.',
+  ...createMetadata({
+    title: 'About Us',
+    description:
+      'Celebrating culture, sports, and community service in Chandannagar',
+    canonical: '/about-us',
+  }),
   keywords: [
     'madhyanchal history',
     'jagadhatri puja samity chandannagar',
@@ -26,16 +30,6 @@ export const metadata: Metadata = {
     'chandannagar cultural heritage',
     'madhyanchal sporting club',
   ],
-  openGraph: {
-    title: 'About Us | Madhyanchal Sarbajanin Chandannagar',
-    description:
-      'Discover Madhyanchal Sarbajanin — organizing grand Pujas, youth sports, and year-round social work in Chandannagar since 1971.',
-    url: '/about-us',
-    type: 'website',
-  },
-  alternates: {
-    canonical: '/about-us',
-  },
 };
 
 interface Person {

@@ -27,32 +27,6 @@ export const metadata: Metadata = {
   alternates: {
     canonical: '/durgapuja',
   },
-  openGraph: {
-    siteName: 'Madhyanchal Sarbajanin',
-    title: `Madhyanchal Sarbajanin Durga Puja ${currentYear} | Chandannagar`,
-    description: `Official website of Madhyanchal Sarbajanin Durga Puja, Chandannagar. Explore the Durga Puja ${currentYear} schedule, rituals, gallery, cultural programmes, drawing competition, and latest updates.`,
-    url: '/durgapuja',
-    type: 'website',
-    locale: 'en_IN',
-  },
-  twitter: {
-    card: 'summary_large_image',
-    site: '@msjpsofficial',
-    creator: '@msjpsofficial',
-    title: `Madhyanchal Sarbajanin Durga Puja ${currentYear} | Chandannagar`,
-    description: `Official website of Madhyanchal Sarbajanin Durga Puja, Chandannagar. Explore the Durga Puja ${currentYear} schedule, gallery, cultural programmes, and latest updates.`,
-  },
-  robots: {
-    index: true,
-    follow: true,
-    googleBot: {
-      index: true,
-      follow: true,
-      'max-video-preview': -1,
-      'max-image-preview': 'large',
-      'max-snippet': -1,
-    },
-  },
 };
 
 export default function DurgaPujaLayout({ children }: { children: ReactNode }) {

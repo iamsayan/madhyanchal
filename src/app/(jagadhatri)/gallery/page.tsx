@@ -7,11 +7,15 @@ import { getGalleryItems } from '@/lib/data';
 import { Sparkles } from 'lucide-react';
 
 import { getGallerySchema } from '@/lib/seo-schemas';
+import { createMetadata } from '@/src/lib/metadata';
 
 export const metadata: Metadata = {
-  title: 'Photo Gallery',
-  description:
-    'Explore high-resolution photo archives of Madhyanchal Sarbajanin in Chandannagar—featuring majestic pandal architecture, idol decorations, and legendary LED illuminations.',
+  ...createMetadata({
+    title: 'Photo Gallery',
+    description:
+      'Explore high-resolution photo archives of Madhyanchal Sarbajanin in Chandannagar—featuring majestic pandal architecture, idol decorations, and legendary LED illuminations.',
+    canonical: '/gallery',
+  }),
   keywords: [
     'jagadhatri puja photos',
     'madhyanchal puja gallery',
@@ -20,16 +24,6 @@ export const metadata: Metadata = {
     'chandannagar lighting photos',
     'madhyanchal sarbajanin photo gallery',
   ],
-  openGraph: {
-    title: 'Photo Gallery | Madhyanchal Sarbajanin Chandannagar',
-    description:
-      'Explore high-resolution photo archives of Madhyanchal Sarbajanin in Chandannagar.',
-    url: '/gallery',
-    type: 'website',
-  },
-  alternates: {
-    canonical: '/gallery',
-  },
 };
 
 export default async function GalleryPage() {
