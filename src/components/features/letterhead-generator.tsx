@@ -38,13 +38,13 @@ const TEMPLATES = [
   {
     id: 'jagadhatri',
     name: 'Jagadhatri Puja Samity',
-    image: '/letter-head-msjps.jpg',
+    image: process.env.NEXT_PUBLIC_LETTERHEAD_MSJPS_URL || '',
     color: 'amber',
   },
   {
     id: 'durga',
     name: 'Durga Puja Samity',
-    image: '/letter-head-msdps.jpg',
+    image: process.env.NEXT_PUBLIC_LETTERHEAD_MSDPS_URL || '',
     color: 'rose',
   },
   {
@@ -157,8 +157,8 @@ export function LetterheadGenerator() {
 
   const handleUnlock = (e: React.FormEvent) => {
     e.preventDefault();
-    const correctPin = process.env.NEXT_PUBLIC_LETTERHEAD_PIN || 'MSJPS2026';
-    if (inputPin.trim() === correctPin) {
+    const correctPin = process.env.NEXT_PUBLIC_LETTERHEAD_PIN || '';
+    if (correctPin && inputPin.trim() === correctPin) {
       setIsAuthorized(true);
       setPinError(false);
       sessionStorage.setItem('msjps_letterhead_auth', 'true');
@@ -301,7 +301,7 @@ export function LetterheadGenerator() {
     }
 
     const letterheadUrl =
-      hasLetterhead && typeof window !== 'undefined'
+      hasLetterhead && bgImage.startsWith('/') && typeof window !== 'undefined'
         ? `${window.location.origin}${bgImage}`
         : bgImage;
 
@@ -725,7 +725,8 @@ export function LetterheadGenerator() {
         {/* CARD 1: TEMPLATE SELECTION */}
         <div className="space-y-3 rounded-2xl border border-slate-200 bg-white/80 p-4 backdrop-blur-md sm:p-5 dark:border-white/12 dark:bg-stone-900/90">
           <label className="flex items-center gap-1.5 text-xs font-extrabold tracking-wider text-slate-700 uppercase dark:text-slate-300">
-            <Sliders className="h-4 w-4 text-amber-500" /> Header Letterhead Template
+            <Sliders className="h-4 w-4 text-amber-500" /> Header Letterhead
+            Template
           </label>
           <div className="grid grid-cols-1 gap-2.5 sm:grid-cols-3">
             {TEMPLATES.map((tmpl) => {
@@ -819,7 +820,8 @@ export function LetterheadGenerator() {
             {/* RECIPIENT DETAILS */}
             <div className="space-y-3">
               <h3 className="flex items-center gap-1.5 text-xs font-extrabold tracking-wider text-slate-700 uppercase dark:text-slate-300">
-                <User className="h-4 w-4 text-amber-500" /> Recipient / Member Details
+                <User className="h-4 w-4 text-amber-500" /> Recipient / Member
+                Details
               </h3>
 
               <div>
@@ -880,7 +882,8 @@ export function LetterheadGenerator() {
             {/* SIGNATORY DETAILS */}
             <div className="space-y-3 md:border-l md:border-slate-200/80 md:pl-6 dark:md:border-white/10">
               <h3 className="flex items-center gap-1.5 text-xs font-extrabold tracking-wider text-slate-700 uppercase dark:text-slate-300">
-                <Building2 className="h-4 w-4 text-amber-500" /> Signatory Details
+                <Building2 className="h-4 w-4 text-amber-500" /> Signatory
+                Details
               </h3>
 
               <div>
@@ -918,8 +921,9 @@ export function LetterheadGenerator() {
                 />
               </div>
 
-              <div className="pt-2 text-[11px] italic text-slate-500 dark:text-slate-400">
-                Note: PDF letters feature automatic official signature block formatting.
+              <div className="pt-2 text-[11px] text-slate-500 italic dark:text-slate-400">
+                Note: PDF letters feature automatic official signature block
+                formatting.
               </div>
             </div>
           </div>
@@ -929,7 +933,8 @@ export function LetterheadGenerator() {
         <div className="space-y-3 rounded-2xl border border-slate-200 bg-white/80 p-4 backdrop-blur-md sm:p-5 dark:border-white/12 dark:bg-stone-900/90">
           <div className="flex flex-wrap items-center justify-between gap-2">
             <label className="flex items-center gap-1.5 text-xs font-extrabold tracking-wider text-slate-700 uppercase dark:text-slate-300">
-              <FileText className="h-4 w-4 text-amber-500" /> Letter Body Paragraphs
+              <FileText className="h-4 w-4 text-amber-500" /> Letter Body
+              Paragraphs
             </label>
 
             <div className="flex flex-wrap items-center gap-1.5">

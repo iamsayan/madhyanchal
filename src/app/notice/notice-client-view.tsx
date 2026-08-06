@@ -176,8 +176,12 @@ export default function NoticeClientView({
     const tmpl = (notice.template || notice.category || '')
       .toLowerCase()
       .trim();
-    if (tmpl === 'durga') return '/letter-head-msdps.jpg';
-    if (tmpl === 'jagadhatri') return '/letter-head-msjps.jpg';
+    if (tmpl === 'durga') {
+      return process.env.NEXT_PUBLIC_LETTERHEAD_MSDPS_URL || '';
+    }
+    if (tmpl === 'jagadhatri') {
+      return process.env.NEXT_PUBLIC_LETTERHEAD_MSJPS_URL || '';
+    }
     return '';
   };
 
@@ -188,7 +192,7 @@ export default function NoticeClientView({
     const bgImage = getLetterheadFilename(notice);
     const hasLetterhead = Boolean(bgImage);
     const letterheadUrl =
-      hasLetterhead && typeof window !== 'undefined'
+      hasLetterhead && bgImage.startsWith('/') && typeof window !== 'undefined'
         ? `${window.location.origin}${bgImage}`
         : bgImage;
 
@@ -381,12 +385,12 @@ export default function NoticeClientView({
             }
             .system-gen-footer {
               position: absolute;
-              bottom: 22px;
+              bottom: 160px;
               left: 42px;
               right: 42px;
               text-align: center;
               font-size: 8.5px;
-              color: #64748b;
+              color: #c9cdd1;
               font-style: italic;
               letter-spacing: 0.2px;
             }
