@@ -10,7 +10,13 @@ import {
   Building2,
   FileCheck,
   Eye,
+  EyeOff,
   Sliders,
+  Lock,
+  ShieldCheck,
+  KeyRound,
+  LogOut,
+  AlertCircle,
 } from 'lucide-react';
 import { cn } from '@/lib/utils';
 
@@ -50,6 +56,37 @@ const TEMPLATES = [
 ] as const;
 
 const PRESETS = [
+  {
+    id: 'vendor_contract',
+    title: 'Vendor Work Order Contract',
+    subject: 'OFFICIAL WORK ORDER & VENDOR CONTRACT AGREEMENT',
+    body: `MEMORANDUM OF WORK ORDER & CONTRACT AGREEMENT
+
+This Work Order Agreement is formally executed between Madhyanchal Sarbajanin (Puja Executive Committee) and M/s [Vendor / Agency Name] (Service Provider) for upcoming festival setup & execution.
+
+1. SCOPE OF WORK & SPECIFICATIONS:
+- Pandal Structure / Lighting Setup / Sound System: Complete installation as per approved blueprint and design.
+- Dimensions & Measurements: Ground clearance area [e.g. 60ft x 40ft], Height clearance [e.g. 35ft], with fire-retardant material lining.
+- Decorative Elements: Illuminated main entry arch, stage backdrop, sound distribution towers, and safe wiring runs.
+
+2. TIMELINE & DEADLINE:
+- Site Handover for Fabrication: [Start Date]
+- Mandatory Structural Completion & Safety Audit: [Completion Date - 2 Days Prior]
+- Final Handover & Testing: [Final Date by 5:00 PM]
+
+3. SAFETY & COMPLIANCE MANDATE:
+- All electrical wirings must adhere to West Bengal State Fire Service and WBSEDCL safety norms with mandatory Earth Leakage Circuit Breakers (ELCB).
+- The vendor is fully responsible for structural stability against adverse weather conditions.
+
+4. PAYMENT TERMS & CONSIDERATION:
+- Total Contracted Amount: Rs. [Total Amount] /-
+- Advance Paid: Rs. [Advance Amount] /- (Receipt Acknowledged)
+- Final Balance Payment: Payable within 7 days post-festival completion upon inspection.
+
+Both parties hereby agree to strictly abide by the terms mentioned above.`,
+    signatoryName: 'Secretary / Treasurer',
+    signatoryRole: 'Madhyanchal Sarbajanin',
+  },
   {
     id: 'member_auth',
     title: 'Member Authorization',
@@ -104,6 +141,38 @@ We look forward to receiving your favorable confirmation.`,
 ];
 
 export function LetterheadGenerator() {
+  const [isAuthorized, setIsAuthorized] = useState<boolean>(false);
+  const [inputPin, setInputPin] = useState<string>('');
+  const [pinError, setPinError] = useState<boolean>(false);
+  const [showPin, setShowPin] = useState<boolean>(false);
+
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      const savedAuth = sessionStorage.getItem('msjps_letterhead_auth');
+      if (savedAuth === 'true') {
+        setIsAuthorized(true);
+      }
+    }
+  }, []);
+
+  const handleUnlock = (e: React.FormEvent) => {
+    e.preventDefault();
+    const correctPin = process.env.NEXT_PUBLIC_LETTERHEAD_PIN || 'MSJPS2026';
+    if (inputPin.trim() === correctPin) {
+      setIsAuthorized(true);
+      setPinError(false);
+      sessionStorage.setItem('msjps_letterhead_auth', 'true');
+    } else {
+      setPinError(true);
+    }
+  };
+
+  const handleLock = () => {
+    setIsAuthorized(false);
+    setInputPin('');
+    sessionStorage.removeItem('msjps_letterhead_auth');
+  };
+
   const [formData, setFormData] = useState<LetterheadData>({
     template: 'jagadhatri',
     refNo: '',
@@ -126,7 +195,85 @@ export function LetterheadGenerator() {
     }));
   }, []);
 
-  const [activeTab, setActiveTab] = useState<'form' | 'preview'>('form');
+  if (!isAuthorized) {
+    return (
+      <div className="mx-auto my-8 max-w-md space-y-6">
+        <div className="card-glass relative overflow-hidden rounded-2xl border border-amber-500/30 p-6 text-center backdrop-blur-2xl sm:p-8 dark:border-white/15 dark:bg-stone-900/90">
+          <div className="mx-auto flex h-14 w-14 items-center justify-center rounded-2xl border border-amber-500/40 bg-amber-500/15 text-amber-600 dark:text-amber-400">
+            <Lock className="h-7 w-7" />
+          </div>
+
+          <div className="space-y-2 pt-4">
+            <span className="inline-flex items-center gap-1 rounded-full border border-amber-500/40 bg-amber-500/20 px-3 py-0.5 text-[10px] font-black tracking-widest text-amber-800 uppercase dark:text-amber-300">
+              <ShieldCheck className="h-3 w-3" /> Restricted Access
+            </span>
+            <h2 className="font-paytone text-xl font-bold text-slate-900 sm:text-2xl dark:text-white">
+              Passcode Required
+            </h2>
+            <p className="text-xs leading-relaxed text-slate-600 dark:text-slate-300">
+              Access to export official Madhyanchal Sarbajanin letterheads &
+              notices is restricted to authorized Executive Committee members
+              only.
+            </p>
+          </div>
+
+          <form onSubmit={handleUnlock} className="mt-6 space-y-4 text-left">
+            <div className="space-y-1">
+              <label className="text-xs font-bold text-slate-700 dark:text-slate-200">
+                Committee Security PIN *
+              </label>
+              <div className="relative flex items-center">
+                <KeyRound className="absolute left-3 h-4 w-4 text-slate-400" />
+                <input
+                  type={showPin ? 'text' : 'password'}
+                  value={inputPin}
+                  onChange={(e) => {
+                    setInputPin(e.target.value);
+                    setPinError(false);
+                  }}
+                  placeholder="Enter committee passcode"
+                  className="h-10 w-full rounded-xl border border-slate-300/80 bg-white/80 pr-10 pl-9 font-mono text-xs tracking-wider text-slate-900 transition-all focus:border-amber-500 focus:ring-2 focus:ring-amber-500/20 focus:outline-none dark:border-white/15 dark:bg-stone-950/70 dark:text-white"
+                />
+                <button
+                  type="button"
+                  onClick={() => setShowPin(!showPin)}
+                  className="absolute right-3 text-slate-400 hover:text-slate-600 dark:hover:text-slate-200"
+                >
+                  {showPin ? (
+                    <EyeOff className="h-4 w-4" />
+                  ) : (
+                    <Eye className="h-4 w-4" />
+                  )}
+                </button>
+              </div>
+              {pinError && (
+                <p className="flex items-center gap-1 pt-1 text-[11px] font-bold text-rose-500">
+                  <AlertCircle className="h-3.5 w-3.5" />
+                  Invalid committee passcode. Access denied.
+                </p>
+              )}
+            </div>
+
+            <Button
+              type="submit"
+              variant="primary"
+              className="h-10 w-full rounded-xl bg-amber-500 font-bold text-slate-950 hover:bg-amber-400"
+            >
+              <span>Unlock Generator</span>
+              <ShieldCheck className="ml-1 h-4 w-4" />
+            </Button>
+          </form>
+
+          <div className="mt-4 border-t border-slate-200/60 pt-4 dark:border-white/10">
+            <p className="text-[10.5px] text-slate-500 dark:text-slate-400">
+              For official committee passcode inquiries, contact General
+              Secretary or IT Administrator.
+            </p>
+          </div>
+        </div>
+      </div>
+    );
+  }
 
   const selectedTemplate =
     TEMPLATES.find((t) => t.id === formData.template) || TEMPLATES[0];
@@ -164,11 +311,50 @@ export function LetterheadGenerator() {
       year: 'numeric',
     });
 
-    const bodyParagraphs = formData.body
-      .split('\n')
-      .filter((p) => p.trim().length > 0)
-      .map((p) => `<p>${p.replace(/\n/g, '<br/>')}</p>`)
-      .join('');
+    const formatPrintBodyHtml = (text: string) => {
+      if (!text) return '';
+      const lines = text.split('\n');
+      let html = '';
+
+      lines.forEach((line) => {
+        const trimmed = line.trim();
+        if (!trimmed) return;
+
+        // Numbered section heading: e.g. "1. SCOPE OF WORK & SPECIFICATIONS:"
+        if (/^\d+\.\s+/.test(trimmed)) {
+          html += `<div style="font-weight: 800; color: #0f172a; margin-top: 11px; margin-bottom: 5px; font-size: 11.5px; border-bottom: 1px dashed #cbd5e1; padding-bottom: 2px;">${trimmed}</div>`;
+        }
+        // Bullet list item: e.g. "- Pandal Structure: ..."
+        else if (/^[-*•]\s+/.test(trimmed)) {
+          const content = trimmed.replace(/^[-*•]\s+/, '');
+          let formattedContent = content;
+          if (content.includes(':')) {
+            const colonIdx = content.indexOf(':');
+            const label = content.substring(0, colonIdx);
+            const rest = content.substring(colonIdx + 1);
+            formattedContent = `<strong style="color: #0f172a; font-weight: 700;">${label}:</strong>${rest}`;
+          }
+          html += `<div style="margin-left: 12px; margin-bottom: 5px; position: relative; padding-left: 11px; font-size: 10.5px; line-height: 1.5;"><span style="position: absolute; left: 0; color: #d97706; font-weight: bold;">•</span>${formattedContent}</div>`;
+        }
+        // Regular paragraph
+        else {
+          let formatted = trimmed;
+          if (
+            trimmed.startsWith('MEMORANDUM') ||
+            trimmed.startsWith('This Work Order') ||
+            trimmed.startsWith('Notice is hereby') ||
+            trimmed.startsWith('This is to certify')
+          ) {
+            formatted = `<strong style="color: #1e293b; font-weight: 700;">${trimmed}</strong>`;
+          }
+          html += `<p style="margin-bottom: 9px; font-size: 10.5px; line-height: 1.6; text-align: justify;">${formatted}</p>`;
+        }
+      });
+
+      return html;
+    };
+
+    const bodyParagraphs = formatPrintBodyHtml(formData.body);
 
     printWindow.document.write(`
       <!DOCTYPE html>
@@ -200,7 +386,7 @@ export function LetterheadGenerator() {
               right: 0;
               background: #0f172a;
               color: #ffffff;
-              padding: 12px 24px;
+              padding: 10px 20px;
               display: flex;
               justify-content: space-between;
               align-items: center;
@@ -209,7 +395,7 @@ export function LetterheadGenerator() {
             }
             .no-print-bar h3 {
               margin: 0;
-              font-size: 14px;
+              font-size: 13px;
               font-weight: 600;
               color: #f59e0b;
             }
@@ -218,9 +404,9 @@ export function LetterheadGenerator() {
               gap: 10px;
             }
             .btn {
-              padding: 8px 18px;
+              padding: 7px 16px;
               border-radius: 6px;
-              font-size: 13px;
+              font-size: 12px;
               font-weight: 700;
               cursor: pointer;
               border: none;
@@ -241,7 +427,7 @@ export function LetterheadGenerator() {
               background: #475569;
             }
             .page-container {
-              padding: 20px 0 40px 0;
+              padding: 15px 0 30px 0;
               display: flex;
               justify-content: center;
             }
@@ -250,8 +436,8 @@ export function LetterheadGenerator() {
               min-height: 297mm;
               ${
                 hasLetterhead
-                  ? `background-image: url('${letterheadUrl}'); background-size: 100% 100%; background-repeat: no-repeat; background-position: top center; padding-top: 215px; padding-left: 65px; padding-right: 65px; padding-bottom: 130px;`
-                  : `padding: 50px 60px;`
+                  ? `background-image: url('${letterheadUrl}'); background-size: 210mm 297mm; background-repeat: repeat-y; background-position: top left; padding-top: 210px; padding-left: 42px; padding-right: 42px; padding-bottom: 110px;`
+                  : `padding: 40px 45px;`
               }
               background-color: #ffffff;
               box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
@@ -260,19 +446,19 @@ export function LetterheadGenerator() {
             .plain-header {
               text-align: center;
               border-bottom: 2px solid #ea580c;
-              padding-bottom: 15px;
-              margin-bottom: 25px;
+              padding-bottom: 12px;
+              margin-bottom: 18px;
             }
             .plain-header h1 {
-              font-size: 22px;
+              font-size: 20px;
               font-weight: 800;
               color: #991b1b;
               text-transform: uppercase;
-              margin: 0 0 4px 0;
+              margin: 0 0 3px 0;
             }
             .plain-header p {
               margin: 2px 0;
-              font-size: 12px;
+              font-size: 11px;
               color: #475569;
             }
             .ref-date-row {
@@ -280,70 +466,85 @@ export function LetterheadGenerator() {
               justify-content: space-between;
               align-items: center;
               font-size: 11px;
-              font-weight: 700;
+              font-weight: 800;
               color: #1e3a8a;
-              margin-bottom: 20px;
+              margin-bottom: 12px;
               font-family: monospace;
-              ${!hasLetterhead ? 'border-bottom: 1px dashed #cbd5e1; padding-bottom: 8px;' : ''}
+              ${!hasLetterhead ? 'border-bottom: 1px dashed #cbd5e1; padding-bottom: 6px;' : ''}
             }
             .recipient-block {
-              margin-bottom: 18px;
-              font-size: 11.5px;
-              line-height: 1.5;
+              margin-bottom: 12px;
+              font-size: 11px;
+              line-height: 1.4;
               color: #334155;
             }
             .recipient-name {
               font-weight: 800;
               color: #0f172a;
-              font-size: 12px;
+              font-size: 11.5px;
             }
             .subject-title {
-              font-size: 14.5px;
+              font-size: 13.5px;
               font-weight: 800;
               text-align: center;
               text-transform: uppercase;
               color: #991b1b;
-              margin-bottom: 20px;
-              line-height: 1.4;
-              letter-spacing: 0.3px;
-              border-bottom: 2px dashed #f59e0b;
-              padding-bottom: 10px;
+              margin-bottom: 14px;
+              line-height: 1.35;
+              letter-spacing: 0.2px;
+              border-bottom: 1.5px dashed #f59e0b;
+              padding-bottom: 5px;
             }
             .letter-body {
-              font-size: 11.5px;
-              line-height: 1.7;
+              font-size: 11px;
+              line-height: 1.5;
               color: #0f172a;
-              margin-bottom: 35px;
+              margin-bottom: 22px;
               text-align: justify;
             }
             .letter-body p {
-              margin-bottom: 14px;
+              margin-bottom: 8px;
             }
             .signature-block {
-              margin-top: 40px;
+              margin-top: 20px;
               float: right;
               text-align: center;
-              min-width: 220px;
+              min-width: 190px;
             }
             .sig-title {
-              font-size: 12px;
+              font-size: 11px;
               font-weight: 700;
               color: #475569;
-              margin-bottom: 35px;
+              margin-bottom: 25px;
             }
             .sig-issuer {
-              font-size: 12px;
+              font-size: 11.5px;
               font-weight: 800;
               color: #1e3a8a;
               border-top: 1px solid #cbd5e1;
-              padding-top: 6px;
+              padding-top: 4px;
             }
             .sig-org {
-              font-size: 10.5px;
+              font-size: 10px;
               color: #64748b;
               font-weight: 600;
             }
+            .system-gen-footer {
+              position: absolute;
+              bottom: 160px;
+              left: 42px;
+              right: 42px;
+              text-align: center;
+              font-size: 8.5px;
+              color: #c9cdd1;
+              font-style: italic;
+              letter-spacing: 0.2px;
+            }
             @media print {
+              @page {
+                size: A4 portrait;
+                margin: 0;
+              }
               .no-print-bar {
                 display: none !important;
               }
@@ -360,7 +561,22 @@ export function LetterheadGenerator() {
                 box-shadow: none !important;
                 width: 210mm !important;
                 min-height: 297mm !important;
-                page-break-after: always;
+                margin: 0 auto !important;
+                padding-top: 210px !important;
+                padding-left: 42px !important;
+                padding-right: 42px !important;
+                padding-bottom: 110px !important;
+                ${
+                  hasLetterhead
+                    ? `background-image: url('${letterheadUrl}') !important; background-size: 210mm 297mm !important; background-repeat: repeat-y !important; background-position: top left !important;`
+                    : ``
+                }
+                -webkit-print-color-adjust: exact !important;
+                print-color-adjust: exact !important;
+              }
+              .letter-body div, .letter-body p, .recipient-block, .signature-block {
+                page-break-inside: avoid !important;
+                break-inside: avoid !important;
               }
             }
           </style>
@@ -419,6 +635,10 @@ export function LetterheadGenerator() {
                 <div class="sig-issuer">${formData.signatoryName || 'General Secretary'}</div>
                 <div class="sig-org">${formData.signatoryOrg || 'Madhyanchal Sarbajanin'}</div>
               </div>
+
+              <div class="system-gen-footer">
+                This is a system generated document.
+              </div>
             </div>
           </div>
           <script>
@@ -435,185 +655,176 @@ export function LetterheadGenerator() {
   };
 
   return (
-    <div className="space-y-6 sm:space-y-8">
-      {/* HEADER BAR & PRESETS */}
-      <div className="flex flex-col gap-4 rounded-2xl border border-amber-500/30 bg-gradient-to-r from-amber-500/10 via-amber-500/5 to-amber-500/10 p-4 sm:p-6 backdrop-blur-2xl dark:border-white/15 dark:from-stone-900 dark:to-stone-950">
-        <div className="flex flex-col items-start justify-between gap-3 sm:flex-row sm:items-center">
-          <div>
-            <div className="flex items-center gap-2">
-              <Sparkles className="h-5 w-5 text-amber-500" />
-              <h2 className="font-paytone text-lg text-slate-900 sm:text-2xl dark:text-white">
-                Official Letterhead & Certificate Generator
-              </h2>
+    <div className="mx-auto max-w-4xl space-y-6">
+      {/* HEADER BAR & PRESETS DOCK */}
+      <div className="relative overflow-hidden rounded-2xl border border-amber-500/30 bg-gradient-to-br from-amber-500/10 via-amber-500/5 to-yellow-500/10 p-3.5 backdrop-blur-2xl sm:rounded-3xl sm:p-7 dark:border-white/15 dark:from-stone-900/90 dark:via-stone-900/80 dark:to-stone-950">
+        <div className="flex flex-col items-start justify-between gap-3 sm:gap-4 lg:flex-row lg:items-center">
+          <div className="flex items-start gap-2.5 sm:gap-3.5">
+            <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-xl border border-amber-500/40 bg-amber-500/20 text-amber-600 sm:h-11 sm:w-11 sm:rounded-2xl dark:text-amber-400">
+              <FileText className="h-4 w-4 sm:h-5.5 sm:w-5.5" />
             </div>
-            <p className="mt-1 text-xs text-slate-600 sm:text-sm dark:text-slate-300">
-              Create and download high-resolution PDF notices, member authorization certificates, and letters on official Madhyanchal Sarbajanin letterhead.
-            </p>
+            <div>
+              <h2 className="font-paytone text-sm font-bold text-slate-900 sm:text-2xl dark:text-white">
+                Letterhead & Certificate Generator
+              </h2>
+              <p className="mt-0.5 text-[11px] leading-tight text-slate-600 sm:mt-1 sm:text-sm sm:leading-relaxed dark:text-slate-300">
+                Generate official Madhyanchal Sarbajanin notices, member
+                certificates, and letters with export to high-resolution PDF.
+              </p>
+            </div>
           </div>
 
-          <div className="flex items-center gap-2">
-            <Button
+          <div className="flex w-full shrink-0 flex-row items-center gap-2 sm:w-auto">
+            <button
+              type="button"
               onClick={handlePrintPdf}
-              className="h-10 rounded-full bg-amber-500 font-bold text-slate-950 hover:bg-amber-400 shadow-md gap-2 px-5 text-xs sm:text-sm"
+              className="inline-flex h-9 flex-1 items-center justify-center gap-1.5 rounded-full border border-amber-500 bg-amber-500 px-4 text-xs font-bold text-slate-950 transition-all hover:bg-amber-400 sm:h-9.5 sm:flex-initial sm:px-5 sm:text-sm"
             >
-              <Printer className="h-4 w-4" /> Print / Save as PDF
-            </Button>
+              <Printer className="h-3.5 w-3.5 sm:h-4 sm:w-4" />
+              <span>Print / Save PDF</span>
+            </button>
+
+            <button
+              type="button"
+              onClick={handleLock}
+              title="Lock Portal"
+              className="inline-flex h-9 items-center justify-center gap-1.5 rounded-full border border-slate-300 bg-white/90 px-3.5 text-xs font-bold text-slate-700 transition hover:border-rose-300 hover:bg-rose-50 hover:text-rose-600 sm:h-9.5 sm:px-4 dark:border-white/15 dark:bg-stone-900 dark:text-slate-200 dark:hover:bg-rose-950/40 dark:hover:text-rose-400"
+            >
+              <LogOut className="h-3.5 w-3.5 sm:h-4 sm:w-4" />
+              <span>Lock</span>
+            </button>
           </div>
         </div>
 
         {/* QUICK PRESETS SELECTION */}
-        <div className="border-t border-amber-500/20 pt-3 dark:border-white/10">
-          <span className="text-[11px] font-bold text-amber-800 uppercase tracking-wider dark:text-amber-300">
-            Quick Template Presets:
-          </span>
-          <div className="mt-2 flex flex-wrap gap-2">
+        <div className="mt-3 border-t border-amber-500/20 pt-2.5 sm:mt-5 sm:pt-4 dark:border-white/10">
+          <div className="flex items-center gap-1 text-[10px] font-extrabold tracking-wider text-amber-800 uppercase sm:gap-1.5 sm:text-[11px] dark:text-amber-300">
+            <Sparkles className="h-3 w-3 text-amber-500 sm:h-3.5 sm:w-3.5" />
+            <span>Quick Document Presets:</span>
+          </div>
+          <div className="mt-2 grid grid-cols-2 gap-1.5 sm:flex sm:flex-wrap sm:gap-2">
             {PRESETS.map((preset) => (
               <button
                 key={preset.id}
                 type="button"
                 onClick={() => handlePresetSelect(preset.id)}
-                className="rounded-lg border border-slate-200 bg-white/80 px-3 py-1.5 text-xs font-semibold text-slate-700 transition hover:border-amber-500 hover:bg-amber-50 dark:border-white/10 dark:bg-stone-900 dark:text-slate-300 dark:hover:bg-stone-800"
+                className="group flex items-center justify-start gap-1 rounded-lg border border-slate-200/90 bg-white/90 px-2.5 py-1 text-[10.5px] font-bold text-slate-700 backdrop-blur-md transition-all hover:border-amber-500/60 hover:bg-amber-50/90 hover:text-amber-900 sm:rounded-xl sm:px-3.5 sm:py-1.5 sm:text-xs dark:border-white/10 dark:bg-stone-900/90 dark:text-slate-300 dark:hover:border-amber-500/40 dark:hover:bg-stone-800 dark:hover:text-amber-300"
               >
-                + {preset.title}
+                <span className="text-amber-500 transition-transform group-hover:scale-110">
+                  +
+                </span>
+                <span className="truncate">{preset.title}</span>
               </button>
             ))}
           </div>
         </div>
       </div>
 
-      {/* MOBILE TABS SWITCHER */}
-      <div className="flex lg:hidden rounded-xl border border-slate-200 bg-slate-100 p-1 dark:border-white/10 dark:bg-stone-900">
-        <button
-          type="button"
-          onClick={() => setActiveTab('form')}
-          className={cn(
-            'flex-1 rounded-lg py-2 text-xs font-bold transition',
-            activeTab === 'form'
-              ? 'bg-amber-500 text-slate-950 shadow-xs'
-              : 'text-slate-600 dark:text-slate-400'
-          )}
-        >
-          1. Fill Details
-        </button>
-        <button
-          type="button"
-          onClick={() => setActiveTab('preview')}
-          className={cn(
-            'flex-1 rounded-lg py-2 text-xs font-bold transition',
-            activeTab === 'preview'
-              ? 'bg-amber-500 text-slate-950 shadow-xs'
-              : 'text-slate-600 dark:text-slate-400'
-          )}
-        >
-          2. Live Preview
-        </button>
-      </div>
-
-      {/* MAIN TWO-COLUMN LAYOUT */}
-      <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
-        {/* LEFT COLUMN: FORM CONTROLS */}
-        <div
-          className={cn(
-            'lg:col-span-6 space-y-5',
-            activeTab === 'preview' ? 'hidden lg:block' : 'block'
-          )}
-        >
-          {/* TEMPLATE SELECTION CARD */}
-          <div className="rounded-2xl border border-slate-200 bg-white/80 p-4 sm:p-5 shadow-xs backdrop-blur-md dark:border-white/12 dark:bg-stone-900/90 space-y-3">
-            <label className="text-xs font-extrabold uppercase tracking-wider text-slate-700 dark:text-slate-300 flex items-center gap-1.5">
-              <Sliders className="h-4 w-4 text-amber-500" /> Header Letterhead Template
-            </label>
-            <div className="grid grid-cols-3 gap-2">
-              {TEMPLATES.map((tmpl) => {
-                const isSelected = formData.template === tmpl.id;
-                return (
-                  <button
-                    key={tmpl.id}
-                    type="button"
-                    onClick={() =>
-                      setFormData((prev) => ({
-                        ...prev,
-                        template: tmpl.id as any,
-                      }))
-                    }
+      {/* MAIN FORM CARDS STACK */}
+      <div className="space-y-5">
+        {/* CARD 1: TEMPLATE SELECTION */}
+        <div className="space-y-3 rounded-2xl border border-slate-200 bg-white/80 p-4 backdrop-blur-md sm:p-5 dark:border-white/12 dark:bg-stone-900/90">
+          <label className="flex items-center gap-1.5 text-xs font-extrabold tracking-wider text-slate-700 uppercase dark:text-slate-300">
+            <Sliders className="h-4 w-4 text-amber-500" /> Header Letterhead Template
+          </label>
+          <div className="grid grid-cols-1 gap-2.5 sm:grid-cols-3">
+            {TEMPLATES.map((tmpl) => {
+              const isSelected = formData.template === tmpl.id;
+              return (
+                <button
+                  key={tmpl.id}
+                  type="button"
+                  onClick={() =>
+                    setFormData((prev) => ({
+                      ...prev,
+                      template: tmpl.id as any,
+                    }))
+                  }
+                  className={cn(
+                    'flex flex-row items-center justify-start gap-2.5 rounded-xl border p-3 text-left text-xs font-bold transition sm:flex-col sm:items-center sm:justify-center sm:text-center',
+                    isSelected
+                      ? 'border-amber-500 bg-amber-500/15 text-amber-900 dark:text-amber-300'
+                      : 'border-slate-200 bg-slate-50 text-slate-600 hover:border-slate-300 dark:border-white/10 dark:bg-stone-800 dark:text-slate-400'
+                  )}
+                >
+                  <FileCheck
                     className={cn(
-                      'rounded-xl border p-2.5 text-center text-xs font-bold transition flex flex-col items-center justify-center gap-1.5',
-                      isSelected
-                        ? 'border-amber-500 bg-amber-500/15 text-amber-900 dark:text-amber-300'
-                        : 'border-slate-200 bg-slate-50 text-slate-600 hover:border-slate-300 dark:border-white/10 dark:bg-stone-800 dark:text-slate-400'
+                      'h-4 w-4 shrink-0',
+                      isSelected ? 'text-amber-500' : 'text-slate-400'
                     )}
-                  >
-                    <FileCheck className={cn('h-4 w-4', isSelected ? 'text-amber-500' : 'text-slate-400')} />
-                    <span>{tmpl.name}</span>
-                  </button>
-                );
-              })}
-            </div>
+                  />
+                  <span>{tmpl.name}</span>
+                </button>
+              );
+            })}
           </div>
+        </div>
 
-          {/* DOCUMENT REFERENCE DETAILS CARD */}
-          <div className="rounded-2xl border border-slate-200 bg-white/80 p-4 sm:p-5 shadow-xs backdrop-blur-md dark:border-white/12 dark:bg-stone-900/90 space-y-4">
-            <h3 className="text-xs font-extrabold uppercase tracking-wider text-slate-700 dark:text-slate-300 flex items-center gap-1.5">
-              <FileText className="h-4 w-4 text-amber-500" /> Reference & Subject
-            </h3>
+        {/* CARD 2: DOCUMENT REFERENCE & SUBJECT */}
+        <div className="space-y-4 rounded-2xl border border-slate-200 bg-white/80 p-4 backdrop-blur-md sm:p-5 dark:border-white/12 dark:bg-stone-900/90">
+          <h3 className="flex items-center gap-1.5 text-xs font-extrabold tracking-wider text-slate-700 uppercase dark:text-slate-300">
+            <FileText className="h-4 w-4 text-amber-500" /> Reference & Subject
+          </h3>
 
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-              <div>
-                <label className="block text-[11px] font-semibold text-slate-600 dark:text-slate-400 mb-1">
-                  Reference No (Ref No)
-                </label>
-                <input
-                  type="text"
-                  value={formData.refNo}
-                  onChange={(e) =>
-                    setFormData((prev) => ({ ...prev, refNo: e.target.value }))
-                  }
-                  className="w-full rounded-xl border border-slate-300 bg-white px-3 py-2 text-xs font-medium text-slate-900 focus:border-amber-500 focus:outline-none dark:border-white/15 dark:bg-stone-800 dark:text-white"
-                  placeholder="e.g. MS/COMM/2026/001"
-                />
-              </div>
-
-              <div>
-                <label className="block text-[11px] font-semibold text-slate-600 dark:text-slate-400 mb-1">
-                  Issue Date
-                </label>
-                <input
-                  type="date"
-                  value={formData.date}
-                  onChange={(e) =>
-                    setFormData((prev) => ({ ...prev, date: e.target.value }))
-                  }
-                  className="w-full rounded-xl border border-slate-300 bg-white px-3 py-2 text-xs font-medium text-slate-900 focus:border-amber-500 focus:outline-none dark:border-white/15 dark:bg-stone-800 dark:text-white"
-                />
-              </div>
-            </div>
-
+          <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
             <div>
-              <label className="block text-[11px] font-semibold text-slate-600 dark:text-slate-400 mb-1">
-                Subject / Title Heading
+              <label className="mb-1 block text-[11px] font-semibold text-slate-600 dark:text-slate-400">
+                Reference No (Ref No)
               </label>
               <input
                 type="text"
-                value={formData.subject}
+                value={formData.refNo}
                 onChange={(e) =>
-                  setFormData((prev) => ({ ...prev, subject: e.target.value }))
+                  setFormData((prev) => ({ ...prev, refNo: e.target.value }))
                 }
-                className="w-full rounded-xl border border-slate-300 bg-white px-3 py-2 text-xs font-bold text-slate-900 focus:border-amber-500 focus:outline-none dark:border-white/15 dark:bg-stone-800 dark:text-white"
-                placeholder="e.g. LETTER OF AUTHORIZATION"
+                className="w-full rounded-xl border border-slate-300 bg-white px-3 py-2 text-xs font-medium text-slate-900 focus:border-amber-500 focus:outline-none dark:border-white/15 dark:bg-stone-800 dark:text-white"
+                placeholder="e.g. MS/COMM/2026/001"
+              />
+            </div>
+
+            <div>
+              <label className="mb-1 block text-[11px] font-semibold text-slate-600 dark:text-slate-400">
+                Issue Date
+              </label>
+              <input
+                type="date"
+                value={formData.date}
+                onChange={(e) =>
+                  setFormData((prev) => ({ ...prev, date: e.target.value }))
+                }
+                className="w-full rounded-xl border border-slate-300 bg-white px-3 py-2 text-xs font-medium text-slate-900 focus:border-amber-500 focus:outline-none dark:border-white/15 dark:bg-stone-800 dark:text-white"
               />
             </div>
           </div>
 
-          {/* RECIPIENT DETAILS CARD */}
-          <div className="rounded-2xl border border-slate-200 bg-white/80 p-4 sm:p-5 shadow-xs backdrop-blur-md dark:border-white/12 dark:bg-stone-900/90 space-y-4">
-            <h3 className="text-xs font-extrabold uppercase tracking-wider text-slate-700 dark:text-slate-300 flex items-center gap-1.5">
-              <User className="h-4 w-4 text-amber-500" /> Recipient / Member Details
-            </h3>
+          <div>
+            <label className="mb-1 block text-[11px] font-semibold text-slate-600 dark:text-slate-400">
+              Subject / Title Heading
+            </label>
+            <input
+              type="text"
+              value={formData.subject}
+              onChange={(e) =>
+                setFormData((prev) => ({ ...prev, subject: e.target.value }))
+              }
+              className="w-full rounded-xl border border-slate-300 bg-white px-3 py-2 text-xs font-bold text-slate-900 focus:border-amber-500 focus:outline-none dark:border-white/15 dark:bg-stone-800 dark:text-white"
+              placeholder="e.g. LETTER OF AUTHORIZATION"
+            />
+          </div>
+        </div>
 
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+        {/* CARD 3: RECIPIENT & SIGNATORY DETAILS */}
+        <div className="rounded-2xl border border-slate-200 bg-white/80 p-4 backdrop-blur-md sm:p-5 dark:border-white/12 dark:bg-stone-900/90">
+          <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
+            {/* RECIPIENT DETAILS */}
+            <div className="space-y-3">
+              <h3 className="flex items-center gap-1.5 text-xs font-extrabold tracking-wider text-slate-700 uppercase dark:text-slate-300">
+                <User className="h-4 w-4 text-amber-500" /> Recipient / Member Details
+              </h3>
+
               <div>
-                <label className="block text-[11px] font-semibold text-slate-600 dark:text-slate-400 mb-1">
-                  Member / Recipient Name
+                <label className="mb-1 block text-[11px] font-semibold text-slate-600 dark:text-slate-400">
+                  Recipient / Member Name
                 </label>
                 <input
                   type="text"
@@ -630,7 +841,7 @@ export function LetterheadGenerator() {
               </div>
 
               <div>
-                <label className="block text-[11px] font-semibold text-slate-600 dark:text-slate-400 mb-1">
+                <label className="mb-1 block text-[11px] font-semibold text-slate-600 dark:text-slate-400">
                   Designation / Role
                 </label>
                 <input
@@ -643,55 +854,37 @@ export function LetterheadGenerator() {
                     }))
                   }
                   className="w-full rounded-xl border border-slate-300 bg-white px-3 py-2 text-xs font-medium text-slate-900 focus:border-amber-500 focus:outline-none dark:border-white/15 dark:bg-stone-800 dark:text-white"
-                  placeholder="e.g. Executive Member / Life Member"
+                  placeholder="e.g. Executive Member / Vendor"
+                />
+              </div>
+
+              <div>
+                <label className="mb-1 block text-[11px] font-semibold text-slate-600 dark:text-slate-400">
+                  Address / Contact (Optional)
+                </label>
+                <input
+                  type="text"
+                  value={formData.recipientAddress}
+                  onChange={(e) =>
+                    setFormData((prev) => ({
+                      ...prev,
+                      recipientAddress: e.target.value,
+                    }))
+                  }
+                  className="w-full rounded-xl border border-slate-300 bg-white px-3 py-2 text-xs font-medium text-slate-900 focus:border-amber-500 focus:outline-none dark:border-white/15 dark:bg-stone-800 dark:text-white"
+                  placeholder="e.g. Station Road, Chandannagar"
                 />
               </div>
             </div>
 
-            <div>
-              <label className="block text-[11px] font-semibold text-slate-600 dark:text-slate-400 mb-1">
-                Address / Contact (Optional)
-              </label>
-              <input
-                type="text"
-                value={formData.recipientAddress}
-                onChange={(e) =>
-                  setFormData((prev) => ({
-                    ...prev,
-                    recipientAddress: e.target.value,
-                  }))
-                }
-                className="w-full rounded-xl border border-slate-300 bg-white px-3 py-2 text-xs font-medium text-slate-900 focus:border-amber-500 focus:outline-none dark:border-white/15 dark:bg-stone-800 dark:text-white"
-                placeholder="e.g. Station Road, Chandannagar"
-              />
-            </div>
-          </div>
+            {/* SIGNATORY DETAILS */}
+            <div className="space-y-3 md:border-l md:border-slate-200/80 md:pl-6 dark:md:border-white/10">
+              <h3 className="flex items-center gap-1.5 text-xs font-extrabold tracking-wider text-slate-700 uppercase dark:text-slate-300">
+                <Building2 className="h-4 w-4 text-amber-500" /> Signatory Details
+              </h3>
 
-          {/* LETTER BODY CONTENT CARD */}
-          <div className="rounded-2xl border border-slate-200 bg-white/80 p-4 sm:p-5 shadow-xs backdrop-blur-md dark:border-white/12 dark:bg-stone-900/90 space-y-3">
-            <label className="text-xs font-extrabold uppercase tracking-wider text-slate-700 dark:text-slate-300 flex items-center gap-1.5">
-              <FileText className="h-4 w-4 text-amber-500" /> Letter Body Paragraphs
-            </label>
-            <textarea
-              rows={6}
-              value={formData.body}
-              onChange={(e) =>
-                setFormData((prev) => ({ ...prev, body: e.target.value }))
-              }
-              className="w-full rounded-xl border border-slate-300 bg-white p-3 text-xs font-normal text-slate-900 focus:border-amber-500 focus:outline-none dark:border-white/15 dark:bg-stone-800 dark:text-white leading-relaxed"
-              placeholder="Type the main content of the letter here..."
-            />
-          </div>
-
-          {/* SIGNATORY CARD */}
-          <div className="rounded-2xl border border-slate-200 bg-white/80 p-4 sm:p-5 shadow-xs backdrop-blur-md dark:border-white/12 dark:bg-stone-900/90 space-y-4">
-            <h3 className="text-xs font-extrabold uppercase tracking-wider text-slate-700 dark:text-slate-300 flex items-center gap-1.5">
-              <Building2 className="h-4 w-4 text-amber-500" /> Signatory Details
-            </h3>
-
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
               <div>
-                <label className="block text-[11px] font-semibold text-slate-600 dark:text-slate-400 mb-1">
+                <label className="mb-1 block text-[11px] font-semibold text-slate-600 dark:text-slate-400">
                   Issued By (Designation)
                 </label>
                 <input
@@ -709,7 +902,7 @@ export function LetterheadGenerator() {
               </div>
 
               <div>
-                <label className="block text-[11px] font-semibold text-slate-600 dark:text-slate-400 mb-1">
+                <label className="mb-1 block text-[11px] font-semibold text-slate-600 dark:text-slate-400">
                   Organization Name
                 </label>
                 <input
@@ -724,118 +917,76 @@ export function LetterheadGenerator() {
                   className="w-full rounded-xl border border-slate-300 bg-white px-3 py-2 text-xs font-medium text-slate-900 focus:border-amber-500 focus:outline-none dark:border-white/15 dark:bg-stone-800 dark:text-white"
                 />
               </div>
+
+              <div className="pt-2 text-[11px] italic text-slate-500 dark:text-slate-400">
+                Note: PDF letters feature automatic official signature block formatting.
+              </div>
             </div>
           </div>
         </div>
 
-        {/* RIGHT COLUMN: LIVE INTERACTIVE A4 PREVIEW */}
-        <div
-          className={cn(
-            'lg:col-span-6 space-y-4 sticky top-24',
-            activeTab === 'form' ? 'hidden lg:block' : 'block'
-          )}
-        >
-          <div className="flex items-center justify-between px-1">
-            <span className="text-xs font-extrabold text-slate-700 uppercase tracking-wider dark:text-slate-300 flex items-center gap-1.5">
-              <Eye className="h-4 w-4 text-amber-500" /> Live Interactive Preview
-            </span>
-          </div>
+        {/* CARD 4: LETTER BODY PARAGRAPHS */}
+        <div className="space-y-3 rounded-2xl border border-slate-200 bg-white/80 p-4 backdrop-blur-md sm:p-5 dark:border-white/12 dark:bg-stone-900/90">
+          <div className="flex flex-wrap items-center justify-between gap-2">
+            <label className="flex items-center gap-1.5 text-xs font-extrabold tracking-wider text-slate-700 uppercase dark:text-slate-300">
+              <FileText className="h-4 w-4 text-amber-500" /> Letter Body Paragraphs
+            </label>
 
-          {/* SIMULATED A4 PAPER SHEET */}
-          <div className="relative overflow-hidden rounded-2xl border border-slate-300 bg-slate-200/60 p-2 sm:p-4 shadow-inner dark:border-white/15 dark:bg-stone-900/60">
-            <div
-              className={cn(
-                'mx-auto w-full max-w-[550px] aspect-[1/1.414] bg-white rounded-lg shadow-2xl relative overflow-hidden transition-all duration-300 text-[10px] sm:text-[11.5px] leading-relaxed text-slate-900',
-                hasLetterhead ? 'p-6 sm:p-10 pt-[24%] sm:pt-[26%] pb-[14%]' : 'p-6 sm:p-8'
-              )}
-              style={
-                hasLetterhead
-                  ? {
-                      backgroundImage: `url(${bgImage})`,
-                      backgroundSize: '100% 100%',
-                      backgroundRepeat: 'no-repeat',
-                    }
-                  : undefined
-              }
-            >
-              {!hasLetterhead && (
-                <div className="text-center border-b-2 border-amber-600 pb-3 mb-4">
-                  <h1 className="text-base sm:text-lg font-black uppercase text-amber-800">
-                    Madhyanchal Sarbajanin
-                  </h1>
-                  <p className="text-[9px] text-slate-500">
-                    Chandannagar, Hooghly, West Bengal - 712136
-                  </p>
-                </div>
-              )}
-
-              {/* REF & DATE ROW */}
-              <div className="flex justify-between items-center text-[9px] sm:text-[10px] font-bold text-blue-900 mb-3 font-mono border-b border-slate-200/60 pb-1">
-                <span>Ref No: {formData.refNo || '____________'}</span>
-                <span suppressHydrationWarning>
-                  Date:{' '}
-                  {formData.date}
-                </span>
-              </div>
-
-              {/* RECIPIENT */}
-              {(formData.recipientName || formData.recipientDesignation) && (
-                <div className="mb-3 text-[9.5px] sm:text-[10.5px]">
-                  <div className="text-slate-500">To,</div>
-                  <div className="font-extrabold text-slate-900">
-                    {formData.recipientName}
-                  </div>
-                  {formData.recipientDesignation && (
-                    <div className="font-semibold text-slate-700">
-                      {formData.recipientDesignation}
-                    </div>
-                  )}
-                  {formData.recipientAddress && (
-                    <div className="text-slate-500 text-[9px]">
-                      {formData.recipientAddress}
-                    </div>
-                  )}
-                </div>
-              )}
-
-              {/* SUBJECT */}
-              {formData.subject ? (
-                <div className="text-[10.5px] sm:text-[12px] font-black text-center text-amber-900 uppercase tracking-wide border-b border-dashed border-amber-500 pb-1 mb-3">
-                  {formData.subject}
-                </div>
-              ) : (
-                <div className="text-[10.5px] sm:text-[12px] font-bold text-center text-slate-300 uppercase tracking-wide border-b border-dashed border-slate-200 pb-1 mb-3 italic">
-                  [SUBJECT / HEADING HERE]
-                </div>
-              )}
-
-              {/* BODY */}
-              <div className="text-slate-800 space-y-2 mb-6 text-justify text-[9.5px] sm:text-[11px] leading-relaxed">
-                {formData.body ? (
-                  formData.body
-                    .split('\n')
-                    .map((para, idx) => (para.trim() ? <p key={idx}>{para}</p> : null))
-                ) : (
-                  <p className="text-slate-400 italic text-center py-6">
-                    (Type your letter content in the form or click a Quick Template Preset above...)
-                  </p>
-                )}
-              </div>
-
-              {/* SIGNATURE */}
-              <div className="absolute right-6 sm:right-10 bottom-6 sm:bottom-10 text-center min-w-[140px]">
-                <div className="text-[8.5px] sm:text-[9.5px] font-bold text-slate-500 mb-6">
-                  By Order of Executive Committee
-                </div>
-                <div className="border-t border-slate-300 pt-1 font-black text-blue-950 text-[9.5px] sm:text-[11px]">
-                  {formData.signatoryName || 'General Secretary'}
-                </div>
-                <div className="text-[8.5px] font-semibold text-slate-500">
-                  {formData.signatoryOrg || 'Madhyanchal Sarbajanin'}
-                </div>
-              </div>
+            <div className="flex flex-wrap items-center gap-1.5">
+              <button
+                type="button"
+                onClick={() =>
+                  setFormData((prev) => ({
+                    ...prev,
+                    body: prev.body
+                      ? `${prev.body}\n\n1. NEW SECTION HEADING:`
+                      : '1. NEW SECTION HEADING:',
+                  }))
+                }
+                className="rounded-lg border border-amber-500/30 bg-amber-500/10 px-2 py-0.5 text-[10.5px] font-bold text-amber-800 transition hover:bg-amber-500/20 dark:text-amber-300"
+              >
+                + Section
+              </button>
+              <button
+                type="button"
+                onClick={() =>
+                  setFormData((prev) => ({
+                    ...prev,
+                    body: prev.body
+                      ? `${prev.body}\n- Item / Specification: Details here`
+                      : '- Item / Specification: Details here',
+                  }))
+                }
+                className="rounded-lg border border-slate-300 bg-slate-100 px-2 py-0.5 text-[10.5px] font-bold text-slate-700 transition hover:bg-slate-200 dark:border-white/10 dark:bg-stone-800 dark:text-slate-300"
+              >
+                + Bullet Item
+              </button>
+              <button
+                type="button"
+                onClick={() =>
+                  setFormData((prev) => ({
+                    ...prev,
+                    body: prev.body
+                      ? `${prev.body}\n- Total Contract Amount: Rs. \n- Advance Amount Paid: Rs. \n- Balance Payable: Rs. `
+                      : '- Total Contract Amount: Rs. \n- Advance Amount Paid: Rs. \n- Balance Payable: Rs. ',
+                  }))
+                }
+                className="rounded-lg border border-emerald-500/30 bg-emerald-500/10 px-2 py-0.5 text-[10.5px] font-bold text-emerald-800 transition hover:bg-emerald-500/20 dark:text-emerald-300"
+              >
+                + Payment Terms
+              </button>
             </div>
           </div>
+
+          <textarea
+            rows={10}
+            value={formData.body}
+            onChange={(e) =>
+              setFormData((prev) => ({ ...prev, body: e.target.value }))
+            }
+            className="w-full rounded-xl border border-slate-300 bg-white p-3 text-xs leading-relaxed font-normal text-slate-900 focus:border-amber-500 focus:outline-none dark:border-white/15 dark:bg-stone-800 dark:text-white"
+            placeholder="Type the main content of the letter here, or use Quick Formatting buttons above..."
+          />
         </div>
       </div>
     </div>
