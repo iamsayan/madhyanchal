@@ -274,14 +274,15 @@ export default function NoticeClientView({
             .letterhead-sheet {
               width: 210mm;
               min-height: 297mm;
+              position: relative;
+              box-sizing: border-box;
               ${
                 hasLetterhead
-                  ? `background-image: url('${letterheadUrl}'); background-size: 100% 100%; background-repeat: no-repeat; background-position: top center; padding-top: 215px; padding-left: 65px; padding-right: 65px; padding-bottom: 130px;`
+                  ? `background-image: url('${letterheadUrl}'); background-size: 210mm 297mm; background-repeat: repeat-y; background-position: top left; padding-top: 210px; padding-left: 42px; padding-right: 42px; padding-bottom: 110px;`
                   : `padding: 50px 60px;`
               }
               background-color: #ffffff;
               box-shadow: 0 10px 30px rgba(0, 0, 0, 0.12);
-              position: relative;
             }
             .plain-header {
               text-align: center;
@@ -305,28 +306,28 @@ export default function NoticeClientView({
               display: flex;
               justify-content: space-between;
               align-items: center;
-              font-size: 11px;
+              font-size: 10.5px;
               font-weight: 700;
               color: #1e3a8a;
-              margin-bottom: 20px;
+              margin-bottom: 16px;
               font-family: monospace;
               ${!hasLetterhead ? 'border-bottom: 1px dashed #cbd5e1; padding-bottom: 8px;' : ''}
             }
             .notice-main-title {
-              font-size: 15px;
+              font-size: 14.5px;
               font-weight: 800;
               text-align: center;
               text-transform: uppercase;
               color: #991b1b;
-              margin-bottom: 18px;
+              margin-bottom: 16px;
               line-height: 1.4;
               letter-spacing: 0.3px;
               border-bottom: 2px dashed #f59e0b;
-              padding-bottom: 10px;
+              padding-bottom: 8px;
             }
             .event-meta-card {
-              background-color: rgba(254, 243, 199, 0.5);
-              border: 1px solid rgba(245, 158, 11, 0.4);
+              background-color: rgba(254, 243, 199, 0.6);
+              border: 1px solid rgba(245, 158, 11, 0.5);
               padding: 8px 14px;
               border-radius: 8px;
               margin-bottom: 18px;
@@ -340,45 +341,60 @@ export default function NoticeClientView({
               color: #92400e;
             }
             .notice-content-body {
-              font-size: 11.5px;
-              line-height: 1.65;
+              font-size: 11px;
+              line-height: 1.6;
               color: #0f172a;
-              margin-bottom: 30px;
+              margin-bottom: 25px;
+              text-align: justify;
               word-wrap: break-word;
             }
             .notice-content-body p {
-              margin-bottom: 12px;
+              margin-bottom: 10px;
             }
             .notice-content-body ul, .notice-content-body ol {
               margin-left: 20px;
-              margin-bottom: 12px;
+              margin-bottom: 10px;
             }
             .signature-block {
-              margin-top: 40px;
+              margin-top: 20px;
               float: right;
               text-align: center;
-              min-width: 220px;
+              min-width: 190px;
             }
             .sig-title {
-              font-size: 12.5px;
+              font-size: 11px;
               font-weight: 700;
-              color: #0f172a;
-              margin-bottom: 4px;
+              color: #475569;
+              margin-bottom: 25px;
             }
             .sig-issuer {
-              font-size: 12px;
+              font-size: 11.5px;
               font-weight: 800;
               color: #1e3a8a;
-              margin-top: 30px;
               border-top: 1px solid #cbd5e1;
-              padding-top: 6px;
+              padding-top: 4px;
             }
             .sig-org {
-              font-size: 11px;
+              font-size: 10px;
               color: #64748b;
               font-weight: 600;
             }
+            .system-gen-footer {
+              position: absolute;
+              bottom: 22px;
+              left: 42px;
+              right: 42px;
+              text-align: center;
+              font-size: 8.5px;
+              color: #64748b;
+              font-style: italic;
+              letter-spacing: 0.2px;
+            }
             @media print {
+              @page {
+                size: A4 portrait;
+                margin: 0;
+              }
               .no-print-header {
                 display: none !important;
               }
@@ -395,7 +411,22 @@ export default function NoticeClientView({
                 box-shadow: none !important;
                 width: 210mm !important;
                 min-height: 297mm !important;
-                page-break-after: always;
+                margin: 0 auto !important;
+                padding-top: 210px !important;
+                padding-left: 42px !important;
+                padding-right: 42px !important;
+                padding-bottom: 110px !important;
+                ${
+                  hasLetterhead
+                    ? `background-image: url('${letterheadUrl}') !important; background-size: 210mm 297mm !important; background-repeat: repeat-y !important; background-position: top left !important;`
+                    : ``
+                }
+                -webkit-print-color-adjust: exact !important;
+                print-color-adjust: exact !important;
+              }
+              .notice-content-body div, .notice-content-body p, .event-meta-card, .signature-block {
+                page-break-inside: avoid !important;
+                break-inside: avoid !important;
               }
             }
           </style>
@@ -444,6 +475,10 @@ export default function NoticeClientView({
                 <div class="sig-title">By Order of Executive Committee</div>
                 <div class="sig-issuer">${notice.issued_by || 'General Secretary'}</div>
                 <div class="sig-org">Madhyanchal Sarbajanin</div>
+              </div>
+
+              <div class="system-gen-footer">
+                This is a system generated document.
               </div>
             </div>
           </div>
