@@ -107,7 +107,7 @@ export default function DurgaPujaSchedulePage() {
 
   return (
     <PageLayout
-      title="Durga Puja Festival Schedule"
+      title="Festival Schedule"
       subtitle="Complete 5-day itinerary — experience traditional Vedic rituals, cultural evenings, and sacred prasad distribution."
       badge={{
         text: 'Rituals & Timings',
@@ -129,22 +129,23 @@ export default function DurgaPujaSchedulePage() {
                 key={item.title}
                 direction="up"
                 delay={idx * 0.06}
+                className="h-full"
               >
-                <div className="card-glass card-hover-glow relative flex h-full flex-col justify-between space-y-2 overflow-hidden rounded-xl border border-slate-200/90 p-3 backdrop-blur-2xl transition-all duration-300 sm:rounded-2xl sm:p-5 dark:border-white/12">
+                <div className="card-glass card-hover-glow relative flex h-full flex-col space-y-2.5 overflow-hidden rounded-xl border border-slate-200/90 p-3.5 backdrop-blur-2xl transition-all duration-300 sm:rounded-2xl sm:p-5 dark:border-white/12">
                   <BorderBeam
                     size={100}
                     duration={6}
                     colorFrom="#f59e0b"
                     colorTo="#fef08a"
                   />
-                  <div className="flex h-8 w-8 items-center justify-center rounded-lg border border-amber-500/30 bg-amber-500/15 text-amber-600 sm:h-9 sm:w-9 sm:rounded-xl dark:text-amber-400">
+                  <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg border border-amber-500/30 bg-amber-500/15 text-amber-600 sm:h-9 sm:w-9 sm:rounded-xl dark:text-amber-400">
                     <Icon className="h-4 w-4 sm:h-4.5 sm:w-4.5" />
                   </div>
                   <div>
-                    <h3 className="font-paytone text-xs text-slate-900 sm:text-base dark:text-white">
+                    <h3 className="font-paytone text-xs font-bold leading-snug text-slate-900 sm:text-base dark:text-white">
                       {item.title}
                     </h3>
-                    <p className="mt-0.5 text-[10px] leading-tight font-normal text-slate-600 sm:text-xs sm:leading-relaxed dark:text-slate-300">
+                    <p className="mt-1 text-[10.5px] leading-relaxed font-normal text-slate-600 sm:text-xs sm:leading-relaxed dark:text-slate-300">
                       {item.description}
                     </p>
                   </div>
@@ -153,49 +154,6 @@ export default function DurgaPujaSchedulePage() {
             );
           })}
         </div>
-
-        {/* FEATURED CTA BANNER: DRAWING COMPETITION */}
-        <AnimatedWrapper direction="up">
-          <div className="relative overflow-hidden rounded-2xl border border-amber-500/40 bg-gradient-to-br from-amber-500/15 via-amber-500/5 to-amber-500/15 p-4 shadow-sm backdrop-blur-2xl sm:rounded-3xl sm:p-8 dark:border-white/15 dark:bg-stone-900/90">
-            <BorderBeam
-              size={180}
-              duration={8}
-              colorFrom="#f59e0b"
-              colorTo="#fef08a"
-            />
-            <div className="flex flex-col items-start justify-between gap-4 sm:flex-row sm:items-center">
-              <div className="space-y-1">
-                <span className="inline-flex items-center gap-1 rounded-full border border-amber-500/40 bg-amber-500/20 px-2.5 py-0.5 text-[10px] font-extrabold tracking-wider text-amber-800 uppercase dark:text-amber-300">
-                  <Palette className="h-3 w-3" /> Special Event Showcase
-                </span>
-                <h3 className="font-paytone text-lg font-bold text-slate-900 sm:text-2xl dark:text-white">
-                  Drawing Competition
-                </h3>
-                <p className="max-w-xl text-xs text-slate-600 sm:text-sm dark:text-slate-300">
-                  Encouraging creative expression among children across 3 age
-                  groups (Category A, B & C) with exciting trophies and
-                  certificates.
-                </p>
-              </div>
-
-              <div className="flex shrink-0 items-center gap-2">
-                <Button
-                  variant="primary"
-                  size="default"
-                  asChild
-                  className="h-10 rounded-full border border-amber-400/60 px-5 text-xs font-bold shadow-none"
-                >
-                  <Link
-                    href="/durgapuja/drawing-competition"
-                    className="gap-1.5"
-                  >
-                    View Registration <ChevronRight className="h-4 w-4" />
-                  </Link>
-                </Button>
-              </div>
-            </div>
-          </div>
-        </AnimatedWrapper>
 
         {/* 5-DAY PUJA SCHEDULE CARDS */}
         <div id="schedule" className="scroll-mt-24 space-y-4 sm:space-y-6">

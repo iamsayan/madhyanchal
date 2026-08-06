@@ -5,6 +5,7 @@ import { useForm, useFieldArray } from 'react-hook-form';
 import { AnimatePresence, motion } from 'framer-motion';
 
 import { createRazorpayOrder } from '@/app/actions/razorpay';
+import { sendDrawingEmailAction } from '@/app/actions/email';
 import { BorderBeam } from '@/components/ui/border-beam';
 import { NativeModal } from '@/components/ui/native-modal';
 import { loadRazorpay } from '@/lib/load-razorpay';
@@ -248,6 +249,28 @@ export function DrawingCompetitionLanding({
         registrations.push({ name: p.participantName, id: regId });
       });
 
+      if (process.env.NODE_ENV !== 'production' && previewData) {
+        try {
+          await sendDrawingEmailAction({
+            toEmail: previewData.email,
+            guardianName: previewData.guardianName,
+            phone: previewData.phone.replace(/\D+/g, ''),
+            paymentId: `pay_TEST_${dateSuffix}`,
+            orderId: `order_TEST_${dateSuffix}`,
+            paymentAmount: totalAmount,
+            participants: previewData.participants.map((p, idx) => ({
+              id: registrations[idx]?.id || `DC/${dateSuffix}${idx + 1}`,
+              name: p.participantName,
+              category: p.category,
+              age: p.age,
+              dob: p.dateOfBirth,
+            })),
+          });
+        } catch (devEmailErr) {
+          console.error('Dev mode email trigger error:', devEmailErr);
+        }
+      }
+
       const options = {
         key: orderResponse.keyId,
         amount: amountInPaise.toString(),
@@ -260,7 +283,8 @@ export function DrawingCompetitionLanding({
           color: '#0C1930',
           backdrop_color: '#0C1930',
         },
-        handler: function (response: RazorpaySuccessResponse) {
+        handler: async function (response: RazorpaySuccessResponse) {
+          const currentData = previewData;
           setPreviewData(null);
           setSuccess({
             registrations,
@@ -269,6 +293,29 @@ export function DrawingCompetitionLanding({
           });
           reset(defaultFormValues);
           setIsSubmittingFinal(false);
+
+          if (process.env.NODE_ENV !== 'production' && currentData) {
+            try {
+              await sendDrawingEmailAction({
+                toEmail: currentData.email,
+                guardianName: currentData.guardianName,
+                phone: currentData.phone.replace(/\D+/g, ''),
+                paymentId: response.razorpay_payment_id,
+                orderId:
+                  response.razorpay_order_id || orderResponse.orderId || '',
+                paymentAmount: totalAmount,
+                participants: currentData.participants.map((p, idx) => ({
+                  id: registrations[idx]?.id || `DC/${dateSuffix}${idx + 1}`,
+                  name: p.participantName,
+                  category: p.category,
+                  age: p.age,
+                  dob: p.dateOfBirth,
+                })),
+              });
+            } catch (devEmailErr) {
+              console.error('Dev mode email trigger error:', devEmailErr);
+            }
+          }
         },
         modal: {
           ondismiss: function () {
@@ -338,7 +385,7 @@ export function DrawingCompetitionLanding({
       )}
 
       {/* TOP ACTION & TOPIC BANNER SECTION */}
-      <div className="card-glass relative overflow-hidden rounded-2xl border border-slate-200/90 p-3 text-center backdrop-blur-2xl sm:rounded-3xl sm:p-8 dark:border-white/12">
+      <div className="card-glass relative overflow-hidden rounded-2xl border border-slate-200/90 p-3.5 text-center backdrop-blur-2xl sm:rounded-3xl sm:p-8 dark:border-white/12">
         <BorderBeam
           size={240}
           duration={7}
@@ -353,46 +400,43 @@ export function DrawingCompetitionLanding({
           </span>
 
           {/* TOPIC BANNER HIGHLIGHT */}
-          <div className="w-full max-w-xl rounded-xl border border-amber-500/30 bg-amber-500/10 px-3 py-1.5 text-center sm:px-4 sm:py-2.5">
+          <div className="w-full max-w-xl rounded-xl border border-amber-500/30 bg-amber-500/10 px-3 py-2 text-center sm:px-5 sm:py-3">
             <span className="block text-[9.5px] leading-none font-extrabold tracking-widest text-amber-700 uppercase sm:text-[11px] dark:text-amber-400">
               Drawing Theme
             </span>
             <h3 className="font-paytone mt-0.5 text-sm leading-tight font-bold text-slate-900 sm:text-xl dark:text-white">
               {config.topic}
             </h3>
-            <p className="mt-0.5 text-[10px] leading-tight font-medium text-slate-600 sm:text-xs dark:text-slate-300">
+            <p className="mt-0.5 text-[10px] leading-relaxed font-medium text-slate-600 sm:text-xs dark:text-slate-300">
               Open creative freedom for all age categories (Group A, B & C)
             </p>
           </div>
 
           {/* ACTION BUTTONS */}
-          <div className="flex flex-col items-center justify-center gap-2 pt-0.5 sm:flex-row sm:gap-3">
+          <div className="flex w-full flex-row flex-nowrap items-center justify-center gap-1.5 pt-0.5 sm:gap-3">
             {!isClosed ? (
               <button
                 type="button"
                 onClick={scrollToForm}
-                className="inline-flex items-center justify-center gap-1.5 rounded-full border border-amber-400/60 bg-gradient-to-r from-amber-500 via-amber-400 to-yellow-400 px-4 py-1.5 text-xs font-extrabold tracking-wide text-slate-950 transition-all hover:scale-105 active:scale-95 sm:px-5 sm:py-2"
+                className="inline-flex shrink-0 items-center justify-center gap-1 rounded-full border border-amber-400/60 bg-gradient-to-r from-amber-500 via-amber-400 to-yellow-400 px-3 py-1.5 text-[11px] font-extrabold tracking-tight whitespace-nowrap text-slate-950 transition-all hover:scale-105 active:scale-95 sm:px-5 sm:py-2 sm:text-xs sm:tracking-wide"
               >
                 <span>Register Now</span>
                 <ArrowRight className="h-3.5 w-3.5" />
               </button>
             ) : (
-              <div className="inline-flex items-center justify-center gap-1.5 rounded-full border border-amber-500/40 bg-amber-500/15 px-3.5 py-1.5 text-xs font-bold text-amber-700 sm:px-5 sm:py-2 dark:text-amber-300">
+              <div className="inline-flex shrink-0 items-center justify-center gap-1 rounded-full border border-amber-500/40 bg-amber-500/15 px-3 py-1.5 text-[11px] font-bold whitespace-nowrap text-amber-700 sm:px-5 sm:py-2 sm:text-xs dark:text-amber-300">
                 <AlertCircle className="h-3.5 w-3.5" />
-                <span>
-                  Registrations Closed for {config.year} (See You in{' '}
-                  {config.year + 1}!)
-                </span>
+                <span>Registrations Closed ({config.year})</span>
               </div>
             )}
 
             <button
               type="button"
               onClick={() => setIsListModalOpen(true)}
-              className="inline-flex items-center justify-center gap-1.5 rounded-full border border-slate-300/80 bg-white/80 px-3.5 py-1.5 text-xs font-bold text-slate-800 transition-all hover:bg-slate-100 sm:px-4.5 sm:py-2 dark:border-white/15 dark:bg-stone-900/80 dark:text-slate-200 dark:hover:bg-stone-800"
+              className="inline-flex shrink-0 items-center justify-center gap-1 rounded-full border border-slate-300/80 bg-white/80 px-3 py-1.5 text-[11px] font-bold whitespace-nowrap text-slate-800 transition-all hover:bg-slate-100 sm:px-4.5 sm:py-2 sm:text-xs dark:border-white/15 dark:bg-stone-900/80 dark:text-slate-200 dark:hover:bg-stone-800"
             >
               <Users className="h-3.5 w-3.5 text-amber-500" />
-              <span>Registered Participants List</span>
+              <span>Participants List</span>
             </button>
           </div>
         </div>
@@ -606,7 +650,7 @@ export function DrawingCompetitionLanding({
             {/* Phone */}
             <div className="space-y-0.5 sm:space-y-1">
               <label className="text-[11px] font-bold text-slate-700 sm:text-xs dark:text-slate-200">
-                Phone Number (WhatsApp) *
+                Phone Number *
               </label>
               <input
                 type="tel"
@@ -695,14 +739,16 @@ export function DrawingCompetitionLanding({
 
         {/* PARTICIPANTS INFORMATION SECTION */}
         <div className="space-y-3 pt-2 sm:space-y-4 sm:pt-4">
-          <div className="flex items-center justify-between border-b border-slate-200/80 pb-2 sm:pb-3 dark:border-white/10">
-            <div>
+          <div className="flex flex-nowrap items-center justify-between gap-2 border-b border-slate-200/80 pb-2 sm:gap-3 sm:pb-3 dark:border-white/10">
+            <div className="min-w-0 flex-1">
               <h3 className="font-paytone flex items-center gap-1.5 text-xs font-bold text-slate-900 sm:gap-2 sm:text-lg dark:text-white">
-                <Users className="h-3.5 w-3.5 text-amber-500 sm:h-4 sm:w-4" />
-                Participant Details ({fields.length}/
-                {MAX_PARTICIPANTS_PER_GUARDIAN})
+                <Users className="h-3.5 w-3.5 shrink-0 text-amber-500 sm:h-4 sm:w-4" />
+                <span className="truncate">
+                  Participant Details ({fields.length}/
+                  {MAX_PARTICIPANTS_PER_GUARDIAN})
+                </span>
               </h3>
-              <p className="text-[10.5px] text-slate-500 sm:text-[11px] dark:text-slate-400">
+              <p className="truncate text-[10px] text-slate-500 sm:text-[11px] dark:text-slate-400">
                 You can add up to {MAX_PARTICIPANTS_PER_GUARDIAN} children per
                 registration.
               </p>
@@ -719,10 +765,10 @@ export function DrawingCompetitionLanding({
                     category: '',
                   })
                 }
-                className="inline-flex items-center gap-1 rounded-full border border-amber-500/40 bg-amber-500/15 px-3 py-1.5 text-xs font-bold text-amber-700 transition-all hover:bg-amber-500 hover:text-slate-950 dark:text-amber-300 dark:hover:text-slate-950"
+                className="inline-flex shrink-0 items-center gap-1 rounded-full border border-amber-500/40 bg-amber-500/15 px-3 py-1.5 text-xs font-bold whitespace-nowrap text-amber-700 transition-all hover:bg-amber-500 hover:text-slate-950 sm:px-3.5 sm:py-1.5 dark:text-amber-300 dark:hover:text-slate-950"
               >
-                <Plus className="h-3.5 w-3.5" />
-                <span>Add Child</span>
+                <Plus className="h-3.5 w-3.5 shrink-0" />
+                <span className="whitespace-nowrap">Add Child</span>
               </button>
             )}
           </div>
@@ -808,7 +854,7 @@ export function DrawingCompetitionLanding({
                     <div className="grid grid-cols-2 gap-2">
                       <div className="space-y-0.5 sm:space-y-1">
                         <label className="text-[10px] font-bold text-slate-500 sm:text-[11px] dark:text-slate-400">
-                          Calculated Age
+                          Age
                         </label>
                         <input
                           type="text"
@@ -821,7 +867,7 @@ export function DrawingCompetitionLanding({
 
                       <div className="space-y-0.5 sm:space-y-1">
                         <label className="text-[10px] font-bold text-slate-500 sm:text-[11px] dark:text-slate-400">
-                          Assigned Group
+                          Group
                         </label>
                         <input
                           type="text"
@@ -847,7 +893,7 @@ export function DrawingCompetitionLanding({
             <button
               type="submit"
               disabled={isSubmitting}
-              className="inline-flex w-full items-center justify-center gap-2 rounded-2xl border border-amber-400/60 bg-gradient-to-r from-amber-500 via-amber-400 to-yellow-400 py-3.5 text-sm font-black tracking-wide text-slate-950 transition-all hover:scale-[1.01] active:scale-[0.99] disabled:opacity-50"
+              className="inline-flex w-full items-center justify-center gap-2 rounded-xl border border-amber-400/60 bg-gradient-to-r from-amber-500 via-amber-400 to-yellow-400 py-2.5 text-xs font-black tracking-wide text-slate-950 transition-all hover:scale-[1.01] active:scale-[0.99] disabled:opacity-50 sm:rounded-2xl sm:py-3.5 sm:text-sm"
             >
               {isSubmitting ? (
                 <>
