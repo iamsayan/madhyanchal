@@ -19,11 +19,15 @@ import {
 } from 'lucide-react';
 
 import { getDurgaPujaScheduleSchema } from '@/lib/seo-schemas';
+import { createMetadata } from '@/lib/metadata';
 
 export const metadata: Metadata = {
-  title: 'Durga Puja Festival Schedule & Timings',
-  description:
-    'Complete 5-day ritual itinerary and event timings for Durga Puja celebrations at Madhyanchal, Chandannagar.',
+  ...createMetadata({
+    title: 'Durga Puja Festival Schedule & Timings',
+    description:
+      'Complete 5-day ritual itinerary and event timings for Durga Puja celebrations at Madhyanchal, Chandannagar.',
+    canonical: '/durgapuja/schedule',
+  }),
   keywords: [
     'durga puja schedule chandannagar',
     'madhyanchal durga puja timings',
@@ -31,16 +35,6 @@ export const metadata: Metadata = {
     'sindoor khela chandannagar',
     'madhyanchal festival itinerary',
   ],
-  openGraph: {
-    title: 'Durga Puja Festival Schedule | Madhyanchal Sarbajanin',
-    description:
-      'Explore the official 5-day festival schedule, Pushpanjali timings, and cultural programs at Madhyanchal Durga Puja.',
-    url: '/durgapuja/schedule',
-    type: 'website',
-  },
-  alternates: {
-    canonical: '/durgapuja/schedule',
-  },
 };
 
 export default function DurgaPujaSchedulePage() {

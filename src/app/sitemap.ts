@@ -62,12 +62,24 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       changeFrequency: 'monthly',
       priority: 0.6,
     },
-    // {
-    //     url: `${process.env.NEXT_PUBLIC_SITE_URL}/jagadhatri-puja`,
-    //     lastModified: new Date(),
-    //     changeFrequency: 'monthly',
-    //     priority: 0.6,
-    // },
+    {
+      url: `${process.env.NEXT_PUBLIC_SITE_URL}/schedule`,
+      lastModified: new Date(),
+      changeFrequency: 'monthly',
+      priority: 0.8,
+    },
+    {
+      url: `${process.env.NEXT_PUBLIC_SITE_URL}/durgapuja`,
+      lastModified: new Date(),
+      changeFrequency: 'monthly',
+      priority: 1,
+    },
+    {
+      url: `${process.env.NEXT_PUBLIC_SITE_URL}/durgapuja/schedule`,
+      lastModified: new Date(),
+      changeFrequency: 'monthly',
+      priority: 0.8,
+    },
   ];
 
   return sitemaps;
