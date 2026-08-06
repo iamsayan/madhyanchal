@@ -22,6 +22,7 @@ import {
   Palette,
   ArrowLeft,
   Download,
+  Megaphone,
 } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { sendGTMEvent } from '@next/third-parties/google';
@@ -105,6 +106,12 @@ export function MobileNavDock() {
       icon: Flame,
       desc: 'Rituals, Drawing Contest & Events',
       highlighted: true,
+    },
+    {
+      label: 'Advertise With Us',
+      href: '/advertise',
+      icon: Megaphone,
+      desc: 'Sponsorship & Souvenir Booking',
     },
     {
       label: 'Awards & Honors',
@@ -345,15 +352,15 @@ export function MobileNavDock() {
                 </div>
               )}
 
-              {/* DURGA PUJA MODE: RETURN TO MAIN WEBSITE ACTION CARD */}
+              {/* DURGA PUJA MODE: RETURN TO MAIN WEBSITE ACTION CARD (Royal Indigo / Violet Theme) */}
               {isDurgaPuja && (
                 <Link
                   href="/"
                   onClick={() => setMoreOpen(false)}
-                  className="flex w-full items-center justify-between rounded-2xl border border-amber-500/40 bg-linear-to-r from-amber-500/20 via-amber-500/10 to-amber-500/20 p-3 text-left transition-all hover:scale-[1.01] active:scale-[0.98]"
+                  className="flex w-full items-center justify-between rounded-2xl border border-indigo-500/40 bg-gradient-to-r from-indigo-500/15 via-purple-500/10 to-indigo-500/20 p-3 text-left transition-all hover:scale-[1.01] active:scale-[0.98] dark:border-indigo-400/30 dark:from-indigo-950/40 dark:to-purple-950/30"
                 >
                   <div className="flex items-center gap-3">
-                    <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-amber-500 text-slate-950 shadow-xs">
+                    <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-gradient-to-br from-indigo-600 to-purple-600 text-white shadow-xs">
                       <ArrowLeft className="h-4.5 w-4.5" />
                     </div>
                     <div>
@@ -365,7 +372,7 @@ export function MobileNavDock() {
                       </div>
                     </div>
                   </div>
-                  <ChevronRight className="h-4 w-4 text-amber-600 dark:text-amber-400" />
+                  <ChevronRight className="h-4 w-4 text-indigo-600 dark:text-indigo-400" />
                 </Link>
               )}
 
@@ -391,7 +398,7 @@ export function MobileNavDock() {
                     <div>
                       <div className="flex items-center gap-1.5 text-xs font-black text-slate-900 dark:text-white">
                         <span>Install Official App</span>
-                        <span className="py-0.2 rounded-full bg-emerald-500 px-1.5 text-[8.5px] font-black tracking-widest text-white uppercase">
+                        <span className="rounded-full bg-emerald-500 px-1.5 py-0.2 text-[8.5px] font-black tracking-widest text-white uppercase">
                           NEW
                         </span>
                       </div>
@@ -450,7 +457,7 @@ export function MobileNavDock() {
                         isActive
                           ? 'border-amber-500/60 bg-amber-500/15 text-slate-900 dark:text-white'
                           : isHighlighted
-                            ? 'border-amber-500/60 bg-amber-500/10 text-slate-900 shadow-xs dark:border-amber-400/50 dark:bg-amber-500/15 dark:text-white'
+                            ? 'border-rose-500/50 bg-gradient-to-r from-rose-500/15 via-orange-500/10 to-rose-500/15 text-slate-900 shadow-xs dark:border-rose-400/50 dark:from-rose-950/40 dark:to-orange-950/30 dark:text-white'
                             : 'border-slate-200/80 bg-slate-50/50 hover:bg-amber-500/10 dark:border-white/10 dark:bg-slate-900/50'
                       )}
                     >
@@ -461,7 +468,7 @@ export function MobileNavDock() {
                             isActive
                               ? 'bg-amber-500 text-slate-950'
                               : isHighlighted
-                                ? 'bg-amber-500 text-slate-950 shadow-xs'
+                                ? 'bg-gradient-to-br from-rose-500 to-orange-500 text-white shadow-xs'
                                 : 'bg-amber-500/15 text-amber-600 dark:text-amber-400'
                           )}
                         >
@@ -471,8 +478,8 @@ export function MobileNavDock() {
                           <div className="flex items-center gap-1.5 text-xs font-bold text-slate-900 dark:text-white">
                             <span>{item.label}</span>
                             {isHighlighted && (
-                              <span className="py-0.2 rounded-full bg-amber-500 px-1.5 text-[8.5px] font-black tracking-widest text-slate-950 uppercase">
-                                Featured
+                              <span className="rounded-full bg-rose-500 px-1.5 py-0.2 text-[8.5px] font-black tracking-widest text-white uppercase">
+                                AUTUMN FEST
                               </span>
                             )}
                           </div>
