@@ -4,6 +4,8 @@ import { ServiceDressOrder } from '@/components/features/service-dress-order';
 import { ServiceLayout } from '@/components/layout/service-layout';
 import { currentYear, getDressOrders } from '@/lib/data';
 
+export const instant = false;
+
 export const metadata: Metadata = {
   title: `Puja Committee Dress ${currentYear}`,
   description: `Order for Madhyanchal Puja Committee Dress ${currentYear}`,
