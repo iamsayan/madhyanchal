@@ -237,7 +237,7 @@ export default function AdvertisePage() {
       <div className="space-y-10 sm:space-y-16">
         {/* AUDIENCE DEMOGRAPHICS DASHBOARD DOCK */}
         <AnimatedWrapper direction="up">
-          <div className="card-glass card-hover-glow relative overflow-hidden rounded-xl border border-slate-200/90 p-5 backdrop-blur-2xl transition-all duration-300 sm:rounded-3xl sm:p-8 dark:border-white/12">
+          <div className="card-glass card-hover-glow relative overflow-hidden rounded-xl border border-slate-200/90 p-4 backdrop-blur-2xl transition-all duration-300 sm:rounded-3xl sm:p-8 dark:border-white/12">
             <BorderBeam
               size={180}
               duration={8}
@@ -245,14 +245,14 @@ export default function AdvertisePage() {
               colorTo="#fef08a"
             />
 
-            <div className="flex flex-col items-center justify-between gap-6 md:flex-row">
+            <div className="flex flex-col items-center justify-between gap-4 md:flex-row sm:gap-8">
               {/* Left Demographics Visual */}
-              <div className="w-full space-y-4 md:w-1/2">
+              <div className="w-full space-y-3.5 md:w-1/2">
                 <div className="flex items-center gap-2">
                   <Users className="h-5 w-5 text-amber-500" />
-                  <h2 className="font-paytone text-lg text-slate-900 sm:text-2xl dark:text-white">
+                  <h3 className="font-paytone text-base text-slate-900 sm:text-2xl dark:text-white">
                     Audience Demographics & Reach
-                  </h2>
+                  </h3>
                 </div>
 
                 <p className="text-xs leading-relaxed text-slate-600 sm:text-sm dark:text-slate-300">
