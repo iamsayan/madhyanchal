@@ -116,15 +116,15 @@ export function GrandProcessionRouteCard() {
   const mapsUrl = `https://www.google.com/maps/dir/?api=1&origin=Madhyanchal+Jagadhatri+Puja+Pandal+Chandannagar&destination=Rani+Ghat+Chandannagar&travelmode=walking`;
 
   return (
-    <div className="relative overflow-hidden rounded-2xl border border-rose-500/30 bg-gradient-to-br from-rose-500/10 via-amber-500/5 to-transparent p-4 backdrop-blur-xl sm:p-7 dark:border-rose-500/30 dark:bg-stone-900/80">
+    <div className="relative overflow-hidden rounded-2xl border border-indigo-500/40 bg-gradient-to-br from-indigo-500/15 via-purple-500/10 to-indigo-500/5 p-4 backdrop-blur-xl sm:p-7 dark:border-indigo-500/30 dark:bg-stone-900/90">
       {/* Card Header */}
       <div className="flex flex-wrap items-center justify-between gap-3 border-b border-slate-200/70 pb-4 dark:border-white/10">
         <div className="flex items-center gap-3">
-          <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-rose-500/20 font-extrabold text-rose-600 dark:text-rose-400">
+          <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-indigo-500/20 font-extrabold text-indigo-600 dark:text-indigo-400">
             <MapPin className="h-5 w-5" />
           </div>
           <div>
-            <span className="block text-[10px] font-extrabold tracking-widest text-rose-600 uppercase dark:text-rose-400">
+            <span className="block text-[10px] font-extrabold tracking-widest text-indigo-600 uppercase dark:text-indigo-400">
               Official Shobhajatra Route
             </span>
             <h3 className="font-paytone text-base font-bold text-slate-900 sm:text-xl dark:text-white">
@@ -139,11 +139,11 @@ export function GrandProcessionRouteCard() {
         <div className="flex w-full snap-x snap-mandatory scrollbar-none items-center gap-3 overflow-x-auto rounded-2xl border border-slate-200/80 bg-white/90 p-3.5 backdrop-blur-md sm:flex-wrap sm:justify-between sm:overflow-visible sm:p-5 dark:border-white/10 dark:bg-stone-950/70">
           {/* Stage 1 */}
           <div className="flex min-w-[170px] shrink-0 snap-center items-center gap-2 sm:min-w-0">
-            <div className="flex h-7 w-7 shrink-0 items-center justify-center rounded-lg bg-amber-500/15 text-amber-600 dark:text-amber-400">
+            <div className="flex h-7 w-7 shrink-0 items-center justify-center rounded-lg bg-indigo-500/15 text-indigo-600 dark:text-indigo-400">
               <Sparkles className="h-3.5 w-3.5" />
             </div>
             <div className="min-w-0 leading-tight">
-              <span className="block text-[9px] font-black tracking-wider whitespace-nowrap text-amber-600 uppercase dark:text-amber-400">
+              <span className="block text-[9px] font-black tracking-wider whitespace-nowrap text-indigo-600 uppercase dark:text-indigo-400">
                 01 • Start
               </span>
               <span className="text-xs font-extrabold whitespace-nowrap text-slate-900 dark:text-slate-100">
@@ -158,11 +158,11 @@ export function GrandProcessionRouteCard() {
 
           {/* Stage 2 */}
           <div className="flex min-w-[170px] shrink-0 snap-center items-center gap-2 sm:min-w-0">
-            <div className="flex h-7 w-7 shrink-0 items-center justify-center rounded-lg bg-rose-500/15 text-rose-600 dark:text-rose-400">
+            <div className="flex h-7 w-7 shrink-0 items-center justify-center rounded-lg bg-purple-500/15 text-purple-600 dark:text-purple-400">
               <MapPin className="h-3.5 w-3.5" />
             </div>
             <div className="min-w-0 leading-tight">
-              <span className="block text-[9px] font-black tracking-wider whitespace-nowrap text-rose-600 uppercase dark:text-rose-400">
+              <span className="block text-[9px] font-black tracking-wider whitespace-nowrap text-purple-600 uppercase dark:text-purple-400">
                 02 • Sequence Entry
               </span>
               <span className="text-xs font-extrabold whitespace-nowrap text-slate-900 dark:text-slate-100">

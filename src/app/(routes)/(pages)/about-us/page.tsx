@@ -137,7 +137,7 @@ export default function AboutUsPage() {
       breadcrumbCurrent="About Us"
       scriptJsonLd={jsonLd}
     >
-      <div className="space-y-6 sm:space-y-14">
+      <div className="space-y-8 sm:space-y-14">
         {/* 4 CORE STAT HIGHLIGHT CARDS (2x2 Balanced Mobile Grid & 4-Column Desktop Grid) */}
         <div className="grid grid-cols-2 gap-2 sm:grid-cols-2 sm:gap-5 lg:grid-cols-4">
           {coreHighlights.map((item, i) => {

@@ -83,7 +83,7 @@ export default function ContactUsPage() {
       breadcrumbCurrent="Contact Us"
       scriptJsonLd={contactJsonLd}
     >
-      <div className="space-y-6 sm:space-y-12">
+      <div className="space-y-8 sm:space-y-14">
         {/* 3 QUICK CONTACT DOCK CARDS */}
         <div className="grid grid-cols-1 gap-2.5 sm:grid-cols-3 sm:gap-5">
           {contactCards.map((card, i) => {
@@ -188,7 +188,7 @@ export default function ContactUsPage() {
                 href="https://www.google.com/maps/search/?api=1&query=Madhyanchal+Sarbajanin+Jagadhatri+Puja+Samity,Chandannagar,Hooghly,West+Bengal,712136"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="flex cursor-pointer items-center justify-center gap-2 rounded-full bg-amber-500 px-5 py-2.5 text-xs font-bold text-slate-950 shadow-sm transition-all hover:bg-amber-600 active:scale-[0.98] sm:text-sm"
+                className="flex cursor-pointer items-center justify-center gap-2 rounded-full bg-amber-500 px-5 py-2.5 text-xs font-bold text-slate-950 shadow-none transition-all hover:bg-amber-600 active:scale-[0.98] sm:text-sm"
               >
                 <MapPin className="h-4 w-4" /> Open Full Direction in Google
                 Maps

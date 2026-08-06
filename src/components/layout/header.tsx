@@ -41,6 +41,7 @@ export function Header() {
     { label: 'Awards', href: '/awards' },
     { label: 'Advertise', href: '/advertise' },
     { label: 'About Us', href: '/about-us' },
+    { label: 'Contact Us', href: '/contact-us' },
     { label: '🌺 Durga Puja', href: '/durgapuja', highlighted: true },
   ];
 

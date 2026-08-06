@@ -84,7 +84,7 @@ export function Footer() {
         </Link>
 
         {/* Compact Navigation Links with Dot Separators */}
-        <nav className="flex flex-wrap items-center justify-center gap-x-2 gap-y-0.5 text-[10px] font-semibold text-slate-600 sm:gap-x-3 sm:text-xs dark:text-slate-300">
+        {/* <nav className="flex flex-wrap items-center justify-center gap-x-2 gap-y-0.5 text-[10px] font-semibold text-slate-600 sm:gap-x-3 sm:text-xs dark:text-slate-300">
           {navLinks.map((link, idx) => (
             <Fragment key={link.href}>
               {idx > 0 && (
@@ -100,7 +100,7 @@ export function Footer() {
               </Link>
             </Fragment>
           ))}
-        </nav>
+        </nav> */}
 
         {/* Social Media Micro Icon Row */}
         <div className="flex items-center justify-center gap-1.5 sm:gap-3">

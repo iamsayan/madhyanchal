@@ -18,6 +18,7 @@ export interface PageLayoutProps {
   className?: string;
   headerContent?: ReactNode;
   scriptJsonLd?: Record<string, unknown>;
+  gradientWordsCount?: number;
 }
 
 export function PageLayout({
@@ -31,6 +32,7 @@ export function PageLayout({
   className,
   headerContent,
   scriptJsonLd,
+  gradientWordsCount,
 }: PageLayoutProps) {
   const currentNav =
     breadcrumbCurrent || (typeof title === 'string' ? title : 'Page');
@@ -41,12 +43,22 @@ export function PageLayout({
     if (typeof title !== 'string') return title;
     const words = title.split(' ');
     if (words.length <= 1) return title;
-    const lastWord = words.pop();
+
+    const count =
+      gradientWordsCount !== undefined
+        ? Math.min(gradientWordsCount, words.length)
+        : words[words.length - 1].length <= 3 && words.length >= 3
+          ? 2
+          : 1;
+
+    const mainWords = words.slice(0, words.length - count);
+    const gradientWords = words.slice(words.length - count);
+
     return (
       <>
-        {words.join(' ')}{' '}
-        <span className="font-paytone bg-linear-to-r from-amber-600 via-amber-500 to-yellow-500 bg-clip-text text-transparent">
-          {lastWord}
+        {mainWords.join(' ')}{' '}
+        <span className="font-paytone bg-gradient-to-r from-amber-600 via-amber-500 to-yellow-500 bg-clip-text text-transparent">
+          {gradientWords.join(' ')}
         </span>
       </>
     );
