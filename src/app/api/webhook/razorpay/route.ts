@@ -4,6 +4,7 @@ import Razorpay from 'razorpay';
 import cockpit from '@/lib/client';
 import { currentYear, getMemberById } from '@/lib/data';
 import { calculateAmountDue, normalizePhone } from '@/lib/member-utils';
+import { sendDrawingRegistrationEmail } from '@/lib/email';
 import { sendWhatsAppMessage, type TwilioMessageResult } from '@/lib/twilio';
 import type {
   DrawingCompetitionRecord,
@@ -195,6 +196,29 @@ async function handleDrawingPayment(
       amount: String(feePerParticipant),
       timestamp: formatTimestamp(),
     });
+  }
+
+  const guardianEmail = (notes.email || payment.email || '').trim();
+  if (guardianEmail) {
+    try {
+      await sendDrawingRegistrationEmail({
+        toEmail: guardianEmail,
+        guardianName: notes.guardian_name || '',
+        phone: phone || '',
+        paymentId: payment.id,
+        orderId: payment.order_id,
+        paymentAmount,
+        participants: participants.map((p) => ({
+          id: p.id,
+          name: p.name,
+          category: p.category,
+          age: p.age,
+          dob: p.dob,
+        })),
+      });
+    } catch (emailErr) {
+      console.error('Error sending drawing registration email:', emailErr);
+    }
   }
 
   return { messageResult: null, duplicate: false };
