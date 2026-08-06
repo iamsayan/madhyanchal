@@ -227,7 +227,7 @@ export default function NoticeClientView({
            ============================================================================ */}
         {featuredNotice && (
           <AnimatedWrapper direction="up">
-            <div className="relative overflow-hidden rounded-2xl border border-amber-500/25 bg-gradient-to-br from-amber-500/10 via-amber-500/5 to-transparent p-4 shadow-2xs backdrop-blur-md transition-all duration-300 sm:rounded-3xl sm:p-7 dark:border-amber-500/20 dark:from-stone-900/90 dark:to-stone-950/80">
+            <div className="relative overflow-hidden rounded-2xl border border-amber-500/25 bg-gradient-to-br from-amber-500/10 via-amber-500/5 to-transparent p-4 backdrop-blur-md transition-all duration-300 sm:rounded-3xl sm:p-7 dark:border-amber-500/20 dark:from-stone-900/90 dark:to-stone-950/80">
               <div className="space-y-3 sm:space-y-3.5">
                 {/* Top Badges */}
                 <div className="flex flex-wrap items-center gap-1.5 sm:gap-2">
@@ -302,7 +302,7 @@ export default function NoticeClientView({
                 <div className="flex flex-wrap items-center gap-2 pt-1.5 sm:pt-2">
                   <button
                     onClick={() => handleOpenNotice(featuredNotice)}
-                    className="inline-flex items-center justify-center gap-1.5 rounded-xl bg-amber-500 px-3.5 py-2 text-xs font-bold text-slate-950 shadow-2xs transition-all hover:bg-amber-400 active:scale-95 sm:px-4 sm:py-2.5 sm:text-sm"
+                    className="inline-flex items-center justify-center gap-1.5 rounded-xl bg-amber-500 px-3.5 py-2 text-xs font-bold text-slate-950 transition-all hover:bg-amber-400 active:scale-95 sm:px-4 sm:py-2.5 sm:text-sm"
                   >
                     <FileText className="h-3.5 w-3.5 sm:h-4 sm:w-4" />
                     <span>Read Notice</span>
@@ -382,7 +382,7 @@ export default function NoticeClientView({
               {filteredNotices.map((notice) => (
                 <div
                   key={notice._id}
-                  className="group relative flex flex-col justify-between rounded-xl border border-slate-200/80 bg-white/90 px-3.5 py-2.5 shadow-2xs backdrop-blur-md transition-all duration-200 hover:-translate-y-0.5 hover:border-amber-500/50 hover:shadow-md sm:rounded-2xl sm:p-5 dark:border-white/10 dark:bg-stone-900/80"
+                  className="group relative flex flex-col justify-between rounded-xl border border-slate-200/80 bg-white/90 px-3.5 py-2.5 backdrop-blur-md transition-all duration-200 hover:-translate-y-0.5 hover:border-amber-500/50 sm:rounded-2xl sm:p-5 dark:border-white/10 dark:bg-stone-900/80"
                 >
                   <div className="space-y-1 sm:space-y-2.5">
                     {/* Top Row: Category Tag, Ref No & Published Date */}
@@ -528,7 +528,7 @@ export default function NoticeClientView({
         }}
       >
         {activeNoticeModal && (
-          <div className="my-2 max-h-[180px] overflow-y-auto rounded-xl border border-slate-200/90 bg-slate-50/90 p-3.5 text-left text-xs leading-relaxed text-slate-700 shadow-inner sm:max-h-[320px] dark:border-white/10 dark:bg-stone-900/80 dark:text-slate-200">
+          <div className="my-2 max-h-[180px] overflow-y-auto rounded-xl border border-slate-200/90 bg-slate-50/90 p-3.5 text-left text-xs leading-relaxed text-slate-700 sm:max-h-[320px] dark:border-white/10 dark:bg-stone-900/80 dark:text-slate-200">
             {activeNoticeModal.content?.includes('<') ? (
               <div
                 className="space-y-2 text-xs leading-relaxed text-slate-700 dark:text-slate-200 [&_a]:font-medium [&_a]:text-amber-600 [&_a]:underline hover:[&_a]:text-amber-700 dark:[&_a]:text-amber-400 [&_blockquote]:my-2 [&_blockquote]:border-l-2 [&_blockquote]:border-amber-500/50 [&_blockquote]:pl-3 [&_blockquote]:text-slate-600 [&_blockquote]:italic dark:[&_blockquote]:text-slate-400 [&_h1]:my-2 [&_h1]:text-base [&_h1]:font-bold [&_h2]:my-2 [&_h2]:text-sm [&_h2]:font-bold [&_h3]:my-1.5 [&_h3]:text-xs [&_h3]:font-bold [&_li]:my-0.5 [&_ol]:my-2 [&_ol]:list-decimal [&_ol]:pl-5 [&_p]:mb-2 [&_p:last-child]:mb-0 [&_strong]:font-semibold [&_strong]:text-slate-900 dark:[&_strong]:text-white [&_ul]:my-2 [&_ul]:list-disc [&_ul]:pl-5"
