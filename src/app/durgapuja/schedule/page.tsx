@@ -21,7 +21,7 @@ import {
 import { getDurgaPujaScheduleSchema } from '@/lib/seo-schemas';
 
 export const metadata: Metadata = {
-  title: 'Durga Puja Festival Schedule & Timings | Madhyanchal Sarbajanin',
+  title: 'Durga Puja Festival Schedule & Timings',
   description:
     'Complete 5-day ritual itinerary and event timings for Durga Puja celebrations at Madhyanchal, Chandannagar.',
   keywords: [

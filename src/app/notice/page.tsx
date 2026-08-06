@@ -5,8 +5,7 @@ import { getBreadcrumbSchema } from '@/lib/seo-schemas';
 import { getNotices } from '@/lib/data';
 
 export const metadata: Metadata = {
-  title:
-    'Public Notices & Announcements | AGM & Official Updates - Madhyanchal Sarbajanin',
+  title: 'Public Notices & Announcements',
   description:
     'Official notice board of Madhyanchal Sarbajanin Chandannagar. Access Annual General Meeting (AGM) notices, financial reports, executive decisions, and public announcements.',
   keywords: [

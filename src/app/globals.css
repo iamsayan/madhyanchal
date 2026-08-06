@@ -5,12 +5,6 @@
 @theme {
   --font-sans: var(--font-outfit), sans-serif;
   --font-paytone: var(--font-paytone), sans-serif;
-  --font-bengali: var(--font-noto-bengali), sans-serif;
-}
-
-@utility font-bengali {
-  font-family: var(--font-noto-bengali), sans-serif;
-  line-height: 1.6;
 }
 
 @layer base {

@@ -20,7 +20,7 @@ import {
 import { getPujaHistorySchema } from '@/lib/seo-schemas';
 
 export const metadata: Metadata = {
-  title: 'History of Jagadhatri Puja | Madhyanchal Sarbajanin Chandannagar',
+  title: 'History of Jagadhatri Puja',
   description:
     'Discover the centuries-old history of Chandannagar Jagadhatri Puja through an interactive golden timeline—from French colonial origins to Bankim Chandra’s Anandamath and master LED light craftsmanship.',
   keywords: [

@@ -27,7 +27,7 @@ import {
 } from 'lucide-react';
 
 export const metadata: Metadata = {
-  title: 'Advertise with Us | Madhyanchal Sarbajanin Chandannagar',
+  title: 'Advertise with Us',
   description:
     'Partner with Madhyanchal Sarbajanin in Chandannagar. Elevate your brand with 1.2M+ footfall and prime Station Road festival branding.',
   keywords: [
@@ -245,7 +245,7 @@ export default function AdvertisePage() {
               colorTo="#fef08a"
             />
 
-            <div className="flex flex-col items-center justify-between gap-4 md:flex-row sm:gap-8">
+            <div className="flex flex-col items-center justify-between gap-4 sm:gap-8 md:flex-row">
               {/* Left Demographics Visual */}
               <div className="w-full space-y-3.5 md:w-1/2">
                 <div className="flex items-center gap-2">

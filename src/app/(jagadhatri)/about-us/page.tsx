@@ -15,7 +15,7 @@ import {
 import { celebratingYear } from '@/src/lib/data';
 
 export const metadata: Metadata = {
-  title: 'About Us | Madhyanchal Sarbajanin Chandannagar',
+  title: 'About Us',
   description:
     'Celebrating culture, sports, and community service in Chandannagar since 1971.',
   keywords: [

@@ -5,7 +5,7 @@ import { createPortal } from 'react-dom';
 import Link from 'next/link';
 import { AnimatePresence, motion } from 'framer-motion';
 import { BorderBeam } from '@/components/ui/border-beam';
-import { cn, hasBengaliText } from '@/lib/utils';
+import { cn } from '@/lib/utils';
 import { useRouteContext } from '@/hooks/use-route-context';
 import {
   Check,
@@ -46,7 +46,7 @@ export interface NativeModalProps {
   children?: ReactNode;
   maxWidthClass?: string;
   backdropClassName?: string;
-  preventClose?: boolean;
+  hideCloseIcon?: boolean;
 }
 
 export function NativeModal({
@@ -62,7 +62,7 @@ export function NativeModal({
   children,
   maxWidthClass = 'sm:max-w-xl md:max-w-2xl',
   backdropClassName,
-  preventClose = false,
+  hideCloseIcon = false,
 }: NativeModalProps) {
   const [mounted, setMounted] = useState(false);
   const [copiedIndex, setCopiedIndex] = useState<number | null>(null);
@@ -178,7 +178,7 @@ export function NativeModal({
     );
   };
 
-  const containsBengali = hasBengaliText(title, description);
+  const hasButtons = Boolean(primaryButton || secondaryButton);
 
   const modalContent = (
     <AnimatePresence>
@@ -187,15 +187,13 @@ export function NativeModal({
           data-native-modal="open"
           className="fixed inset-0 z-[9999] flex items-end justify-center p-0 sm:items-center sm:p-4"
         >
-          {/* Backdrop Touch & Blur Overlay matching Header Theme */}
+          {/* Backdrop Touch & Blur Overlay matching Header Theme (Always non-closable on backdrop click) */}
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            onClick={preventClose ? undefined : onClose}
             className={cn(
               'fixed inset-0 backdrop-blur-md transition-colors duration-300',
-              !preventClose && 'cursor-pointer',
               backdropClassName
                 ? backdropClassName
                 : isDurgaPuja
@@ -211,12 +209,14 @@ export function NativeModal({
             exit={{ y: '100%' }}
             transition={{ duration: 0.28, ease: [0.32, 0.72, 0, 1] }}
             className={cn(
-              `relative z-10 flex max-h-[85vh] w-full ${maxWidthClass} flex-col overflow-hidden rounded-t-[2rem] border-t border-slate-200 bg-white/95 p-4 pb-[calc(1.25rem+env(safe-area-inset-bottom,0px))] text-center shadow-2xl backdrop-blur-2xl sm:rounded-[2.5rem] sm:border sm:p-6 sm:pb-6 dark:border-white/15 dark:bg-stone-950/95`,
-              containsBengali && 'font-bengali'
+              `relative z-10 flex max-h-[85vh] w-full ${maxWidthClass} flex-col overflow-hidden rounded-t-[2rem] border-t border-slate-200 bg-white/95 p-4 text-center shadow-2xl backdrop-blur-2xl sm:rounded-[2.5rem] sm:border sm:p-6 dark:border-white/15 dark:bg-stone-950/95`,
+              hasButtons
+                ? 'pb-[calc(1.25rem+env(safe-area-inset-bottom,0px))] sm:pb-6'
+                : 'pb-[calc(0.75rem+env(safe-area-inset-bottom,0px))] sm:pb-4'
             )}
           >
             {/* Top-Right Close Button */}
-            {!preventClose && (
+            {!hideCloseIcon && (
               <button
                 type="button"
                 onClick={onClose}
@@ -250,7 +250,12 @@ export function NativeModal({
             </div>
 
             {/* Scrollable Content Container */}
-            <div className="my-2.5 min-h-0 flex-1 space-y-2 overflow-y-auto pr-0.5">
+            <div
+              className={cn(
+                'mt-2.5 min-h-0 flex-1 space-y-2 overflow-y-auto pr-0.5',
+                hasButtons ? 'mb-2.5' : 'mb-0'
+              )}
+            >
               {/* Custom Content Slot */}
               {children}
 

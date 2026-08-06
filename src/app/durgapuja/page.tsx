@@ -22,30 +22,6 @@ import {
   Sun,
 } from 'lucide-react';
 
-export const metadata: Metadata = {
-  title: 'Durga Puja Celebrations & Sacred Heritage | Madhyanchal Sarbajanin',
-  description:
-    'Welcome to Madhyanchal Durga Puja in Chandannagar. Explore our 5-day festival schedule, traditional Vedic rituals, Pushpanjali, Sandhi Puja, and festive photo gallery.',
-  keywords: [
-    'durga puja chandannagar',
-    'madhyanchal durga puja',
-    'durga puja entry point',
-    'chandannagar durga puja 2026',
-    'sandhi puja chandannagar',
-    'pushpanjali timing chandannagar',
-  ],
-  openGraph: {
-    title: 'Durga Puja Celebrations | Madhyanchal Sarbajanin',
-    description:
-      'Experience the divine autumn homecoming of Maa Durga at Madhyanchal, Chandannagar — traditional rituals, Sandhi Puja, and community festivities.',
-    url: '/durgapuja',
-    type: 'website',
-  },
-  alternates: {
-    canonical: '/durgapuja',
-  },
-};
-
 export default function DurgaPujaLandingPage() {
   const jsonLd = getDurgaPujaEntrySchema();
 

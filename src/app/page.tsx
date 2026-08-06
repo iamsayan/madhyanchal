@@ -1,4 +1,3 @@
-import Image from 'next/image';
 import Link from 'next/link';
 
 import { JsonLd } from '@/components/shared/json-ld';
@@ -33,8 +32,14 @@ import {
   TrendingUp,
   Users,
 } from 'lucide-react';
-import { getHomePage, getSettings } from '@/lib/data';
+import { currentYear, getHomePage, getSettings } from '@/lib/data';
 import CockpitImage from '@/components/shared/cockpit-image';
+import { Metadata } from 'next';
+
+export const metadata: Metadata = {
+  title: `Madhyanchal Sarbajanin Jagadhatri Puja ${currentYear} | Chandannagar`,
+  publisher: 'Madhyanchal Sarbajanin Jagadhatri Puja Samity',
+};
 
 export default async function HomePage() {
   // Fetch CMS singletons with fallback data safety

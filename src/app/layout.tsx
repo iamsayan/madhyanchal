@@ -1,6 +1,6 @@
 import { SerwistProvider } from '@serwist/next/react';
 import type { Metadata, Viewport } from 'next';
-import { Outfit, Paytone_One, Noto_Sans_Bengali } from 'next/font/google';
+import { Outfit, Paytone_One } from 'next/font/google';
 
 import { ThemeProvider } from '@/app/providers/theme-provider';
 import { Footer } from '@/components/layout/footer';
@@ -30,13 +30,6 @@ const paytoneOne = Paytone_One({
   variable: '--font-paytone',
 });
 
-const notoSansBengali = Noto_Sans_Bengali({
-  weight: ['400', '500', '600', '700'],
-  subsets: ['bengali'],
-  display: 'swap',
-  variable: '--font-noto-bengali',
-});
-
 export const viewport: Viewport = {
   themeColor: '#1c1917',
   width: 'device-width',
@@ -52,10 +45,10 @@ export const metadata: Metadata = {
     canonical: '/',
   },
   title: {
-    template: `%s - Madhyanchal Sarbajanin | ${celebratingYear} Years of Tradition, Unity, and Celebration since 1971!`,
-    default: `Madhyanchal Sarbajanin | ${celebratingYear} Years of Tradition, Unity, and Celebration since 1971!`,
+    default: 'Madhyanchal Sarbajanin',
+    template: '%s | Madhyanchal Sarbajanin',
   },
-  description: `Welcome to the official website of Madhyanchal Sarbajanin Jagadhatri Puja Samity! In ${currentYear}, we proudly celebrate ${celebratingYear} years of devotion, tradition, and togetherness.`,
+  description: `Official website of Madhyanchal Sarbajanin Jagadhatri Puja, Chandannagar. Celebrating ${celebratingYear} years since 1971. Explore the puja schedule, gallery, events, committee details, and latest updates for ${currentYear}.`,
   keywords: [
     'madhyanchal',
     'jagadhatri',
@@ -94,13 +87,17 @@ export const metadata: Metadata = {
     locale: 'en_IN',
     type: 'website',
     url: '/',
+    title: `Madhyanchal Sarbajanin Jagadhatri Puja ${currentYear} | Chandannagar`,
+    description:
+      'Official website of Madhyanchal Sarbajanin Jagadhatri Puja, Chandannagar.',
   },
   twitter: {
     card: 'summary_large_image',
     site: '@msjpsofficial',
     creator: '@msjpsofficial',
-    title: `Madhyanchal Sarbajanin | ${celebratingYear} Years of Tradition, Unity, and Celebration since 1971!`,
-    description: `Welcome to the official website of Madhyanchal Sarbajanin Jagadhatri Puja Samity! In ${currentYear}, we proudly celebrate ${celebratingYear} years of devotion, tradition, and togetherness.`,
+    title: `Madhyanchal Sarbajanin Jagadhatri Puja ${currentYear} | Chandannagar`,
+    description:
+      'Official website of Madhyanchal Sarbajanin Jagadhatri Puja, Chandannagar.',
   },
   verification: {
     google: 'SYZt9rv7_qvB3hl-_KzC5lcd-yrB4C2hr4tb2q6RyBA',
@@ -128,7 +125,7 @@ export default function RootLayout({ children }: { children: ReactNode }) {
     <html
       lang="en"
       suppressHydrationWarning
-      className={`${outfit.variable} ${paytoneOne.variable} ${notoSansBengali.variable} scroll-smooth`}
+      className={`${outfit.variable} ${paytoneOne.variable} scroll-smooth`}
       data-scroll-behavior="smooth"
     >
       {process.env.NODE_ENV === 'production' && (

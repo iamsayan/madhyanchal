@@ -1,32 +1,12 @@
 import type { Metadata } from 'next';
-import Link from 'next/link';
 
 import { PageLayout } from '@/components/layout/page-layout';
 import { AnimatedWrapper } from '@/components/shared/animated-wrapper';
 import { FestivalScheduleShowcase } from '@/components/shared/festival-schedule-showcase';
-import { BorderBeam } from '@/components/ui/border-beam';
-import { Button } from '@/components/ui/button';
 import type { EventDate } from '@/types';
 import { getSettings } from '@/lib/data';
 
-import {
-  Calendar,
-  ChevronRight,
-  Clock,
-  Compass,
-  Eye,
-  Flame,
-  HeartHandshake,
-  Image as ImageIcon,
-  Info,
-  Lightbulb,
-  MapPin,
-  Sparkles,
-  Star,
-  Train,
-  Truck,
-  Utensils,
-} from 'lucide-react';
+import { Calendar, Compass, Info, MapPin, Train } from 'lucide-react';
 
 import {
   FestivalTimeline,
@@ -40,7 +20,7 @@ import {
 import { getJagadhatriScheduleSchema } from '@/lib/seo-schemas';
 
 export const metadata: Metadata = {
-  title: 'Festival Timeline & Puja Guide | Madhyanchal Sarbajanin',
+  title: 'Festival Timeline & Puja Guide',
   description:
     'Official festival timeline for Jagadhatri Puja at Madhyanchal Sarbajanin in Chandannagar—including daily worship, Pushpanjali, Nabami Bhog distribution, and world-famous night immersion procession.',
   keywords: [

@@ -68,9 +68,3 @@ export function toISOWithOffset(date: Date, time?: string): string {
 
   return `${year}-${month}-${day}T${hours}:${minutes}:${seconds}${sign}${offsetHours}:${offsetMinutes}`;
 }
-
-export function hasBengaliText(
-  ...texts: (string | undefined | null)[]
-): boolean {
-  return texts.some((t) => Boolean(t && /[\u0980-\u09FF]/.test(t)));
-}

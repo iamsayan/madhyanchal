@@ -16,7 +16,7 @@ import {
 } from 'lucide-react';
 
 export const metadata: Metadata = {
-  title: 'Our Awards & Accolades | Madhyanchal Sarbajanin Chandannagar',
+  title: 'Our Awards & Accolades',
   description:
     'Explore the 100+ Prestigious Awards and recognitions earned by Madhyanchal Sarbajanin in Chandannagar—from Best Road Lighting to Idol Mukhasree and Cultural Heritage.',
   keywords: [

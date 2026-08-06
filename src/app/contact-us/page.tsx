@@ -17,7 +17,7 @@ import {
 import { getContactSchema } from '@/lib/seo-schemas';
 
 export const metadata: Metadata = {
-  title: 'Contact Us | Madhyanchal Sarbajanin Chandannagar',
+  title: 'Contact Us',
   description:
     'Get in touch with Madhyanchal Sarbajanin for inquiries, sponsorships, and collaborations. Located at Station Road, Chandannagar.',
   keywords: [

@@ -9,7 +9,7 @@ import { Sparkles } from 'lucide-react';
 import { getGallerySchema } from '@/lib/seo-schemas';
 
 export const metadata: Metadata = {
-  title: 'Photo Gallery | Madhyanchal Sarbajanin Chandannagar',
+  title: 'Photo Gallery',
   description:
     'Explore high-resolution photo archives of Madhyanchal Sarbajanin in Chandannagar—featuring majestic pandal architecture, idol decorations, and legendary LED illuminations.',
   keywords: [

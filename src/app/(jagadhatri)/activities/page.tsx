@@ -17,7 +17,7 @@ import {
 } from 'lucide-react';
 
 export const metadata: Metadata = {
-  title: 'Social Activities & Community Initiatives | Madhyanchal Sarbajanin',
+  title: 'Social Activities & Community Initiatives',
   description:
     'Discover the year-round social initiatives of Madhyanchal Sarbajanin—from orphanage Kali Puja celebrations to COVID vaccination camps and blood donation drives.',
   keywords: [
