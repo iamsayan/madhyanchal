@@ -19,13 +19,8 @@ export async function generateMetadata({
   const year = await getMembershipYear(yearParam);
 
   return {
-    title: `Membership Status ${year} | Madhyanchal Sarbajanin`,
+    title: `Membership Status ${year}`,
     description: `Membership Status ${year} for Madhyanchal Sarbajanin`,
-    robots: {
-      index: false,
-      follow: false,
-      nocache: true,
-    },
     alternates: {
       canonical: `/services/membership/${id}/status`,
     },
