@@ -48,6 +48,7 @@
     "eslint-config-prettier": "^10.1.8",
     "postcss": "^8.5.25",
     "prettier-plugin-tailwindcss": "^0.8.1",
+    "schema-dts": "^2.0.0",
     "serwist": "^9.5.12",
     "tailwindcss": "^4.0.0",
     "typescript": "^5.9.3"

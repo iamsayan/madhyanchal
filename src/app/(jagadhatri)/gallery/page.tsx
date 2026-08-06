@@ -3,11 +3,15 @@ import type { Metadata } from 'next';
 import { GalleryFilterView } from '@/components/features/gallery-filter-view';
 import { PageLayout } from '@/components/layout/page-layout';
 import { getGalleryItems } from '@/lib/data';
+import { createMetadata } from '@/lib/metadata';
+import {
+  JsonLd,
+  webpageSchema,
+  breadcrumbSchema,
+  imageGallerySchema,
+} from '@/lib/schema';
 
 import { Sparkles } from 'lucide-react';
-
-import { getGallerySchema } from '@/lib/seo-schemas';
-import { createMetadata } from '@/src/lib/metadata';
 
 export const metadata: Metadata = {
   ...createMetadata({
@@ -28,7 +32,31 @@ export const metadata: Metadata = {
 
 export default async function GalleryPage() {
   const items = await getGalleryItems();
-  const jsonLd = getGallerySchema();
+
+  const galleryImages = items
+    .flatMap((item) => item.images?.map((img) => img?.path || '') || [])
+    .filter(Boolean);
+
+  const galleryWebpage = webpageSchema({
+    title: 'Photo Gallery | Madhyanchal Sarbajanin',
+    description:
+      'Browse high-resolution photo archives of Madhyanchal Sarbajanin Jagadhatri & Durga Puja celebrations in Chandannagar.',
+    url: '/gallery',
+    type: 'CollectionPage',
+  });
+
+  const galleryBreadcrumb = breadcrumbSchema([
+    { name: 'Home', url: '/' },
+    { name: 'Gallery', url: '/gallery' },
+  ]);
+
+  const gallerySchemaObj = imageGallerySchema({
+    title: 'Madhyanchal Sarbajanin Jagadhatri & Durga Puja Photo Gallery',
+    description:
+      'Explore memories of majestic pandals, sacred idols, and world-renowned Chandannagar illuminations.',
+    url: '/gallery',
+    images: galleryImages.length > 0 ? galleryImages : ['/logo.png'],
+  });
 
   return (
     <PageLayout
@@ -39,8 +67,8 @@ export default async function GalleryPage() {
         icon: Sparkles,
       }}
       breadcrumbCurrent="Gallery"
-      scriptJsonLd={jsonLd}
     >
+      <JsonLd data={[galleryWebpage, galleryBreadcrumb, gallerySchemaObj]} />
       <GalleryFilterView items={items} />
     </PageLayout>
   );

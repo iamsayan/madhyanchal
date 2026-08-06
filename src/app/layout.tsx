@@ -15,7 +15,7 @@ import { ReactNode, Suspense } from 'react';
 
 import './globals.css';
 import Script from 'next/script';
-import { SITE_URL } from '@/lib/seo-schemas';
+import { JsonLd, organizationSchema, websiteSchema, SITE_URL } from '@/lib/schema';
 
 const outfit = Outfit({
   subsets: ['latin'],
@@ -100,6 +100,9 @@ export default function RootLayout({ children }: { children: ReactNode }) {
       className={`${outfit.variable} ${paytoneOne.variable} scroll-smooth`}
       data-scroll-behavior="smooth"
     >
+      <head>
+        <JsonLd data={[organizationSchema(), websiteSchema()]} />
+      </head>
       {process.env.NODE_ENV === 'production' && (
         <>
           <GoogleTagManager

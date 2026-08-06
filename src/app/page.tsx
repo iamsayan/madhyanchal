@@ -1,7 +1,12 @@
 import Link from 'next/link';
 
-import { JsonLd } from '@/components/shared/json-ld';
-import { getJagadhatriPujaEntrySchema } from '@/lib/seo-schemas';
+import {
+  JsonLd,
+  webpageSchema,
+  jagadhatriPujaEventSchema,
+  jagadhatriFaqSchema,
+  breadcrumbSchema,
+} from '@/lib/schema';
 
 import {
   AnimatedWrapper,
@@ -118,11 +123,26 @@ export default async function HomePage() {
     },
   ];
 
-  const jsonLd = getJagadhatriPujaEntrySchema();
+  const homepageWebpageSchema = webpageSchema({
+    title: `Madhyanchal Sarbajanin Jagadhatri Puja ${currentYear} | Chandannagar`,
+    description: `Official website of Madhyanchal Sarbajanin Jagadhatri Puja, Chandannagar. Celebrating ${legacyYears} years since 1971.`,
+    url: '/',
+  });
+
+  const homepageBreadcrumbSchema = breadcrumbSchema([
+    { name: 'Home', url: '/' },
+  ]);
 
   return (
     <div className="bg-dot-mesh relative overflow-hidden pb-4 sm:pb-0">
-      <JsonLd schema={jsonLd} />
+      <JsonLd
+        data={[
+          homepageWebpageSchema,
+          jagadhatriPujaEventSchema(),
+          homepageBreadcrumbSchema,
+          jagadhatriFaqSchema(),
+        ]}
+      />
 
       {/* HERO SECTION WITH PHOTO SLIDER & SHIMMER TITLE */}
       <HeroSlider images={heroImages}>

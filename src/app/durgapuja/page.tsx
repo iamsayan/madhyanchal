@@ -3,10 +3,15 @@ import Link from 'next/link';
 
 import { AnimatedWrapper } from '@/components/shared/animated-wrapper';
 import { HeroSlider } from '@/components/shared/hero-slider';
-import { JsonLd } from '@/components/shared/json-ld';
+import {
+  JsonLd,
+  webpageSchema,
+  durgaPujaEventSchema,
+  durgaFaqSchema,
+  breadcrumbSchema,
+} from '@/lib/schema';
 import { BorderBeam } from '@/components/ui/border-beam';
 import { Button } from '@/components/ui/button';
-import { getDurgaPujaEntrySchema } from '@/lib/seo-schemas';
 
 import {
   Calendar,
@@ -23,7 +28,17 @@ import {
 } from 'lucide-react';
 
 export default function DurgaPujaLandingPage() {
-  const jsonLd = getDurgaPujaEntrySchema();
+  const durgaWebpageSchema = webpageSchema({
+    title: 'Madhyanchal Sarbajanin Durga Puja | Chandannagar',
+    description:
+      'Official Durga Puja landing page of Madhyanchal Sarbajanin. Explore Vedic rituals, Pushpanjali timings, 108 lotus Sandhi Puja, drawing contest, and gallery.',
+    url: '/durgapuja',
+  });
+
+  const durgaBreadcrumbSchema = breadcrumbSchema([
+    { name: 'Home', url: '/' },
+    { name: 'Durga Puja', url: '/durgapuja' },
+  ]);
 
   const festivalPillars = [
     {
@@ -104,7 +119,14 @@ export default function DurgaPujaLandingPage() {
 
   return (
     <div className="bg-dot-mesh relative overflow-hidden pb-4 sm:pb-0">
-      <JsonLd schema={jsonLd} />
+      <JsonLd
+        data={[
+          durgaWebpageSchema,
+          durgaPujaEventSchema(),
+          durgaBreadcrumbSchema,
+          durgaFaqSchema('/durgapuja'),
+        ]}
+      />
 
       {/* FULL-WIDTH HERO SLIDER (Identical to Home Page Hero) */}
       <HeroSlider images={[]}>
