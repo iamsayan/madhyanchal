@@ -53,8 +53,8 @@ export function FestivalScheduleShowcase({
 
   return (
     <div className="relative mx-auto max-w-6xl space-y-3">
-      {/* FLAT NATIVE APP DASHBOARD CONTAINER (Zero Shadows on Mobile) */}
-      <div className="relative overflow-hidden rounded-2xl border border-slate-200/90 bg-white/95 p-3.5 shadow-none backdrop-blur-2xl sm:rounded-3xl sm:p-6 sm:shadow-lg dark:border-white/12 dark:bg-stone-900/95">
+      {/* FLAT NATIVE APP DASHBOARD CONTAINER (Zero Shadows) */}
+      <div className="relative overflow-hidden rounded-2xl border border-slate-200/90 bg-white/95 p-3.5 backdrop-blur-2xl sm:rounded-3xl sm:p-6 dark:border-white/12 dark:bg-stone-900/95">
         <BorderBeam
           size={180}
           duration={8}
@@ -91,7 +91,7 @@ export function FestivalScheduleShowcase({
             </span>
           </div>
 
-          <div className="flex w-full scrollbar-none flex-nowrap gap-1.5 overflow-x-auto rounded-2xl border border-slate-200/80 bg-slate-100/70 p-1.5 shadow-none dark:border-white/10 dark:bg-stone-950/80">
+          <div className="flex w-full scrollbar-none flex-nowrap gap-1.5 overflow-x-auto rounded-2xl border border-slate-200/80 bg-slate-100/70 p-1.5 dark:border-white/10 dark:bg-stone-950/80">
             {dates.map((item, idx) => {
               const isActive = activeIdx === idx;
               const isProcessionItem = checkIsProcession(item.event);
@@ -105,10 +105,10 @@ export function FestivalScheduleShowcase({
                     'group relative flex min-h-[42px] min-w-[120px] flex-1 shrink-0 cursor-pointer items-center gap-2 rounded-xl px-2.5 py-1.5 text-left transition-all duration-200 sm:min-h-[46px]',
                     isProcessionItem
                       ? isActive
-                        ? 'min-w-[130px] border border-rose-400 bg-gradient-to-r from-rose-600 via-rose-500 to-rose-600 font-black text-white shadow-sm'
+                        ? 'min-w-[130px] border border-rose-400 bg-gradient-to-r from-rose-600 via-rose-500 to-rose-600 font-black text-white'
                         : 'min-w-[130px] border border-rose-500/30 bg-rose-500/10 text-rose-700 hover:bg-rose-500/20 dark:border-rose-500/30 dark:bg-rose-950/50 dark:text-rose-300 dark:hover:bg-rose-900/50'
                       : isActive
-                        ? 'border border-amber-400 bg-gradient-to-r from-amber-400 via-amber-500 to-amber-400 font-black text-slate-950 shadow-sm'
+                        ? 'border border-amber-400 bg-gradient-to-r from-amber-400 via-amber-500 to-amber-400 font-black text-slate-950'
                         : 'border border-slate-200/80 bg-white/90 text-slate-700 hover:border-amber-500/40 hover:bg-amber-500/10 dark:border-white/10 dark:bg-stone-900/90 dark:text-slate-200 dark:hover:border-amber-500/40 dark:hover:bg-stone-800'
                   )}
                 >
@@ -118,10 +118,10 @@ export function FestivalScheduleShowcase({
                       'flex h-7 w-7 shrink-0 items-center justify-center rounded-lg transition-transform group-hover:scale-105 sm:h-8 sm:w-8',
                       isProcessionItem
                         ? isActive
-                          ? 'bg-white text-rose-600 shadow-xs'
+                          ? 'bg-white text-rose-600'
                           : 'bg-rose-500/15 text-rose-600 dark:bg-rose-500/25 dark:text-rose-400'
                         : isActive
-                          ? 'bg-slate-950 text-amber-400 shadow-xs'
+                          ? 'bg-slate-950 text-amber-400'
                           : 'bg-amber-500/15 text-amber-600 dark:bg-amber-500/20 dark:text-amber-400'
                     )}
                   >
@@ -179,7 +179,7 @@ export function FestivalScheduleShowcase({
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.2 }}
           >
-            <div className="mt-3 flex flex-col gap-2 rounded-2xl border border-amber-500/30 bg-gradient-to-br from-amber-500/10 via-amber-500/5 to-transparent p-3.5 shadow-none backdrop-blur-md transition-all duration-300 sm:p-5 dark:border-white/12 dark:bg-stone-950/60">
+            <div className="mt-3 flex flex-col gap-2 rounded-2xl border border-amber-500/30 bg-gradient-to-br from-amber-500/10 via-amber-500/5 to-transparent p-3.5 backdrop-blur-md transition-all duration-300 sm:p-5 dark:border-white/12 dark:bg-stone-950/60">
               {/* Header Badge & Title */}
               <div className="flex flex-wrap items-center justify-between gap-2">
                 <div className="flex items-center gap-2">

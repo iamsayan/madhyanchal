@@ -131,7 +131,7 @@ export default function AboutUsPage() {
       title="About Madhyanchal"
       subtitle="Bringing people together through grand Jagadhatri & Durga Pujas, sports, and year-round social welfare in Chandannagar."
       badge={{
-        text: `Heritage Since 1971 (${celebratingYear} Years)`,
+        text: `Heritage Since 1971`,
         icon: Sparkles,
       }}
       breadcrumbCurrent="About Us"

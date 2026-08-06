@@ -6,7 +6,7 @@ import { GallerySlider } from '@/components/shared/gallery-slider';
 import type { Asset } from '@/lib/client';
 import type { GalleryItem } from '@/types';
 
-import { Calendar, Camera, Sparkles } from 'lucide-react';
+import { Camera } from 'lucide-react';
 
 interface GalleryFilterViewProps {
   items?: GalleryItem[];
@@ -51,44 +51,40 @@ export function GalleryFilterView({ items = [] }: GalleryFilterViewProps) {
     <div className="space-y-6 sm:space-y-8">
       {/* Year Filter Track */}
       {yearTabs.length > 1 && (
-        <div className="flex flex-col items-center justify-between gap-3 rounded-2xl border border-slate-200/80 bg-white/80 p-3 shadow-xs backdrop-blur-xl sm:flex-row sm:px-5 sm:py-3.5 dark:border-white/10 dark:bg-stone-900/80">
-          <div className="flex items-center gap-2 text-xs font-bold text-slate-700 dark:text-slate-200">
-            <Calendar className="h-4 w-4 text-amber-500" />
-            <span>Archive Year:</span>
-          </div>
+        <div className="flex w-full items-center justify-start gap-2.5 overflow-x-auto scrollbar-none snap-x snap-mandatory rounded-2xl border border-slate-200/90 bg-white/80 p-2 backdrop-blur-xl sm:justify-center sm:overflow-visible sm:p-2.5 dark:border-white/10 dark:bg-stone-900/80">
+          <span className="shrink-0 text-xs font-black text-slate-500 dark:text-slate-400 pl-1 sm:pl-0">
+            Filter:
+          </span>
+          {yearTabs.map((tab) => {
+            const isActive = selectedTab === tab;
+            const count =
+              tab === 'All'
+                ? allPhotos.length
+                : photosByYear[tab]?.length || 0;
 
-          <div className="flex flex-wrap items-center justify-center gap-1.5">
-            {yearTabs.map((tab) => {
-              const isActive = selectedTab === tab;
-              const count =
-                tab === 'All'
-                  ? allPhotos.length
-                  : photosByYear[tab]?.length || 0;
-
-              return (
-                <button
-                  key={tab}
-                  onClick={() => setSelectedTab(tab)}
-                  className={`flex items-center gap-1.5 rounded-full px-3.5 py-1 text-xs font-black transition-all duration-300 ${
+            return (
+              <button
+                key={tab}
+                onClick={() => setSelectedTab(tab)}
+                className={`inline-flex shrink-0 snap-center items-center gap-1.5 rounded-full px-4 py-1.5 text-xs font-extrabold transition-all duration-200 cursor-pointer shadow-none ${
+                  isActive
+                    ? 'bg-amber-500 text-slate-950 border border-amber-400/80'
+                    : 'border border-slate-200/80 bg-slate-100/80 text-slate-600 hover:bg-slate-200/80 dark:border-white/10 dark:bg-stone-800/80 dark:text-slate-300 dark:hover:bg-stone-700'
+                }`}
+              >
+                <span>{tab}</span>
+                <span
+                  className={`rounded-full px-1.5 py-0.2 text-[9.5px] font-black ${
                     isActive
-                      ? 'scale-105 border border-amber-400 bg-gradient-to-r from-amber-500 to-yellow-500 text-slate-950 shadow-md'
-                      : 'border border-slate-200/80 bg-slate-100/80 text-slate-600 hover:border-amber-400/50 hover:bg-amber-500/10 hover:text-amber-600 dark:border-white/10 dark:bg-stone-800/80 dark:text-slate-300 dark:hover:text-amber-400'
+                      ? 'bg-slate-950/20 text-slate-950'
+                      : 'bg-slate-200 text-slate-500 dark:bg-stone-700 dark:text-slate-400'
                   }`}
                 >
-                  <span>{tab}</span>
-                  <span
-                    className={`py-0.2 rounded-full px-1.5 text-[9.5px] ${
-                      isActive
-                        ? 'bg-slate-950/20 text-slate-950'
-                        : 'bg-slate-200 text-slate-500 dark:bg-stone-700 dark:text-slate-400'
-                    }`}
-                  >
-                    {count}
-                  </span>
-                </button>
-              );
-            })}
-          </div>
+                  {count}
+                </span>
+              </button>
+            );
+          })}
         </div>
       )}
 

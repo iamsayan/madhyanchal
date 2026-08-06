@@ -49,6 +49,37 @@ export function AwardsFilterView({ awards }: AwardsFilterViewProps) {
     return flatAwards.filter((award) => award.year === selectedYear);
   }, [flatAwards, selectedYear]);
 
+  // Hall of fame summary stats
+  const stats = useMemo(() => {
+    const total = flatAwards.length;
+    const firstPrizes = flatAwards.filter((a) => {
+      const p = (a.position || '').toLowerCase();
+      return (
+        p.includes('1st') ||
+        p.includes('first') ||
+        p.includes('sarbik srestho') ||
+        p.includes('srestho')
+      );
+    }).length;
+    const lightAwards = flatAwards.filter((a) => {
+      const c = (a.category || '').toLowerCase();
+      const e = (a.event || '').toLowerCase();
+      return (
+        c.includes('light') ||
+        c.includes('alok') ||
+        c.includes('lighting') ||
+        e.includes('light')
+      );
+    }).length;
+
+    return {
+      total,
+      firstPrizes,
+      lightAwards,
+      editions: years.length,
+    };
+  }, [flatAwards, years]);
+
   // Award rank helper styling
   const getBadgeStyle = (position: string) => {
     const p = position.toLowerCase();
@@ -82,8 +113,79 @@ export function AwardsFilterView({ awards }: AwardsFilterViewProps) {
 
   return (
     <div className="space-y-6">
+      {/* 1. HALL OF FAME MILESTONE DASHBOARD (Single Horizontal Scroll Row on Mobile) */}
+      <div className="no-scrollbar flex w-full items-center justify-start gap-2.5 overflow-x-auto snap-x snap-mandatory sm:grid sm:grid-cols-4 sm:gap-4 sm:overflow-visible">
+        {/* Total Accolades */}
+        <div className="relative min-w-[140px] shrink-0 snap-center overflow-hidden rounded-xl border border-amber-500/30 bg-gradient-to-br from-amber-500/10 via-amber-500/5 to-transparent p-2.5 backdrop-blur-xl sm:min-w-0 sm:rounded-2xl sm:p-4 dark:border-amber-500/20 dark:bg-stone-900/80">
+          <div className="flex items-center gap-2 sm:gap-2.5">
+            <div className="flex h-7 w-7 shrink-0 items-center justify-center rounded-lg bg-amber-500/20 font-extrabold text-amber-600 sm:h-9 sm:w-9 sm:rounded-xl dark:text-amber-400">
+              <Trophy className="h-3.5 w-3.5 sm:h-4.5 sm:w-4.5" />
+            </div>
+            <div className="min-w-0">
+              <span className="block text-[8.5px] font-black tracking-wider text-amber-600 uppercase sm:text-[9.5px] dark:text-amber-400 truncate">
+                Total Accolades
+              </span>
+              <span className="font-paytone text-sm font-bold text-slate-900 sm:text-2xl dark:text-white">
+                {stats.total}+
+              </span>
+            </div>
+          </div>
+        </div>
+
+        {/* 1st Rank Honors */}
+        <div className="relative min-w-[140px] shrink-0 snap-center overflow-hidden rounded-xl border border-rose-500/30 bg-gradient-to-br from-rose-500/10 via-rose-500/5 to-transparent p-2.5 backdrop-blur-xl sm:min-w-0 sm:rounded-2xl sm:p-4 dark:border-rose-500/20 dark:bg-stone-900/80">
+          <div className="flex items-center gap-2 sm:gap-2.5">
+            <div className="flex h-7 w-7 shrink-0 items-center justify-center rounded-lg bg-rose-500/20 font-extrabold text-rose-600 sm:h-9 sm:w-9 sm:rounded-xl dark:text-rose-400">
+              <AwardIcon className="h-3.5 w-3.5 sm:h-4.5 sm:w-4.5" />
+            </div>
+            <div className="min-w-0">
+              <span className="block text-[8.5px] font-black tracking-wider text-rose-600 uppercase sm:text-[9.5px] dark:text-rose-400 truncate">
+                1st Rank Honors
+              </span>
+              <span className="font-paytone text-sm font-bold text-slate-900 sm:text-2xl dark:text-white">
+                {stats.firstPrizes}
+              </span>
+            </div>
+          </div>
+        </div>
+
+        {/* Light Art Honors */}
+        <div className="relative min-w-[140px] shrink-0 snap-center overflow-hidden rounded-xl border border-amber-500/30 bg-gradient-to-br from-amber-500/10 via-amber-500/5 to-transparent p-2.5 backdrop-blur-xl sm:min-w-0 sm:rounded-2xl sm:p-4 dark:border-amber-500/20 dark:bg-stone-900/80">
+          <div className="flex items-center gap-2 sm:gap-2.5">
+            <div className="flex h-7 w-7 shrink-0 items-center justify-center rounded-lg bg-amber-500/20 font-extrabold text-amber-600 sm:h-9 sm:w-9 sm:rounded-xl dark:text-amber-400">
+              <Sparkles className="h-3.5 w-3.5 sm:h-4.5 sm:w-4.5" />
+            </div>
+            <div className="min-w-0">
+              <span className="block text-[8.5px] font-black tracking-wider text-amber-600 uppercase sm:text-[9.5px] dark:text-amber-400 truncate">
+                Light Art Honors
+              </span>
+              <span className="font-paytone text-sm font-bold text-slate-900 sm:text-2xl dark:text-white">
+                {stats.lightAwards}
+              </span>
+            </div>
+          </div>
+        </div>
+
+        {/* Awarded Editions */}
+        <div className="relative min-w-[140px] shrink-0 snap-center overflow-hidden rounded-xl border border-blue-500/30 bg-gradient-to-br from-blue-500/10 via-blue-500/5 to-transparent p-2.5 backdrop-blur-xl sm:min-w-0 sm:rounded-2xl sm:p-4 dark:border-blue-500/20 dark:bg-stone-900/80">
+          <div className="flex items-center gap-2 sm:gap-2.5">
+            <div className="flex h-7 w-7 shrink-0 items-center justify-center rounded-lg bg-blue-500/20 font-extrabold text-blue-600 sm:h-9 sm:w-9 sm:rounded-xl dark:text-blue-400">
+              <Building2 className="h-3.5 w-3.5 sm:h-4.5 sm:w-4.5" />
+            </div>
+            <div className="min-w-0">
+              <span className="block text-[8.5px] font-black tracking-wider text-blue-600 uppercase sm:text-[9.5px] dark:text-blue-400 truncate">
+                Awarded Years
+              </span>
+              <span className="font-paytone text-sm font-bold text-slate-900 sm:text-2xl dark:text-white">
+                {stats.editions} Years
+              </span>
+            </div>
+          </div>
+        </div>
+      </div>
+
       {/* YEAR FILTER BAR */}
-      <div className="card-glass relative overflow-hidden rounded-2xl border border-slate-200/90 p-4 backdrop-blur-2xl sm:rounded-3xl sm:p-6 dark:border-white/12">
+      <div className="card-glass relative overflow-hidden rounded-xl border border-slate-200/90 p-3 backdrop-blur-2xl sm:rounded-3xl sm:p-6 dark:border-white/12">
         <BorderBeam
           size={160}
           duration={8}
@@ -91,46 +193,45 @@ export function AwardsFilterView({ awards }: AwardsFilterViewProps) {
           colorTo="#fef08a"
         />
 
-        <div className="flex flex-col items-start justify-between gap-4 md:flex-row md:items-center">
-          <div className="flex items-center gap-3">
-            <div className="flex h-10 w-10 items-center justify-center rounded-xl border border-amber-500/30 bg-amber-500/15 text-amber-600 dark:text-amber-400">
-              <Trophy className="h-5 w-5" />
+        <div className="flex flex-col items-start justify-between gap-3 xl:flex-row xl:items-center">
+          <div className="flex items-center gap-2.5 sm:gap-3">
+            <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg border border-amber-500/30 bg-amber-500/15 text-amber-600 sm:h-10 sm:w-10 sm:rounded-xl dark:text-amber-400">
+              <Trophy className="h-4 w-4 sm:h-5 sm:w-5" />
             </div>
             <div>
-              <h3 className="font-paytone text-base font-bold text-slate-900 sm:text-xl dark:text-white">
-                Honors & Recognition ({filteredAwards.length} Awards in{' '}
-                {selectedYear})
+              <h3 className="font-paytone text-sm font-bold text-slate-900 sm:text-xl dark:text-white">
+                Honors & Recognition
               </h3>
-              <p className="text-xs text-slate-600 dark:text-slate-300">
+              <p className="text-[10.5px] text-slate-600 sm:text-xs dark:text-slate-300">
                 Celebrating excellence in Pandal Art, Lighting, Security & Public Choice
               </p>
             </div>
           </div>
-        </div>
 
-        {/* Year Filter Buttons */}
-        <div className="mt-4 flex flex-wrap items-center gap-2 pt-3 border-t border-slate-200/80 dark:border-white/10">
-          <span className="mr-1 inline-flex items-center gap-1 text-[11px] font-bold text-slate-500 dark:text-slate-400">
-            <Filter className="h-3 w-3" /> Select Edition Year:
-          </span>
-          {years.map((year) => {
-            const isActive = selectedYear === year;
-            return (
-              <button
-                key={year}
-                type="button"
-                onClick={() => setSelectedYear(year)}
-                className={cn(
-                  'rounded-xl px-3 py-1 text-xs font-bold transition-all duration-200 min-h-[36px] cursor-pointer',
-                  isActive
-                    ? 'border border-amber-400 bg-amber-500 font-black text-slate-950 shadow-xs'
-                    : 'border border-slate-200/80 bg-white/80 text-slate-700 hover:border-amber-500/30 hover:bg-amber-500/10 dark:border-white/10 dark:bg-stone-900 dark:text-slate-300 dark:hover:bg-stone-800'
-                )}
-              >
-                {year} Edition
-              </button>
-            );
-          })}
+          {/* Year Filter Buttons */}
+          <div className="flex w-full items-center justify-start gap-1.5 overflow-x-auto scrollbar-none snap-x snap-mandatory xl:w-auto xl:overflow-visible">
+            <span className="shrink-0 text-[11px] font-black text-slate-500 sm:text-xs dark:text-slate-400 mr-1">
+              Filter:
+            </span>
+            {years.map((year) => {
+              const isActive = selectedYear === year;
+              return (
+                <button
+                  key={year}
+                  type="button"
+                  onClick={() => setSelectedYear(year)}
+                  className={cn(
+                    'inline-flex shrink-0 snap-center items-center justify-center rounded-full px-3 py-1 text-[11px] font-extrabold transition-all duration-200 cursor-pointer shadow-none sm:px-3.5 sm:py-1.5 sm:text-xs',
+                    isActive
+                      ? 'bg-amber-500 text-slate-950 border border-amber-400/80 font-black'
+                      : 'border border-slate-200/80 bg-slate-100/80 text-slate-600 hover:bg-slate-200/80 dark:border-white/10 dark:bg-stone-800/80 dark:text-slate-300 dark:hover:bg-stone-700'
+                  )}
+                >
+                  {year}
+                </button>
+              );
+            })}
+          </div>
         </div>
       </div>
 

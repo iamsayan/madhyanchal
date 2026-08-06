@@ -12,17 +12,17 @@ export function PageSkeleton({
 }: PageSkeletonProps) {
   return (
     <div className={cn('relative min-h-[60vh] w-full pb-8 sm:pb-12', className)}>
-      {/* HERO BANNER SKELETON (NATIVE COMPACT ON MOBILE) */}
-      <section className="relative border-b border-amber-500/10 bg-amber-50/30 px-3.5 pt-[calc(3.5rem+env(safe-area-inset-top,0px))] pb-6 sm:px-6 sm:pt-24 sm:pb-10 dark:bg-stone-950/50">
-        <div className="mx-auto flex max-w-4xl flex-col items-center space-y-2.5 text-center sm:space-y-4">
+      {/* HERO BANNER SKELETON (ADJUSTED FOR MOBILE HEADER HEIGHT) */}
+      <section className="relative border-b border-amber-500/10 bg-amber-50/30 px-3.5 pt-[calc(4rem+env(safe-area-inset-top,0px))] pb-5 sm:px-6 sm:pt-24 sm:pb-10 dark:bg-stone-950/50">
+        <div className="mx-auto flex max-w-4xl flex-col items-center space-y-2 text-center sm:space-y-4">
           {/* Badge Skeleton */}
-          <Skeleton className="h-5 w-28 rounded-full sm:h-6 sm:w-36" />
+          <Skeleton className="h-4.5 w-24 rounded-full sm:h-6 sm:w-36" />
 
           {/* Title Skeleton */}
-          <Skeleton className="h-7 w-48 rounded-xl sm:h-12 sm:w-96" />
+          <Skeleton className="h-6.5 w-44 rounded-xl sm:h-12 sm:w-96" />
 
           {/* Subtitle Skeleton */}
-          <Skeleton className="h-3.5 w-3/4 rounded-lg sm:h-4 sm:w-2/3" />
+          <Skeleton className="h-3 w-2/3 rounded-lg sm:h-4 sm:w-2/3" />
         </div>
       </section>
 

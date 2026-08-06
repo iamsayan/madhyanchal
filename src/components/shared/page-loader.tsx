@@ -21,7 +21,7 @@ export function PageLoader({ className, showText = true }: PageLoaderProps) {
         <div className="absolute h-24 w-48 rounded-full bg-amber-500/25 blur-3xl dark:bg-amber-500/15" />
 
         {/* Logo Card Container */}
-        <div className="relative flex flex-col items-center justify-center rounded-2xl border border-amber-500/20 bg-white/80 px-6 py-4 shadow-lg backdrop-blur-2xl dark:border-white/10 dark:bg-stone-900/90">
+        <div className="relative flex flex-col items-center justify-center rounded-2xl border border-amber-500/20 bg-white/80 px-6 py-4 backdrop-blur-2xl dark:border-white/10 dark:bg-stone-900/90">
           <Image
             src="/logo.png"
             alt="Madhyanchal Sarbajanin Logo"

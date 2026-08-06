@@ -29,6 +29,7 @@ import {
   History,
   MapPin,
   Sparkles,
+  Train,
   TrendingUp,
   Users,
 } from 'lucide-react';
@@ -404,8 +405,8 @@ export default async function HomePage() {
                     <MapPin className="h-5.5 w-5.5" />
                   </div>
 
-                  <span className="rounded-full border border-emerald-500/40 bg-emerald-500/10 px-2.5 py-0.5 text-xs font-bold text-emerald-600 backdrop-blur-md dark:text-emerald-400">
-                    📍 800m from Station
+                  <span className="inline-flex items-center gap-1.5 rounded-full border border-emerald-500/40 bg-emerald-500/10 px-2.5 py-0.5 text-xs font-bold text-emerald-600 backdrop-blur-md dark:text-emerald-400">
+                    <Train className="h-3.5 w-3.5" /> 800m from Station
                   </span>
                 </div>
 
@@ -425,8 +426,8 @@ export default async function HomePage() {
                     </h3>
                   </div>
 
-                  <span className="rounded-full border border-emerald-500/40 bg-emerald-500/10 px-2 py-0.5 text-[9px] font-bold text-emerald-600 backdrop-blur-md dark:text-emerald-400">
-                    📍 800m Station
+                  <span className="inline-flex shrink-0 items-center gap-1 rounded-full border border-emerald-500/40 bg-emerald-500/10 px-2 py-0.5 text-[9.5px] font-bold text-emerald-600 backdrop-blur-md dark:text-emerald-400">
+                    <Train className="h-3 w-3" /> 800m
                   </span>
                 </div>
 
@@ -442,7 +443,7 @@ export default async function HomePage() {
                   variant="primary"
                   size="default"
                   asChild
-                  className="min-h-[34px] flex-1 rounded-full border border-amber-400/60 px-3.5 text-[11px] font-bold sm:min-h-[40px] sm:flex-initial sm:px-5 sm:text-xs"
+                  className="min-h-[34px] flex-1 rounded-full border border-amber-400/60 px-3.5 text-[11px] font-bold shadow-none sm:min-h-[40px] sm:flex-initial sm:px-5 sm:text-xs"
                 >
                   <a
                     href="https://maps.app.goo.gl/xY6cx8Arcy6ayLYq9"
@@ -559,6 +560,21 @@ export default async function HomePage() {
             dates={dates}
             targetPujaDate={targetPujaDate}
           />
+
+          <div className="mt-6 flex justify-center sm:mt-8">
+            <Button
+              variant="primary"
+              size="default"
+              asChild
+              className="min-h-[40px] rounded-full border border-amber-400/60 px-6 text-xs font-bold shadow-none sm:min-h-[44px] sm:px-8 sm:text-sm"
+            >
+              <Link href="/schedule" className="gap-2">
+                <Calendar className="h-4 w-4 text-slate-950" />
+                <span>Explore Full Festival Schedule</span>
+                <ChevronRight className="h-4 w-4 text-slate-950" />
+              </Link>
+            </Button>
+          </div>
         </AnimatedWrapper>
       </Section>
 

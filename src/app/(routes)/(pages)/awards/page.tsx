@@ -192,21 +192,6 @@ export default function AwardsPage() {
           <AwardsFilterView awards={awards} />
         </div>
 
-        {/* PREVIOUS AWARDS PHOTO SHOWCASE (Horizontal Touch Carousel) */}
-        <div className="space-y-4 pt-4 sm:space-y-6">
-          <AnimatedWrapper direction="up" className="space-y-1 text-center">
-            <h3 className="font-paytone text-base text-slate-900 sm:text-xl dark:text-white">
-              Award Ceremonies Showcase
-            </h3>
-            <p className="text-xs text-slate-600 dark:text-slate-400">
-              Moments of recognition captured across award functions over the
-              years.
-            </p>
-          </AnimatedWrapper>
-
-          {/* <AdvertiserSlider slides={awardsSlides} /> */}
-        </div>
-
         {/* COMMUNITY GRATITUDE DOCK */}
         <AnimatedWrapper direction="up" className="relative pt-2">
           <div className="relative space-y-2.5 overflow-hidden rounded-xl border border-amber-500/30 bg-gradient-to-r from-amber-500/10 via-amber-500/5 to-amber-500/10 p-4 text-center backdrop-blur-2xl sm:space-y-4 sm:rounded-3xl sm:p-8 dark:from-amber-500/15 dark:via-stone-950 dark:to-amber-500/15">

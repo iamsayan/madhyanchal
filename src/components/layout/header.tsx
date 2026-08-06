@@ -39,6 +39,7 @@ export function Header() {
     { label: 'Schedule', href: '/schedule' },
     { label: 'Gallery', href: '/gallery' },
     { label: 'Awards', href: '/awards' },
+    { label: 'Advertise', href: '/advertise' },
     { label: 'About Us', href: '/about-us' },
     { label: '🌺 Durga Puja', href: '/durgapuja', highlighted: true },
   ];
