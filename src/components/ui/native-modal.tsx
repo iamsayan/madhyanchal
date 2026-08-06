@@ -46,6 +46,7 @@ export interface NativeModalProps {
   children?: ReactNode;
   maxWidthClass?: string;
   backdropClassName?: string;
+  preventClose?: boolean;
 }
 
 export function NativeModal({
@@ -61,6 +62,7 @@ export function NativeModal({
   children,
   maxWidthClass = 'sm:max-w-xl md:max-w-2xl',
   backdropClassName,
+  preventClose = false,
 }: NativeModalProps) {
   const [mounted, setMounted] = useState(false);
   const [copiedIndex, setCopiedIndex] = useState<number | null>(null);
@@ -190,9 +192,10 @@ export function NativeModal({
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            onClick={onClose}
+            onClick={preventClose ? undefined : onClose}
             className={cn(
-              'fixed inset-0 cursor-pointer backdrop-blur-md transition-colors duration-300',
+              'fixed inset-0 backdrop-blur-md transition-colors duration-300',
+              !preventClose && 'cursor-pointer',
               backdropClassName
                 ? backdropClassName
                 : isDurgaPuja
@@ -213,14 +216,16 @@ export function NativeModal({
             )}
           >
             {/* Top-Right Close Button */}
-            <button
-              type="button"
-              onClick={onClose}
-              className="absolute top-3 right-3 z-20 flex h-8 min-h-8 w-8 min-w-8 items-center justify-center rounded-full text-slate-500 transition-colors hover:text-slate-900 active:scale-[0.98] sm:top-4 sm:right-4 dark:text-slate-400 dark:hover:text-white"
-              aria-label="Close dialog"
-            >
-              <X className="h-4.5 w-4.5" />
-            </button>
+            {!preventClose && (
+              <button
+                type="button"
+                onClick={onClose}
+                className="absolute top-3 right-3 z-20 flex h-8 min-h-8 w-8 min-w-8 items-center justify-center rounded-full text-slate-500 transition-colors hover:text-slate-900 active:scale-[0.98] sm:top-4 sm:right-4 dark:text-slate-400 dark:hover:text-white"
+                aria-label="Close dialog"
+              >
+                <X className="h-4.5 w-4.5" />
+              </button>
+            )}
 
             {/* Mobile Native Drag Handle Bar */}
             <div className="mx-auto mb-3 h-1.5 w-10 shrink-0 rounded-full bg-slate-300 sm:hidden dark:bg-slate-700" />

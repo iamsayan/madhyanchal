@@ -324,6 +324,41 @@ export function MobileNavDock() {
                 </div>
               </div>
 
+              {/* PWA INSTALL DIRECT ACTION CARD (Distinct Emerald/Teal Theme) */}
+              {!isStandalone && (
+                <button
+                  type="button"
+                  onClick={() => {
+                    setMoreOpen(false);
+                    if (
+                      typeof window !== 'undefined' &&
+                      window.openPwaInstallPrompt
+                    ) {
+                      window.openPwaInstallPrompt();
+                    }
+                  }}
+                  className="flex w-full items-center justify-between rounded-2xl border border-emerald-500/40 bg-gradient-to-r from-emerald-500/15 via-teal-500/10 to-emerald-500/20 p-3 text-left transition-all hover:scale-[1.01] active:scale-[0.98] dark:border-emerald-400/30 dark:from-emerald-950/40 dark:to-teal-950/30"
+                >
+                  <div className="flex items-center gap-3">
+                    <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-gradient-to-br from-emerald-500 to-teal-600 text-white shadow-xs">
+                      <Download className="h-4.5 w-4.5" />
+                    </div>
+                    <div>
+                      <div className="flex items-center gap-1.5 text-xs font-black text-slate-900 dark:text-white">
+                        <span>Install Official App</span>
+                        <span className="py-0.2 rounded-full bg-emerald-500 px-1.5 text-[8.5px] font-black tracking-widest text-white uppercase">
+                          NEW
+                        </span>
+                      </div>
+                      <div className="text-[10px] font-medium text-slate-600 dark:text-slate-300">
+                        Add to home screen for quick offline access
+                      </div>
+                    </div>
+                  </div>
+                  <ChevronRight className="h-4 w-4 text-emerald-600 dark:text-emerald-400" />
+                </button>
+              )}
+
               {/* SAVED MEMBERSHIPS ON THIS DEVICE SECTION */}
               {!isDurgaPuja && savedMembers.length > 0 && (
                 <div className="space-y-2 rounded-2xl border border-amber-500/30 bg-linear-to-r from-amber-500/10 via-amber-500/5 to-amber-500/10 p-3">
@@ -378,41 +413,6 @@ export function MobileNavDock() {
                   </div>
                   <ChevronRight className="h-4 w-4 text-indigo-600 dark:text-indigo-400" />
                 </Link>
-              )}
-
-              {/* PWA INSTALL DIRECT ACTION CARD (Distinct Emerald/Teal Theme) */}
-              {!isStandalone && (
-                <button
-                  type="button"
-                  onClick={() => {
-                    setMoreOpen(false);
-                    if (
-                      typeof window !== 'undefined' &&
-                      window.openPwaInstallPrompt
-                    ) {
-                      window.openPwaInstallPrompt();
-                    }
-                  }}
-                  className="flex w-full items-center justify-between rounded-2xl border border-emerald-500/40 bg-gradient-to-r from-emerald-500/15 via-teal-500/10 to-emerald-500/20 p-3 text-left transition-all hover:scale-[1.01] active:scale-[0.98] dark:border-emerald-400/30 dark:from-emerald-950/40 dark:to-teal-950/30"
-                >
-                  <div className="flex items-center gap-3">
-                    <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-gradient-to-br from-emerald-500 to-teal-600 text-white shadow-xs">
-                      <Download className="h-4.5 w-4.5" />
-                    </div>
-                    <div>
-                      <div className="flex items-center gap-1.5 text-xs font-black text-slate-900 dark:text-white">
-                        <span>Install Official App</span>
-                        <span className="py-0.2 rounded-full bg-emerald-500 px-1.5 text-[8.5px] font-black tracking-widest text-white uppercase">
-                          NEW
-                        </span>
-                      </div>
-                      <div className="text-[10px] font-medium text-slate-600 dark:text-slate-300">
-                        Add to home screen for quick offline access
-                      </div>
-                    </div>
-                  </div>
-                  <ChevronRight className="h-4 w-4 text-emerald-600 dark:text-emerald-400" />
-                </button>
               )}
 
               {/* Menu List */}
