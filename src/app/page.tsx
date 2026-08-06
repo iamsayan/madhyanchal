@@ -38,7 +38,6 @@ import { Metadata } from 'next';
 
 export const metadata: Metadata = {
   title: `Madhyanchal Sarbajanin Jagadhatri Puja ${currentYear} | Chandannagar`,
-  publisher: 'Madhyanchal Sarbajanin Jagadhatri Puja Samity',
 };
 
 export default async function HomePage() {

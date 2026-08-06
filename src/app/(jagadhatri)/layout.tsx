@@ -2,10 +2,9 @@ import { Metadata } from 'next';
 
 export const metadata: Metadata = {
   title: {
-    template: '%s | Madhyanchal Sarbajanin Jagadhatri Puja, Chandannagar',
+    template: '%s | Madhyanchal Sarbajanin Jagadhatri Puja',
     default: 'Madhyanchal Sarbajanin Jagadhatri Puja | Chandannagar',
   },
-  publisher: 'Madhyanchal Sarbajanin Jagadhatri Puja Samity',
 };
 
 export default function JagadhatriLayout({

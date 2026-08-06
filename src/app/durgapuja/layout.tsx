@@ -24,7 +24,6 @@ export const metadata: Metadata = {
     'hooghly durga puja',
     'bengal autumn festival',
   ],
-  publisher: 'Madhyanchal Sarbajanin Durga Puja Samity',
   alternates: {
     canonical: '/durgapuja',
   },
