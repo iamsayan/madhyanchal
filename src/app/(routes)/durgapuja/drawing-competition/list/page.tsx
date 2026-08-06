@@ -20,7 +20,7 @@ export const metadata: Metadata = {
 };
 
 export default async function DrawingCompetitionListPage() {
-  const participantList = await getDrawingCompetitionParticipants('2025');
+  const participantList = await getDrawingCompetitionParticipants('2026');
 
   const jsonLd = {
     '@context': 'https://schema.org',

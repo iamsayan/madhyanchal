@@ -68,9 +68,5 @@ export const metadata: Metadata = {
 };
 
 export default function DurgaPujaLayout({ children }: { children: ReactNode }) {
-  return (
-    <div className="durga-puja-theme flex min-h-screen flex-col">
-      {children}
-    </div>
-  );
+  return <div className="durga-puja-theme flex flex-col">{children}</div>;
 }
