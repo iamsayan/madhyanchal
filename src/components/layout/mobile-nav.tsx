@@ -314,9 +314,9 @@ export function MobileNavDock() {
                 <button
                   type="button"
                   onClick={() => setMoreOpen(false)}
-                  className="flex h-9 min-h-11 w-9 min-w-11 items-center justify-center rounded-full bg-slate-100 text-slate-700 active:scale-[0.98] dark:bg-slate-900 dark:text-slate-300"
+                  className="flex h-9 min-h-11 w-9 min-w-11 items-center justify-center rounded-full text-slate-500 transition-colors hover:text-slate-900 active:scale-[0.98] dark:text-slate-400 dark:hover:text-white"
                 >
-                  <X className="h-4 w-4" />
+                  <X className="h-4.5 w-4.5" />
                 </button>
               </div>
 

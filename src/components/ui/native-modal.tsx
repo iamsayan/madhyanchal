@@ -15,6 +15,7 @@ import {
   ShieldCheck,
   Trophy,
   XCircle,
+  X,
 } from 'lucide-react';
 
 export interface NativeModalDetailItem {
@@ -108,7 +109,7 @@ export function NativeModal({
           borderBeam: { from: '#f43f5e', to: '#fb7185' },
           badgeBg:
             'border-rose-500/30 bg-rose-500/10 text-rose-500 dark:border-rose-500/40 dark:bg-rose-500/20 dark:text-rose-400',
-          borderColor: 'border-rose-500/30 dark:border-rose-500/40',
+          borderColor: 'border-slate-200 dark:border-white/15',
           defaultIcon: (
             <XCircle className="h-7 w-7 text-rose-500 sm:h-9 sm:w-9" />
           ),
@@ -119,7 +120,7 @@ export function NativeModal({
           borderBeam: { from: '#f59e0b', to: '#fbbf24' },
           badgeBg:
             'border-amber-500/30 bg-amber-500/10 text-amber-600 dark:border-amber-500/40 dark:bg-amber-500/20 dark:text-amber-400',
-          borderColor: 'border-amber-500/30 dark:border-amber-500/40',
+          borderColor: 'border-slate-200 dark:border-white/15',
           defaultIcon: (
             <Trophy className="h-7 w-7 text-amber-500 sm:h-9 sm:w-9" />
           ),
@@ -130,7 +131,7 @@ export function NativeModal({
           borderBeam: { from: '#10b981', to: '#34d399' },
           badgeBg:
             'border-emerald-500/30 bg-emerald-500/10 text-emerald-500 shadow-lg shadow-emerald-500/20 dark:border-emerald-500/40 dark:bg-emerald-500/20 dark:text-emerald-400',
-          borderColor: 'border-emerald-500/30 dark:border-emerald-500/40',
+          borderColor: 'border-slate-200 dark:border-white/15',
           defaultIcon: (
             <CheckCircle2 className="h-7 w-7 animate-bounce text-emerald-500 sm:h-9 sm:w-9" />
           ),
@@ -142,8 +143,8 @@ export function NativeModal({
 
   const renderButton = (btn: NativeModalActionButton, isPrimary: boolean) => {
     const baseClasses = isPrimary
-      ? 'inline-flex flex-1 items-center justify-center gap-1.5 rounded-2xl bg-gradient-to-r from-amber-600 via-amber-500 to-yellow-500 py-2.5 px-2 text-[11px] font-black tracking-wide text-stone-950 uppercase shadow-md whitespace-nowrap transition-all hover:scale-[1.02] active:scale-[0.98] sm:gap-2 sm:px-3 sm:text-xs'
-      : 'inline-flex flex-1 items-center justify-center gap-1.5 rounded-2xl border border-slate-200 bg-white py-2.5 px-2 text-[11px] font-bold text-slate-800 shadow-xs whitespace-nowrap transition-all hover:bg-slate-50 active:scale-[0.98] sm:gap-2 sm:px-3 sm:text-xs dark:border-white/15 dark:bg-stone-900 dark:text-slate-200 dark:hover:bg-stone-800';
+      ? 'inline-flex flex-auto items-center justify-center gap-1.5 rounded-full bg-gradient-to-r from-amber-600 via-amber-500 to-yellow-500 py-2.5 px-4 text-[11px] font-black tracking-wide text-stone-950 uppercase shadow-md whitespace-nowrap transition-all hover:scale-[1.02] active:scale-[0.98] sm:gap-2 sm:px-5 sm:text-xs'
+      : 'inline-flex flex-auto items-center justify-center gap-1.5 rounded-full border border-slate-200 bg-white py-2.5 px-4 text-[11px] font-bold text-slate-800 shadow-xs whitespace-nowrap transition-all hover:bg-slate-50 active:scale-[0.98] sm:gap-2 sm:px-5 sm:text-xs dark:border-white/15 dark:bg-stone-900 dark:text-slate-200 dark:hover:bg-stone-800';
 
     if (btn.href) {
       return (
@@ -207,16 +208,19 @@ export function NativeModal({
             exit={{ y: '100%' }}
             transition={{ duration: 0.28, ease: [0.32, 0.72, 0, 1] }}
             className={cn(
-              `relative z-10 flex max-h-[85vh] w-full ${maxWidthClass} flex-col overflow-hidden rounded-t-[2rem] border ${vStyles.borderColor} bg-white/95 p-4 pb-[calc(1.25rem+env(safe-area-inset-bottom,0px))] text-center shadow-2xl backdrop-blur-2xl sm:rounded-[2.5rem] sm:p-6 sm:pb-6 dark:bg-stone-950/95`,
+              `relative z-10 flex max-h-[85vh] w-full ${maxWidthClass} flex-col overflow-hidden rounded-t-[2rem] border-t border-slate-200 bg-white/95 p-4 pb-[calc(1.25rem+env(safe-area-inset-bottom,0px))] text-center shadow-2xl backdrop-blur-2xl sm:rounded-[2.5rem] sm:border sm:p-6 sm:pb-6 dark:border-white/15 dark:bg-stone-950/95`,
               containsBengali && 'font-bengali'
             )}
           >
-            <BorderBeam
-              size={160}
-              duration={6}
-              colorFrom={vStyles.borderBeam.from}
-              colorTo={vStyles.borderBeam.to}
-            />
+            {/* Top-Right Close Button */}
+            <button
+              type="button"
+              onClick={onClose}
+              className="absolute top-3 right-3 z-20 flex h-9 min-h-11 w-9 min-w-11 items-center justify-center rounded-full text-slate-500 transition-colors hover:text-slate-900 active:scale-[0.98] sm:top-4 sm:right-4 dark:text-slate-400 dark:hover:text-white"
+              aria-label="Close dialog"
+            >
+              <X className="h-4.5 w-4.5" />
+            </button>
 
             {/* Mobile Native Drag Handle Bar */}
             <div className="mx-auto mb-3 h-1.5 w-10 shrink-0 rounded-full bg-slate-300 sm:hidden dark:bg-slate-700" />
@@ -295,7 +299,7 @@ export function NativeModal({
 
             {/* Action Buttons */}
             {(primaryButton || secondaryButton) && (
-              <div className="flex shrink-0 gap-2.5 pt-1.5">
+              <div className="flex w-full shrink-0 items-center justify-between gap-2.5 pt-2 sm:gap-3">
                 {secondaryButton && renderButton(secondaryButton, false)}
                 {primaryButton && renderButton(primaryButton, true)}
               </div>

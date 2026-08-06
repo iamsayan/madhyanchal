@@ -177,12 +177,12 @@ export default function DurgaPujaLandingPage() {
             cultural celebrations in Chandannagar.
           </p>
 
-          <div className="flex w-full flex-row items-center justify-center gap-2.5 px-2 pt-1 sm:w-auto sm:gap-4 sm:px-0">
+          <div className="flex w-full flex-wrap items-center justify-center gap-2.5 px-2 pt-1 sm:w-auto sm:gap-4 sm:px-0">
             <Button
               variant="primary"
               size="lg"
               asChild
-              className="gold-glow relative min-h-[42px] flex-1 shrink-0 overflow-hidden rounded-full px-4 py-2.5 text-xs font-extrabold whitespace-nowrap hover:scale-105 active:scale-95 sm:min-h-[44px] sm:w-auto sm:px-6 sm:py-3 sm:text-sm lg:text-base"
+              className="gold-glow relative min-h-[42px] w-auto shrink-0 overflow-hidden rounded-full px-5 py-2.5 text-xs font-extrabold whitespace-nowrap hover:scale-105 active:scale-95 sm:min-h-[44px] sm:px-6 sm:py-3 sm:text-sm lg:text-base"
             >
               <Link
                 href="/durgapuja/schedule"
@@ -203,7 +203,7 @@ export default function DurgaPujaLandingPage() {
             <Button
               variant="outline"
               size="lg"
-              className="min-h-[42px] flex-1 shrink-0 rounded-full border-slate-300/90 bg-white/80 px-4 py-2.5 text-xs whitespace-nowrap text-slate-800 backdrop-blur-xl hover:scale-105 hover:bg-slate-100 active:scale-95 sm:min-h-[44px] sm:w-auto sm:px-6 sm:py-3 sm:text-sm lg:text-base dark:border-white/40 dark:bg-transparent dark:text-white dark:hover:bg-white/15"
+              className="min-h-[42px] w-auto shrink-0 rounded-full border-slate-300/90 bg-white/80 px-5 py-2.5 text-xs whitespace-nowrap text-slate-800 backdrop-blur-xl hover:scale-105 hover:bg-slate-100 active:scale-95 sm:min-h-[44px] sm:px-6 sm:py-3 sm:text-sm lg:text-base dark:border-white/40 dark:bg-transparent dark:text-white dark:hover:bg-white/15"
               asChild
             >
               <Link
