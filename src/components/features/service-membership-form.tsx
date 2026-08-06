@@ -3,18 +3,14 @@
 import { FormEvent, useCallback, useEffect, useMemo, useState } from 'react';
 
 import Link from 'next/link';
+import { useRouter, useSearchParams } from 'next/navigation';
 
 import { createRazorpayOrder } from '@/app/actions/razorpay';
 import { BorderBeam } from '@/components/ui/border-beam';
 import { NativeModal } from '@/components/ui/native-modal';
 import { loadRazorpay } from '@/lib/load-razorpay';
 
-import { AnimatePresence, motion } from 'framer-motion';
-
 import {
-  Check,
-  CheckCircle2,
-  Copy,
   History,
   Loader2,
   Lock,
@@ -24,7 +20,6 @@ import {
   Sparkles,
   Trophy,
   User,
-  XCircle,
 } from 'lucide-react';
 import type {
   MembershipPayment,
@@ -41,6 +36,8 @@ export function ServiceMembershipForm({
   memberData,
   year,
 }: ServiceMembershipFormProps) {
+  const router = useRouter();
+  const searchParams = useSearchParams();
   const [success, setSuccess] = useState<{
     paymentId: string;
     amount: string;
@@ -67,6 +64,32 @@ export function ServiceMembershipForm({
       document.body.style.overflow = '';
     };
   }, [success, error]);
+
+  // Persist opened member to device list & clean legacy URL query parameter
+  useEffect(() => {
+    if (memberData?._id) {
+      try {
+        const existingStr = localStorage.getItem('madhyanchal_members_list');
+        let list: Array<{ id: string; name: string }> = existingStr
+          ? JSON.parse(existingStr)
+          : [];
+
+        list = list.filter((m) => m.id !== memberData._id);
+        list.unshift({ id: memberData._id, name: memberData.name });
+        if (list.length > 5) list = list.slice(0, 5);
+
+        localStorage.setItem('madhyanchal_members_list', JSON.stringify(list));
+
+        if (searchParams.has('id')) {
+          router.replace(`/services/membership/${memberData._id}`, {
+            scroll: false,
+          });
+        }
+      } catch {
+        // Ignore storage error
+      }
+    }
+  }, [memberData, router, searchParams]);
 
   const amountData = useMemo(() => {
     const total = Number(memberData.amount || 0);

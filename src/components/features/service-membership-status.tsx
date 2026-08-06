@@ -3,7 +3,7 @@
 import { useCallback, useEffect, useMemo, useState } from 'react';
 
 import Link from 'next/link';
-import { useSearchParams } from 'next/navigation';
+import { useRouter, useSearchParams } from 'next/navigation';
 
 import { BorderBeam } from '@/components/ui/border-beam';
 import { cn } from '@/lib/utils';
@@ -81,6 +81,7 @@ export function ServiceMembershipStatus({
   data = [],
   year,
 }: ServiceMembershipStatusProps) {
+  const router = useRouter();
   const searchParams = useSearchParams();
   const [searchTerm, setSearchTerm] = useState('');
   const isInternal = searchParams.get('mode') === 'internal';
@@ -91,9 +92,9 @@ export function ServiceMembershipStatus({
     );
   }, [data]);
 
-  // Persist opened WhatsApp member link to device list for quick family access
+  // Persist opened member to device list for quick family access & clean legacy URL query
   useEffect(() => {
-    if (sanitizedData.length === 1 && !isInternal) {
+    if (sanitizedData.length === 1) {
       try {
         const member = sanitizedData[0];
         const existingStr = localStorage.getItem('madhyanchal_members_list');
@@ -111,11 +112,18 @@ export function ServiceMembershipStatus({
         if (list.length > 5) list = list.slice(0, 5);
 
         localStorage.setItem('madhyanchal_members_list', JSON.stringify(list));
+
+        // Clean up legacy rewrite query param using Next.js router & searchParams hook
+        if (searchParams.has('id')) {
+          router.replace(`/services/membership/${member._id}/status`, {
+            scroll: false,
+          });
+        }
       } catch {
         // Ignore storage error
       }
     }
-  }, [sanitizedData, isInternal]);
+  }, [sanitizedData, router, searchParams]);
 
   const filteredData = useMemo(() => {
     if (!searchTerm.trim()) return sanitizedData;

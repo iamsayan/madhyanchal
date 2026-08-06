@@ -56,7 +56,7 @@ const nextConfig = {
       },
     ];
   },
-  rewrites() {
+  redirects() {
     return [
       {
         source: '/payment/membership',
@@ -67,7 +67,7 @@ const nextConfig = {
           },
         ],
         destination: '/services/membership/:id',
-        //permanent: true,
+        permanent: true,
       },
       {
         source: '/membership-status',
@@ -78,7 +78,7 @@ const nextConfig = {
           },
         ],
         destination: '/services/membership/:id/status',
-        //permanent: true,
+        permanent: true,
       },
     ];
   },
