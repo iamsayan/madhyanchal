@@ -187,18 +187,18 @@ export default async function HomePage() {
           </div>
 
           {/* Centered Mobile Metrics Bar */}
-          <div className="grid w-full grid-cols-3 items-center justify-center gap-2 border-t border-slate-300/80 pt-4 text-[10px] font-bold text-slate-700 sm:flex sm:flex-wrap sm:gap-6 sm:pt-5 sm:text-xs lg:text-sm dark:border-white/15 dark:text-slate-300">
-            <span className="flex flex-col items-center justify-center gap-1 text-center sm:flex-row sm:gap-2">
+          <div className="flex flex-wrap items-center justify-center gap-x-4 gap-y-2 border-t border-slate-300/80 pt-4 text-[10px] font-bold text-slate-700 sm:gap-x-6 sm:pt-5 sm:text-xs lg:text-sm dark:border-white/15 dark:text-slate-300">
+            <span className="flex flex-row items-center justify-center gap-1.5 text-center sm:gap-2">
               <Footprints className="h-3.5 w-3.5 shrink-0 text-emerald-400" />
-              1.2M+ Footfalls
+              <span>1.2M+ Footfalls</span>
             </span>
-            <span className="flex flex-col items-center justify-center gap-1 text-center sm:flex-row sm:gap-2">
+            <span className="flex flex-row items-center justify-center gap-1.5 text-center sm:gap-2">
               <Award className="h-3.5 w-3.5 shrink-0 text-amber-400" />
-              100+ Awards
+              <span>100+ Awards</span>
             </span>
-            <span className="flex flex-col items-center justify-center gap-1 text-center sm:flex-row sm:gap-2">
+            <span className="flex flex-row items-center justify-center gap-1.5 text-center sm:gap-2">
               <MapPin className="h-3.5 w-3.5 shrink-0 text-rose-400" />
-              Station Road
+              <span>Station Road, Chandannagar</span>
             </span>
           </div>
         </AnimatedWrapper>
@@ -243,9 +243,9 @@ export default async function HomePage() {
 
                 <p className="line-clamp-3 max-w-xl text-xs leading-relaxed font-normal text-slate-300 sm:line-clamp-none sm:text-sm">
                   Chandannagar is globally renowned for its revolutionary light
-                  dynamic 3D light illumination art. Every year, Madhyanchal presents
-                  spectacular moving light tableaux created by master light
-                  artisans of Bengal.
+                  dynamic 3D light illumination art. Every year, Madhyanchal
+                  presents spectacular moving light tableaux created by master
+                  light artisans of Bengal.
                 </p>
 
                 <div className="pt-1 sm:pt-2">
@@ -255,10 +255,7 @@ export default async function HomePage() {
                     asChild
                     className="min-h-[36px] rounded-full border border-amber-400/60 px-4 text-xs font-bold sm:min-h-[40px] sm:px-5"
                   >
-                    <Link
-                      href="/gallery"
-                      className="gap-1.5 sm:gap-2"
-                    >
+                    <Link href="/gallery" className="gap-1.5 sm:gap-2">
                       Explore Photo Gallery{' '}
                       <ChevronRight className="h-3.5 w-3.5 sm:h-4 sm:w-4" />
                     </Link>

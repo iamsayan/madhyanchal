@@ -122,7 +122,7 @@ export function MobileNavDock() {
       label: 'About Committee',
       href: '/about-us',
       icon: Info,
-      desc: 'Legacy & Team',
+      desc: 'Legacy & Members',
     },
     {
       label: 'Contact Us',

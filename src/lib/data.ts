@@ -13,8 +13,8 @@ import type {
 } from '@/types';
 
 export const currentYear = new Date().getFullYear();
-
 export const celebratingYear = currentYear - 1971 + 1;
+export const celebratingYearDurga = currentYear - 1995 + 1;
 
 export async function getSettings(): Promise<Settings> {
   'use cache';
