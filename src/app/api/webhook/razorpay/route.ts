@@ -11,6 +11,15 @@ import type {
   MembershipPayment,
 } from '@/types';
 
+interface RazorpayPaymentEntity {
+  id: string;
+  order_id: string;
+  amount: number;
+  email?: string;
+  contact?: string;
+  notes?: Record<string, any>;
+}
+
 function formatTimestamp(): string {
   const d = new Date();
   const pad = (n: number) => String(n).padStart(2, '0');
@@ -20,7 +29,7 @@ function formatTimestamp(): string {
 }
 
 async function handleMembershipPayment(
-  payment: Record<string, any>,
+  payment: RazorpayPaymentEntity,
   paymentYear: string,
   paymentAmount: number,
   phone: string
@@ -66,14 +75,14 @@ async function handleMembershipPayment(
     memberId: String(memberId).trim(),
   };
 
-  let contentSid = process.env.TWILIO_TEMPLATE_ACKNOWLEDGEMENT_NO_DUE!;
+  let contentSid = process.env.TWILIO_TEMPLATE_ACKNOWLEDGEMENT_NO_DUE || '';
   if (amountDue > 0) {
     contentVariables.dueAmount = String(amountDue);
-    contentSid = process.env.TWILIO_TEMPLATE_ACKNOWLEDGEMENT_DUE!;
+    contentSid = process.env.TWILIO_TEMPLATE_ACKNOWLEDGEMENT_DUE || '';
   }
 
   let messageResult: TwilioMessageResult | null = null;
-  if (phone) {
+  if (phone && contentSid) {
     messageResult = await sendWhatsAppMessage(
       phone,
       contentSid,
@@ -85,7 +94,7 @@ async function handleMembershipPayment(
 }
 
 async function handleDressPayment(
-  payment: Record<string, any>,
+  payment: RazorpayPaymentEntity,
   paymentYear: string,
   paymentAmount: number,
   phone: string
@@ -122,7 +131,7 @@ async function handleDressPayment(
 }
 
 async function handleDrawingPayment(
-  payment: Record<string, any>,
+  payment: RazorpayPaymentEntity,
   paymentYear: string,
   paymentAmount: number,
   phone: string
@@ -203,10 +212,18 @@ export async function POST(req: NextRequest) {
       );
     }
 
+    const secret = process.env.RAZORPAY_WEBHOOK_SECRET;
+    if (!secret) {
+      return NextResponse.json(
+        { success: false, error: 'Server webhook secret misconfigured' },
+        { status: 500 }
+      );
+    }
+
     const isValidSignature = Razorpay.validateWebhookSignature(
       rawPayload,
       webhookSignature,
-      process.env.RAZORPAY_WEBHOOK_SECRET!
+      secret
     );
 
     if (!isValidSignature) {

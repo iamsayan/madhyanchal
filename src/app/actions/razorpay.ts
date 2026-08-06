@@ -13,15 +13,15 @@ export async function createRazorpayOrder(formData: RazorpayOrder) {
       };
     }
 
-    const amount = formData.amount;
+    const amount = Number(formData.amount);
     const email = formData.email;
     const name = formData.name;
     const phone = formData.phone;
 
-    if (!amount || !email || !name || !phone) {
+    if (!amount || isNaN(amount) || amount <= 0 || amount > 100000000 || !email || !name || !phone) {
       return {
         success: false,
-        error: 'Missing required fields',
+        error: 'Invalid or missing required fields',
       };
     }
 

@@ -18,7 +18,7 @@ export interface PageLayoutProps {
   maxWidth?: string;
   className?: string;
   headerContent?: ReactNode;
-  scriptJsonLd?: Record<string, unknown>;
+  scriptJsonLd?: any;
   gradientWordsCount?: number;
 }
 

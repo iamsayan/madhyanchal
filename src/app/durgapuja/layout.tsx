@@ -1,4 +1,4 @@
-import { currentYear } from '@/src/lib/data';
+import { currentYear } from '@/lib/data';
 import type { Metadata, Viewport } from 'next';
 import { ReactNode } from 'react';
 

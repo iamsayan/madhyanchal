@@ -18,7 +18,7 @@ import {
 } from '@/components/shared/schedule-utilities';
 
 import { getJagadhatriScheduleSchema } from '@/lib/seo-schemas';
-import { createMetadata } from '@/src/lib/metadata';
+import { createMetadata } from '@/lib/metadata';
 
 export const metadata: Metadata = {
   ...createMetadata({

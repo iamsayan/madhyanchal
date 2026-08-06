@@ -2,7 +2,7 @@ import type { Metadata } from 'next';
 
 import { ServicePaymentForm } from '@/components/features/service-payment-form';
 import { ServiceLayout } from '@/components/layout/service-layout';
-import { currentYear } from '@/src/lib/data';
+import { currentYear } from '@/lib/data';
 
 export const metadata: Metadata = {
   title: `Subscription ${currentYear}`,

@@ -15,7 +15,12 @@ import { ReactNode, Suspense } from 'react';
 
 import './globals.css';
 import Script from 'next/script';
-import { JsonLd, organizationSchema, websiteSchema, SITE_URL } from '@/lib/schema';
+import {
+  JsonLd,
+  organizationSchema,
+  websiteSchema,
+  SITE_URL,
+} from '@/lib/schema';
 
 const outfit = Outfit({
   subsets: ['latin'],

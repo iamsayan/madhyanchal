@@ -12,8 +12,8 @@ import {
   Sparkles,
   Trophy,
 } from 'lucide-react';
-import { celebratingYear } from '@/src/lib/data';
-import { createMetadata } from '@/src/lib/metadata';
+import { celebratingYear } from '@/lib/data';
+import { createMetadata } from '@/lib/metadata';
 
 export const metadata: Metadata = {
   ...createMetadata({

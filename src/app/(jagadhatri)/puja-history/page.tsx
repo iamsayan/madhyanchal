@@ -18,7 +18,7 @@ import {
 } from 'lucide-react';
 
 import { getPujaHistorySchema } from '@/lib/seo-schemas';
-import { createMetadata } from '@/src/lib/metadata';
+import { createMetadata } from '@/lib/metadata';
 
 export const metadata: Metadata = {
   ...createMetadata({

@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 
-import { verifySecret } from '@/src/lib/verify';
+import { verifySecret } from '@/lib/verify';
 import cockpit from '@/lib/client';
 import { getMembershipYear } from '@/lib/data';
 import { calculateAmountDue, normalizePhone } from '@/lib/member-utils';

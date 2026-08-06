@@ -101,18 +101,6 @@ export interface Settings extends SingletonEntity {
   membership_year: number;
 }
 
-export interface DressOrder extends Entity {
-  name: string;
-  quantity: string[];
-  amount: string;
-  mode: string;
-  phone: string;
-  email: string;
-  payment_id: string;
-  order_id: string;
-  timestamp: string;
-}
-
 export interface HomepageVideo {
   title: string;
   video_id: string;

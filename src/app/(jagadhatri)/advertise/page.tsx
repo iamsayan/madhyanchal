@@ -25,7 +25,7 @@ import {
   Users,
   Zap,
 } from 'lucide-react';
-import { createMetadata } from '@/src/lib/metadata';
+import { createMetadata } from '@/lib/metadata';
 
 export const metadata: Metadata = {
   ...createMetadata({

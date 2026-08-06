@@ -1,7 +1,7 @@
 import { revalidateTag } from 'next/cache';
 import { NextRequest, NextResponse } from 'next/server';
 
-import { verifySecret } from '@/src/lib/verify';
+import { verifySecret } from '@/lib/verify';
 
 function handleRevalidate(tag: string) {
   console.log(`Revalidating Next.js cache tag: ${tag}`);

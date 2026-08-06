@@ -1,3 +1,4 @@
+import crypto from 'crypto';
 import { NextRequest } from 'next/server';
 
 /**
@@ -13,5 +14,13 @@ export function verifySecret(req: NextRequest): boolean {
     req.headers.get('x-webhook-secret') ||
     req.headers.get('authorization')?.replace(/^Bearer\s+/i, '');
 
-  return token === expectedSecret;
+  if (!token) return false;
+
+  const expectedBuf = Buffer.from(expectedSecret);
+  const tokenBuf = Buffer.from(token);
+
+  if (expectedBuf.length !== tokenBuf.length) return false;
+
+  return crypto.timingSafeEqual(expectedBuf, tokenBuf);
 }
+

@@ -28,6 +28,8 @@ export function createMetadata({
   canonical,
   image,
 }: MetadataOptions): Metadata {
+  const fullTitle = title.includes(SITE_NAME) ? title : `${title} | ${SITE_NAME}`;
+
   return {
     title,
     description,
@@ -36,7 +38,7 @@ export function createMetadata({
     },
     openGraph: {
       ...sharedOpenGraph,
-      title: `${title} | ${SITE_NAME}`,
+      title: fullTitle,
       description,
       url: canonical,
       ...(image && {
@@ -52,7 +54,7 @@ export function createMetadata({
     },
     twitter: {
       ...sharedTwitter,
-      title: `${title} | ${SITE_NAME}`,
+      title: fullTitle,
       description,
       ...(image && {
         images: [image],

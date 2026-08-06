@@ -2,11 +2,9 @@
  * Next.js 16 compliant Schema.org JSON-LD Component
  * Renders safe <script type="application/ld+json"> for search crawlers.
  */
-import type { JsonLdInput } from '@/lib/schema/types';
-
 interface JsonLdProps {
-  data?: JsonLdInput;
-  schema?: JsonLdInput;
+  data?: any;
+  schema?: any;
 }
 
 /**
@@ -34,4 +32,3 @@ export function JsonLd({ data, schema }: JsonLdProps) {
     />
   );
 }
-
