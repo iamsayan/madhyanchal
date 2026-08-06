@@ -95,7 +95,7 @@ export const openLetterheadPrintWindow = (options: PrintLetterheadOptions) => {
         <meta charset="utf-8">
         <style>
           @page {
-            size: A4 portrait;
+            size: 210mm 297mm;
             margin: 0;
           }
           * {
@@ -285,7 +285,7 @@ export const openLetterheadPrintWindow = (options: PrintLetterheadOptions) => {
           }
           @media print {
             @page {
-              size: A4 portrait;
+              size: 210mm 297mm;
               margin: 0;
             }
             .no-print-bar {
