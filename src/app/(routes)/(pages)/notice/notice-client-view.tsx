@@ -571,7 +571,7 @@ export default function NoticeClientView({
                     className="inline-flex items-center justify-center gap-1.5 rounded-xl bg-amber-500 px-3.5 py-2 text-xs font-bold text-slate-950 shadow-2xs transition-all hover:bg-amber-400 active:scale-95 sm:px-4 sm:py-2.5 sm:text-sm"
                   >
                     <FileText className="h-3.5 w-3.5 sm:h-4 sm:w-4" />
-                    <span>Read Full Notice</span>
+                    <span>Read Notice</span>
                   </button>
 
                   <button
@@ -742,7 +742,6 @@ export default function NoticeClientView({
         details={
           activeNoticeModal
             ? [
-                { label: 'Category', value: activeNoticeModal.category },
                 ...(activeNoticeModal.ref_no
                   ? [
                       {

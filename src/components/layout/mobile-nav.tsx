@@ -26,6 +26,7 @@ import {
 } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { sendGTMEvent } from '@next/third-parties/google';
+import { ThemeToggle } from '@/components/ui/theme-toggle';
 
 import { useRouteContext } from '@/hooks/use-route-context';
 
@@ -311,13 +312,16 @@ export function MobileNavDock() {
                       : 'Culture, Sports & Community Services'}
                   </p>
                 </div>
-                <button
-                  type="button"
-                  onClick={() => setMoreOpen(false)}
-                  className="flex h-9 min-h-11 w-9 min-w-11 items-center justify-center rounded-full text-slate-500 transition-colors hover:text-slate-900 active:scale-[0.98] dark:text-slate-400 dark:hover:text-white"
-                >
-                  <X className="h-4.5 w-4.5" />
-                </button>
+                <div className="flex items-center gap-1">
+                  <ThemeToggle className="h-8 min-h-8 w-8 min-w-8 border border-slate-200/80 bg-slate-100/80 dark:border-white/15 dark:bg-slate-900" />
+                  <button
+                    type="button"
+                    onClick={() => setMoreOpen(false)}
+                    className="flex h-8 min-h-8 w-8 min-w-8 items-center justify-center rounded-full text-slate-500 transition-colors hover:text-slate-900 active:scale-[0.98] dark:text-slate-400 dark:hover:text-white"
+                  >
+                    <X className="h-4.5 w-4.5" />
+                  </button>
+                </div>
               </div>
 
               {/* SAVED MEMBERSHIPS ON THIS DEVICE SECTION */}
@@ -398,7 +402,7 @@ export function MobileNavDock() {
                     <div>
                       <div className="flex items-center gap-1.5 text-xs font-black text-slate-900 dark:text-white">
                         <span>Install Official App</span>
-                        <span className="rounded-full bg-emerald-500 px-1.5 py-0.2 text-[8.5px] font-black tracking-widest text-white uppercase">
+                        <span className="py-0.2 rounded-full bg-emerald-500 px-1.5 text-[8.5px] font-black tracking-widest text-white uppercase">
                           NEW
                         </span>
                       </div>
@@ -478,7 +482,7 @@ export function MobileNavDock() {
                           <div className="flex items-center gap-1.5 text-xs font-bold text-slate-900 dark:text-white">
                             <span>{item.label}</span>
                             {isHighlighted && (
-                              <span className="rounded-full bg-rose-500 px-1.5 py-0.2 text-[8.5px] font-black tracking-widest text-white uppercase">
+                              <span className="py-0.2 rounded-full bg-rose-500 px-1.5 text-[8.5px] font-black tracking-widest text-white uppercase">
                                 AUTUMN FEST
                               </span>
                             )}

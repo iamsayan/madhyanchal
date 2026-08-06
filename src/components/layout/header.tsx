@@ -267,23 +267,6 @@ export function Header() {
               <span className="relative inline-flex h-2 w-2 rounded-full bg-amber-500"></span>
             </span>
           </Link>
-          <ThemeToggle
-            className={cn(
-              'h-8 w-8 shadow-xs backdrop-blur-xl active:scale-90',
-              isCommon
-                ? 'border-rose-900/50 bg-[#631422]/90 text-amber-300 hover:bg-[#781a2b]'
-                : isDurgaPuja
-                  ? 'border-white/15 bg-[#132342]/90 text-amber-400 hover:bg-[#1a2d52]'
-                  : 'border-stone-700 bg-stone-800/80 text-amber-400 hover:bg-stone-800'
-            )}
-            iconClassName={
-              isCommon
-                ? 'text-amber-300'
-                : isDurgaPuja
-                  ? 'text-amber-400'
-                  : 'text-amber-400'
-            }
-          />
         </div>
       </div>
     </header>

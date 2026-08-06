@@ -143,8 +143,8 @@ export function NativeModal({
 
   const renderButton = (btn: NativeModalActionButton, isPrimary: boolean) => {
     const baseClasses = isPrimary
-      ? 'inline-flex flex-auto items-center justify-center gap-1.5 rounded-full bg-gradient-to-r from-amber-600 via-amber-500 to-yellow-500 py-2.5 px-4 text-[11px] font-black tracking-wide text-stone-950 uppercase shadow-md whitespace-nowrap transition-all hover:scale-[1.02] active:scale-[0.98] sm:gap-2 sm:px-5 sm:text-xs'
-      : 'inline-flex flex-auto items-center justify-center gap-1.5 rounded-full border border-slate-200 bg-white py-2.5 px-4 text-[11px] font-bold text-slate-800 shadow-xs whitespace-nowrap transition-all hover:bg-slate-50 active:scale-[0.98] sm:gap-2 sm:px-5 sm:text-xs dark:border-white/15 dark:bg-stone-900 dark:text-slate-200 dark:hover:bg-stone-800';
+      ? 'inline-flex flex-auto items-center justify-center gap-1.5 rounded-full bg-gradient-to-r from-amber-600 via-amber-500 to-yellow-500 py-2.5 px-4 text-[11px] font-black tracking-wide text-stone-950 uppercase whitespace-nowrap transition-all hover:scale-[1.02] active:scale-[0.98] sm:gap-2 sm:px-5 sm:text-xs'
+      : 'inline-flex flex-auto items-center justify-center gap-1.5 rounded-full border border-slate-200 bg-white py-2.5 px-4 text-[11px] font-bold text-slate-800 whitespace-nowrap transition-all hover:bg-slate-50 active:scale-[0.98] sm:gap-2 sm:px-5 sm:text-xs dark:border-white/15 dark:bg-stone-900 dark:text-slate-200 dark:hover:bg-stone-800';
 
     if (btn.href) {
       return (
@@ -216,7 +216,7 @@ export function NativeModal({
             <button
               type="button"
               onClick={onClose}
-              className="absolute top-3 right-3 z-20 flex h-9 min-h-11 w-9 min-w-11 items-center justify-center rounded-full text-slate-500 transition-colors hover:text-slate-900 active:scale-[0.98] sm:top-4 sm:right-4 dark:text-slate-400 dark:hover:text-white"
+              className="absolute top-3 right-3 z-20 flex h-8 min-h-8 w-8 min-w-8 items-center justify-center rounded-full text-slate-500 transition-colors hover:text-slate-900 active:scale-[0.98] sm:top-4 sm:right-4 dark:text-slate-400 dark:hover:text-white"
               aria-label="Close dialog"
             >
               <X className="h-4.5 w-4.5" />
