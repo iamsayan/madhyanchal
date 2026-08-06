@@ -199,6 +199,21 @@ export default function DurgaPujaLandingPage() {
                 <ChevronRight className="h-3.5 w-3.5 sm:h-4.5 sm:w-4.5" />
               </Link>
             </Button>
+
+            <Button
+              variant="outline"
+              size="lg"
+              className="min-h-[42px] flex-1 shrink-0 rounded-full border-slate-300/90 bg-white/80 px-4 py-2.5 text-xs whitespace-nowrap text-slate-800 backdrop-blur-xl hover:scale-105 hover:bg-slate-100 active:scale-95 sm:min-h-[44px] sm:w-auto sm:px-6 sm:py-3 sm:text-sm lg:text-base dark:border-white/40 dark:bg-transparent dark:text-white dark:hover:bg-white/15"
+              asChild
+            >
+              <Link
+                href="/durgapuja/drawing-competition"
+                className="flex items-center justify-center gap-1.5 whitespace-nowrap sm:gap-2"
+              >
+                <Palette className="h-4 w-4 text-amber-500" />
+                <span>Drawing Contest</span>
+              </Link>
+            </Button>
           </div>
 
           {/* Centered Highlights Bar */}

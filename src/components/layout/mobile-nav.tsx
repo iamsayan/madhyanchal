@@ -153,12 +153,6 @@ export function MobileNavDock() {
       desc: 'Get in Touch',
     },
     {
-      label: 'Main Home',
-      href: '/',
-      icon: ArrowLeft,
-      desc: 'Return to Jagadhatri Puja',
-    },
-    {
       label: 'Puja Location',
       href: 'https://maps.app.goo.gl/xY6cx8Arcy6ayLYq9',
       icon: MapPin,
@@ -375,7 +369,7 @@ export function MobileNavDock() {
                 </Link>
               )}
 
-              {/* PWA INSTALL DIRECT ACTION CARD (Only shown when not already running as standalone PWA) */}
+              {/* PWA INSTALL DIRECT ACTION CARD (Distinct Emerald/Teal Theme) */}
               {!isStandalone && (
                 <button
                   type="button"
@@ -388,16 +382,16 @@ export function MobileNavDock() {
                       window.openPwaInstallPrompt();
                     }
                   }}
-                  className="flex w-full items-center justify-between rounded-2xl border border-amber-500/40 bg-linear-to-r from-amber-500/20 via-amber-500/10 to-amber-500/20 p-3 text-left transition-all hover:scale-[1.01] active:scale-[0.98]"
+                  className="flex w-full items-center justify-between rounded-2xl border border-emerald-500/40 bg-gradient-to-r from-emerald-500/15 via-teal-500/10 to-emerald-500/20 p-3 text-left transition-all hover:scale-[1.01] active:scale-[0.98] dark:border-emerald-400/30 dark:from-emerald-950/40 dark:to-teal-950/30"
                 >
                   <div className="flex items-center gap-3">
-                    <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-amber-500 text-slate-950 shadow-xs">
+                    <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-gradient-to-br from-emerald-500 to-teal-600 text-white shadow-xs">
                       <Download className="h-4.5 w-4.5" />
                     </div>
                     <div>
                       <div className="flex items-center gap-1.5 text-xs font-black text-slate-900 dark:text-white">
                         <span>Install Official App</span>
-                        <span className="py-0.2 rounded-full bg-amber-500 px-1.5 text-[8.5px] font-black tracking-widest text-slate-950 uppercase">
+                        <span className="py-0.2 rounded-full bg-emerald-500 px-1.5 text-[8.5px] font-black tracking-widest text-white uppercase">
                           NEW
                         </span>
                       </div>
@@ -406,7 +400,7 @@ export function MobileNavDock() {
                       </div>
                     </div>
                   </div>
-                  <ChevronRight className="h-4 w-4 text-amber-600 dark:text-amber-400" />
+                  <ChevronRight className="h-4 w-4 text-emerald-600 dark:text-emerald-400" />
                 </button>
               )}
 
