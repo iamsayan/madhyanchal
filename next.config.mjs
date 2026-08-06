@@ -80,6 +80,16 @@ const nextConfig = {
         destination: '/services/membership/:id/status',
         permanent: true,
       },
+      {
+        source: '/durgapuja/drawing-competition/register',
+        destination: '/durgapuja/drawing-competition',
+        permanent: true,
+      },
+      {
+        source: '/durgapuja/drawing-competition/list',
+        destination: '/durgapuja/drawing-competition',
+        permanent: true,
+      },
     ];
   },
 };

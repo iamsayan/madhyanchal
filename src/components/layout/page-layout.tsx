@@ -67,7 +67,7 @@ export function PageLayout({
   };
 
   return (
-    <div className="bg-dot-mesh relative min-h-screen overflow-hidden bg-amber-50/60 transition-colors duration-500 dark:bg-stone-950">
+    <div className="bg-dot-mesh relative overflow-hidden bg-amber-50/60 transition-colors duration-500 dark:bg-stone-950">
       {scriptJsonLd && <JsonLd schema={scriptJsonLd} />}
 
       {/* HERO HEADER BANNER (Standardized Mobile-First Spacing) */}
@@ -85,7 +85,7 @@ export function PageLayout({
               {badge && (
                 <span className="inline-flex items-center gap-1.5 rounded-full border border-amber-500/30 bg-amber-500/10 px-3 py-0.5 text-[10px] font-black tracking-widest text-amber-700 uppercase backdrop-blur-md sm:px-4 sm:py-1 sm:text-[11px] dark:text-amber-400">
                   {BadgeIcon && (
-                    <BadgeIcon className="h-3 w-3 text-amber-500 sm:h-3.5 w-3.5" />
+                    <BadgeIcon className="h-3 w-3 w-3.5 text-amber-500 sm:h-3.5" />
                   )}
                   {badge.text}
                 </span>

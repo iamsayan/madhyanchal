@@ -107,7 +107,13 @@ function calculateAgeAndCategory(dobString: string) {
   }
 }
 
-export function DrawingCompetitionForm() {
+export interface DrawingCompetitionFormProps {
+  onOpenListModal?: () => void;
+}
+
+export function DrawingCompetitionForm({
+  onOpenListModal,
+}: DrawingCompetitionFormProps = {}) {
   const isClosed = isRegistrationClosed();
   const config = DRAWING_COMPETITION_CONFIG;
 
@@ -292,7 +298,7 @@ export function DrawingCompetitionForm() {
   };
 
   return (
-    <div className="relative mx-auto max-w-4xl space-y-4 sm:space-y-6">
+    <>
       {/* UNIFIED NATIVE PREVIEW MODAL */}
       <NativeModal
         isOpen={previewData !== null}
@@ -532,188 +538,19 @@ export function DrawingCompetitionForm() {
               for your support! We look forward to seeing you in{' '}
               {config.year + 1}.
             </p>
-            <Link
-              href="/durgapuja/drawing-competition/list"
+            <button
+              type="button"
+              onClick={() => {
+                if (onOpenListModal) onOpenListModal();
+              }}
               className="mt-1 inline-flex items-center gap-1.5 rounded-full bg-amber-500 px-4 py-2 text-xs font-bold text-slate-950 transition-all hover:bg-amber-400"
             >
               <Users className="h-3.5 w-3.5" />
               <span>View Registered Participants List</span>
-            </Link>
+            </button>
           </div>
         </div>
       )}
-
-      {/* TOP EVENT SUMMARY BAR */}
-      <div className="card-glass relative overflow-hidden rounded-2xl border border-slate-200/90 p-3.5 backdrop-blur-2xl sm:rounded-3xl sm:p-6 dark:border-white/12">
-        <BorderBeam
-          size={180}
-          duration={8}
-          colorFrom="#f59e0b"
-          colorTo="#fef08a"
-        />
-
-        <div className="flex flex-col items-center justify-between gap-3 border-b border-slate-200/80 pb-3 text-center sm:flex-row sm:gap-4 sm:pb-4 sm:text-left dark:border-white/10">
-          <div className="space-y-0.5 sm:space-y-1">
-            <span className="inline-flex items-center gap-1 rounded-full border border-amber-500/30 bg-amber-500/10 px-2.5 py-0.5 text-[9.5px] font-extrabold text-amber-700 sm:gap-1.5 sm:px-3 sm:text-[10px] dark:text-amber-400">
-              <Palette className="h-3 w-3" />
-              ANNUAL DRAWING COMPETITION
-            </span>
-            <h2 className="font-paytone text-base font-bold text-slate-900 sm:text-2xl dark:text-white">
-              Participant Registration Portal
-            </h2>
-          </div>
-
-          {/* Fee Badge */}
-          <div className="flex items-center gap-1.5 rounded-xl border border-amber-500/40 bg-amber-500/10 px-3 py-1.5 text-xs font-bold text-amber-800 sm:rounded-2xl sm:px-4 sm:py-2 dark:text-amber-300">
-            <span>₹50 / Participant</span>
-          </div>
-        </div>
-
-        {/* TOPIC BANNER */}
-        <div className="mt-3 rounded-xl border border-amber-500/30 bg-amber-500/10 p-2.5 text-center sm:mt-4 sm:p-4">
-          <span className="text-[9.5px] font-extrabold tracking-widest text-amber-700 uppercase sm:text-[10px] dark:text-amber-400">
-            Drawing Topic
-          </span>
-          <h4 className="font-paytone text-sm font-bold text-slate-900 sm:text-xl dark:text-white">
-            Draw As You Like
-          </h4>
-          <p className="mt-0.5 text-[10.5px] font-medium text-slate-600 sm:text-[11px] dark:text-slate-300">
-            Open theme for all age groups (Group A, B & C)
-          </p>
-        </div>
-      </div>
-
-      {/* EVENT SCHEDULE & LOCATION DETAILS CARD */}
-      <div className="card-glass relative overflow-hidden rounded-2xl border border-slate-200/90 p-3.5 backdrop-blur-2xl sm:rounded-3xl sm:p-5 dark:border-white/12">
-        <div className="grid grid-cols-1 divide-y divide-slate-200/80 sm:grid-cols-3 sm:divide-x sm:divide-y-0 dark:divide-white/10">
-          {/* Date */}
-          <div className="flex items-center gap-3 pb-2.5 sm:pr-4 sm:pb-0">
-            <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-amber-500/20 text-amber-600 dark:text-amber-400">
-              <Calendar className="h-4 w-4" />
-            </div>
-            <div className="min-w-0 space-y-0.5">
-              <div className="text-[9.5px] font-extrabold tracking-wider text-slate-400 uppercase sm:text-[10px]">
-                Date
-              </div>
-              <div className="text-xs font-bold text-slate-900 dark:text-white">
-                Sunday, 11th Oct 2026
-              </div>
-            </div>
-          </div>
-
-          {/* Time */}
-          <div className="flex items-center gap-3 py-2.5 sm:px-4 sm:py-0">
-            <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-amber-500/20 text-amber-600 dark:text-amber-400">
-              <Clock className="h-4 w-4" />
-            </div>
-            <div className="min-w-0 space-y-0.5">
-              <div className="text-[9.5px] font-extrabold tracking-wider text-slate-400 uppercase sm:text-[10px]">
-                Time
-              </div>
-              <div className="text-xs font-bold text-slate-900 dark:text-white">
-                10:00 AM Onwards
-              </div>
-              <div className="text-[10px] text-slate-500 dark:text-slate-400">
-                (Reporting: 9:30 AM)
-              </div>
-            </div>
-          </div>
-
-          {/* Venue & Map Link */}
-          <div className="flex items-center justify-between gap-2 pt-2.5 sm:pt-0 sm:pl-4">
-            <div className="flex min-w-0 items-center gap-3">
-              <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-amber-500/20 text-amber-600 dark:text-amber-400">
-                <MapPin className="h-4 w-4" />
-              </div>
-              <div className="min-w-0 space-y-0.5">
-                <div className="text-[9.5px] font-extrabold tracking-wider text-slate-400 uppercase sm:text-[10px]">
-                  Venue
-                </div>
-                <div className="truncate text-xs font-bold text-slate-900 dark:text-white">
-                  Madhyanchal Durga Puja Mandap
-                </div>
-                <div className="text-[10px] text-slate-500 dark:text-slate-400">
-                  Chandannagar, Hooghly
-                </div>
-              </div>
-            </div>
-
-            <a
-              href="https://maps.google.com/?q=Madhyanchal+Sarbajanin+Chandannagar"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-flex shrink-0 items-center gap-1 rounded-full border border-amber-500/40 bg-amber-500/15 px-3 py-1.5 text-[10.5px] font-extrabold text-amber-700 transition-all hover:bg-amber-500 hover:text-slate-950 dark:text-amber-300 dark:hover:text-slate-950"
-            >
-              <span>Map</span>
-              <ExternalLink className="h-3 w-3" />
-            </a>
-          </div>
-        </div>
-      </div>
-
-      {/* PRIZES, GIFTS & CEREMONY HIGHLIGHTS CARD */}
-      <div className="card-glass relative overflow-hidden rounded-2xl border border-slate-200/90 p-3.5 backdrop-blur-2xl sm:rounded-3xl sm:p-5 dark:border-white/12">
-        <h4 className="font-paytone mb-3 flex items-center gap-2 text-xs font-bold text-slate-900 sm:text-base dark:text-white">
-          <Trophy className="h-4 w-4 text-amber-500" />
-          <span>Prizes, Gifts & Ceremony Details:</span>
-        </h4>
-
-        <div className="grid grid-cols-1 gap-2.5 sm:grid-cols-2 sm:gap-3.5">
-          {/* Category Prizes */}
-          <div className="flex items-start gap-3 rounded-xl border border-amber-500/20 bg-amber-500/10 p-3">
-            <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-amber-500/20 text-amber-600 dark:text-amber-400">
-              <Trophy className="h-4.5 w-4.5" />
-            </div>
-            <div className="min-w-0 space-y-0.5 text-left">
-              <div className="text-[10px] font-extrabold text-amber-800 uppercase dark:text-amber-300">
-                5 Prizes Per Group
-              </div>
-              <div className="text-xs font-bold text-slate-900 dark:text-white">
-                3 Mementos (1st, 2nd, 3rd) + 2 Medals (4th, 5th)
-              </div>
-              <div className="text-[10px] text-slate-600 dark:text-slate-400">
-                Awarded across Group A, B & C
-              </div>
-            </div>
-          </div>
-
-          {/* Certificate & Gift Kit */}
-          <div className="flex items-start gap-3 rounded-xl border border-amber-500/20 bg-amber-500/10 p-3">
-            <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-amber-500/20 text-amber-600 dark:text-amber-400">
-              <Gift className="h-4.5 w-4.5" />
-            </div>
-            <div className="min-w-0 space-y-0.5 text-left">
-              <div className="text-[10px] font-extrabold text-amber-800 uppercase dark:text-amber-300">
-                Gifts & Refreshments for All
-              </div>
-              <div className="text-xs font-bold text-slate-900 dark:text-white">
-                Participation Certificate & Gift Hamper
-              </div>
-              <div className="text-[10px] text-slate-600 dark:text-slate-400">
-                Complimentary Refreshments & Special Gift Package for All
-              </div>
-            </div>
-          </div>
-
-          {/* Prize Distribution Ceremony */}
-          <div className="col-span-1 flex items-start gap-3 rounded-xl border border-amber-500/20 bg-amber-500/10 p-3 sm:col-span-2">
-            <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-amber-500/20 text-amber-600 dark:text-amber-400">
-              <Award className="h-4.5 w-4.5" />
-            </div>
-            <div className="min-w-0 space-y-0.5 text-left">
-              <div className="text-[10px] font-extrabold text-amber-800 uppercase dark:text-amber-300">
-                Prize Distribution Ceremony
-              </div>
-              <div className="text-xs font-bold text-slate-900 dark:text-white">
-                Saturday, 17th October 2026 at 5:00 PM
-              </div>
-              <div className="text-[10px] text-slate-600 dark:text-slate-400">
-                Venue: Madhyanchal Durga Puja Mandap, Chandannagar
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
 
       {/* REGISTRATION FORM */}
       <form
@@ -1187,6 +1024,6 @@ export function DrawingCompetitionForm() {
           </a>
         </div>
       </div>
-    </div>
+    </>
   );
 }

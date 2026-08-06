@@ -431,8 +431,6 @@ export function getDurgaPujaScheduleSchema() {
  * Drawing Competition Schema (/durgapuja/drawing-competition)
  */
 export function getDrawingCompetitionSchema() {
-  const contestUrl = `${SITE_URL}/durgapuja/drawing-competition`;
-
   return {
     '@context': 'https://schema.org',
     '@graph': [

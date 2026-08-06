@@ -4,6 +4,7 @@ import { DrawingCompetitionLanding } from '@/components/features/drawing-competi
 import { PageLayout } from '@/components/layout/page-layout';
 import { Palette } from 'lucide-react';
 import { getDrawingCompetitionSchema } from '@/lib/seo-schemas';
+import { getDrawingCompetitionParticipants } from '@/lib/data';
 
 export const metadata: Metadata = {
   title: 'Annual Sit & Draw Competition 2026 | Madhyanchal Sarbajanin',
@@ -28,12 +29,13 @@ export const metadata: Metadata = {
   },
 };
 
-export default function DrawingCompetitionLandingPage() {
+export default async function DrawingCompetitionLandingPage() {
   const jsonLd = getDrawingCompetitionSchema();
+  const participantList = await getDrawingCompetitionParticipants('2026');
 
   return (
     <PageLayout
-      title="Annual Drawing Competition"
+      title="Drawing Competition"
       subtitle="Unleash your child’s creative imagination! Open across 3 age categories with exciting trophies, medals, certificates, and gifts."
       badge={{
         text: 'Art & Creativity Festival',
@@ -42,7 +44,7 @@ export default function DrawingCompetitionLandingPage() {
       breadcrumbCurrent="Drawing Competition"
       scriptJsonLd={jsonLd}
     >
-      <DrawingCompetitionLanding />
+      <DrawingCompetitionLanding initialParticipants={participantList} />
     </PageLayout>
   );
 }
