@@ -203,7 +203,7 @@ export default function DurgaPujaSchedulePage() {
       breadcrumbCurrent="Puja Schedule"
       scriptJsonLd={jsonLd}
     >
-      <div className="space-y-6 sm:space-y-16">
+      <div className="space-y-4 sm:space-y-6">
         {/* QUICK STATS & FESTIVAL HIGHLIGHTS STRIP */}
         <AnimatedWrapper direction="up">
           <div className="grid grid-cols-2 gap-2.5 rounded-xl border border-amber-500/30 bg-gradient-to-r from-amber-500/10 via-amber-500/5 to-amber-500/10 p-3 backdrop-blur-2xl sm:grid-cols-4 sm:gap-4 sm:rounded-2xl sm:p-6 dark:border-white/15 dark:from-stone-900 dark:to-stone-950">
@@ -298,7 +298,10 @@ export default function DurgaPujaSchedulePage() {
         </div>
 
         {/* SYMMETRICAL 6-CARD PUJA SCHEDULE GRID (3x2 Desktop Layout) */}
-        <div id="schedule" className="scroll-mt-24 space-y-4 sm:space-y-6">
+        <div
+          id="schedule"
+          className="mt-8 scroll-mt-24 space-y-4 sm:mt-16 sm:space-y-6"
+        >
           <div className="space-y-1 text-center">
             <span className="inline-flex items-center gap-1 rounded-full border border-amber-500/30 bg-amber-500/15 px-2.5 py-0.5 text-[9.5px] font-extrabold tracking-wider text-amber-800 uppercase sm:px-3 sm:text-[10.5px] dark:text-amber-300">
               <Sparkles className="h-3 w-3 text-amber-500" /> Rituals & Schedule

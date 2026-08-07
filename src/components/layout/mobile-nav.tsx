@@ -38,30 +38,65 @@ export function MobileNavDock() {
   >([]);
 
   const { isDurgaPuja, isCommon } = useRouteContext();
-  const [isStandalone, setIsStandalone] = useState(false);
+  const [isInstallAvailable, setIsInstallAvailable] = useState(false);
 
-  // Check if app is running in Standalone PWA mode or already installed using pwa-install properties
+  // Use @khmyznikov/pwa-install package built-in methods & properties
   useEffect(() => {
-    if (typeof window !== 'undefined') {
-      const checkStandalone = () => {
-        const pwaInstall = document.getElementsByTagName(
-          'pwa-install'
-        )[0] as unknown as {
-          isUnderStandaloneMode?: boolean;
-          isInstallAvailable?: boolean;
-        };
-        const isUnderStandalone =
-          pwaInstall?.isUnderStandaloneMode ??
-          (window.matchMedia('(display-mode: standalone)').matches ||
-            (window.navigator as any).standalone === true);
-        setIsStandalone(Boolean(isUnderStandalone));
+    if (typeof window === 'undefined') return;
+
+    const checkPWAStatus = async () => {
+      const pwaInstall = document.getElementsByTagName(
+        'pwa-install'
+      )[0] as unknown as {
+        isInstallAvailable?: boolean;
+        isUnderStandaloneMode?: boolean;
+        getInstalledRelatedApps?: () => Promise<unknown[]>;
       };
 
-      checkStandalone();
-      const mediaQuery = window.matchMedia('(display-mode: standalone)');
-      mediaQuery.addEventListener?.('change', checkStandalone);
-      return () => mediaQuery.removeEventListener?.('change', checkStandalone);
-    }
+      if (!pwaInstall) return;
+
+      // Check package's built-in getInstalledRelatedApps method
+      if (typeof pwaInstall.getInstalledRelatedApps === 'function') {
+        try {
+          const installedApps = await pwaInstall.getInstalledRelatedApps();
+          if (installedApps && installedApps.length > 0) {
+            setIsInstallAvailable(false);
+            return;
+          }
+        } catch {
+          // Ignore error
+        }
+      }
+
+      // Check package's built-in isInstallAvailable & isUnderStandaloneMode properties
+      if (pwaInstall.isUnderStandaloneMode) {
+        setIsInstallAvailable(false);
+      } else if (typeof pwaInstall.isInstallAvailable === 'boolean') {
+        setIsInstallAvailable(pwaInstall.isInstallAvailable);
+      }
+    };
+
+    checkPWAStatus();
+
+    // Listen for @khmyznikov/pwa-install package custom events
+    const pwaInstallEl = document.getElementsByTagName('pwa-install')[0];
+
+    const handleAvailable = () => setIsInstallAvailable(true);
+    const handleInstalled = () => setIsInstallAvailable(false);
+
+    pwaInstallEl?.addEventListener('pwa-install-available', handleAvailable);
+    pwaInstallEl?.addEventListener('pwa-install-installed', handleInstalled);
+
+    return () => {
+      pwaInstallEl?.removeEventListener(
+        'pwa-install-available',
+        handleAvailable
+      );
+      pwaInstallEl?.removeEventListener(
+        'pwa-install-installed',
+        handleInstalled
+      );
+    };
   }, [moreOpen]);
 
   // Load saved member profiles list from localStorage
@@ -324,8 +359,8 @@ export function MobileNavDock() {
                 </div>
               </div>
 
-              {/* PWA INSTALL DIRECT ACTION CARD (Distinct Emerald/Teal Theme) */}
-              {!isStandalone && (
+              {/* PWA INSTALL DIRECT ACTION CARD (Only shown if install is available and app is NOT installed) */}
+              {isInstallAvailable && (
                 <button
                   type="button"
                   onClick={() => {
