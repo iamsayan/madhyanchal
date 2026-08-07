@@ -41,6 +41,7 @@ export function Header() {
     { label: 'Awards', href: '/awards' },
     { label: 'Advertise', href: '/advertise' },
     { label: 'About Us', href: '/about-us' },
+    { label: 'Contact Us', href: '/contact-us' },
     { label: '🌺 Durga Puja', href: '/durgapuja', highlighted: true },
   ];
 
@@ -48,6 +49,7 @@ export function Header() {
     { label: 'Home', href: '/durgapuja' },
     { label: 'Schedule', href: '/durgapuja/schedule' },
     { label: 'Drawing Contest', href: '/durgapuja/drawing-competition' },
+    { label: 'Gallery', href: '/durgapuja/gallery' },
     { label: 'Contact Us', href: '/durgapuja/contact-us' },
   ];
 

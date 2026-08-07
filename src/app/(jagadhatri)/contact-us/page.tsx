@@ -41,7 +41,7 @@ interface ContactUsPageProps {
 export default function ContactUsPage({
   isDurgaPuja = false,
 }: ContactUsPageProps) {
-  const contactJsonLd = getContactSchema();
+  const contactJsonLd = getContactSchema(isDurgaPuja);
 
   const emailValue = isDurgaPuja
     ? 'durga.madhyanchal@gmail.com'

@@ -5,7 +5,6 @@
 
 import {
   organizationSchema,
-  websiteSchema,
   webpageSchema,
   breadcrumbSchema,
   jagadhatriPujaEventSchema,
@@ -49,10 +48,7 @@ export function getDurgaPujaEntrySchema() {
   return {
     '@context': 'https://schema.org' as const,
     '@graph': [
-      breadcrumbSchema([
-        { name: 'Home', url: '/' },
-        { name: 'Durga Puja Entry Point', url: '/durgapuja' },
-      ]),
+      breadcrumbSchema([{ name: 'Home', url: '/durgapuja' }]),
       webpageSchema({
         title: 'Madhyanchal Sarbajanin Durga Puja | Chandannagar',
         description: 'Grand Durga Puja celebrations at Madhyanchal Sarbajanin.',
@@ -100,8 +96,7 @@ export function getDurgaPujaScheduleSchema() {
     '@context': 'https://schema.org' as const,
     '@graph': [
       breadcrumbSchema([
-        { name: 'Home', url: '/' },
-        { name: 'Durga Puja', url: '/durgapuja' },
+        { name: 'Home', url: '/durgapuja' },
         { name: 'Festival Schedule', url: '/durgapuja/schedule' },
       ]),
     ],
@@ -113,8 +108,7 @@ export function getDrawingCompetitionSchema() {
     '@context': 'https://schema.org' as const,
     '@graph': [
       breadcrumbSchema([
-        { name: 'Home', url: '/' },
-        { name: 'Durga Puja', url: '/durgapuja' },
+        { name: 'Home', url: '/durgapuja' },
         {
           name: 'Drawing Competition',
           url: '/durgapuja/drawing-competition',
@@ -124,31 +118,109 @@ export function getDrawingCompetitionSchema() {
   };
 }
 
-export function getContactSchema() {
+export function getContactSchema(isDurgaPuja = false) {
   return {
     '@context': 'https://schema.org' as const,
     '@graph': [
-      breadcrumbSchema([
-        { name: 'Home', url: '/' },
-        { name: 'Contact Us', url: '/contact-us' },
-      ]),
+      breadcrumbSchema(
+        isDurgaPuja
+          ? [
+              { name: 'Home', url: '/durgapuja' },
+              { name: 'Contact Us', url: '/durgapuja/contact-us' },
+            ]
+          : [
+              { name: 'Home', url: '/' },
+              { name: 'Contact Us', url: '/contact-us' },
+            ]
+      ),
+      {
+        '@type': 'ContactPage',
+        name: isDurgaPuja
+          ? 'Contact Us | Madhyanchal Sarbajanin Durga Puja'
+          : 'Contact Us | Madhyanchal Sarbajanin Jagadhatri Puja',
+        description: isDurgaPuja
+          ? 'Get in touch with Madhyanchal Sarbajanin Durga Puja committee desk for festival queries, sponsorships, and drawing competition.'
+          : 'Get in touch with Madhyanchal Sarbajanin Jagadhatri Puja Samity for inquiries, sponsorships, and collaborations.',
+        url: isDurgaPuja
+          ? `${SCHEMA_SITE_URL}/durgapuja/contact-us`
+          : `${SCHEMA_SITE_URL}/contact-us`,
+        mainEntity: {
+          '@type': 'Organization',
+          name: isDurgaPuja
+            ? 'Madhyanchal Sarbajanin Durga Puja Samity'
+            : 'Madhyanchal Sarbajanin Jagadhatri Puja Samity',
+          email: isDurgaPuja
+            ? 'durga.madhyanchal@gmail.com'
+            : 'jagatdhatri.madhyanchal@gmail.com',
+          telephone: '+91-9051300020',
+          address: {
+            '@type': 'PostalAddress',
+            streetAddress: 'Station Road',
+            addressLocality: 'Chandannagar',
+            addressRegion: 'West Bengal',
+            postalCode: '712136',
+            addressCountry: 'IN',
+          },
+        },
+      },
     ],
   };
 }
 
-export function getGallerySchema() {
+export function getNoticeSchema(isDurgaPuja = false) {
   return {
     '@context': 'https://schema.org' as const,
     '@graph': [
-      breadcrumbSchema([
-        { name: 'Home', url: '/' },
-        { name: 'Gallery', url: '/gallery' },
-      ]),
+      breadcrumbSchema(
+        isDurgaPuja
+          ? [
+              { name: 'Home', url: '/durgapuja' },
+              { name: 'Notice Board', url: '/durgapuja/notice' },
+            ]
+          : [
+              { name: 'Home', url: '/' },
+              { name: 'Notice Board', url: '/notice' },
+            ]
+      ),
+      {
+        '@type': 'WebPage',
+        name: isDurgaPuja
+          ? 'Public Notices & Announcements | Durga Puja'
+          : 'Public Notices & Announcements | Madhyanchal Sarbajanin',
+        description: isDurgaPuja
+          ? 'Official Durga Puja notice board of Madhyanchal Sarbajanin Chandannagar.'
+          : 'Official notice board of Madhyanchal Sarbajanin Chandannagar.',
+        url: isDurgaPuja
+          ? `${SCHEMA_SITE_URL}/durgapuja/notice`
+          : `${SCHEMA_SITE_URL}/notice`,
+      },
+    ],
+  };
+}
+
+export function getGallerySchema(isDurgaPuja = false) {
+  return {
+    '@context': 'https://schema.org' as const,
+    '@graph': [
+      breadcrumbSchema(
+        isDurgaPuja
+          ? [
+              { name: 'Home', url: '/durgapuja' },
+              { name: 'Gallery', url: '/durgapuja/gallery' },
+            ]
+          : [
+              { name: 'Home', url: '/' },
+              { name: 'Gallery', url: '/gallery' },
+            ]
+      ),
       imageGallerySchema({
-        title: 'Madhyanchal Sarbajanin Jagadhatri & Durga Puja Photo Gallery',
-        description:
-          'Browse HD photo gallery of pandal decorations, lighting displays, idol artistry, and cultural events.',
-        url: '/gallery',
+        title: isDurgaPuja
+          ? 'Madhyanchal Sarbajanin Durga Puja Photo Gallery'
+          : 'Madhyanchal Sarbajanin Jagadhatri & Durga Puja Photo Gallery',
+        description: isDurgaPuja
+          ? 'Browse HD photo gallery of Durga Puja pandal decorations, drawing competition, lighting displays, and idol artistry.'
+          : 'Browse HD photo gallery of pandal decorations, lighting displays, idol artistry, and cultural events.',
+        url: isDurgaPuja ? '/durgapuja/gallery' : '/gallery',
         images: ['/logo.png'],
       }),
     ],

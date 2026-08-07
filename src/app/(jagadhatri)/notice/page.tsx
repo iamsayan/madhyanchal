@@ -1,7 +1,7 @@
 import type { Metadata } from 'next';
 import NoticeClientView from '@/components/features/notice-client-view';
 
-import { getBreadcrumbSchema } from '@/lib/seo-schemas';
+import { getNoticeSchema } from '@/lib/seo-schemas';
 import { getNotices } from '@/lib/data';
 import { createMetadata } from '@/lib/metadata';
 
@@ -30,19 +30,7 @@ export default async function NoticePage({
   isDurgaPuja = false,
 }: NoticePageProps) {
   const notices = await getNotices().catch(() => []);
-
-  const jsonLd = {
-    '@context': 'https://schema.org',
-    '@graph': [
-      getBreadcrumbSchema([
-        { name: 'Home', url: isDurgaPuja ? '/durgapuja' : '/' },
-        {
-          name: 'Notice Board',
-          url: isDurgaPuja ? '/durgapuja/notice' : '/notice',
-        },
-      ]),
-    ],
-  };
+  const jsonLd = getNoticeSchema(isDurgaPuja);
 
   return (
     <NoticeClientView

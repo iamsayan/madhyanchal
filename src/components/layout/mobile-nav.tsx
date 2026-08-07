@@ -191,6 +191,12 @@ export function MobileNavDock() {
       desc: '5-Day Festival Rituals & Timings',
     },
     {
+      label: 'Photo Gallery',
+      href: '/durgapuja/gallery',
+      icon: ImageIcon,
+      desc: 'Pandals, Idols & Contests',
+    },
+    {
       label: 'Notice Board',
       href: '/durgapuja/notice',
       icon: Bell,
