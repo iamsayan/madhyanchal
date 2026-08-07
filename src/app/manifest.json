@@ -1,7 +1,7 @@
 {
-    "name": "Madhyanchal Sarbajanin",
+    "name": "Madhyanchal",
     "short_name": "Madhyanchal",
-    "description": "Official Portal for Madhyanchal Sarbajanin, Station Road, Chandannagar.",
+    "description": "Official App for Madhyanchal Sarbajanin, Chandannagar.",
     "id": "/?homescreen=1",
     "start_url": "/?utm_source=pwa",
     "scope": "/",
