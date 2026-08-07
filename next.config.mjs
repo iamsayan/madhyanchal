@@ -1,6 +1,8 @@
+import { withSerwist } from "@serwist/turbopack";
+
 /** @type {import('next').NextConfig} */
-const nextConfig = {
-  allowedDevOrigins: ['192.168.0.224', 'preview-local.sayandatta.co.in'],
+const nextConfig = withSerwist({
+  allowedDevOrigins: ['192.168.0.224'],
   images: {
     qualities: [25, 50, 70, 80, 90, 100],
     formats: ['image/avif', 'image/webp'],
@@ -80,18 +82,8 @@ const nextConfig = {
         destination: '/services/membership/:id/status',
         permanent: true,
       },
-      {
-        source: '/durgapuja/drawing-competition/register',
-        destination: '/durgapuja/drawing-competition',
-        permanent: true,
-      },
-      {
-        source: '/durgapuja/drawing-competition/list',
-        destination: '/durgapuja/drawing-competition',
-        permanent: true,
-      },
     ];
   },
-};
+});
 
 export default nextConfig;

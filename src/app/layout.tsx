@@ -1,4 +1,4 @@
-import { SerwistProvider } from '@serwist/next/react';
+import { SerwistProvider } from '@serwist/turbopack/react';
 import type { Metadata, Viewport } from 'next';
 import { Outfit, Paytone_One } from 'next/font/google';
 
@@ -134,7 +134,7 @@ export default function RootLayout({ children }: { children: ReactNode }) {
       )}
       <body className="text-foreground flex min-h-screen flex-col bg-amber-50/60 font-sans antialiased transition-colors duration-500 selection:bg-amber-500 selection:text-slate-950 dark:bg-stone-950">
         <SerwistProvider
-          swUrl="/sw.js"
+          swUrl="/serwist/sw.js"
           disable={process.env.NODE_ENV !== 'production'}
         >
           <ThemeProvider
