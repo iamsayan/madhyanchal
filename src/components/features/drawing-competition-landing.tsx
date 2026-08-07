@@ -903,10 +903,7 @@ export function DrawingCompetitionLanding({
               ) : (
                 <>
                   <CreditCard className="h-4 w-4" />
-                  <span>
-                    Proceed to Review (Pay ₹
-                    {fields.length * REGISTRATION_FEE_PER_PARTICIPANT})
-                  </span>
+                  <span>Proceed to Review</span>
                 </>
               )}
             </button>

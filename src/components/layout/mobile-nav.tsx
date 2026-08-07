@@ -191,7 +191,7 @@ export function MobileNavDock() {
     },
     {
       label: 'Contact Us',
-      href: '/contact-us',
+      href: '/durgapuja/contact-us',
       icon: Phone,
       desc: 'Get in Touch',
     },

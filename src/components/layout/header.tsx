@@ -7,7 +7,7 @@ import { usePathname } from 'next/navigation';
 import { ThemeToggle } from '@/components/ui/theme-toggle';
 import { cn } from '@/lib/utils';
 import { sendGTMEvent } from '@next/third-parties/google';
-import { Calendar, MapPin, ChevronLeft, Bell } from 'lucide-react';
+import { Calendar, MapPin, ChevronLeft, Bell, Mail } from 'lucide-react';
 
 import { useRouteContext } from '@/hooks/use-route-context';
 
@@ -41,7 +41,6 @@ export function Header() {
     { label: 'Awards', href: '/awards' },
     { label: 'Advertise', href: '/advertise' },
     { label: 'About Us', href: '/about-us' },
-    { label: 'Contact Us', href: '/contact-us' },
     { label: '🌺 Durga Puja', href: '/durgapuja', highlighted: true },
   ];
 
@@ -49,6 +48,7 @@ export function Header() {
     { label: 'Home', href: '/durgapuja' },
     { label: 'Schedule', href: '/durgapuja/schedule' },
     { label: 'Drawing Contest', href: '/durgapuja/drawing-competition' },
+    { label: 'Contact Us', href: '/durgapuja/contact-us' },
   ];
 
   const navItems = isDurgaPuja ? durgaPujaNavItems : mainNavItems;
@@ -214,7 +214,7 @@ export function Header() {
           </Link>
         </div>
 
-        {/* Right: Action Buttons (Map, Schedule, Notice, Theme) */}
+        {/* Right: Action Buttons (Map, Schedule, Notice) */}
         <div className="flex items-center gap-1.5 sm:gap-2">
           <a
             href="https://maps.app.goo.gl/xY6cx8Arcy6ayLYq9"

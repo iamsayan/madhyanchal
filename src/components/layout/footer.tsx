@@ -1,7 +1,5 @@
 'use client';
 
-import { Fragment } from 'react';
-
 import Image from 'next/image';
 import Link from 'next/link';
 import { Space_Grotesk } from 'next/font/google';
@@ -9,14 +7,13 @@ import { Space_Grotesk } from 'next/font/google';
 import {
   AtSign,
   Facebook,
-  Heart,
   Instagram,
-  MessageCircle,
   Sparkles,
   Twitter,
   Youtube,
 } from 'lucide-react';
 import { cn } from '@/lib/utils';
+import { useRouteContext } from '@/hooks/use-route-context';
 
 const spaceGrotesk = Space_Grotesk({
   subsets: ['latin'],
@@ -25,14 +22,9 @@ const spaceGrotesk = Space_Grotesk({
 });
 
 export function Footer() {
-  const navLinks = [
-    { label: 'About Us', href: '/about-us' },
-    { label: 'Contact', href: '/contact-us' },
-    { label: 'Terms', href: '/terms' },
-    { label: 'Privacy', href: '/privacy-policy' },
-  ];
+  const { isDurgaPuja } = useRouteContext();
 
-  const socialLinks = [
+  const defaultSocialLinks = [
     {
       icon: Facebook,
       label: 'Facebook',
@@ -49,9 +41,23 @@ export function Footer() {
       href: 'https://www.instagram.com/madhyanchal_sarbajanin',
     },
     {
-      icon: MessageCircle,
-      label: 'WhatsApp',
-      href: 'https://wa.me/916291355010',
+      icon: AtSign,
+      label: 'Threads',
+      href: 'https://www.threads.net/@madhyanchal_sarbajanin',
+    },
+    { icon: Twitter, label: 'X (Twitter)', href: 'https://x.com/madhyanchal' },
+  ];
+
+  const durgaSocialLinks = [
+    {
+      icon: Facebook,
+      label: 'Facebook',
+      href: 'https://www.facebook.com/msdpsofficial',
+    },
+    {
+      icon: Instagram,
+      label: 'Instagram',
+      href: 'https://www.instagram.com/madhyanchal_sarbajanin',
     },
     {
       icon: AtSign,
@@ -60,6 +66,8 @@ export function Footer() {
     },
     { icon: Twitter, label: 'X (Twitter)', href: 'https://x.com/madhyanchal' },
   ];
+
+  const socialLinks = isDurgaPuja ? durgaSocialLinks : defaultSocialLinks;
 
   return (
     <footer className="relative overflow-hidden border-t border-slate-200/80 bg-slate-100/60 pt-3 pb-20 text-slate-700 transition-colors sm:pt-10 sm:pb-10 dark:border-white/10 dark:bg-[#0c0a09] dark:text-slate-300">
@@ -82,25 +90,6 @@ export function Footer() {
             priority
           />
         </Link>
-
-        {/* Compact Navigation Links with Dot Separators */}
-        {/* <nav className="flex flex-wrap items-center justify-center gap-x-2 gap-y-0.5 text-[10px] font-semibold text-slate-600 sm:gap-x-3 sm:text-xs dark:text-slate-300">
-          {navLinks.map((link, idx) => (
-            <Fragment key={link.href}>
-              {idx > 0 && (
-                <span className="text-[9px] text-amber-500/40 select-none">
-                  •
-                </span>
-              )}
-              <Link
-                href={link.href}
-                className="transition-colors hover:text-amber-600 dark:hover:text-amber-400"
-              >
-                {link.label}
-              </Link>
-            </Fragment>
-          ))}
-        </nav> */}
 
         {/* Social Media Micro Icon Row */}
         <div className="flex items-center justify-center gap-1.5 sm:gap-3">

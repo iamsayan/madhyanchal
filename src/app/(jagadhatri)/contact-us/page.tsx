@@ -1,4 +1,4 @@
-import type { Metadata, Viewport } from 'next';
+import type { Metadata } from 'next';
 import { ContactForm } from '@/components/features/contact-form';
 import { PageLayout } from '@/components/layout/page-layout';
 import { AnimatedWrapper } from '@/components/shared/animated-wrapper';
@@ -15,11 +15,15 @@ import {
 } from 'lucide-react';
 
 import { getContactSchema } from '@/lib/seo-schemas';
+import { createMetadata } from '@/src/lib/metadata';
 
 export const metadata: Metadata = {
-  title: 'Contact Us',
-  description:
-    'Get in touch with Madhyanchal Sarbajanin for inquiries, sponsorships, and collaborations. Located at Station Road, Chandannagar.',
+  ...createMetadata({
+    title: 'Contact Us',
+    description:
+      'Get in touch with Madhyanchal Sarbajanin for inquiries, sponsorships, and collaborations. Located at Station Road, Chandannagar.',
+    canonical: '/contact-us',
+  }),
   keywords: [
     'contact madhyanchal',
     'jagadhatri puja contact chandannagar',
@@ -28,37 +32,33 @@ export const metadata: Metadata = {
     'madhyanchal email address',
     'station road chandannagar puja',
   ],
-  openGraph: {
-    title: 'Contact Us | Madhyanchal Sarbajanin Chandannagar',
-    description:
-      'Reach out to our dedicated committee desk for festival queries, sponsorships, and media inquiries.',
-    url: '/contact-us',
-    type: 'website',
-  },
-  alternates: {
-    canonical: '/contact-us',
-  },
 };
 
-export const viewport: Viewport = {
-  themeColor: '#4a0e17',
-};
+interface ContactUsPageProps {
+  isDurgaPuja?: boolean;
+}
 
-export default function ContactUsPage() {
+export default function ContactUsPage({
+  isDurgaPuja = false,
+}: ContactUsPageProps) {
   const contactJsonLd = getContactSchema();
+
+  const emailValue = isDurgaPuja
+    ? 'durga.madhyanchal@gmail.com'
+    : 'jagatdhatri.madhyanchal@gmail.com';
 
   const contactCards = [
     {
       title: 'Email Address',
-      value: 'jagatdhatri.madhyanchal@gmail.com',
-      href: 'mailto:jagatdhatri.madhyanchal@gmail.com',
+      value: emailValue,
+      href: `mailto:${emailValue}`,
       action: 'Send Email',
       icon: Mail,
     },
     {
       title: 'Phone Helpline',
-      value: '+91 6291355010',
-      href: 'tel:+916291355010',
+      value: '+91 9051300020',
+      href: 'tel:+919051300020',
       action: 'Call Directly',
       icon: Phone,
     },
@@ -75,9 +75,13 @@ export default function ContactUsPage() {
   return (
     <PageLayout
       title="Get In Touch With Us"
-      subtitle="Have questions about Jagadhatri Puja, sponsorships, or festival arrangements? Send us a message or reach out through our contact desk."
+      subtitle={
+        isDurgaPuja
+          ? 'Have questions about Durga Puja, sponsorships, sit & draw contest, or festival arrangements? Send us a message or reach out through our contact desk.'
+          : 'Have questions about Jagadhatri Puja, sponsorships, or festival arrangements? Send us a message or reach out through our contact desk.'
+      }
       badge={{
-        text: 'Direct Committee Communication Desk',
+        text: 'Communication Desk',
         icon: Sparkles,
       }}
       breadcrumbCurrent="Contact Us"
@@ -126,9 +130,13 @@ export default function ContactUsPage() {
         </div>
 
         {/* FORM & GOOGLE MAPS DUAL GRID */}
-        <div className="grid grid-cols-1 items-start gap-6 sm:gap-8 lg:grid-cols-2">
+        <div className="grid grid-cols-1 gap-6 sm:gap-8 lg:grid-cols-2">
           {/* Left: Interactive Contact Form */}
-          <AnimatedWrapper direction="up" delay={0.15} className="space-y-3">
+          <AnimatedWrapper
+            direction="up"
+            delay={0.15}
+            className="flex h-full flex-col space-y-3"
+          >
             <div className="flex items-center gap-2">
               <MessageSquare className="h-4 w-4 text-amber-500" />
               <h2 className="font-paytone text-base text-slate-900 sm:text-xl dark:text-white">
@@ -139,7 +147,11 @@ export default function ContactUsPage() {
           </AnimatedWrapper>
 
           {/* Right: Interactive Location & Google Maps Card */}
-          <AnimatedWrapper direction="up" delay={0.25} className="space-y-3">
+          <AnimatedWrapper
+            direction="up"
+            delay={0.25}
+            className="flex h-full flex-col space-y-3"
+          >
             <div className="flex items-center gap-2">
               <MapPin className="h-4 w-4 text-amber-500" />
               <h2 className="font-paytone text-base text-slate-900 sm:text-xl dark:text-white">
@@ -147,7 +159,7 @@ export default function ContactUsPage() {
               </h2>
             </div>
 
-            <div className="card-glass card-hover-glow relative space-y-4 overflow-hidden rounded-xl border border-slate-200/90 p-4 backdrop-blur-2xl sm:rounded-2xl sm:p-7 dark:border-white/12">
+            <div className="card-glass card-hover-glow relative flex flex-1 flex-col justify-between space-y-4 overflow-hidden rounded-xl border border-slate-200/90 p-4 backdrop-blur-2xl sm:rounded-2xl sm:p-7 dark:border-white/12">
               <BorderBeam
                 size={140}
                 duration={6}
@@ -157,7 +169,9 @@ export default function ContactUsPage() {
 
               <div className="space-y-1.5">
                 <h3 className="font-paytone text-sm text-slate-900 sm:text-lg dark:text-white">
-                  Madhyanchal Sarbajanin
+                  {isDurgaPuja
+                    ? 'Madhyanchal Sarbajanin Durga Puja'
+                    : 'Madhyanchal Sarbajanin'}
                 </h3>
                 <p className="text-xs leading-relaxed font-normal text-slate-600 dark:text-slate-300">
                   Madhyanchal, Station Road, Chandannagar, Hooghly, West Bengal
@@ -170,7 +184,7 @@ export default function ContactUsPage() {
               </div>
 
               {/* Google Maps Visual Embed Frame */}
-              <div className="group relative aspect-video overflow-hidden rounded-xl border border-slate-200/90 bg-stone-900 dark:border-white/12">
+              <div className="group relative min-h-[220px] flex-1 overflow-hidden rounded-xl border border-slate-200/90 bg-stone-900 dark:border-white/12">
                 <iframe
                   title="Madhyanchal Sarbajanin Location Map"
                   src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3678.892398514108!2d88.36033547590895!3d22.864798579284245!2m3!1f0!f0!f0!m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x39f8931167448ebf%3A0x8e82d3e1a613589b!2sMadhyanchal%20Sarbajanin%20Jagadhatri%20Puja%20Samity!5e0!3m2!1sen!2sin!4v1700000000000!5m2!1sen!2sin"

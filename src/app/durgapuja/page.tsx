@@ -653,7 +653,7 @@ export default function DurgaPujaLandingPage() {
                   asChild
                   className="h-9 flex-1 rounded-full border-slate-300 px-4 text-xs font-bold shadow-none sm:flex-initial dark:border-white/20"
                 >
-                  <Link href="/contact-us" className="justify-center gap-1">
+                  <Link href="/durgapuja/contact-us" className="justify-center gap-1">
                     Contact Committee <ChevronRight className="h-3.5 w-3.5" />
                   </Link>
                 </Button>

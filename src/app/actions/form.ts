@@ -15,6 +15,7 @@ export async function submitContactForm(
   const name = formData.get('name') as string;
   const email = formData.get('email') as string;
   const phone = formData.get('phone') as string;
+  const puja = (formData.get('puja') as string) || 'Jagadhatri Puja';
   const subject = formData.get('subject') as string;
   const message = formData.get('message') as string;
   const honeypot = formData.get('_honeypot') as string;
@@ -58,6 +59,7 @@ export async function submitContactForm(
       name: name.trim(),
       email: email.trim(),
       phone: phone ? phone.trim() : undefined,
+      puja: puja.trim(),
       subject: subject ? subject.trim() : 'General Inquiry',
       message: message.trim(),
       _honeypot: honeypot || '',

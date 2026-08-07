@@ -55,7 +55,7 @@ export function DrawingCompetitionList({
         <div className="card-glass rounded-2xl border border-slate-200/90 p-6 text-center dark:border-white/12">
           <User className="mx-auto h-7 w-7 text-slate-400 opacity-60" />
           <p className="mt-1.5 text-xs font-semibold text-slate-600 dark:text-slate-300">
-            No participants found matching &quot;{searchTerm}&quot;
+            No participants found
           </p>
         </div>
       ) : (

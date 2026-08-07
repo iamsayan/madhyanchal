@@ -1,7 +1,6 @@
 import type { Metadata } from 'next';
-import { ServiceLayout } from '@/components/layout/service-layout';
 import { LetterheadGenerator } from '@/components/features/letterhead-generator';
-import { PageLayout } from '@/src/components/layout/page-layout';
+import { PageLayout } from '@/components/layout/page-layout';
 
 export const metadata: Metadata = {
   title: 'Letterhead & PDF Generator',

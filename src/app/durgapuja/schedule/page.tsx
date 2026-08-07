@@ -436,7 +436,7 @@ export default function DurgaPujaSchedulePage() {
                   asChild
                   className="h-9 flex-1 items-center justify-center rounded-full border-slate-300 px-4 text-xs font-bold shadow-none sm:h-10 sm:flex-initial sm:px-5 dark:border-white/20"
                 >
-                  <Link href="/contact-us" className="gap-1.5">
+                  <Link href="/durgapuja/contact-us" className="gap-1.5">
                     <span>Contact</span>
                     <ChevronRight className="h-4 w-4" />
                   </Link>
