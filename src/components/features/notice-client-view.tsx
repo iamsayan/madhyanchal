@@ -106,7 +106,7 @@ export default function NoticeClientView({
     });
   }, [notices, isDurgaPuja]);
 
-  // Direct URL linking support (e.g. /notice?id=notice-agm-2026 or ?notice=notice-agm-2026)
+  // Direct URL linking support (e.g. /notices?id=notice-agm-2026 or ?notice=notice-agm-2026)
   useEffect(() => {
     const noticeId = searchParams.get('id') || searchParams.get('notice');
     if (noticeId) {

@@ -166,13 +166,13 @@ export function Header() {
         {/* Right Controls: Notice Icon & Theme Toggle Switch (Far Right) */}
         <div className="flex shrink-0 items-center gap-2">
           <Link
-            href={isDurgaPuja ? '/durgapuja/notice' : '/notice'}
+            href={isDurgaPuja ? '/durgapuja/notices' : '/notices'}
             className={cn(
               'relative flex items-center justify-center rounded-full border transition-all active:scale-95',
               scrolled
                 ? 'h-8 w-8 border-slate-300/80 bg-slate-100/80 text-slate-700 hover:border-amber-500/50 hover:bg-amber-500 hover:text-slate-950 dark:border-white/15 dark:bg-stone-900/80 dark:text-slate-200 dark:hover:bg-amber-500 dark:hover:text-slate-950'
                 : 'h-9 w-9 border-amber-500/30 bg-amber-500/10 text-slate-800 backdrop-blur-md hover:bg-amber-500/20 dark:border-white/20 dark:bg-stone-950/80 dark:text-slate-100',
-              (pathname === '/notice' || pathname === '/durgapuja/notice') &&
+              (pathname === '/notices' || pathname === '/durgapuja/notices') &&
                 'border-amber-500 bg-amber-500 text-slate-950 dark:bg-amber-500 dark:text-slate-950'
             )}
             title="Public Notices & Announcements"

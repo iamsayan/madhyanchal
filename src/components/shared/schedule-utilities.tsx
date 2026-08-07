@@ -116,18 +116,18 @@ export function GrandProcessionRouteCard() {
   const mapsUrl = `https://www.google.com/maps/dir/?api=1&origin=Madhyanchal+Jagadhatri+Puja+Pandal+Chandannagar&destination=Rani+Ghat+Chandannagar&travelmode=walking`;
 
   return (
-    <div className="relative overflow-hidden rounded-2xl border border-indigo-500/40 bg-gradient-to-br from-indigo-500/15 via-purple-500/10 to-indigo-500/5 p-4 backdrop-blur-xl sm:p-7 dark:border-indigo-500/30 dark:bg-stone-900/90">
+    <div className="relative overflow-hidden rounded-xl border border-indigo-500/40 bg-gradient-to-br from-indigo-500/15 via-purple-500/10 to-indigo-500/5 p-3 backdrop-blur-xl sm:rounded-2xl sm:p-7 dark:border-indigo-500/30 dark:bg-stone-900/90">
       {/* Card Header */}
-      <div className="flex flex-wrap items-center justify-between gap-3 border-b border-slate-200/70 pb-4 dark:border-white/10">
-        <div className="flex items-center gap-3">
-          <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-indigo-500/20 font-extrabold text-indigo-600 dark:text-indigo-400">
-            <MapPin className="h-5 w-5" />
+      <div className="flex flex-wrap items-center justify-between gap-2 border-b border-slate-200/70 pb-2.5 sm:gap-3 sm:pb-4 dark:border-white/10">
+        <div className="flex items-center gap-2.5 sm:gap-3">
+          <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-indigo-500/20 font-extrabold text-indigo-600 sm:h-10 sm:w-10 sm:rounded-xl dark:text-indigo-400">
+            <MapPin className="h-4 w-4 sm:h-5 sm:w-5" />
           </div>
           <div>
-            <span className="block text-[10px] font-extrabold tracking-widest text-indigo-600 uppercase dark:text-indigo-400">
+            <span className="block text-[9px] font-extrabold tracking-widest text-indigo-600 uppercase sm:text-[10px] dark:text-indigo-400">
               Official Shobhajatra Route
             </span>
-            <h3 className="font-paytone text-base font-bold text-slate-900 sm:text-xl dark:text-white">
+            <h3 className="font-paytone text-sm font-bold text-slate-900 sm:text-xl dark:text-white">
               Grand Procession Route
             </h3>
           </div>
@@ -135,18 +135,18 @@ export function GrandProcessionRouteCard() {
       </div>
 
       {/* Modern Connected Route Path Track with Mobile Horizontal Scroll */}
-      <div className="mt-4 space-y-3.5">
-        <div className="flex w-full snap-x snap-mandatory scrollbar-none items-center gap-3 overflow-x-auto rounded-2xl border border-slate-200/80 bg-white/90 p-3.5 backdrop-blur-md sm:flex-wrap sm:justify-between sm:overflow-visible sm:p-5 dark:border-white/10 dark:bg-stone-950/70">
+      <div className="mt-2.5 space-y-2.5 sm:mt-4 sm:space-y-3.5">
+        <div className="flex w-full snap-x snap-mandatory scrollbar-none items-center gap-2.5 overflow-x-auto rounded-xl border border-slate-200/80 bg-white/90 p-2.5 backdrop-blur-md sm:flex-wrap sm:justify-between sm:overflow-visible sm:rounded-2xl sm:p-5 dark:border-white/10 dark:bg-stone-950/70">
           {/* Stage 1 */}
-          <div className="flex min-w-[170px] shrink-0 snap-center items-center gap-2 sm:min-w-0">
-            <div className="flex h-7 w-7 shrink-0 items-center justify-center rounded-lg bg-indigo-500/15 text-indigo-600 dark:text-indigo-400">
+          <div className="flex min-w-[155px] shrink-0 snap-center items-center gap-2 sm:min-w-0">
+            <div className="flex h-6.5 w-6.5 shrink-0 items-center justify-center rounded-lg bg-indigo-500/15 text-indigo-600 sm:h-7 sm:w-7 dark:text-indigo-400">
               <Sparkles className="h-3.5 w-3.5" />
             </div>
             <div className="min-w-0 leading-tight">
-              <span className="block text-[9px] font-black tracking-wider whitespace-nowrap text-indigo-600 uppercase dark:text-indigo-400">
+              <span className="block text-[8.5px] font-black tracking-wider whitespace-nowrap text-indigo-600 uppercase sm:text-[9px] dark:text-indigo-400">
                 01 • Start
               </span>
-              <span className="text-xs font-extrabold whitespace-nowrap text-slate-900 dark:text-slate-100">
+              <span className="text-[11px] font-extrabold whitespace-nowrap text-slate-900 sm:text-xs dark:text-slate-100">
                 Madhyanchal Barowari
               </span>
             </div>
@@ -157,15 +157,15 @@ export function GrandProcessionRouteCard() {
           </span>
 
           {/* Stage 2 */}
-          <div className="flex min-w-[170px] shrink-0 snap-center items-center gap-2 sm:min-w-0">
-            <div className="flex h-7 w-7 shrink-0 items-center justify-center rounded-lg bg-purple-500/15 text-purple-600 dark:text-purple-400">
+          <div className="flex min-w-[155px] shrink-0 snap-center items-center gap-2 sm:min-w-0">
+            <div className="flex h-6.5 w-6.5 shrink-0 items-center justify-center rounded-lg bg-purple-500/15 text-purple-600 sm:h-7 sm:w-7 dark:text-purple-400">
               <MapPin className="h-3.5 w-3.5" />
             </div>
             <div className="min-w-0 leading-tight">
-              <span className="block text-[9px] font-black tracking-wider whitespace-nowrap text-purple-600 uppercase dark:text-purple-400">
+              <span className="block text-[8.5px] font-black tracking-wider whitespace-nowrap text-purple-600 uppercase sm:text-[9px] dark:text-purple-400">
                 02 • Sequence Entry
               </span>
-              <span className="text-xs font-extrabold whitespace-nowrap text-slate-900 dark:text-slate-100">
+              <span className="text-[11px] font-extrabold whitespace-nowrap text-slate-900 sm:text-xs dark:text-slate-100">
                 Bagbazar More
               </span>
             </div>
@@ -176,15 +176,15 @@ export function GrandProcessionRouteCard() {
           </span>
 
           {/* Stage 3 */}
-          <div className="flex min-w-[170px] shrink-0 snap-center items-center gap-2 sm:min-w-0">
-            <div className="flex h-7 w-7 shrink-0 items-center justify-center rounded-lg bg-amber-500/15 text-amber-600 dark:text-amber-400">
+          <div className="flex min-w-[155px] shrink-0 snap-center items-center gap-2 sm:min-w-0">
+            <div className="flex h-6.5 w-6.5 shrink-0 items-center justify-center rounded-lg bg-amber-500/15 text-amber-600 sm:h-7 sm:w-7 dark:text-amber-400">
               <Lightbulb className="h-3.5 w-3.5" />
             </div>
             <div className="min-w-0 leading-tight">
-              <span className="block text-[9px] font-black tracking-wider whitespace-nowrap text-amber-600 uppercase dark:text-amber-400">
+              <span className="block text-[8.5px] font-black tracking-wider whitespace-nowrap text-amber-600 uppercase sm:text-[9px] dark:text-amber-400">
                 03 • 3D Light Tableaux
               </span>
-              <span className="text-xs font-extrabold whitespace-nowrap text-slate-900 dark:text-slate-100">
+              <span className="text-[11px] font-extrabold whitespace-nowrap text-slate-900 sm:text-xs dark:text-slate-100">
                 GT Road (Jyotir More)
               </span>
             </div>
@@ -195,15 +195,15 @@ export function GrandProcessionRouteCard() {
           </span>
 
           {/* Stage 4 */}
-          <div className="flex min-w-[170px] shrink-0 snap-center items-center gap-2 sm:min-w-0">
-            <div className="flex h-7 w-7 shrink-0 items-center justify-center rounded-lg bg-rose-500/15 text-rose-600 dark:text-rose-400">
+          <div className="flex min-w-[155px] shrink-0 snap-center items-center gap-2 sm:min-w-0">
+            <div className="flex h-6.5 w-6.5 shrink-0 items-center justify-center rounded-lg bg-rose-500/15 text-rose-600 sm:h-7 sm:w-7 dark:text-rose-400">
               <Flame className="h-3.5 w-3.5" />
             </div>
             <div className="min-w-0 leading-tight">
-              <span className="block text-[9px] font-black tracking-wider whitespace-nowrap text-rose-600 uppercase dark:text-rose-400">
+              <span className="block text-[8.5px] font-black tracking-wider whitespace-nowrap text-rose-600 uppercase sm:text-[9px] dark:text-rose-400">
                 04 • Riverfront Circuit
               </span>
-              <span className="text-xs font-extrabold whitespace-nowrap text-slate-900 dark:text-slate-100">
+              <span className="text-[11px] font-extrabold whitespace-nowrap text-slate-900 sm:text-xs dark:text-slate-100">
                 Strand & Taldanga
               </span>
             </div>
@@ -214,22 +214,22 @@ export function GrandProcessionRouteCard() {
           </span>
 
           {/* Stage 5 */}
-          <div className="flex min-w-[170px] shrink-0 snap-center items-center gap-2 sm:min-w-0">
-            <div className="flex h-7 w-7 shrink-0 items-center justify-center rounded-lg bg-blue-500/15 text-blue-600 dark:text-blue-400">
+          <div className="flex min-w-[155px] shrink-0 snap-center items-center gap-2 sm:min-w-0">
+            <div className="flex h-6.5 w-6.5 shrink-0 items-center justify-center rounded-lg bg-blue-500/15 text-blue-600 sm:h-7 sm:w-7 dark:text-blue-400">
               <Waves className="h-3.5 w-3.5" />
             </div>
             <div className="min-w-0 leading-tight">
-              <span className="block text-[9px] font-black tracking-wider whitespace-nowrap text-blue-600 uppercase dark:text-blue-400">
+              <span className="block text-[8.5px] font-black tracking-wider whitespace-nowrap text-blue-600 uppercase sm:text-[9px] dark:text-blue-400">
                 05 • Ganga Immersion
               </span>
-              <span className="text-xs font-extrabold whitespace-nowrap text-slate-900 dark:text-slate-100">
+              <span className="text-[11px] font-extrabold whitespace-nowrap text-slate-900 sm:text-xs dark:text-slate-100">
                 Rani Ghat
               </span>
             </div>
           </div>
         </div>
 
-        <p className="rounded-xl border border-slate-200/60 bg-white/60 p-3 text-xs leading-relaxed text-slate-600 backdrop-blur-sm dark:border-white/5 dark:bg-stone-950/40 dark:text-slate-300">
+        <p className="rounded-lg border border-slate-200/60 bg-white/60 p-2.5 text-[11px] leading-relaxed text-slate-600 backdrop-blur-sm sm:rounded-xl sm:p-3 sm:text-xs dark:border-white/5 dark:bg-stone-950/40 dark:text-slate-300">
           <strong className="font-extrabold text-slate-900 dark:text-slate-100">
             Official Immersion Circuit:
           </strong>{' '}

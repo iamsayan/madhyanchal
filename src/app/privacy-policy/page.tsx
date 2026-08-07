@@ -2,7 +2,6 @@ import type { Metadata, Viewport } from 'next';
 
 import { PageLayout } from '@/components/layout/page-layout';
 import { AnimatedWrapper } from '@/components/shared/animated-wrapper';
-import { Section } from '@/components/shared/section';
 import { BorderBeam } from '@/components/ui/border-beam';
 
 import {
@@ -128,8 +127,8 @@ export default function PrivacyPolicyPage() {
       breadcrumbCurrent="Privacy Policy"
     >
       {/* POLICY CLAUSES GRID */}
-      <Section className="p-0!">
-        <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:gap-6">
+      <div className="space-y-6 sm:space-y-10">
+        <div className="grid grid-cols-1 gap-3.5 sm:gap-6 md:grid-cols-2">
           {policySections.map((item, index) => {
             const Icon = item.icon;
 
@@ -139,7 +138,7 @@ export default function PrivacyPolicyPage() {
                 direction="up"
                 delay={index * 0.05}
               >
-                <div className="card-glass card-hover-glow relative h-full space-y-3 overflow-hidden rounded-2xl border border-slate-200/90 p-5 backdrop-blur-2xl transition-all duration-300 sm:rounded-3xl sm:p-6 dark:border-white/12">
+                <div className="card-glass card-hover-glow relative h-full space-y-2.5 overflow-hidden rounded-xl border border-slate-200/90 p-3.5 backdrop-blur-2xl transition-all duration-300 sm:rounded-2xl sm:p-6 dark:border-white/12">
                   <BorderBeam
                     size={120}
                     duration={8}
@@ -147,21 +146,21 @@ export default function PrivacyPolicyPage() {
                     colorTo="#fef08a"
                   />
 
-                  <div className="flex items-start justify-between">
-                    <div className="flex items-center gap-3">
-                      <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl border border-amber-500/30 bg-amber-500/15 text-amber-600 dark:text-amber-400">
-                        <Icon className="h-5 w-5" />
+                  <div className="flex items-start justify-between gap-2">
+                    <div className="flex items-center gap-2.5">
+                      <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg border border-amber-500/30 bg-amber-500/15 text-amber-600 sm:h-9 sm:w-9 sm:rounded-xl dark:text-amber-400">
+                        <Icon className="h-4 w-4 sm:h-4.5 sm:w-4.5" />
                       </div>
-                      <h3 className="font-paytone text-base font-bold text-slate-900 sm:text-lg dark:text-white">
+                      <h3 className="font-paytone text-xs font-bold leading-snug text-slate-900 sm:text-base dark:text-white">
                         {item.title}
                       </h3>
                     </div>
-                    <span className="font-mono text-xs font-black text-amber-500/70">
+                    <span className="font-mono text-[11px] font-black text-amber-500/70 sm:text-xs">
                       {item.num}
                     </span>
                   </div>
 
-                  <p className="text-xs leading-relaxed text-slate-600 sm:text-sm dark:text-slate-300">
+                  <p className="text-[11px] leading-relaxed text-slate-600 sm:text-sm dark:text-slate-300">
                     {item.content}
                   </p>
                 </div>
@@ -172,7 +171,7 @@ export default function PrivacyPolicyPage() {
           {/* 10. PRIVACY CONTACT CLAUSE CARD (Full Width on Desktop) */}
           <div className="md:col-span-2">
             <AnimatedWrapper direction="up" delay={0.3}>
-              <div className="card-glass card-hover-glow relative overflow-hidden rounded-2xl border border-amber-500/40 bg-gradient-to-br from-amber-500/10 via-amber-500/5 to-transparent p-5 backdrop-blur-2xl transition-all duration-300 sm:rounded-3xl sm:p-7 dark:border-amber-500/30">
+              <div className="card-glass card-hover-glow relative overflow-hidden rounded-xl border border-amber-500/40 bg-gradient-to-br from-amber-500/10 via-amber-500/5 to-transparent p-3.5 backdrop-blur-2xl transition-all duration-300 sm:rounded-3xl sm:p-7 dark:border-amber-500/30">
                 <BorderBeam
                   size={180}
                   duration={6}
@@ -180,17 +179,17 @@ export default function PrivacyPolicyPage() {
                   colorTo="#fef08a"
                 />
 
-                <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
-                  <div className="space-y-2">
+                <div className="flex flex-col gap-3.5 md:flex-row md:items-center md:justify-between">
+                  <div className="space-y-1.5">
                     <div className="flex items-center gap-2">
-                      <span className="flex h-8 w-8 items-center justify-center rounded-xl bg-amber-500 text-slate-950">
-                        <HelpCircle className="h-4 w-4" />
+                      <span className="flex h-7 w-7 items-center justify-center rounded-lg bg-amber-500 text-slate-950 sm:h-8 sm:w-8 sm:rounded-xl">
+                        <HelpCircle className="h-3.5 w-3.5 sm:h-4 sm:w-4" />
                       </span>
-                      <h3 className="font-paytone text-lg font-bold text-slate-900 sm:text-xl dark:text-white">
+                      <h3 className="font-paytone text-sm font-bold text-slate-900 sm:text-xl dark:text-white">
                         10. Privacy Desk Contact Information
                       </h3>
                     </div>
-                    <p className="text-xs leading-relaxed text-slate-600 sm:text-sm dark:text-slate-300">
+                    <p className="text-[11px] leading-relaxed text-slate-600 sm:text-sm dark:text-slate-300">
                       If you have questions, data deletion requests, or privacy
                       concerns regarding this policy, please get in touch with
                       our team:
@@ -198,14 +197,14 @@ export default function PrivacyPolicyPage() {
                   </div>
 
                   {/* Contact Info Badges */}
-                  <div className="flex shrink-0 flex-col flex-wrap gap-3 sm:flex-row">
-                    <div className="flex items-center gap-2.5 rounded-xl border border-slate-200 bg-white/80 p-2.5 text-xs dark:border-white/10 dark:bg-stone-900/90">
-                      <MapPin className="h-4 w-4 text-amber-500" />
+                  <div className="flex shrink-0 flex-col flex-wrap gap-2 sm:flex-row sm:gap-3">
+                    <div className="flex items-center gap-2 rounded-xl border border-slate-200 bg-white/80 p-2 text-[11px] sm:p-2.5 sm:text-xs dark:border-white/10 dark:bg-stone-900/90">
+                      <MapPin className="h-3.5 w-3.5 shrink-0 text-amber-500 sm:h-4 sm:w-4" />
                       <div>
                         <p className="font-bold text-slate-900 dark:text-white">
                           Station Road
                         </p>
-                        <p className="text-[11px] text-slate-500">
+                        <p className="text-[10px] text-slate-500 sm:text-[11px]">
                           Chandannagar, 712136
                         </p>
                       </div>
@@ -213,14 +212,14 @@ export default function PrivacyPolicyPage() {
 
                     <a
                       href="mailto:jagatdhatri.madhyanchal@gmail.com"
-                      className="flex items-center gap-2.5 rounded-xl border border-slate-200 bg-white/80 p-2.5 text-xs transition-colors hover:border-amber-500/40 dark:border-white/10 dark:bg-stone-900/90"
+                      className="flex items-center gap-2 rounded-xl border border-slate-200 bg-white/80 p-2 text-[11px] transition-colors hover:border-amber-500/40 sm:p-2.5 sm:text-xs dark:border-white/10 dark:bg-stone-900/90"
                     >
-                      <Mail className="h-4 w-4 text-amber-500" />
+                      <Mail className="h-3.5 w-3.5 shrink-0 text-amber-500 sm:h-4 sm:w-4" />
                       <div>
                         <p className="font-bold text-slate-900 dark:text-white">
                           Email Privacy Desk
                         </p>
-                        <p className="text-[11px] text-slate-500">
+                        <p className="text-[10px] text-slate-500 sm:text-[11px]">
                           jagatdhatri.madhyanchal@gmail.com
                         </p>
                       </div>
@@ -228,14 +227,14 @@ export default function PrivacyPolicyPage() {
 
                     <a
                       href="tel:+919831360465"
-                      className="flex items-center gap-2.5 rounded-xl border border-slate-200 bg-white/80 p-2.5 text-xs transition-colors hover:border-amber-500/40 dark:border-white/10 dark:bg-stone-900/90"
+                      className="flex items-center gap-2 rounded-xl border border-slate-200 bg-white/80 p-2 text-[11px] transition-colors hover:border-amber-500/40 sm:p-2.5 sm:text-xs dark:border-white/10 dark:bg-stone-900/90"
                     >
-                      <Phone className="h-4 w-4 text-emerald-500" />
+                      <Phone className="h-3.5 w-3.5 shrink-0 text-emerald-500 sm:h-4 sm:w-4" />
                       <div>
                         <p className="font-bold text-slate-900 dark:text-white">
                           Committee Helpline
                         </p>
-                        <p className="text-[11px] text-slate-500">
+                        <p className="text-[10px] text-slate-500 sm:text-[11px]">
                           +91-9831360465
                         </p>
                       </div>
@@ -246,7 +245,7 @@ export default function PrivacyPolicyPage() {
             </AnimatedWrapper>
           </div>
         </div>
-      </Section>
+      </div>
     </PageLayout>
   );
 }

@@ -49,6 +49,57 @@
             "purpose": "maskable"
         }
     ],
+    "screenshots": [
+        {
+            "src": "/screenshots/1.jpg",
+            "sizes": "1080x1920",
+            "type": "image/jpeg",
+            "form_factor": "narrow",
+            "label": "Experience Jagadhatri Puja"
+        },
+        {
+            "src": "/screenshots/2.jpg",
+            "sizes": "1080x1920",
+            "type": "image/jpeg",
+            "form_factor": "narrow",
+            "label": "Festival Schedule"
+        },
+        {
+            "src": "/screenshots/3.jpg",
+            "sizes": "1080x1920",
+            "type": "image/jpeg",
+            "form_factor": "narrow",
+            "label": "Photo Gallery"
+        },
+        {
+            "src": "/screenshots/4.jpg",
+            "sizes": "1080x1920",
+            "type": "image/jpeg",
+            "form_factor": "narrow",
+            "label": "Festival Origins"
+        },
+        {
+            "src": "/screenshots/5.jpg",
+            "sizes": "1080x1920",
+            "type": "image/jpeg",
+            "form_factor": "narrow",
+            "label": "Heritage Timeline"
+        },
+        {
+            "src": "/screenshots/6.jpg",
+            "sizes": "1080x1920",
+            "type": "image/jpeg",
+            "form_factor": "narrow",
+            "label": "Awards & Recognition"
+        },
+        {
+            "src": "/screenshots/7.jpg",
+            "sizes": "1080x1920",
+            "type": "image/jpeg",
+            "form_factor": "narrow",
+            "label": "Durga Puja at Madhyanchal"
+        }
+    ],
     "shortcuts": [
         {
             "name": "Durga Puja",
