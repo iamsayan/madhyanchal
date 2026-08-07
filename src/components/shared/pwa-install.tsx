@@ -40,7 +40,7 @@ export function PwaInstallPrompt() {
 
   return (
     <pwa-install
-      manifest-url="/manifest.webmanifest"
+      manifest-url="/manifest.json"
       name="Madhyanchal Sarbajanin"
       icon="/circle-logo.png"
       description="Official App for Madhyanchal Sarbajanin, Chandannagar."

@@ -243,9 +243,9 @@ export default function DurgaPujaLandingPage() {
             </h2>
           </div>
 
-          <div className="flex w-full snap-x snap-mandatory scrollbar-none items-stretch gap-2.5 overflow-x-auto pb-2 sm:grid sm:grid-cols-5 sm:gap-3 sm:overflow-visible lg:gap-3.5">
+          <div className="-mx-3.5 flex snap-x snap-mandatory items-stretch gap-3 overflow-x-auto px-3.5 pb-2 scrollbar-none scroll-px-3.5 sm:mx-0 sm:grid sm:grid-cols-5 sm:gap-3 sm:overflow-visible sm:px-0 lg:gap-3.5">
             {/* Day 1: Shashthi */}
-            <div className="card-glass card-hover-glow relative flex h-full min-w-[160px] shrink-0 snap-center flex-col justify-between overflow-hidden rounded-xl border border-slate-200/90 p-3 backdrop-blur-2xl transition-all duration-300 sm:min-w-0 sm:rounded-2xl sm:p-4 dark:border-white/12">
+            <div className="card-glass card-hover-glow relative flex h-full w-[76vw] max-w-[260px] shrink-0 snap-start flex-col justify-between overflow-hidden rounded-xl border border-slate-200/90 p-3.5 backdrop-blur-2xl transition-all duration-300 sm:w-auto sm:max-w-none sm:min-w-0 sm:rounded-2xl sm:p-4 dark:border-white/12">
               <span className="text-[9.5px] font-black tracking-wider text-amber-600 uppercase sm:text-[10.5px] dark:text-amber-400">
                 Day 1 • Shashthi
               </span>
@@ -263,7 +263,7 @@ export default function DurgaPujaLandingPage() {
             </div>
 
             {/* Day 2: Saptami */}
-            <div className="card-glass card-hover-glow relative flex h-full min-w-[160px] shrink-0 snap-center flex-col justify-between overflow-hidden rounded-xl border border-slate-200/90 p-3 backdrop-blur-2xl transition-all duration-300 sm:min-w-0 sm:rounded-2xl sm:p-4 dark:border-white/12">
+            <div className="card-glass card-hover-glow relative flex h-full w-[76vw] max-w-[260px] shrink-0 snap-start flex-col justify-between overflow-hidden rounded-xl border border-slate-200/90 p-3.5 backdrop-blur-2xl transition-all duration-300 sm:w-auto sm:max-w-none sm:min-w-0 sm:rounded-2xl sm:p-4 dark:border-white/12">
               <span className="text-[9.5px] font-black tracking-wider text-amber-600 uppercase sm:text-[10.5px] dark:text-amber-400">
                 Day 2 • Saptami
               </span>
@@ -281,7 +281,7 @@ export default function DurgaPujaLandingPage() {
             </div>
 
             {/* Day 3: Ashtami */}
-            <div className="card-glass card-hover-glow relative flex h-full min-w-[160px] shrink-0 snap-center flex-col justify-between overflow-hidden rounded-xl border border-amber-500/50 bg-amber-500/10 p-3 backdrop-blur-2xl transition-all duration-300 sm:min-w-0 sm:rounded-2xl sm:p-4 dark:border-amber-400/40 dark:bg-amber-500/15">
+            <div className="card-glass card-hover-glow relative flex h-full w-[76vw] max-w-[260px] shrink-0 snap-start flex-col justify-between overflow-hidden rounded-xl border border-amber-500/50 bg-amber-500/10 p-3.5 backdrop-blur-2xl transition-all duration-300 sm:w-auto sm:max-w-none sm:min-w-0 sm:rounded-2xl sm:p-4 dark:border-amber-400/40 dark:bg-amber-500/15">
               <div className="flex items-center justify-between gap-1">
                 <span className="text-[9.5px] font-black tracking-wider text-amber-700 uppercase sm:text-[10.5px] dark:text-amber-300">
                   Day 3 • Ashtami
@@ -304,7 +304,7 @@ export default function DurgaPujaLandingPage() {
             </div>
 
             {/* Day 4: Navami */}
-            <div className="card-glass card-hover-glow relative flex h-full min-w-[160px] shrink-0 snap-center flex-col justify-between overflow-hidden rounded-xl border border-slate-200/90 p-3 backdrop-blur-2xl transition-all duration-300 sm:min-w-0 sm:rounded-2xl sm:p-4 dark:border-white/12">
+            <div className="card-glass card-hover-glow relative flex h-full w-[76vw] max-w-[260px] shrink-0 snap-start flex-col justify-between overflow-hidden rounded-xl border border-slate-200/90 p-3.5 backdrop-blur-2xl transition-all duration-300 sm:w-auto sm:max-w-none sm:min-w-0 sm:rounded-2xl sm:p-4 dark:border-white/12">
               <span className="text-[9.5px] font-black tracking-wider text-emerald-600 uppercase sm:text-[10.5px] dark:text-emerald-400">
                 Day 4 • Navami
               </span>
@@ -322,7 +322,7 @@ export default function DurgaPujaLandingPage() {
             </div>
 
             {/* Day 5: Dashami */}
-            <div className="card-glass card-hover-glow relative flex h-full min-w-[160px] shrink-0 snap-center flex-col justify-between overflow-hidden rounded-xl border border-slate-200/90 p-3 backdrop-blur-2xl transition-all duration-300 sm:min-w-0 sm:rounded-2xl sm:p-4 dark:border-white/12">
+            <div className="card-glass card-hover-glow relative flex h-full w-[76vw] max-w-[260px] shrink-0 snap-start flex-col justify-between overflow-hidden rounded-xl border border-slate-200/90 p-3.5 backdrop-blur-2xl transition-all duration-300 sm:w-auto sm:max-w-none sm:min-w-0 sm:rounded-2xl sm:p-4 dark:border-white/12">
               <span className="text-[9.5px] font-black tracking-wider text-rose-600 uppercase sm:text-[10.5px] dark:text-rose-400">
                 Day 5 • Dashami
               </span>
