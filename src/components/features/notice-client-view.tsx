@@ -93,7 +93,7 @@ export default function NoticeClientView({
     null
   );
 
-  const basePath = isDurgaPuja ? '/durgapuja/notice' : '/notice';
+  const basePath = isDurgaPuja ? '/durgapuja/notices' : '/notices';
   const allNotices = useMemo(() => {
     return notices.filter((notice) => {
       const refNo = notice.ref_no?.toUpperCase() || '';

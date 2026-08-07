@@ -10,7 +10,7 @@ export const metadata: Metadata = {
     title: 'Public Notices & Announcements',
     description:
       'Official notice board of Madhyanchal Sarbajanin Chandannagar. Access Annual General Meeting (AGM) notices, financial reports, executive decisions, and public announcements.',
-    canonical: '/notice',
+    canonical: '/notices',
   }),
   keywords: [
     'madhyanchal sarbajanin notice',

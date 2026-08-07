@@ -109,7 +109,7 @@
         },
         {
             "protocol": "web+msmnotice",
-            "url": "/notice"
+            "url": "/notices"
         }
     ]
 }

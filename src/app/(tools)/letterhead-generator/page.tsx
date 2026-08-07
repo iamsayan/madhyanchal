@@ -6,11 +6,6 @@ export const metadata: Metadata = {
   title: 'Letterhead & PDF Generator',
   description:
     'Generate official Madhyanchal Sarbajanin letterheads, member authorization certificates, notices, and PDF documents.',
-  robots: {
-    index: false,
-    follow: false,
-    nocache: true,
-  },
 };
 
 export default function LetterheadGeneratorPage() {

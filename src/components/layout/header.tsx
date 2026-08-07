@@ -249,7 +249,7 @@ export function Header() {
             <Calendar className="h-4 w-4" />
           </Link>
           <Link
-            href="/notice"
+            href={isDurgaPuja ? '/durgapuja/notices' : '/notices'}
             className={cn(
               'relative flex h-8 w-8 shrink-0 items-center justify-center rounded-full border shadow-xs backdrop-blur-xl transition-all active:scale-90',
               isCommon
@@ -257,7 +257,7 @@ export function Header() {
                 : isDurgaPuja
                   ? 'border-white/15 bg-[#132342]/90 text-amber-400 hover:bg-[#1a2d52]'
                   : 'border-stone-700 bg-stone-800/80 text-amber-400 hover:bg-stone-800',
-              pathname === '/notice' &&
+              (pathname === '/notices' || pathname === '/durgapuja/notices') &&
                 'border-amber-500 bg-amber-500 text-slate-950 dark:bg-amber-500 dark:text-slate-950'
             )}
             aria-label="Public Notices"

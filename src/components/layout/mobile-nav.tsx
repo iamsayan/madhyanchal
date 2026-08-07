@@ -198,7 +198,7 @@ export function MobileNavDock() {
     },
     {
       label: 'Notice Board',
-      href: '/durgapuja/notice',
+      href: '/durgapuja/notices',
       icon: Bell,
       desc: 'Official Announcements & Circulars',
     },

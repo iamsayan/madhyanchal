@@ -175,11 +175,11 @@ export function getNoticeSchema(isDurgaPuja = false) {
         isDurgaPuja
           ? [
               { name: 'Home', url: '/durgapuja' },
-              { name: 'Notice Board', url: '/durgapuja/notice' },
+              { name: 'Notice Board', url: '/durgapuja/notices' },
             ]
           : [
               { name: 'Home', url: '/' },
-              { name: 'Notice Board', url: '/notice' },
+              { name: 'Notice Board', url: '/notices' },
             ]
       ),
       {
@@ -191,8 +191,8 @@ export function getNoticeSchema(isDurgaPuja = false) {
           ? 'Official Durga Puja notice board of Madhyanchal Sarbajanin Chandannagar.'
           : 'Official notice board of Madhyanchal Sarbajanin Chandannagar.',
         url: isDurgaPuja
-          ? `${SCHEMA_SITE_URL}/durgapuja/notice`
-          : `${SCHEMA_SITE_URL}/notice`,
+          ? `${SCHEMA_SITE_URL}/durgapuja/notices`
+          : `${SCHEMA_SITE_URL}/notices`,
       },
     ],
   };
