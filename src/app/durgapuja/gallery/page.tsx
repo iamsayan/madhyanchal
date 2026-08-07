@@ -38,7 +38,7 @@ export default async function DurgaPujaGalleryPage() {
     .filter(Boolean);
 
   const galleryWebpage = webpageSchema({
-    title: 'Durga Puja Photo Gallery | Madhyanchal Sarbajanin',
+    title: 'Photo Gallery',
     description:
       'Browse high-resolution photo archives of Madhyanchal Sarbajanin Durga Puja celebrations in Chandannagar.',
     url: '/durgapuja/gallery',
@@ -60,7 +60,7 @@ export default async function DurgaPujaGalleryPage() {
 
   return (
     <PageLayout
-      title="Durga Puja Photo Gallery"
+      title="Durga Puja"
       subtitle="Explore high-resolution photo archives of Madhyanchal Sarbajanin Durga Puja celebrations, sit and draw competition, idol artistry, and illuminations."
       badge={{
         text: 'Durga Puja Memory Archives',

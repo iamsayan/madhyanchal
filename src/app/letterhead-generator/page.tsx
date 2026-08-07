@@ -16,7 +16,7 @@ export const metadata: Metadata = {
 export default function LetterheadGeneratorPage() {
   return (
     <PageLayout
-      title={'Letterhead Generator'}
+      title="Letterhead Generator"
       subtitle="Generate official Madhyanchal Sarbajanin letterheads, member authorization certificates, notices, and PDF documents."
       showBreadcrumb={false}
     >
