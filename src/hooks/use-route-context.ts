@@ -2,12 +2,7 @@
 
 import { usePathname } from 'next/navigation';
 
-export const COMMON_ROUTES = [
-  '/notice',
-  '/contact-us',
-  '/privacy-policy',
-  '/terms',
-];
+export const COMMON_ROUTES = ['/privacy-policy', '/terms'];
 
 export interface RouteContext {
   isDurgaPuja: boolean;

@@ -23,6 +23,7 @@ import {
   ArrowLeft,
   Download,
   Megaphone,
+  Bell,
 } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { sendGTMEvent } from '@next/third-parties/google';
@@ -188,6 +189,12 @@ export function MobileNavDock() {
       href: '/durgapuja/schedule',
       icon: Calendar,
       desc: '5-Day Festival Rituals & Timings',
+    },
+    {
+      label: 'Notice Board',
+      href: '/durgapuja/notice',
+      icon: Bell,
+      desc: 'Official Announcements & Circulars',
     },
     {
       label: 'Contact Us',
