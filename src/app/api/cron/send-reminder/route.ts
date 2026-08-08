@@ -8,14 +8,14 @@ import { sendWhatsAppMessage } from '@/lib/twilio';
 import type { MemberWithPayments } from '@/types';
 
 export async function GET(req: NextRequest) {
-  const { searchParams } = req.nextUrl;
-
-  if (!verifySecret(req)) {
+  if (!verifySecret(req, process.env.CRON_SECRET)) {
     return NextResponse.json(
       { success: false, error: 'Unauthorized' },
       { status: 401 }
     );
   }
+
+  const { searchParams } = req.nextUrl;
 
   const rawSendNumbers = searchParams.get('s');
   const sendNumbers = rawSendNumbers
@@ -24,20 +24,6 @@ export async function GET(req: NextRequest) {
 
   const skip = Number(searchParams.get('skip')) || 0;
   const yearParam = searchParams.get('year');
-  const force = searchParams.get('force') === 'true';
-
-  const currentDay = new Date().getDate();
-  const scheduledDays = [2, 15];
-
-  if (!force && !scheduledDays.includes(currentDay)) {
-    return NextResponse.json({
-      success: true,
-      message: `Skipped reminder. Current day (${currentDay}) is not in scheduled days [${scheduledDays.join(
-        ', '
-      )}]. Pass ?force=true to override.`,
-      processedCount: 0,
-    });
-  }
 
   try {
     const year = await getMembershipYear(yearParam);

@@ -2,10 +2,10 @@ import crypto from 'crypto';
 import { NextRequest } from 'next/server';
 
 /**
- * Verifies secret token passed in query parameters or request headers against WEBHOOK_SECRET.
+ * Verifies secret token passed in query parameters or request headers against specified secret (defaults to WEBHOOK_SECRET).
  */
-export function verifySecret(req: NextRequest): boolean {
-  const expectedSecret = process.env.WEBHOOK_SECRET;
+export function verifySecret(req: NextRequest, secret?: string): boolean {
+  const expectedSecret = secret || process.env.WEBHOOK_SECRET;
   if (!expectedSecret) return false;
 
   const token =
@@ -23,4 +23,3 @@ export function verifySecret(req: NextRequest): boolean {
 
   return crypto.timingSafeEqual(expectedBuf, tokenBuf);
 }
-
