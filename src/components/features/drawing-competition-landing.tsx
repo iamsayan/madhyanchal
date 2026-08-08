@@ -117,8 +117,12 @@ export function DrawingCompetitionLanding({
   initialParticipants = [],
 }: DrawingCompetitionLandingProps) {
   const [isListModalOpen, setIsListModalOpen] = useState(false);
-  const isClosed = isRegistrationClosed();
   const config = DRAWING_COMPETITION_CONFIG;
+  const isClosed = isRegistrationClosed(
+    initialParticipants.length,
+    config.competitionDateISO,
+    config.maxTotalParticipants
+  );
   const ageCategories = getAgeCategoryLimits(config.year);
   const editionOrdinal = getOrdinalSuffix(config.edition);
 
@@ -194,6 +198,18 @@ export function DrawingCompetitionLanding({
 
   const onFormSubmit = (data: DrawingCompetitionFormData) => {
     setErrorMsg(null);
+    if (
+      config.maxTotalParticipants > 0 &&
+      initialParticipants.length + data.participants.length > config.maxTotalParticipants
+    ) {
+      const remaining = Math.max(0, config.maxTotalParticipants - initialParticipants.length);
+      setErrorMsg(
+        remaining > 0
+          ? `Seating capacity limit reached! Only ${remaining} seat(s) remain, but you attempted to register ${data.participants.length} participant(s).`
+          : `Registrations are officially closed as maximum seating capacity (${config.maxTotalParticipants}) has been reached.`
+      );
+      return;
+    }
     setPreviewData(data);
   };
 
@@ -355,35 +371,6 @@ export function DrawingCompetitionLanding({
 
   return (
     <div className="relative mx-auto max-w-6xl space-y-4 sm:space-y-6">
-      {/* REGISTRATION CLOSED NOTICE BANNER (IF EXPIRED) */}
-      {isClosed && (
-        <div className="flex flex-col items-center justify-between gap-3 rounded-2xl border border-amber-500/40 bg-amber-500/15 p-4 text-center sm:flex-row sm:text-left dark:border-amber-500/30 dark:bg-stone-900/90">
-          <div className="flex items-center gap-3">
-            <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-amber-500 text-slate-950">
-              <AlertCircle className="h-5 w-5" />
-            </div>
-            <div>
-              <h4 className="font-paytone text-sm font-bold text-slate-900 sm:text-base dark:text-white">
-                Registrations Closed for {config.year}
-              </h4>
-              <p className="text-xs text-slate-600 dark:text-slate-300">
-                Thank you for the overwhelming response! Online registrations
-                for the {config.year} edition are officially closed. We look
-                forward to welcoming you in {config.year + 1}!
-              </p>
-            </div>
-          </div>
-          <button
-            type="button"
-            onClick={() => setIsListModalOpen(true)}
-            className="inline-flex shrink-0 items-center gap-1.5 rounded-full bg-amber-500 px-4 py-2 text-xs font-bold text-slate-950 transition-all hover:bg-amber-400"
-          >
-            <Users className="h-3.5 w-3.5" />
-            <span>View Registered List</span>
-          </button>
-        </div>
-      )}
-
       {/* TOP ACTION & TOPIC BANNER SECTION */}
       <div className="card-glass relative overflow-hidden rounded-2xl border border-slate-200/90 p-3.5 text-center backdrop-blur-2xl sm:rounded-3xl sm:p-8 dark:border-white/12">
         <BorderBeam
@@ -396,7 +383,9 @@ export function DrawingCompetitionLanding({
         <div className="flex flex-col items-center space-y-2.5 sm:space-y-4">
           <span className="inline-flex items-center gap-1.5 rounded-full border border-amber-500/40 bg-amber-500/15 px-3 py-0.5 text-[9.5px] font-extrabold tracking-wider text-amber-800 uppercase sm:px-4 sm:py-1.5 sm:text-xs dark:text-amber-300">
             <Sparkles className="h-3 w-3 animate-pulse text-amber-500 sm:h-3.5 sm:w-3.5" />
-            {editionOrdinal} ANNUAL SIT & DRAW COMPETITION {config.year}
+            {isClosed
+              ? `REGISTRATIONS CLOSED • ${editionOrdinal} EDITION ${config.year}`
+              : `${editionOrdinal} ANNUAL SIT & DRAW COMPETITION ${config.year}`}
           </span>
 
           {/* TOPIC BANNER HIGHLIGHT */}
@@ -412,32 +401,44 @@ export function DrawingCompetitionLanding({
             </p>
           </div>
 
+          {isClosed && (
+            <p className="max-w-lg text-xs leading-relaxed font-medium text-slate-600 sm:text-sm dark:text-slate-300">
+              Thank you for the overwhelming response! Online registrations for the{' '}
+              {config.year} edition are officially closed.
+            </p>
+          )}
+
           {/* ACTION BUTTONS */}
           <div className="flex w-full flex-row flex-nowrap items-center justify-center gap-1.5 pt-0.5 sm:gap-3">
             {!isClosed ? (
+              <>
+                <button
+                  type="button"
+                  onClick={scrollToForm}
+                  className="inline-flex shrink-0 items-center justify-center gap-1 rounded-full border border-amber-400/60 bg-gradient-to-r from-amber-500 via-amber-400 to-yellow-400 px-3 py-1.5 text-[11px] font-extrabold tracking-tight whitespace-nowrap text-slate-950 transition-all hover:scale-105 active:scale-95 sm:px-5 sm:py-2 sm:text-xs sm:tracking-wide"
+                >
+                  <span>Register Now</span>
+                  <ArrowRight className="h-3.5 w-3.5" />
+                </button>
+                <button
+                  type="button"
+                  onClick={() => setIsListModalOpen(true)}
+                  className="inline-flex shrink-0 items-center justify-center gap-1 rounded-full border border-slate-300/80 bg-white/80 px-3 py-1.5 text-[11px] font-bold whitespace-nowrap text-slate-800 transition-all hover:bg-slate-100 sm:px-4.5 sm:py-2 sm:text-xs dark:border-white/15 dark:bg-stone-900/80 dark:text-slate-200 dark:hover:bg-stone-800"
+                >
+                  <Users className="h-3.5 w-3.5 text-amber-500" />
+                  <span>Participants List</span>
+                </button>
+              </>
+            ) : (
               <button
                 type="button"
-                onClick={scrollToForm}
-                className="inline-flex shrink-0 items-center justify-center gap-1 rounded-full border border-amber-400/60 bg-gradient-to-r from-amber-500 via-amber-400 to-yellow-400 px-3 py-1.5 text-[11px] font-extrabold tracking-tight whitespace-nowrap text-slate-950 transition-all hover:scale-105 active:scale-95 sm:px-5 sm:py-2 sm:text-xs sm:tracking-wide"
+                onClick={() => setIsListModalOpen(true)}
+                className="inline-flex shrink-0 items-center justify-center gap-1.5 rounded-full bg-amber-500 px-5 py-2.5 text-xs font-bold text-slate-950 transition-all hover:bg-amber-400 active:scale-95 sm:text-sm"
               >
-                <span>Register Now</span>
-                <ArrowRight className="h-3.5 w-3.5" />
+                <Users className="h-4 w-4" />
+                <span>View Confirmed Participants List</span>
               </button>
-            ) : (
-              <div className="inline-flex shrink-0 items-center justify-center gap-1 rounded-full border border-amber-500/40 bg-amber-500/15 px-3 py-1.5 text-[11px] font-bold whitespace-nowrap text-amber-700 sm:px-5 sm:py-2 sm:text-xs dark:text-amber-300">
-                <AlertCircle className="h-3.5 w-3.5" />
-                <span>Registrations Closed ({config.year})</span>
-              </div>
             )}
-
-            <button
-              type="button"
-              onClick={() => setIsListModalOpen(true)}
-              className="inline-flex shrink-0 items-center justify-center gap-1 rounded-full border border-slate-300/80 bg-white/80 px-3 py-1.5 text-[11px] font-bold whitespace-nowrap text-slate-800 transition-all hover:bg-slate-100 sm:px-4.5 sm:py-2 sm:text-xs dark:border-white/15 dark:bg-stone-900/80 dark:text-slate-200 dark:hover:bg-stone-800"
-            >
-              <Users className="h-3.5 w-3.5 text-amber-500" />
-              <span>Participants List</span>
-            </button>
           </div>
         </div>
       </div>
@@ -584,312 +585,312 @@ export function DrawingCompetitionLanding({
         </div>
       </div>
 
-      {/* REGISTRATION FORM */}
-      <form
-        id="drawing-form-container"
-        onSubmit={handleSubmit(onFormSubmit)}
-        className="card-glass relative space-y-4 rounded-2xl border border-slate-200/90 p-3.5 backdrop-blur-2xl sm:space-y-8 sm:rounded-3xl sm:p-8 dark:border-white/12"
-      >
-        {/* GUARDIAN INFORMATION SECTION */}
-        <div className="space-y-3 sm:space-y-4">
-          <div className="border-b border-slate-200/80 pb-2 sm:pb-3 dark:border-white/10">
-            <h3 className="font-paytone flex items-center gap-1.5 text-xs font-bold text-slate-900 sm:gap-2 sm:text-lg dark:text-white">
-              <User className="h-3.5 w-3.5 text-amber-500 sm:h-4 sm:w-4" />
-              Guardian Details
-            </h3>
-            <p className="text-[10.5px] text-slate-500 sm:text-[11px] dark:text-slate-400">
-              Provide guardian contact details for confirmation and updates.
-            </p>
-          </div>
-
-          <div className="grid grid-cols-1 gap-2.5 sm:grid-cols-2 sm:gap-5">
-            {/* Guardian Name */}
-            <div className="col-span-1 space-y-0.5 sm:col-span-2 sm:space-y-1">
-              <label className="text-[11px] font-bold text-slate-700 sm:text-xs dark:text-slate-200">
-                Guardian Full Name *
-              </label>
-              <input
-                type="text"
-                {...register('guardianName', {
-                  required: 'Guardian name is required',
-                })}
-                placeholder="Enter guardian full name"
-                className="h-9 w-full rounded-xl border border-slate-300/80 bg-white/80 px-3 text-xs text-slate-900 transition-all focus:border-amber-500 focus:ring-2 focus:ring-amber-500/20 focus:outline-none sm:h-10 sm:px-3.5 dark:border-white/15 dark:bg-stone-950/70 dark:text-white"
-              />
-              {errors.guardianName && (
-                <p className="text-[10px] font-semibold text-rose-500 sm:text-[11px]">
-                  {errors.guardianName.message}
-                </p>
-              )}
-            </div>
-
-            {/* Email */}
-            <div className="space-y-0.5 sm:space-y-1">
-              <label className="text-[11px] font-bold text-slate-700 sm:text-xs dark:text-slate-200">
-                Email Address *
-              </label>
-              <input
-                type="email"
-                {...register('email', {
-                  required: 'Email is required',
-                  pattern: {
-                    value: /^\S+@\S+$/i,
-                    message: 'Invalid email address',
-                  },
-                })}
-                placeholder="guardian@example.com"
-                className="h-9 w-full rounded-xl border border-slate-300/80 bg-white/80 px-3 text-xs text-slate-900 transition-all focus:border-amber-500 focus:ring-2 focus:ring-amber-500/20 focus:outline-none sm:h-10 sm:px-3.5 dark:border-white/15 dark:bg-stone-950/70 dark:text-white"
-              />
-              {errors.email && (
-                <p className="text-[10px] font-semibold text-rose-500 sm:text-[11px]">
-                  {errors.email.message}
-                </p>
-              )}
-            </div>
-
-            {/* Phone */}
-            <div className="space-y-0.5 sm:space-y-1">
-              <label className="text-[11px] font-bold text-slate-700 sm:text-xs dark:text-slate-200">
-                Phone Number *
-              </label>
-              <input
-                type="tel"
-                {...register('phone', {
-                  required: 'Phone number is required',
-                  pattern: {
-                    value: /^[6-9]\d{9}$/,
-                    message: '10-digit valid Indian phone number required',
-                  },
-                })}
-                placeholder="10-digit mobile number"
-                className="h-9 w-full rounded-xl border border-slate-300/80 bg-white/80 px-3 text-xs text-slate-900 transition-all focus:border-amber-500 focus:ring-2 focus:ring-amber-500/20 focus:outline-none sm:h-10 sm:px-3.5 dark:border-white/15 dark:bg-stone-950/70 dark:text-white"
-              />
-              {errors.phone && (
-                <p className="text-[10px] font-semibold text-rose-500 sm:text-[11px]">
-                  {errors.phone.message}
-                </p>
-              )}
-            </div>
-
-            {/* Address */}
-            <div className="col-span-1 space-y-0.5 sm:col-span-2 sm:space-y-1">
-              <label className="text-[11px] font-bold text-slate-700 sm:text-xs dark:text-slate-200">
-                Street Address *
-              </label>
-              <input
-                type="text"
-                {...register('address', {
-                  required: 'Address is required',
-                })}
-                placeholder="House / Flat No, Street, Landmark"
-                className="h-9 w-full rounded-xl border border-slate-300/80 bg-white/80 px-3 text-xs text-slate-900 transition-all focus:border-amber-500 focus:ring-2 focus:ring-amber-500/20 focus:outline-none sm:h-10 sm:px-3.5 dark:border-white/15 dark:bg-stone-950/70 dark:text-white"
-              />
-              {errors.address && (
-                <p className="text-[10px] font-semibold text-rose-500 sm:text-[11px]">
-                  {errors.address.message}
-                </p>
-              )}
-            </div>
-
-            {/* City */}
-            <div className="space-y-0.5 sm:space-y-1">
-              <label className="text-[11px] font-bold text-slate-700 sm:text-xs dark:text-slate-200">
-                City / Town *
-              </label>
-              <input
-                type="text"
-                {...register('city', {
-                  required: 'City is required',
-                })}
-                placeholder="Chandannagar"
-                className="h-9 w-full rounded-xl border border-slate-300/80 bg-white/80 px-3 text-xs text-slate-900 transition-all focus:border-amber-500 focus:ring-2 focus:ring-amber-500/20 focus:outline-none sm:h-10 sm:px-3.5 dark:border-white/15 dark:bg-stone-950/70 dark:text-white"
-              />
-              {errors.city && (
-                <p className="text-[10px] font-semibold text-rose-500 sm:text-[11px]">
-                  {errors.city.message}
-                </p>
-              )}
-            </div>
-
-            {/* Pincode */}
-            <div className="space-y-0.5 sm:space-y-1">
-              <label className="text-[11px] font-bold text-slate-700 sm:text-xs dark:text-slate-200">
-                Pincode *
-              </label>
-              <input
-                type="text"
-                {...register('pinCode', {
-                  required: 'Pincode is required',
-                  pattern: {
-                    value: /^\d{6}$/,
-                    message: '6-digit pincode required',
-                  },
-                })}
-                placeholder="712136"
-                className="h-9 w-full rounded-xl border border-slate-300/80 bg-white/80 px-3 text-xs text-slate-900 transition-all focus:border-amber-500 focus:ring-2 focus:ring-amber-500/20 focus:outline-none sm:h-10 sm:px-3.5 dark:border-white/15 dark:bg-stone-950/70 dark:text-white"
-              />
-              {errors.pinCode && (
-                <p className="text-[10px] font-semibold text-rose-500 sm:text-[11px]">
-                  {errors.pinCode.message}
-                </p>
-              )}
-            </div>
-          </div>
-        </div>
-
-        {/* PARTICIPANTS INFORMATION SECTION */}
-        <div className="space-y-3 pt-2 sm:space-y-4 sm:pt-4">
-          <div className="flex flex-nowrap items-center justify-between gap-2 border-b border-slate-200/80 pb-2 sm:gap-3 sm:pb-3 dark:border-white/10">
-            <div className="min-w-0 flex-1">
+      {/* REGISTRATION FORM (ONLY WHEN OPEN) */}
+      {!isClosed && (
+        <form
+          id="drawing-form-container"
+          onSubmit={handleSubmit(onFormSubmit)}
+          className="card-glass relative space-y-4 rounded-2xl border border-slate-200/90 p-3.5 backdrop-blur-2xl sm:space-y-8 sm:rounded-3xl sm:p-8 dark:border-white/12"
+        >
+          {/* GUARDIAN INFORMATION SECTION */}
+          <div className="space-y-3 sm:space-y-4">
+            <div className="border-b border-slate-200/80 pb-2 sm:pb-3 dark:border-white/10">
               <h3 className="font-paytone flex items-center gap-1.5 text-xs font-bold text-slate-900 sm:gap-2 sm:text-lg dark:text-white">
-                <Users className="h-3.5 w-3.5 shrink-0 text-amber-500 sm:h-4 sm:w-4" />
-                <span className="truncate">
-                  Participant Details ({fields.length}/
-                  {MAX_PARTICIPANTS_PER_GUARDIAN})
-                </span>
+                <User className="h-3.5 w-3.5 text-amber-500 sm:h-4 sm:w-4" />
+                Guardian Details
               </h3>
-              <p className="truncate text-[10px] text-slate-500 sm:text-[11px] dark:text-slate-400">
-                You can add up to {MAX_PARTICIPANTS_PER_GUARDIAN} children per
-                registration.
+              <p className="text-[10.5px] text-slate-500 sm:text-[11px] dark:text-slate-400">
+                Provide guardian contact details for confirmation and updates.
               </p>
             </div>
 
-            {fields.length < MAX_PARTICIPANTS_PER_GUARDIAN && !isClosed && (
-              <button
-                type="button"
-                onClick={() =>
-                  append({
-                    participantName: '',
-                    dateOfBirth: '',
-                    age: '',
-                    category: '',
-                  })
-                }
-                className="inline-flex shrink-0 items-center gap-1 rounded-full border border-amber-500/40 bg-amber-500/15 px-3 py-1.5 text-xs font-bold whitespace-nowrap text-amber-700 transition-all hover:bg-amber-500 hover:text-slate-950 sm:px-3.5 sm:py-1.5 dark:text-amber-300 dark:hover:text-slate-950"
-              >
-                <Plus className="h-3.5 w-3.5 shrink-0" />
-                <span className="whitespace-nowrap">Add Child</span>
-              </button>
-            )}
+            <div className="grid grid-cols-1 gap-2.5 sm:grid-cols-2 sm:gap-5">
+              {/* Guardian Name */}
+              <div className="col-span-1 space-y-0.5 sm:col-span-2 sm:space-y-1">
+                <label className="text-[11px] font-bold text-slate-700 sm:text-xs dark:text-slate-200">
+                  Guardian Full Name *
+                </label>
+                <input
+                  type="text"
+                  {...register('guardianName', {
+                    required: 'Guardian name is required',
+                  })}
+                  placeholder="Enter guardian full name"
+                  className="h-9 w-full rounded-xl border border-slate-300/80 bg-white/80 px-3 text-xs text-slate-900 transition-all focus:border-amber-500 focus:ring-2 focus:ring-amber-500/20 focus:outline-none sm:h-10 sm:px-3.5 dark:border-white/15 dark:bg-stone-950/70 dark:text-white"
+                />
+                {errors.guardianName && (
+                  <p className="text-[10px] font-semibold text-rose-500 sm:text-[11px]">
+                    {errors.guardianName.message}
+                  </p>
+                )}
+              </div>
+
+              {/* Email */}
+              <div className="space-y-0.5 sm:space-y-1">
+                <label className="text-[11px] font-bold text-slate-700 sm:text-xs dark:text-slate-200">
+                  Email Address *
+                </label>
+                <input
+                  type="email"
+                  {...register('email', {
+                    required: 'Email is required',
+                    pattern: {
+                      value: /^\S+@\S+$/i,
+                      message: 'Invalid email address',
+                    },
+                  })}
+                  placeholder="guardian@example.com"
+                  className="h-9 w-full rounded-xl border border-slate-300/80 bg-white/80 px-3 text-xs text-slate-900 transition-all focus:border-amber-500 focus:ring-2 focus:ring-amber-500/20 focus:outline-none sm:h-10 sm:px-3.5 dark:border-white/15 dark:bg-stone-950/70 dark:text-white"
+                />
+                {errors.email && (
+                  <p className="text-[10px] font-semibold text-rose-500 sm:text-[11px]">
+                    {errors.email.message}
+                  </p>
+                )}
+              </div>
+
+              {/* Phone */}
+              <div className="space-y-0.5 sm:space-y-1">
+                <label className="text-[11px] font-bold text-slate-700 sm:text-xs dark:text-slate-200">
+                  Phone Number *
+                </label>
+                <input
+                  type="tel"
+                  {...register('phone', {
+                    required: 'Phone number is required',
+                    pattern: {
+                      value: /^[6-9]\d{9}$/,
+                      message: '10-digit valid Indian phone number required',
+                    },
+                  })}
+                  placeholder="10-digit mobile number"
+                  className="h-9 w-full rounded-xl border border-slate-300/80 bg-white/80 px-3 text-xs text-slate-900 transition-all focus:border-amber-500 focus:ring-2 focus:ring-amber-500/20 focus:outline-none sm:h-10 sm:px-3.5 dark:border-white/15 dark:bg-stone-950/70 dark:text-white"
+                />
+                {errors.phone && (
+                  <p className="text-[10px] font-semibold text-rose-500 sm:text-[11px]">
+                    {errors.phone.message}
+                  </p>
+                )}
+              </div>
+
+              {/* Address */}
+              <div className="col-span-1 space-y-0.5 sm:col-span-2 sm:space-y-1">
+                <label className="text-[11px] font-bold text-slate-700 sm:text-xs dark:text-slate-200">
+                  Street Address *
+                </label>
+                <input
+                  type="text"
+                  {...register('address', {
+                    required: 'Address is required',
+                  })}
+                  placeholder="House / Flat No, Street, Landmark"
+                  className="h-9 w-full rounded-xl border border-slate-300/80 bg-white/80 px-3 text-xs text-slate-900 transition-all focus:border-amber-500 focus:ring-2 focus:ring-amber-500/20 focus:outline-none sm:h-10 sm:px-3.5 dark:border-white/15 dark:bg-stone-950/70 dark:text-white"
+                />
+                {errors.address && (
+                  <p className="text-[10px] font-semibold text-rose-500 sm:text-[11px]">
+                    {errors.address.message}
+                  </p>
+                )}
+              </div>
+
+              {/* City */}
+              <div className="space-y-0.5 sm:space-y-1">
+                <label className="text-[11px] font-bold text-slate-700 sm:text-xs dark:text-slate-200">
+                  City / Town *
+                </label>
+                <input
+                  type="text"
+                  {...register('city', {
+                    required: 'City is required',
+                  })}
+                  placeholder="Chandannagar"
+                  className="h-9 w-full rounded-xl border border-slate-300/80 bg-white/80 px-3 text-xs text-slate-900 transition-all focus:border-amber-500 focus:ring-2 focus:ring-amber-500/20 focus:outline-none sm:h-10 sm:px-3.5 dark:border-white/15 dark:bg-stone-950/70 dark:text-white"
+                />
+                {errors.city && (
+                  <p className="text-[10px] font-semibold text-rose-500 sm:text-[11px]">
+                    {errors.city.message}
+                  </p>
+                )}
+              </div>
+
+              {/* Pincode */}
+              <div className="space-y-0.5 sm:space-y-1">
+                <label className="text-[11px] font-bold text-slate-700 sm:text-xs dark:text-slate-200">
+                  Pincode *
+                </label>
+                <input
+                  type="text"
+                  {...register('pinCode', {
+                    required: 'Pincode is required',
+                    pattern: {
+                      value: /^\d{6}$/,
+                      message: '6-digit pincode required',
+                    },
+                  })}
+                  placeholder="712136"
+                  className="h-9 w-full rounded-xl border border-slate-300/80 bg-white/80 px-3 text-xs text-slate-900 transition-all focus:border-amber-500 focus:ring-2 focus:ring-amber-500/20 focus:outline-none sm:h-10 sm:px-3.5 dark:border-white/15 dark:bg-stone-950/70 dark:text-white"
+                />
+                {errors.pinCode && (
+                  <p className="text-[10px] font-semibold text-rose-500 sm:text-[11px]">
+                    {errors.pinCode.message}
+                  </p>
+                )}
+              </div>
+            </div>
           </div>
 
-          <div className="space-y-3 sm:space-y-4">
-            <AnimatePresence initial={false}>
-              {fields.map((field, index) => (
-                <motion.div
-                  key={field.id}
-                  initial={{ opacity: 0, y: 10 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  exit={{ opacity: 0, y: -10 }}
-                  transition={{ duration: 0.2 }}
-                  className="relative rounded-2xl border border-slate-200/80 bg-white/70 p-3 sm:p-5 dark:border-white/10 dark:bg-stone-900/60"
+          {/* PARTICIPANTS INFORMATION SECTION */}
+          <div className="space-y-3 pt-2 sm:space-y-4 sm:pt-4">
+            <div className="flex flex-nowrap items-center justify-between gap-2 border-b border-slate-200/80 pb-2 sm:gap-3 sm:pb-3 dark:border-white/10">
+              <div className="min-w-0 flex-1">
+                <h3 className="font-paytone flex items-center gap-1.5 text-xs font-bold text-slate-900 sm:gap-2 sm:text-lg dark:text-white">
+                  <Users className="h-3.5 w-3.5 shrink-0 text-amber-500 sm:h-4 sm:w-4" />
+                  <span className="truncate">
+                    Participant Details ({fields.length}/
+                    {MAX_PARTICIPANTS_PER_GUARDIAN})
+                  </span>
+                </h3>
+                <p className="truncate text-[10px] text-slate-500 sm:text-[11px] dark:text-slate-400">
+                  You can add up to {MAX_PARTICIPANTS_PER_GUARDIAN} children per
+                  registration.
+                </p>
+              </div>
+
+              {fields.length < MAX_PARTICIPANTS_PER_GUARDIAN && (
+                <button
+                  type="button"
+                  onClick={() =>
+                    append({
+                      participantName: '',
+                      dateOfBirth: '',
+                      age: '',
+                      category: '',
+                    })
+                  }
+                  className="inline-flex shrink-0 items-center gap-1 rounded-full border border-amber-500/40 bg-amber-500/15 px-3 py-1.5 text-xs font-bold whitespace-nowrap text-amber-700 transition-all hover:bg-amber-500 hover:text-slate-950 sm:px-3.5 sm:py-1.5 dark:text-amber-300 dark:hover:text-slate-950"
                 >
-                  <div className="flex items-center justify-between border-b border-slate-200/60 pb-2 text-xs font-bold text-slate-900 sm:pb-3 dark:border-white/10 dark:text-white">
-                    <span className="flex items-center gap-1.5 text-amber-800 dark:text-amber-300">
-                      <span className="flex h-5 w-5 items-center justify-center rounded-full bg-amber-500 text-[10px] font-black text-slate-950">
-                        {index + 1}
+                  <Plus className="h-3.5 w-3.5 shrink-0" />
+                  <span className="whitespace-nowrap">Add Child</span>
+                </button>
+              )}
+            </div>
+
+            <div className="space-y-3 sm:space-y-4">
+              <AnimatePresence initial={false}>
+                {fields.map((field, index) => (
+                  <motion.div
+                    key={field.id}
+                    initial={{ opacity: 0, y: 10 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0, y: -10 }}
+                    transition={{ duration: 0.2 }}
+                    className="relative rounded-2xl border border-slate-200/80 bg-white/70 p-3 sm:p-5 dark:border-white/10 dark:bg-stone-900/60"
+                  >
+                    <div className="flex items-center justify-between border-b border-slate-200/60 pb-2 text-xs font-bold text-slate-900 sm:pb-3 dark:border-white/10 dark:text-white">
+                      <span className="flex items-center gap-1.5 text-amber-800 dark:text-amber-300">
+                        <span className="flex h-5 w-5 items-center justify-center rounded-full bg-amber-500 text-[10px] font-black text-slate-950">
+                          {index + 1}
+                        </span>
+                        <span>Participant #{index + 1}</span>
                       </span>
-                      <span>Participant #{index + 1}</span>
-                    </span>
 
-                    {fields.length > 1 && !isClosed && (
-                      <button
-                        type="button"
-                        onClick={() => remove(index)}
-                        className="inline-flex items-center gap-1 rounded-lg px-2 py-1 text-[11px] font-semibold text-rose-500 transition-colors hover:bg-rose-500/10 dark:text-rose-400"
-                      >
-                        <Trash2 className="h-3.5 w-3.5" />
-                        <span>Remove</span>
-                      </button>
-                    )}
-                  </div>
-
-                  <div className="mt-3 grid grid-cols-1 gap-2.5 sm:grid-cols-2 sm:gap-4">
-                    {/* Participant Name */}
-                    <div className="col-span-1 space-y-0.5 sm:col-span-2 sm:space-y-1">
-                      <label className="text-[11px] font-bold text-slate-700 sm:text-xs dark:text-slate-200">
-                        Child’s Full Name *
-                      </label>
-                      <input
-                        type="text"
-                        {...register(
-                          `participants.${index}.participantName` as const,
-                          { required: 'Child name is required' }
-                        )}
-                        placeholder="Enter participant full name"
-                        className="h-9 w-full rounded-xl border border-slate-300/80 bg-white/80 px-3 text-xs text-slate-900 transition-all focus:border-amber-500 focus:ring-2 focus:ring-amber-500/20 focus:outline-none sm:h-10 sm:px-3.5 dark:border-white/15 dark:bg-stone-950/70 dark:text-white"
-                      />
-                      {errors.participants?.[index]?.participantName && (
-                        <p className="text-[10px] font-semibold text-rose-500 sm:text-[11px]">
-                          {errors.participants[index]?.participantName?.message}
-                        </p>
+                      {fields.length > 1 && (
+                        <button
+                          type="button"
+                          onClick={() => remove(index)}
+                          className="inline-flex items-center gap-1 rounded-lg px-2 py-1 text-[11px] font-semibold text-rose-500 transition-colors hover:bg-rose-500/10 dark:text-rose-400"
+                        >
+                          <Trash2 className="h-3.5 w-3.5" />
+                          <span>Remove</span>
+                        </button>
                       )}
                     </div>
 
-                    {/* Date of Birth */}
-                    <div className="space-y-0.5 sm:space-y-1">
-                      <label className="text-[11px] font-bold text-slate-700 sm:text-xs dark:text-slate-200">
-                        Date of Birth *
-                      </label>
-                      <input
-                        type="date"
-                        {...register(
-                          `participants.${index}.dateOfBirth` as const,
-                          {
-                            required: 'Date of birth is required',
-                            onChange: (e) =>
-                              handleDobChange(index, e.target.value),
-                          }
-                        )}
-                        className="h-9 w-full rounded-xl border border-slate-300/80 bg-white/80 px-3 text-xs text-slate-900 transition-all focus:border-amber-500 focus:ring-2 focus:ring-amber-500/20 focus:outline-none sm:h-10 sm:px-3.5 dark:border-white/15 dark:bg-stone-950/70 dark:text-white"
-                      />
-                      {errors.participants?.[index]?.dateOfBirth && (
-                        <p className="text-[10px] font-semibold text-rose-500 sm:text-[11px]">
-                          {errors.participants[index]?.dateOfBirth?.message}
-                        </p>
-                      )}
-                    </div>
-
-                    {/* Auto Computed Age & Category */}
-                    <div className="grid grid-cols-2 gap-2">
-                      <div className="space-y-0.5 sm:space-y-1">
-                        <label className="text-[10px] font-bold text-slate-500 sm:text-[11px] dark:text-slate-400">
-                          Age
+                    <div className="mt-3 grid grid-cols-1 gap-2.5 sm:grid-cols-2 sm:gap-4">
+                      {/* Participant Name */}
+                      <div className="col-span-1 space-y-0.5 sm:col-span-2 sm:space-y-1">
+                        <label className="text-[11px] font-bold text-slate-700 sm:text-xs dark:text-slate-200">
+                          Child’s Full Name *
                         </label>
                         <input
                           type="text"
-                          readOnly
-                          {...register(`participants.${index}.age` as const)}
-                          placeholder="Auto-calculated"
-                          className="h-9 w-full rounded-xl border border-slate-200/80 bg-slate-100/80 px-3 text-xs font-semibold text-slate-700 sm:h-10 sm:px-3.5 dark:border-white/10 dark:bg-stone-950/40 dark:text-slate-300"
-                        />
-                      </div>
-
-                      <div className="space-y-0.5 sm:space-y-1">
-                        <label className="text-[10px] font-bold text-slate-500 sm:text-[11px] dark:text-slate-400">
-                          Group
-                        </label>
-                        <input
-                          type="text"
-                          readOnly
                           {...register(
-                            `participants.${index}.category` as const
+                            `participants.${index}.participantName` as const,
+                            { required: 'Child name is required' }
                           )}
-                          placeholder="Auto-assigned"
-                          className="h-9 w-full rounded-xl border border-slate-200/80 bg-slate-100/80 px-3 text-xs font-semibold text-slate-700 sm:h-10 sm:px-3.5 dark:border-white/10 dark:bg-stone-950/40 dark:text-slate-300"
+                          placeholder="Enter participant full name"
+                          className="h-9 w-full rounded-xl border border-slate-300/80 bg-white/80 px-3 text-xs text-slate-900 transition-all focus:border-amber-500 focus:ring-2 focus:ring-amber-500/20 focus:outline-none sm:h-10 sm:px-3.5 dark:border-white/15 dark:bg-stone-950/70 dark:text-white"
                         />
+                        {errors.participants?.[index]?.participantName && (
+                          <p className="text-[10px] font-semibold text-rose-500 sm:text-[11px]">
+                            {errors.participants[index]?.participantName?.message}
+                          </p>
+                        )}
+                      </div>
+
+                      {/* Date of Birth */}
+                      <div className="space-y-0.5 sm:space-y-1">
+                        <label className="text-[11px] font-bold text-slate-700 sm:text-xs dark:text-slate-200">
+                          Date of Birth *
+                        </label>
+                        <input
+                          type="date"
+                          {...register(
+                            `participants.${index}.dateOfBirth` as const,
+                            {
+                              required: 'Date of birth is required',
+                              onChange: (e) =>
+                                handleDobChange(index, e.target.value),
+                            }
+                          )}
+                          className="h-9 w-full rounded-xl border border-slate-300/80 bg-white/80 px-3 text-xs text-slate-900 transition-all focus:border-amber-500 focus:ring-2 focus:ring-amber-500/20 focus:outline-none sm:h-10 sm:px-3.5 dark:border-white/15 dark:bg-stone-950/70 dark:text-white"
+                        />
+                        {errors.participants?.[index]?.dateOfBirth && (
+                          <p className="text-[10px] font-semibold text-rose-500 sm:text-[11px]">
+                            {errors.participants[index]?.dateOfBirth?.message}
+                          </p>
+                        )}
+                      </div>
+
+                      {/* Auto Computed Age & Category */}
+                      <div className="grid grid-cols-2 gap-2">
+                        <div className="space-y-0.5 sm:space-y-1">
+                          <label className="text-[10px] font-bold text-slate-500 sm:text-[11px] dark:text-slate-400">
+                            Age
+                          </label>
+                          <input
+                            type="text"
+                            readOnly
+                            {...register(`participants.${index}.age` as const)}
+                            placeholder="Auto-calculated"
+                            className="h-9 w-full rounded-xl border border-slate-200/80 bg-slate-100/80 px-3 text-xs font-semibold text-slate-700 sm:h-10 sm:px-3.5 dark:border-white/10 dark:bg-stone-950/40 dark:text-slate-300"
+                          />
+                        </div>
+
+                        <div className="space-y-0.5 sm:space-y-1">
+                          <label className="text-[10px] font-bold text-slate-500 sm:text-[11px] dark:text-slate-400">
+                            Group
+                          </label>
+                          <input
+                            type="text"
+                            readOnly
+                            {...register(
+                              `participants.${index}.category` as const
+                            )}
+                            placeholder="Auto-assigned"
+                            className="h-9 w-full rounded-xl border border-slate-200/80 bg-slate-100/80 px-3 text-xs font-semibold text-slate-700 sm:h-10 sm:px-3.5 dark:border-white/10 dark:bg-stone-950/40 dark:text-slate-300"
+                          />
+                        </div>
                       </div>
                     </div>
-                  </div>
-                </motion.div>
-              ))}
-            </AnimatePresence>
+                  </motion.div>
+                ))}
+              </AnimatePresence>
+            </div>
           </div>
-        </div>
 
-        {/* SUBMIT REGISTRATION BUTTON */}
-        <div className="relative">
-          {!isClosed ? (
+          {/* SUBMIT REGISTRATION BUTTON */}
+          <div className="relative">
             <button
               type="submit"
               disabled={isSubmitting}
@@ -907,13 +908,9 @@ export function DrawingCompetitionLanding({
                 </>
               )}
             </button>
-          ) : (
-            <div className="rounded-2xl border border-amber-500/40 bg-amber-500/15 p-3 text-center text-xs font-bold text-amber-800 dark:text-amber-300">
-              Registrations Closed for {config.year}
-            </div>
-          )}
-        </div>
-      </form>
+          </div>
+        </form>
+      )}
 
       {/* TERMS & RULES LIST CARD */}
       <div className="card-glass relative space-y-2 rounded-2xl border border-slate-200/90 p-3.5 backdrop-blur-2xl sm:space-y-3 sm:rounded-3xl sm:p-6 dark:border-white/12">
@@ -922,21 +919,25 @@ export function DrawingCompetitionLanding({
           Terms & Guidelines
         </h4>
         <ul className="space-y-1.5 text-[11px] text-slate-600 sm:space-y-2 sm:text-xs dark:text-slate-300">
-          <li className="flex items-start gap-2">
-            <span className="mt-1 h-1.5 w-1.5 shrink-0 rounded-full bg-amber-500" />
-            <span>
-              Registration Limit: Maximum of {MAX_PARTICIPANTS_PER_GUARDIAN}{' '}
-              participants are allowed per guardian registration.
-            </span>
-          </li>
-          <li className="flex items-start gap-2">
-            <span className="mt-1 h-1.5 w-1.5 shrink-0 rounded-full bg-amber-500" />
-            <span>
-              Registration Fee: ₹{REGISTRATION_FEE_PER_PARTICIPANT} per
-              participant (Payable online via UPI, Credit/Debit Cards, Net
-              Banking).
-            </span>
-          </li>
+          {!isClosed && (
+            <>
+              <li className="flex items-start gap-2">
+                <span className="mt-1 h-1.5 w-1.5 shrink-0 rounded-full bg-amber-500" />
+                <span>
+                  Registration Limit: Maximum of {MAX_PARTICIPANTS_PER_GUARDIAN}{' '}
+                  participants are allowed per guardian registration.
+                </span>
+              </li>
+              <li className="flex items-start gap-2">
+                <span className="mt-1 h-1.5 w-1.5 shrink-0 rounded-full bg-amber-500" />
+                <span>
+                  Registration Fee: ₹{REGISTRATION_FEE_PER_PARTICIPANT} per
+                  participant (Payable online via UPI, Credit/Debit Cards, Net
+                  Banking).
+                </span>
+              </li>
+            </>
+          )}
           <li className="flex items-start gap-2">
             <span className="mt-1 h-1.5 w-1.5 shrink-0 rounded-full bg-amber-500" />
             <span>Drawing paper will be provided by the organizers only.</span>
@@ -982,13 +983,6 @@ export function DrawingCompetitionLanding({
             <span>
               Our seating capacity is limited, so it will be accepted on a
               priority basis.
-            </span>
-          </li>
-          <li className="flex items-start gap-2">
-            <span className="mt-1 h-1.5 w-1.5 shrink-0 rounded-full bg-amber-500" />
-            <span>
-              No applications will be accepted after the seating capacity is
-              full before the specified date.
             </span>
           </li>
         </ul>

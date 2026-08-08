@@ -9,6 +9,7 @@ export interface DrawingCompetitionConfig {
   venueLocation: string;
   registrationFee: number;
   maxParticipantsPerGuardian: number;
+  maxTotalParticipants: number;
   topic: string;
 }
 
@@ -27,18 +28,32 @@ export const DRAWING_COMPETITION_CONFIG: DrawingCompetitionConfig = {
   venueLocation: 'Chandannagar, Hooghly, West Bengal',
   registrationFee: 50,
   maxParticipantsPerGuardian: 5,
+  maxTotalParticipants: 150, // Maximum total allowed registrations (seating capacity limit)
   topic: 'Draw As You Like',
 };
 
 /**
- * Checks if the competition date has passed and registrations are closed.
+ * Checks if the competition date has passed OR total registered participants reached max capacity.
  */
 export function isRegistrationClosed(
-  competitionDateISO: string = DRAWING_COMPETITION_CONFIG.competitionDateISO
+  currentRegisteredCount: number = 0,
+  competitionDateISO: string = DRAWING_COMPETITION_CONFIG.competitionDateISO,
+  maxTotalParticipants: number = DRAWING_COMPETITION_CONFIG.maxTotalParticipants
 ): boolean {
+  // 1. Date check
   const eventDate = new Date(competitionDateISO);
   const now = new Date();
-  return now > eventDate;
+  if (now > eventDate) return true;
+
+  // 2. Total registrations capacity check
+  if (
+    maxTotalParticipants > 0 &&
+    currentRegisteredCount >= maxTotalParticipants
+  ) {
+    return true;
+  }
+
+  return false;
 }
 
 /**
