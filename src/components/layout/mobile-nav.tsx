@@ -185,6 +185,12 @@ export function MobileNavDock() {
 
   const durgaPujaExplorePages = [
     {
+      label: 'About Durga Puja',
+      href: '/durgapuja/about-us',
+      icon: Info,
+      desc: 'Heritage, Legacy & Community',
+    },
+    {
       label: 'Puja Schedule',
       href: '/durgapuja/schedule',
       icon: Calendar,

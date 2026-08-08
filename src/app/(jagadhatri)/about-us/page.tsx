@@ -12,7 +12,7 @@ import {
   Sparkles,
   Trophy,
 } from 'lucide-react';
-import { celebratingYear } from '@/lib/data';
+import { celebratingYear, celebratingYearDurga } from '@/lib/data';
 import { createMetadata } from '@/lib/metadata';
 
 export const metadata: Metadata = {
@@ -37,7 +37,11 @@ interface Person {
   designation: string;
 }
 
-export default function AboutUsPage() {
+interface AboutUsPageProps {
+  isDurgaPuja?: boolean;
+}
+
+export default function AboutUsPage({ isDurgaPuja = false }: AboutUsPageProps) {
   const members: Person[] = [
     { name: 'Shri Swapan Kumar Bayen', designation: 'President' },
     {
@@ -73,43 +77,54 @@ export default function AboutUsPage() {
             '@type': 'ListItem',
             position: 1,
             name: 'Home',
-            item: 'https://www.madhyanchalsarbajanin.co.in',
+            item: isDurgaPuja
+              ? 'https://www.madhyanchalsarbajanin.co.in/durgapuja'
+              : 'https://www.madhyanchalsarbajanin.co.in',
           },
           {
             '@type': 'ListItem',
             position: 2,
             name: 'About Us',
-            item: 'https://www.madhyanchalsarbajanin.co.in/about-us',
+            item: isDurgaPuja
+              ? 'https://www.madhyanchalsarbajanin.co.in/durgapuja/about-us'
+              : 'https://www.madhyanchalsarbajanin.co.in/about-us',
           },
         ],
       },
       {
         '@type': 'Organization',
-        name: 'Madhyanchal Sarbajanin',
+        name: isDurgaPuja
+          ? 'Madhyanchal Sarbajanin Durga Puja Samity'
+          : 'Madhyanchal Sarbajanin',
         url: 'https://www.madhyanchalsarbajanin.co.in',
-        foundingDate: '1971',
-        description:
-          'Promoting sports, culture, and community welfare in Chandannagar since 1971.',
+        foundingDate: isDurgaPuja ? '1995' : '1971',
+        description: isDurgaPuja
+          ? 'Organizing Durga Puja, Sit & Draw competition, sports, and community welfare in Chandannagar since 1995.'
+          : 'Promoting sports, culture, and community welfare in Chandannagar since 1971.',
       },
     ],
   };
 
   const coreHighlights = [
     {
-      title: 'Established 1971',
-      description: `${celebratingYear} years of continuous community celebrations, sports, and social work.`,
+      title: isDurgaPuja ? 'Established 1995' : 'Established 1971',
+      description: isDurgaPuja
+        ? `${celebratingYearDurga} years of continuous Sharad Utsav celebrations, sports, and community welfare.`
+        : `${celebratingYear} years of continuous community celebrations, sports, and social work.`,
       icon: ShieldCheck,
     },
     {
-      title: '1.2M+ Visitors',
-      description:
-        'Pandal hoppers and visitors from across Bengal gathering on Station Road during Puja.',
+      title: isDurgaPuja ? 'Grand Pandal & Idols' : '1.2M+ Visitors',
+      description: isDurgaPuja
+        ? 'Exquisite pandal artwork, traditional Durga pratima, and festive celebrations on Station Road.'
+        : 'Pandal hoppers and visitors from across Bengal gathering on Station Road during Puja.',
       icon: Globe2,
     },
     {
-      title: '100+ Awards & Honors',
-      description:
-        'Recognized for exceptional light displays, idol craftsmanship, and pandal design.',
+      title: isDurgaPuja ? 'Sit & Draw Contest' : '100+ Awards & Honors',
+      description: isDurgaPuja
+        ? "Annual children's art competition drawing hundreds of young talents across 3 age categories."
+        : 'Recognized for exceptional light displays, idol craftsmanship, and pandal design.',
       icon: Trophy,
     },
     {
@@ -122,10 +137,14 @@ export default function AboutUsPage() {
 
   return (
     <PageLayout
-      title="About Madhyanchal"
-      subtitle="Bringing people together through grand Jagadhatri & Durga Pujas, sports, and year-round social welfare in Chandannagar."
+      title={isDurgaPuja ? 'About Durga Puja' : 'About Madhyanchal'}
+      subtitle={
+        isDurgaPuja
+          ? 'Bringing community together through autumn’s grandest festival — Madhyanchal Sarbajanin Durga Puja, Annual Sit & Draw Competition, sports, and year-round social welfare in Chandannagar.'
+          : 'Bringing people together through grand Jagadhatri & Durga Pujas, sports, and year-round social welfare in Chandannagar.'
+      }
       badge={{
-        text: `Heritage Since 1971`,
+        text: isDurgaPuja ? 'Durga Puja Heritage • Since 1995' : 'Heritage Since 1971',
         icon: Sparkles,
       }}
       breadcrumbCurrent="About Us"
@@ -167,42 +186,79 @@ export default function AboutUsPage() {
           <div className="card-glass relative space-y-3 overflow-hidden rounded-xl border border-slate-200/90 p-3.5 text-xs leading-relaxed text-slate-700 backdrop-blur-2xl sm:space-y-4 sm:rounded-3xl sm:p-7 sm:text-sm sm:leading-relaxed dark:border-white/12 dark:text-slate-300">
             <div className="border-b border-slate-200/80 pb-2.5 dark:border-white/10">
               <span className="text-[9.5px] font-extrabold tracking-widest text-amber-600 uppercase sm:text-[11px] dark:text-amber-400">
-                Our Journey & Community Spirit
+                {isDurgaPuja
+                  ? 'Sharad Utsav & Community Spirit'
+                  : 'Our Journey & Community Spirit'}
               </span>
               <h2 className="font-paytone mt-0.5 text-base text-slate-900 sm:text-xl dark:text-white">
-                Preserving Local Culture, Serving People
+                {isDurgaPuja
+                  ? 'Preserving Culture, Celebrating Sharad Utsav'
+                  : 'Preserving Local Culture, Serving People'}
               </h2>
             </div>
 
-            <p className="leading-relaxed">
-              <strong className="font-semibold text-slate-900 dark:text-white">
-                Jagadhatri Puja
-              </strong>{' '}
-              is the soul of Chandannagar. Located just one kilometer from
-              Chandannagar railway station along Station Road,{' '}
-              <strong className="font-semibold text-slate-900 dark:text-white">
-                Madhyanchal Sarbajanin
-              </strong>{' '}
-              has been at the heart of this grand festival since 1971. Over the past{' '}
-              {celebratingYear} years, our committee has grown into a vibrant
-              family of local residents, youth volunteers, and organizers.
-            </p>
+            {isDurgaPuja ? (
+              <>
+                <p className="leading-relaxed">
+                  <strong className="font-semibold text-slate-900 dark:text-white">
+                    Durga Puja (Sharad Utsav)
+                  </strong>{' '}
+                  is the most cherished autumn festival in Bengal. Located just one kilometer
+                  from Chandannagar railway station along Station Road,{' '}
+                  <strong className="font-semibold text-slate-900 dark:text-white">
+                    Madhyanchal Sarbajanin Durga Puja Samity (MSDPS)
+                  </strong>{' '}
+                  has been organizing grand Durga Puja celebrations since 1995. Over the past{' '}
+                  {celebratingYearDurga} years, our committee has grown into a vibrant family of local
+                  residents, youth volunteers, and organizers.
+                </p>
 
-            <p className="leading-relaxed">
-              Every year, thousands of visitors from across Bengal and India
-              come to experience our unique pandal artwork, traditional idols,
-              and the world-famous light illumination of Chandannagar.
-            </p>
+                <p className="leading-relaxed">
+                  Every year during Sharad Utsav, thousands of visitors from across Bengal and India
+                  come to experience our unique pandal artwork, traditional idols, and festive atmosphere.
+                  We organize traditional rituals, Dhunuchi Naach, Pushpanjali, and community Mahaprasad distribution.
+                </p>
 
-            <p className="leading-relaxed">
-              <strong className="font-semibold text-slate-900 dark:text-white">
-                Madhyanchal Sporting Club
-              </strong>{' '}
-              is not just a Puja organizer — it is a local sports and cultural
-              hub with its own playground. Throughout the year, we host sports
-              tournaments, blood donation camps, youth competitions, and social
-              welfare programs for our neighborhood.
-            </p>
+                <p className="leading-relaxed">
+                  <strong className="font-semibold text-slate-900 dark:text-white">
+                    Madhyanchal Sporting Club
+                  </strong>{' '}
+                  is not just a Puja organizer — it is a local sports and cultural hub with its own playground.
+                  Throughout the year, we host sports tournaments, the Annual Sit & Draw Competition, blood donation camps,
+                  and social welfare programs for our neighborhood.
+                </p>
+              </>
+            ) : (
+              <>
+                <p className="leading-relaxed">
+                  <strong className="font-semibold text-slate-900 dark:text-white">
+                    Jagadhatri Puja
+                  </strong>{' '}
+                  is the soul of Chandannagar. Located just one kilometer from Chandannagar railway
+                  station along Station Road,{' '}
+                  <strong className="font-semibold text-slate-900 dark:text-white">
+                    Madhyanchal Sarbajanin
+                  </strong>{' '}
+                  has been at the heart of this grand festival since 1971. Over the past{' '}
+                  {celebratingYear} years, our committee has grown into a vibrant family of local
+                  residents, youth volunteers, and organizers.
+                </p>
+
+                <p className="leading-relaxed">
+                  Every year, thousands of visitors from across Bengal and India come to experience
+                  our unique pandal artwork, traditional idols, and the world-famous light illumination of Chandannagar.
+                </p>
+
+                <p className="leading-relaxed">
+                  <strong className="font-semibold text-slate-900 dark:text-white">
+                    Madhyanchal Sporting Club
+                  </strong>{' '}
+                  is not just a Puja organizer — it is a local sports and cultural hub with its own playground.
+                  Throughout the year, we host sports tournaments, blood donation camps, youth competitions, and social
+                  welfare programs for our neighborhood.
+                </p>
+              </>
+            )}
           </div>
         </AnimatedWrapper>
 
@@ -210,14 +266,17 @@ export default function AboutUsPage() {
         <div className="space-y-3.5 sm:space-y-5">
           <div className="space-y-1 text-center">
             <span className="text-[9.5px] font-extrabold tracking-widest text-amber-600 uppercase sm:text-[11px] dark:text-amber-400">
-              The Dedicated People
+              {isDurgaPuja ? 'Durga Puja Samity' : 'The Dedicated People'}
             </span>
             <h2 className="font-paytone text-base text-slate-900 sm:text-xl dark:text-white">
-              Meet Our Organizing Committee
+              {isDurgaPuja
+                ? 'Meet Our Durga Puja Committee'
+                : 'Meet Our Organizing Committee'}
             </h2>
             <p className="mx-auto max-w-xl text-[11px] text-slate-600 sm:text-xs dark:text-slate-400">
-              Discover the leadership team, working secretaries, and citizens
-              driving Madhyanchal’s cultural pride.
+              {isDurgaPuja
+                ? 'Discover the leadership team, working secretaries, and citizens driving Madhyanchal’s Durga Puja.'
+                : 'Discover the leadership team, working secretaries, and citizens driving Madhyanchal’s cultural pride.'}
             </p>
           </div>
 

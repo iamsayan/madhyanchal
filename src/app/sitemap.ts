@@ -81,6 +81,24 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       priority: 1,
     },
     {
+      url: `${process.env.NEXT_PUBLIC_SITE_URL}/durgapuja/about-us`,
+      lastModified: new Date(),
+      changeFrequency: 'monthly',
+      priority: 0.6,
+    },
+    {
+      url: `${process.env.NEXT_PUBLIC_SITE_URL}/durgapuja/drawing-competition`,
+      lastModified: new Date(),
+      changeFrequency: 'monthly',
+      priority: 0.8,
+    },
+    {
+      url: `${process.env.NEXT_PUBLIC_SITE_URL}/durgapuja/gallery`,
+      lastModified: new Date(),
+      changeFrequency: 'monthly',
+      priority: 0.8,
+    },
+    {
       url: `${process.env.NEXT_PUBLIC_SITE_URL}/durgapuja/schedule`,
       lastModified: new Date(),
       changeFrequency: 'monthly',

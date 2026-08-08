@@ -47,6 +47,7 @@ export function Header() {
 
   const durgaPujaNavItems = [
     { label: 'Home', href: '/durgapuja' },
+    { label: 'About Us', href: '/durgapuja/about-us' },
     { label: 'Schedule', href: '/durgapuja/schedule' },
     { label: 'Drawing Contest', href: '/durgapuja/drawing-competition' },
     { label: 'Gallery', href: '/durgapuja/gallery' },
