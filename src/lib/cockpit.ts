@@ -4,25 +4,13 @@
  * Optimized with native Next.js fetch cache/revalidation support.
  */
 
-/**
- * Next.js specific extensions to the standard RequestInit
- */
-export interface NextRequestInit extends RequestInit {
-  next?: {
-    revalidate?: number | false;
-    tags?: string[];
-  };
-}
-
 export interface CockpitConfig {
   /** The host url of your Cockpit installation (e.g. 'https://cockpit.example.com') */
   host: string;
   /** The Cockpit API token or Master API key */
   apiKey: string;
   /** Custom options for fetch requests (e.g. headers, Next.js cache configurations) */
-  fetchOptions?: NextRequestInit;
-  /** Enable auto tags for fetch requests */
-  autoTags?: boolean;
+  fetchOptions?: RequestInit;
 }
 
 // ==========================================
@@ -224,14 +212,12 @@ export interface InboxSubmitResponse<T = Record<string, unknown>> {
 export class CockpitClient {
   private host: string;
   private apiKey: string;
-  private fetchOptions: NextRequestInit;
-  private autoTags: boolean;
+  private fetchOptions: RequestInit;
 
   constructor(config: CockpitConfig) {
     this.host = config.host.replace(/\/+$/, '');
     this.apiKey = config.apiKey;
     this.fetchOptions = config.fetchOptions || {};
-    this.autoTags = config.autoTags || true;
   }
 
   /**
@@ -288,7 +274,7 @@ export class CockpitClient {
     method: 'GET' | 'POST' | 'DELETE' = 'GET',
     body?: unknown,
     customHeaders?: Record<string, string>,
-    extraFetchOptions?: NextRequestInit
+    extraFetchOptions?: RequestInit
   ): Promise<T> {
     const url = `${this.host}/api${path}`;
 
@@ -299,50 +285,12 @@ export class CockpitClient {
       extraFetchOptions?.headers
     );
 
-    // Automatically determine default Next.js cache revalidation tags from Cockpit model paths
-    let tags: string[] | undefined = extraFetchOptions?.next?.tags;
-
-    if (!tags && this.autoTags && method === 'GET') {
-      const [cleanPath, query] = path.split('?');
-      const parts = cleanPath.replace(/^\/|\/$/g, '').split('/');
-
-      if (parts[0] === 'content') {
-        if (parts[1] === 'items' && parts.length === 2) {
-          // Batch query: /content/items?models=...
-          if (query) {
-            try {
-              const modelsParam = new URLSearchParams(query).get('models');
-              if (modelsParam) {
-                tags = Object.keys(
-                  JSON.parse(modelsParam) as Record<string, unknown>
-                );
-              }
-            } catch {
-              // Ignore URL parsing or JSON parsing errors
-            }
-          }
-        } else if (parts.length > 1) {
-          // The last segment of single-model paths is always the modelName
-          tags = [parts[parts.length - 1]];
-        }
-      } else if (parts[0] === 'assets') {
-        tags = ['assets'];
-      }
-    }
-
-    const options: NextRequestInit = {
+    const options: RequestInit = {
       ...this.fetchOptions,
       ...extraFetchOptions,
       method,
       headers,
     };
-
-    if (tags && tags.length > 0) {
-      options.next = {
-        ...options.next,
-        tags,
-      };
-    }
 
     if (body) {
       if (body instanceof FormData) {
@@ -356,7 +304,7 @@ export class CockpitClient {
         };
       }
     }
-
+    console.log(url, options);
     const response = await fetch(url, options);
 
     if (!response.ok) {
@@ -402,7 +350,7 @@ export class CockpitClient {
    */
   async listAssets(
     options: ListAssetsOptions = {},
-    fetchOptions?: NextRequestInit
+    fetchOptions?: RequestInit
   ): Promise<Asset[]> {
     return this.request<Asset[]>(
       `/assets${this.buildQuery(options)}`,
@@ -416,7 +364,7 @@ export class CockpitClient {
   /**
    * Get asset metadata by ID
    */
-  async getAsset(id: string, fetchOptions?: NextRequestInit): Promise<Asset> {
+  async getAsset(id: string, fetchOptions?: RequestInit): Promise<Asset> {
     return this.request<Asset>(
       `/assets/${id}`,
       'GET',
@@ -514,7 +462,7 @@ export class CockpitClient {
    * List available image presets
    */
   async listPresets(
-    fetchOptions?: NextRequestInit
+    fetchOptions?: RequestInit
   ): Promise<Record<string, Preset>> {
     return this.request<Record<string, Preset>>(
       '/assets/presets',
@@ -534,7 +482,7 @@ export class CockpitClient {
    */
   async getContentItem<T = CollectionItem>(
     model: string,
-    fetchOptions?: NextRequestInit
+    fetchOptions?: RequestInit
   ): Promise<T> {
     return this.request<T>(
       `/content/item/${model}`,
@@ -551,7 +499,7 @@ export class CockpitClient {
   async getContentItemByFilter<T = CollectionItem>(
     model: string,
     options: ContentItemGetByFilterOptions & Record<string, unknown>,
-    fetchOptions?: NextRequestInit
+    fetchOptions?: RequestInit
   ): Promise<T> {
     return this.request<T>(
       `/content/item/${model}${this.buildQuery(options)}`,
@@ -568,8 +516,10 @@ export class CockpitClient {
   async getContentItemById<T = CollectionItem>(
     model: string,
     id: string,
-    options: (ContentItemGetOptions & Record<string, unknown>) | ContentItemGetOptions = {},
-    fetchOptions?: NextRequestInit
+    options:
+      | (ContentItemGetOptions & Record<string, unknown>)
+      | ContentItemGetOptions = {},
+    fetchOptions?: RequestInit
   ): Promise<T> {
     return this.request<T>(
       `/content/item/${model}/${id}${this.buildQuery(options)}`,
@@ -605,8 +555,10 @@ export class CockpitClient {
    */
   async listContentItems<T = CollectionItem[]>(
     model: string,
-    options: (ContentItemsListOptions & Record<string, unknown>) | ContentItemsListOptions = {},
-    fetchOptions?: NextRequestInit
+    options:
+      | (ContentItemsListOptions & Record<string, unknown>)
+      | ContentItemsListOptions = {},
+    fetchOptions?: RequestInit
   ): Promise<T> {
     return this.request<T>(
       `/content/items/${model}${this.buildQuery(options)}`,
@@ -625,7 +577,7 @@ export class CockpitClient {
   >(
     models: ContentItemsBatchModels,
     options: ContentItemsBatchQueryOptions = {},
-    fetchOptions?: NextRequestInit
+    fetchOptions?: RequestInit
   ): Promise<T> {
     const params = { models, ...options };
     return this.request<T>(
@@ -644,7 +596,7 @@ export class CockpitClient {
     model: string,
     pipeline: unknown[],
     options: ContentAggregateOptions = {},
-    fetchOptions?: NextRequestInit
+    fetchOptions?: RequestInit
   ): Promise<T> {
     const params = { pipeline, ...options };
     return this.request<T>(
@@ -662,7 +614,7 @@ export class CockpitClient {
   async getContentTree<T = CollectionItem[]>(
     model: string,
     options: ContentTreeOptions = {},
-    fetchOptions?: NextRequestInit
+    fetchOptions?: RequestInit
   ): Promise<T> {
     return this.request<T>(
       `/content/tree/${model}${this.buildQuery(options)}`,
@@ -691,7 +643,7 @@ export class CockpitClient {
   /**
    * Check system health
    */
-  async healthcheck<T = unknown>(fetchOptions?: NextRequestInit): Promise<T> {
+  async healthcheck<T = unknown>(fetchOptions?: RequestInit): Promise<T> {
     return this.request<T>(
       '/system/healthcheck',
       'GET',

@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 
 import { verifySecret } from '@/lib/verify';
-import cockpit from '@/lib/client';
+import cockpit, { PaginatedList } from '@/lib/client';
 import { getMembershipYear } from '@/lib/data';
 import { calculateAmountDue, normalizePhone } from '@/lib/member-utils';
 import { sendWhatsAppMessage } from '@/lib/twilio';
@@ -19,7 +19,7 @@ export async function GET(req: NextRequest) {
 
   const rawSendNumbers = searchParams.get('s');
   const sendNumbers = rawSendNumbers
-    ? rawSendNumbers.split(',').map(Number).filter(Boolean)
+    ? rawSendNumbers.split(',').map(String).filter(Boolean)
     : [];
 
   const skip = Number(searchParams.get('skip')) || 0;
@@ -37,10 +37,9 @@ export async function GET(req: NextRequest) {
         : {}),
     };
 
-    const members = await cockpit.listContentItems<MemberWithPayments>(
-      'members',
-      queryOptions
-    );
+    const { data: members } = await cockpit.listContentItems<
+      PaginatedList<MemberWithPayments>
+    >('members', queryOptions);
 
     if (!Array.isArray(members) || members.length === 0) {
       return NextResponse.json({
@@ -73,7 +72,7 @@ export async function GET(req: NextRequest) {
       if (amountDue > 0) {
         const id = item._id.trim();
         const name = (item.name || '').trim();
-        const dueAmount = (totalAmountNum / 12).toFixed(2);
+        const dueAmount = (totalAmountNum / 12).toFixed(0);
 
         try {
           const result = await sendWhatsAppMessage(
