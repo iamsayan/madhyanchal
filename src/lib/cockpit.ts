@@ -304,7 +304,7 @@ export class CockpitClient {
         };
       }
     }
-    console.log(url, options);
+
     const response = await fetch(url, options);
 
     if (!response.ok) {

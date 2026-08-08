@@ -106,6 +106,8 @@ export async function GET(req: NextRequest) {
       }
     }
 
+    console.table(logs);
+
     return NextResponse.json({
       success: true,
       membershipYear: year,
