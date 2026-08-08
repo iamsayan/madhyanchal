@@ -14,6 +14,7 @@ import {
 } from 'lucide-react';
 import { celebratingYear, celebratingYearDurga } from '@/lib/data';
 import { createMetadata } from '@/lib/metadata';
+import { getAboutSchema } from '@/lib/seo-schemas';
 
 export const metadata: Metadata = {
   ...createMetadata({
@@ -67,43 +68,7 @@ export default function AboutUsPage({ isDurgaPuja = false }: AboutUsPageProps) {
     },
   ];
 
-  const jsonLd = {
-    '@context': 'https://schema.org',
-    '@graph': [
-      {
-        '@type': 'BreadcrumbList',
-        itemListElement: [
-          {
-            '@type': 'ListItem',
-            position: 1,
-            name: 'Home',
-            item: isDurgaPuja
-              ? 'https://www.madhyanchalsarbajanin.co.in/durgapuja'
-              : 'https://www.madhyanchalsarbajanin.co.in',
-          },
-          {
-            '@type': 'ListItem',
-            position: 2,
-            name: 'About Us',
-            item: isDurgaPuja
-              ? 'https://www.madhyanchalsarbajanin.co.in/durgapuja/about-us'
-              : 'https://www.madhyanchalsarbajanin.co.in/about-us',
-          },
-        ],
-      },
-      {
-        '@type': 'Organization',
-        name: isDurgaPuja
-          ? 'Madhyanchal Sarbajanin Durga Puja Samity'
-          : 'Madhyanchal Sarbajanin',
-        url: 'https://www.madhyanchalsarbajanin.co.in',
-        foundingDate: isDurgaPuja ? '1995' : '1971',
-        description: isDurgaPuja
-          ? 'Organizing Durga Puja, Sit & Draw competition, sports, and community welfare in Chandannagar since 1995.'
-          : 'Promoting sports, culture, and community welfare in Chandannagar since 1971.',
-      },
-    ],
-  };
+  const jsonLd = getAboutSchema(isDurgaPuja);
 
   const coreHighlights = [
     {

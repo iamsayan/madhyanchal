@@ -226,3 +226,50 @@ export function getGallerySchema(isDurgaPuja = false) {
     ],
   };
 }
+
+export function getAboutSchema(isDurgaPuja = false) {
+  return {
+    '@context': 'https://schema.org' as const,
+    '@graph': [
+      breadcrumbSchema(
+        isDurgaPuja
+          ? [
+              { name: 'Home', url: '/durgapuja' },
+              { name: 'About Us', url: '/durgapuja/about-us' },
+            ]
+          : [
+              { name: 'Home', url: '/' },
+              { name: 'About Us', url: '/about-us' },
+            ]
+      ),
+      {
+        '@type': 'AboutPage',
+        name: isDurgaPuja
+          ? 'About Us | Madhyanchal Sarbajanin Durga Puja'
+          : 'About Us | Madhyanchal Sarbajanin Jagadhatri Puja',
+        description: isDurgaPuja
+          ? 'Discover Madhyanchal Sarbajanin Durga Puja Samity (MSDPS) in Chandannagar. Celebrating Durga Puja, Annual Sit & Draw Competition, sports, and community welfare since 1995.'
+          : 'Promoting sports, culture, and community welfare in Chandannagar since 1971.',
+        url: isDurgaPuja
+          ? `${SCHEMA_SITE_URL}/durgapuja/about-us`
+          : `${SCHEMA_SITE_URL}/about-us`,
+        mainEntity: {
+          '@type': 'Organization',
+          name: isDurgaPuja
+            ? 'Madhyanchal Sarbajanin Durga Puja Samity'
+            : 'Madhyanchal Sarbajanin Jagadhatri Puja Samity',
+          foundingDate: isDurgaPuja ? '1995' : '1971',
+          url: SCHEMA_SITE_URL,
+          address: {
+            '@type': 'PostalAddress',
+            streetAddress: 'Station Road',
+            addressLocality: 'Chandannagar',
+            addressRegion: 'West Bengal',
+            postalCode: '712136',
+            addressCountry: 'IN',
+          },
+        },
+      },
+    ],
+  };
+}
