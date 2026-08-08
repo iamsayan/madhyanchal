@@ -27,6 +27,7 @@ import {
   Megaphone,
   Bell,
   Sparkles,
+  Compass,
 } from 'lucide-react';
 import {
   SiFacebook,
@@ -41,6 +42,7 @@ import { sendGTMEvent } from '@next/third-parties/google';
 import { ThemeToggle } from '@/components/ui/theme-toggle';
 
 import { useRouteContext } from '@/hooks/use-route-context';
+import { VirtualTourModal } from '@/components/features/virtual-tour-modal';
 
 const spaceGrotesk = Space_Grotesk({
   subsets: ['latin'],
@@ -48,9 +50,30 @@ const spaceGrotesk = Space_Grotesk({
   display: 'swap',
 });
 
+type ExplorePageItem =
+  | {
+      label: string;
+      action: string;
+      icon: React.ComponentType<{ className?: string }>;
+      desc: string;
+      highlighted?: boolean;
+      href?: never;
+      isExternal?: never;
+    }
+  | {
+      label: string;
+      href: string;
+      action?: never;
+      icon: React.ComponentType<{ className?: string }>;
+      desc: string;
+      highlighted?: boolean;
+      isExternal?: boolean;
+    };
+
 export function MobileNavDock() {
   const pathname = usePathname();
   const [moreOpen, setMoreOpen] = useState(false);
+  const [tourModalOpen, setTourModalOpen] = useState(false);
   const [savedMembers, setSavedMembers] = useState<
     Array<{ id: string; name: string }>
   >([]);
@@ -153,13 +176,19 @@ export function MobileNavDock() {
 
   const primaryTabs = isDurgaPuja ? durgaPujaPrimaryTabs : mainPrimaryTabs;
 
-  const mainExplorePages = [
+  const mainExplorePages: ExplorePageItem[] = [
+    {
+      label: '360° Virtual Tour',
+      action: '360',
+      icon: Compass,
+      desc: 'Interactive 360° Pandal & Lighting',
+      highlighted: true,
+    },
     {
       label: 'Durga Puja',
       href: '/durgapuja',
       icon: Flame,
       desc: 'Rituals, Drawing Contest & Events',
-      highlighted: true,
     },
     {
       label: 'Advertise With Us',
@@ -200,7 +229,7 @@ export function MobileNavDock() {
     },
   ];
 
-  const durgaPujaExplorePages = [
+  const durgaPujaExplorePages: ExplorePageItem[] = [
     {
       label: 'About Durga Puja',
       href: '/durgapuja/about-us',
@@ -554,6 +583,38 @@ export function MobileNavDock() {
                     'highlighted' in item && item.highlighted
                   );
 
+                  if (item.action === '360') {
+                    return (
+                      <button
+                        key={item.label}
+                        type="button"
+                        onClick={() => {
+                          setMoreOpen(false);
+                          setTourModalOpen(true);
+                        }}
+                        className="flex cursor-pointer items-center justify-between rounded-2xl border border-amber-500/50 bg-gradient-to-r from-amber-500/15 via-amber-500/10 to-amber-500/15 p-3 text-left transition-colors hover:scale-[1.01] active:scale-[0.98] dark:border-amber-400/50 dark:from-amber-950/40 dark:to-amber-950/30"
+                      >
+                        <div className="flex items-center gap-3">
+                          <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-amber-500 text-slate-950 shadow-xs">
+                            <Icon className="h-4.5 w-4.5 animate-spin [animation-duration:10s]" />
+                          </div>
+                          <div>
+                            <div className="flex items-center gap-1.5 text-xs font-bold text-slate-900 dark:text-white">
+                              <span>{item.label}</span>
+                              <span className="py-0.2 rounded-full bg-amber-500 px-1.5 text-[8.5px] font-black tracking-widest text-slate-950 uppercase">
+                                360°
+                              </span>
+                            </div>
+                            <div className="text-[10px] text-slate-500 dark:text-slate-400">
+                              {item.desc}
+                            </div>
+                          </div>
+                        </div>
+                        <ChevronRight className="h-4 w-4 text-amber-600 dark:text-amber-400" />
+                      </button>
+                    );
+                  }
+
                   if (item.isExternal) {
                     return (
                       <a
@@ -580,6 +641,8 @@ export function MobileNavDock() {
                       </a>
                     );
                   }
+
+                  if (!item.href) return null;
 
                   return (
                     <Link
@@ -691,6 +754,11 @@ export function MobileNavDock() {
           </div>
         )}
       </AnimatePresence>
+
+      <VirtualTourModal
+        isOpen={tourModalOpen}
+        onClose={() => setTourModalOpen(false)}
+      />
     </>
   );
 }

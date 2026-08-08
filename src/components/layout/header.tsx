@@ -7,13 +7,15 @@ import { usePathname } from 'next/navigation';
 import { ThemeToggle } from '@/components/ui/theme-toggle';
 import { cn } from '@/lib/utils';
 import { sendGTMEvent } from '@next/third-parties/google';
-import { Calendar, MapPin, ChevronLeft, Bell } from 'lucide-react';
+import { Calendar, MapPin, ChevronLeft, Bell, Compass } from 'lucide-react';
 
 import { useRouteContext } from '@/hooks/use-route-context';
+import { VirtualTourModal } from '@/components/features/virtual-tour-modal';
 
 export function Header() {
   const pathname = usePathname();
   const [scrolled, setScrolled] = useState(false);
+  const [tourModalOpen, setTourModalOpen] = useState(false);
 
   const { isDurgaPuja, isCommon } = useRouteContext();
 
@@ -164,8 +166,25 @@ export function Header() {
           </nav>
         </div>
 
-        {/* Right Controls: Notice Icon & Theme Toggle Switch (Far Right) */}
+        {/* Right Controls: 360° Virtual Tour, Notice Icon & Theme Toggle Switch (Far Right) */}
         <div className="flex shrink-0 items-center gap-2">
+          <button
+            type="button"
+            onClick={() => setTourModalOpen(true)}
+            className={cn(
+              'relative flex items-center justify-center rounded-full border transition-all active:scale-95 cursor-pointer',
+              scrolled
+                ? 'h-8 w-8 border-amber-500/40 bg-amber-500/10 text-amber-700 hover:bg-amber-500 hover:text-slate-950 dark:border-amber-500/40 dark:bg-amber-500/15 dark:text-amber-300 dark:hover:bg-amber-500 dark:hover:text-slate-950'
+                : 'h-9 w-9 border-amber-500/40 bg-amber-500/15 text-amber-800 backdrop-blur-md hover:bg-amber-500/25 dark:border-amber-400/30 dark:bg-amber-500/20 dark:text-amber-300'
+            )}
+            title="360° Virtual Pandal Tour"
+            aria-label="360° Virtual Pandal Tour"
+          >
+            <Compass className="h-4.5 w-4.5 animate-spin [animation-duration:10s]" />
+            <span className="absolute -top-1 -right-1 flex h-3.5 items-center justify-center rounded-full border border-slate-900 bg-amber-500 px-1 text-[7.5px] font-black leading-none text-slate-950 uppercase">
+              360°
+            </span>
+          </button>
           <Link
             href={isDurgaPuja ? '/durgapuja/notices' : '/notices'}
             className={cn(
@@ -272,6 +291,11 @@ export function Header() {
           </Link>
         </div>
       </div>
+
+      <VirtualTourModal
+        isOpen={tourModalOpen}
+        onClose={() => setTourModalOpen(false)}
+      />
     </header>
   );
 }
