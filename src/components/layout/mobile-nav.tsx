@@ -271,20 +271,16 @@ export function MobileNavDock() {
 
   const explorePages = isDurgaPuja ? durgaPujaExplorePages : mainExplorePages;
 
-  const whatsappUrl =
-    process.env.NEXT_PUBLIC_WHATSAPP_CHANNEL_URL ||
-    'https://whatsapp.com/channel/0029VaA1B2C3D4E5F6G7H8';
-
   const defaultSocialLinks = [
-    {
-      icon: SiWhatsapp,
-      label: 'WhatsApp Channel',
-      href: whatsappUrl,
-    },
     {
       icon: SiFacebook,
       label: 'Facebook',
       href: 'https://www.facebook.com/madhyanchalsarbajanin',
+    },
+    {
+      icon: SiWhatsapp,
+      label: 'WhatsApp Channel',
+      href: 'https://whatsapp.com/channel/0029Va9oDu0C6ZvcosFumh0Y',
     },
     {
       icon: SiYoutube,
@@ -306,14 +302,14 @@ export function MobileNavDock() {
 
   const durgaSocialLinks = [
     {
-      icon: SiWhatsapp,
-      label: 'WhatsApp Channel',
-      href: whatsappUrl,
-    },
-    {
       icon: SiFacebook,
       label: 'Facebook',
       href: 'https://www.facebook.com/msdpsofficial',
+    },
+    {
+      icon: SiWhatsapp,
+      label: 'WhatsApp Channel',
+      href: 'https://whatsapp.com/channel/0029Va9oDu0C6ZvcosFumh0Y',
     },
     {
       icon: SiInstagram,
