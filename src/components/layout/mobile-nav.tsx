@@ -185,12 +185,6 @@ export function MobileNavDock() {
       highlighted: true,
     },
     {
-      label: 'Durga Puja',
-      href: '/durgapuja',
-      icon: Flame,
-      desc: 'Rituals, Drawing Contest & Events',
-    },
-    {
       label: 'Advertise With Us',
       href: '/advertise',
       icon: Megaphone,
@@ -571,7 +565,7 @@ export function MobileNavDock() {
               )}
 
               {/* Menu List */}
-              <div className="grid grid-cols-1 gap-2.5 pt-1 sm:grid-cols-2">
+              <div className="grid grid-cols-1 gap-2.5 sm:grid-cols-2">
                 {explorePages.map((item) => {
                   const Icon = item.icon;
                   const isActive = pathname === item.href;
