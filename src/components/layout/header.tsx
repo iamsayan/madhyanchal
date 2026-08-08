@@ -41,6 +41,7 @@ export function Header() {
     { label: 'Schedule', href: '/schedule' },
     { label: 'Gallery', href: '/gallery' },
     { label: 'Awards', href: '/awards' },
+    { label: 'Media', href: '/media-coverage' },
     { label: 'Advertise', href: '/advertise' },
     { label: 'About Us', href: '/about-us' },
     { label: 'Contact Us', href: '/contact-us' },

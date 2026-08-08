@@ -1,0 +1,303 @@
+{
+  "organization": "Madhyanchal Sarbajanin Jagadhatri Puja",
+  "location": "Chandannagar, Hooghly, West Bengal",
+  "items": [
+    {
+      "id": "sangbad-pratidin-10-avatars-2025",
+      "title": "Vishnu's 10 Avatars Theme on Chalchitra",
+      "publisher": "Sangbad Pratidin",
+      "category": "news",
+      "url": "https://www.sangbadpratidin.in/bengal/chandannagars-jagaddhatri-puja-has-a-variety-of-themes/pid/1090053/",
+      "year": 2025,
+      "details": "Featured the 10 Avatars of Lord Vishnu on the Chalchitra and Kundughat Dalan decorations.",
+      "platform": "Print & Digital",
+      "featured": true,
+      "tags": [
+        "2025 Theme",
+        "10 Avatars",
+        "Chalchitra"
+      ]
+    },
+    {
+      "id": "sangbad-pratidin-top-5-2024",
+      "title": "Top 5 Jagadhatri Pujas in Chandannagar",
+      "publisher": "Sangbad Pratidin",
+      "category": "news",
+      "url": "https://www.sangbadpratidin.in/photo/jagadhatri-puja-2024-top-five-jagadhatri-pujas-in-chandannagar/",
+      "year": 2024,
+      "details": "Featured among the top five pujas of Chandannagar; highlights traditional idol and illumination.",
+      "platform": "Print & Digital",
+      "featured": true,
+      "tags": [
+        "Top 5",
+        "Chandannagar",
+        "Lighting"
+      ]
+    },
+    {
+      "id": "tv9-bangla-lights-off-2024",
+      "title": "Lights Off Protest on Saptami Night",
+      "publisher": "TV9 Bangla",
+      "category": "news",
+      "url": "https://tv9bangla.com/west-bengal/hooghly/lights-off-protest-visitors-to-see-idols-by-candlelight-at-jagadhatri-puja-in-chandannagar-1133777.html",
+      "year": 2024,
+      "details": "Turned off lights for 3 hours on Saptami evening in protest, arranging darshan by candlelight.",
+      "platform": "TV Broadcast",
+      "featured": true,
+      "tags": [
+        "Protest",
+        "Candlelight",
+        "Saptami"
+      ]
+    },
+    {
+      "id": "etv-bharat-organ-donation-2023",
+      "title": "Organ Donation Awareness Water Laser Show",
+      "publisher": "ETV Bharat",
+      "category": "news",
+      "url": "https://www.etvbharat.com/bengali/west-bengal/videos/other-videos/laser-show-in-chandannagar-jagaddhatri-puja-for-organ-donation-awareness/wb20231121141801670670085",
+      "year": 2023,
+      "details": "Organized a water laser and sound show on the adjacent pond to spread organ donation awareness.",
+      "platform": "TV Broadcast",
+      "featured": true,
+      "tags": [
+        "Organ Donation",
+        "Laser Show",
+        "ETV Bharat"
+      ]
+    },
+    {
+      "id": "vlog-traversexp",
+      "title": "Pandal, Idol & Lighting Full Video",
+      "publisher": "YouTube (TraverseXP)",
+      "category": "video",
+      "url": "https://www.youtube.com/watch?v=o4f3bvNAzzQ",
+      "year": 2024,
+      "details": "Full video coverage of illumination, pandal, and idol.",
+      "platform": "YouTube",
+      "channel": "TraverseXP",
+      "featured": true,
+      "tags": [
+        "Full Video",
+        "Illumination",
+        "Pandal Tour"
+      ]
+    },
+    {
+      "id": "official-portal",
+      "title": "Madhyanchal Sarbajanin Official Portal",
+      "publisher": "Madhyanchal Sarbajanin",
+      "category": "official",
+      "url": "https://www.madhyanchalsarbajanin.co.in",
+      "year": 2024,
+      "details": "Official website with puja history, schedule, Kumari Puja, and procession details.",
+      "platform": "Official Web",
+      "featured": false,
+      "tags": [
+        "Official",
+        "History",
+        "Schedule"
+      ]
+    },
+    {
+      "id": "official-about-us",
+      "title": "Madhyanchal About Us Page",
+      "publisher": "Madhyanchal Sarbajanin",
+      "category": "official",
+      "url": "https://www.madhyanchalsarbajanin.co.in/about-us",
+      "year": 2024,
+      "details": "History and background of the puja committee.",
+      "platform": "Official Web",
+      "featured": false,
+      "tags": [
+        "About Us",
+        "History"
+      ]
+    },
+    {
+      "id": "sangbad-pratidin-route-map",
+      "title": "Chandannagar Puja Parikrama & Route Map Guide",
+      "publisher": "Sangbad Pratidin",
+      "category": "news",
+      "url": "https://www.sangbadpratidin.in/lifestyle/travel/jagaddhatri-puja-in-chandannagar/pid/191545/",
+      "year": 2024,
+      "details": "Travel guide featuring Madhyanchal as a key station road destination.",
+      "platform": "Print & Digital",
+      "featured": false,
+      "tags": [
+        "Route Map",
+        "Travel Guide",
+        "Station Road"
+      ]
+    },
+    {
+      "id": "ei-samay-light-canopy-2023",
+      "title": "120ft Light Canopy & Water Laser Show",
+      "publisher": "Ei Samay",
+      "category": "news",
+      "url": "https://eisamay.com/west-bengal-news/hooghly-news/chandannagar-city-of-lights-shines-for-jagadhatri-puja-bengal-know-the-best-pandals-for-lighting/articleshow/105389246.cms",
+      "year": 2023,
+      "details": "Highlighted the 120-foot light canopy and animated water laser show.",
+      "platform": "Print & Digital",
+      "featured": false,
+      "tags": [
+        "120ft Canopy",
+        "Lighting",
+        "Laser Show"
+      ]
+    },
+    {
+      "id": "abp-ananda-kumari-puja",
+      "title": "Kumari Puja Live Coverage",
+      "publisher": "ABP Ananda",
+      "category": "news",
+      "url": "https://bengali.abplive.com/religion/page-34/amp",
+      "year": 2023,
+      "details": "Live broadcast and reportage on traditional Kumari Puja rituals at Madhyanchal Club.",
+      "platform": "TV Broadcast",
+      "featured": false,
+      "tags": [
+        "Kumari Puja",
+        "Rituals",
+        "ABP Ananda"
+      ]
+    },
+    {
+      "id": "news-wave-india-feature",
+      "title": "Historical Context & Puja Feature",
+      "publisher": "News Wave India",
+      "category": "news",
+      "url": "https://www.newswaveindia.com/feature/historical-place-chandannagar-of-hooghly-famous-for-jagaddhatri-puja/amp/",
+      "year": 2023,
+      "details": "Feature article on Chandannagar heritage highlighting Madhyanchal.",
+      "platform": "Digital Feature",
+      "featured": false,
+      "tags": [
+        "Heritage",
+        "History"
+      ]
+    },
+    {
+      "id": "times-of-india-covid-2020",
+      "title": "Heritage Pujas of Chandernagore during COVID-19",
+      "publisher": "The Times of India",
+      "category": "news",
+      "url": "https://timesofindia.indiatimes.com/city/kolkata/no-sacrifice-procession-for-heritage-chandernagore-jagaddhatri-pujas/articleshow/79364328.cms",
+      "year": 2020,
+      "details": "Coverage on how heritage pujas maintained traditions and restrictions during the pandemic.",
+      "platform": "Print & Digital",
+      "featured": false,
+      "tags": [
+        "COVID-19",
+        "Heritage",
+        "Times of India"
+      ]
+    },
+    {
+      "id": "get-bengal-covid-2020",
+      "title": "Jagadhatri Puja in Times of COVID-19",
+      "publisher": "Get Bengal",
+      "category": "news",
+      "url": "https://getbengal.com/jagaddhatri-puja-in-times-of-covid/",
+      "year": 2020,
+      "details": "Report on traditional observances and restricted celebrations during COVID-19.",
+      "platform": "Digital Magazine",
+      "featured": false,
+      "tags": [
+        "COVID-19",
+        "Get Bengal"
+      ]
+    },
+    {
+      "id": "vlog-nil-vs-nil",
+      "title": "Madhyanchal Jagadhatri Puja Pandal Tour",
+      "publisher": "YouTube (Nil Vs Nil Vlogs)",
+      "category": "video",
+      "url": "https://www.youtube.com/watch?v=LkCvx-49hx0",
+      "year": 2024,
+      "details": "Vlog covering pandal walkthrough and crowd updates.",
+      "platform": "YouTube",
+      "channel": "Nil Vs Nil Vlogs",
+      "featured": false,
+      "tags": [
+        "Vlog",
+        "Pandal Tour",
+        "Crowd Updates"
+      ]
+    },
+    {
+      "id": "vlog-travelbandhu",
+      "title": "Station Road & Immersion Procession Feature",
+      "publisher": "YouTube (TravelBandhu)",
+      "category": "video",
+      "url": "https://www.youtube.com/watch?v=y2imYSlMfSo",
+      "year": 2024,
+      "details": "Feature on Station Road illumination and immersion procession.",
+      "platform": "YouTube",
+      "channel": "TravelBandhu",
+      "featured": false,
+      "tags": [
+        "Immersion",
+        "Station Road",
+        "Procession"
+      ]
+    },
+    {
+      "id": "mention-news18-bangla",
+      "title": "Chaturdashi Central Immersion Procession",
+      "publisher": "News18 Bangla",
+      "category": "mention",
+      "year": 2024,
+      "details": "Live coverage of truck decorations and station road illumination during immersion.",
+      "platform": "TV News Mention",
+      "featured": false,
+      "tags": [
+        "Immersion",
+        "Procession",
+        "News18"
+      ]
+    },
+    {
+      "id": "mention-zee-24-ghanta",
+      "title": "Crowd Management & Prime-Time Pandal Parikrama",
+      "publisher": "Zee 24 Ghanta",
+      "category": "mention",
+      "year": 2024,
+      "details": "Prime-time news bulletins on crowd management and live pandal visuals.",
+      "platform": "TV News Mention",
+      "featured": false,
+      "tags": [
+        "Crowd Management",
+        "Prime Time"
+      ]
+    },
+    {
+      "id": "mention-bartaman-patrika",
+      "title": "Heritage & Traditional Idol Feature",
+      "publisher": "Bartaman Patrika",
+      "category": "mention",
+      "year": 2024,
+      "details": "Festival edition print coverage on idol tradition and light artistry.",
+      "platform": "Print Mention",
+      "featured": false,
+      "tags": [
+        "Heritage",
+        "Festival Edition"
+      ]
+    },
+    {
+      "id": "mention-anandabazar-online",
+      "title": "Central Committee Puja Guide",
+      "publisher": "Anandabazar Online",
+      "category": "mention",
+      "year": 2024,
+      "details": "Listed in digital route guides as a prominent heritage puja.",
+      "platform": "Digital Guide",
+      "featured": false,
+      "tags": [
+        "ABP Group",
+        "Puja Guide"
+      ]
+    }
+  ]
+}

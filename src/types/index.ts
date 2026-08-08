@@ -169,3 +169,27 @@ declare global {
     Razorpay: new (options: unknown) => { open(): void };
   }
 }
+
+export type MediaCategory = 'official' | 'news' | 'video' | 'mention';
+
+export interface MediaItem {
+  id: string;
+  title: string;
+  publisher: string;
+  category: MediaCategory;
+  url?: string;
+  year?: number | null;
+  details: string;
+  platform?: string;
+  channel?: string;
+  topic?: string;
+  featured?: boolean;
+  tags?: string[];
+}
+
+export interface MediaCoverageData {
+  organization: string;
+  location: string;
+  items: MediaItem[];
+}
+

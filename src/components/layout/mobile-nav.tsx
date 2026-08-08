@@ -28,6 +28,7 @@ import {
   Bell,
   Sparkles,
   Compass,
+  Newspaper,
 } from 'lucide-react';
 import {
   SiFacebook,
@@ -214,6 +215,12 @@ export function MobileNavDock() {
       href: '/awards',
       icon: Award,
       desc: 'Recognitions & Trophies',
+    },
+    {
+      label: 'Media Coverage',
+      href: '/media-coverage',
+      icon: Newspaper,
+      desc: 'Press Releases & News',
     },
     {
       label: 'Puja History',
