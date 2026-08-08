@@ -1,8 +1,10 @@
 'use client';
 
 import { useEffect, useState } from 'react';
+import Image from 'next/image';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
+import { Space_Grotesk } from 'next/font/google';
 import { motion, AnimatePresence } from 'motion/react';
 import {
   Home,
@@ -24,12 +26,27 @@ import {
   Download,
   Megaphone,
   Bell,
+  Sparkles,
 } from 'lucide-react';
+import {
+  SiFacebook,
+  SiInstagram,
+  SiThreads,
+  SiWhatsapp,
+  SiX,
+  SiYoutube,
+} from '@icons-pack/react-simple-icons';
 import { cn } from '@/lib/utils';
 import { sendGTMEvent } from '@next/third-parties/google';
 import { ThemeToggle } from '@/components/ui/theme-toggle';
 
 import { useRouteContext } from '@/hooks/use-route-context';
+
+const spaceGrotesk = Space_Grotesk({
+  subsets: ['latin'],
+  weight: ['700'],
+  display: 'swap',
+});
 
 export function MobileNavDock() {
   const pathname = usePathname();
@@ -224,6 +241,65 @@ export function MobileNavDock() {
   ];
 
   const explorePages = isDurgaPuja ? durgaPujaExplorePages : mainExplorePages;
+
+  const whatsappUrl =
+    process.env.NEXT_PUBLIC_WHATSAPP_CHANNEL_URL ||
+    'https://whatsapp.com/channel/0029VaA1B2C3D4E5F6G7H8';
+
+  const defaultSocialLinks = [
+    {
+      icon: SiWhatsapp,
+      label: 'WhatsApp Channel',
+      href: whatsappUrl,
+    },
+    {
+      icon: SiFacebook,
+      label: 'Facebook',
+      href: 'https://www.facebook.com/madhyanchalsarbajanin',
+    },
+    {
+      icon: SiYoutube,
+      label: 'YouTube',
+      href: 'https://www.youtube.com/@madhyanchalsarbajanin',
+    },
+    {
+      icon: SiInstagram,
+      label: 'Instagram',
+      href: 'https://www.instagram.com/madhyanchal_sarbajanin',
+    },
+    {
+      icon: SiThreads,
+      label: 'Threads',
+      href: 'https://www.threads.net/@madhyanchal_sarbajanin',
+    },
+    { icon: SiX, label: 'X (Twitter)', href: 'https://x.com/madhyanchal' },
+  ];
+
+  const durgaSocialLinks = [
+    {
+      icon: SiWhatsapp,
+      label: 'WhatsApp Channel',
+      href: whatsappUrl,
+    },
+    {
+      icon: SiFacebook,
+      label: 'Facebook',
+      href: 'https://www.facebook.com/msdpsofficial',
+    },
+    {
+      icon: SiInstagram,
+      label: 'Instagram',
+      href: 'https://www.instagram.com/madhyanchal_sarbajanin',
+    },
+    {
+      icon: SiThreads,
+      label: 'Threads',
+      href: 'https://www.threads.net/@madhyanchal_sarbajanin',
+    },
+    { icon: SiX, label: 'X (Twitter)', href: 'https://x.com/madhyanchal' },
+  ];
+
+  const drawerSocialLinks = isDurgaPuja ? durgaSocialLinks : defaultSocialLinks;
 
   const isPrimaryActive = primaryTabs.some((tab) => tab.href === pathname);
 
@@ -550,6 +626,66 @@ export function MobileNavDock() {
                     </Link>
                   );
                 })}
+              </div>
+
+              {/* DRAWER MOBILE FOOTER: Logo, Social Icons & Copyright */}
+              <div className="mt-4 border-t border-slate-200/80 pt-4 text-center dark:border-white/10">
+                <Link
+                  href={isDurgaPuja ? '/durgapuja' : '/'}
+                  onClick={() => setMoreOpen(false)}
+                  className="inline-block transition-transform hover:scale-105"
+                >
+                  <Image
+                    src="/logo.png"
+                    alt="Madhyanchal Sarbajanin Logo"
+                    width={180}
+                    height={45}
+                    className="mx-auto h-7 w-auto object-contain dark:brightness-110"
+                  />
+                </Link>
+
+                {/* Social Micro Icons */}
+                <div className="mt-3 flex items-center justify-center gap-2">
+                  {drawerSocialLinks.map((item, idx) => {
+                    const Icon = item.icon;
+                    return (
+                      <a
+                        key={idx}
+                        href={item.href}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        aria-label={item.label}
+                        className="flex h-7.5 w-7.5 items-center justify-center rounded-full border border-slate-300/80 bg-slate-100/80 text-slate-700 shadow-2xs transition-all hover:scale-110 hover:border-amber-500/50 hover:bg-amber-500 hover:text-slate-950 active:scale-95 dark:border-white/10 dark:bg-stone-900/80 dark:text-slate-300 dark:hover:bg-amber-500 dark:hover:text-slate-950"
+                      >
+                        <Icon className="h-3.5 w-3.5" />
+                      </a>
+                    );
+                  })}
+                </div>
+
+                {/* Copyright & Developer Credits */}
+                <div className="mt-3 space-y-1 text-[10px] text-slate-500 dark:text-slate-400">
+                  <p>
+                    Copyright © {new Date().getFullYear()} Madhyanchal Sarbajanin. All
+                    Rights Reserved.
+                  </p>
+                  <p className="flex items-center justify-center gap-1 text-[9px] text-slate-400 dark:text-slate-500">
+                    Designed & Developed by{' '}
+                    <Link
+                      href="https://www.sayandatta.co.in"
+                      target="_blank"
+                      className={cn(
+                        spaceGrotesk.className,
+                        'inline-flex items-center gap-1 rounded border border-amber-500/25 bg-amber-500/10 px-1.5 py-0.5 text-[8px] font-bold tracking-widest transition-all hover:scale-105 hover:border-amber-500/50 hover:bg-amber-500/20'
+                      )}
+                    >
+                      <Sparkles className="h-2 w-2 animate-pulse text-amber-500" />
+                      <span className="bg-gradient-to-r from-amber-600 via-amber-500 to-yellow-500 bg-clip-text text-transparent uppercase dark:from-amber-400 dark:to-yellow-300">
+                        SAYAN DATTA
+                      </span>
+                    </Link>
+                  </p>
+                </div>
               </div>
             </motion.div>
           </div>

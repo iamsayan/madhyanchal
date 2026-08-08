@@ -72,8 +72,8 @@ export function PageLayout({
 
       {/* HERO HEADER BANNER (Standardized Mobile-First Spacing) */}
       {showHeader && (
-        <section className="relative overflow-hidden border-b border-amber-500/20 bg-amber-50/60 pt-[calc(5rem+env(safe-area-inset-top,0px))] pb-5 transition-colors duration-500 sm:pt-32 sm:pb-10 dark:bg-stone-950">
-          <div className="relative z-10 mx-auto max-w-6xl px-3.5 sm:px-6 lg:px-8">
+        <section className="relative overflow-hidden border-b border-amber-500/20 bg-amber-50/60 pt-[calc(5rem+env(safe-area-inset-top,0px))] pb-6 transition-colors duration-500 sm:pt-28 sm:pb-8 lg:pt-32 lg:pb-10 dark:bg-stone-950">
+          <div className="relative z-10 mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
             <AnimatedWrapper
               direction="up"
               className="flex flex-col items-center space-y-2.5 text-center sm:space-y-4"
@@ -110,7 +110,7 @@ export function PageLayout({
       )}
 
       {/* MAIN CONTENT CONTAINER - Unified Padding Control */}
-      <main className="relative z-10 px-3.5 pt-5 pb-6 sm:px-6 sm:pt-10 sm:pb-12 lg:px-8">
+      <main className="relative z-10 px-4 pt-6 pb-20 sm:px-6 sm:pt-8 sm:pb-24 lg:px-8 lg:pb-12">
         <div className={cn('mx-auto', maxWidth, className)}>{children}</div>
       </main>
     </div>

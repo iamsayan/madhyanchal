@@ -134,7 +134,7 @@ export default async function HomePage() {
   ]);
 
   return (
-    <div className="bg-dot-mesh relative overflow-hidden pb-4 sm:pb-0">
+    <div className="bg-dot-mesh relative overflow-hidden">
       <JsonLd
         data={[
           homepageWebpageSchema,
@@ -629,7 +629,7 @@ export default async function HomePage() {
         badge="✦ VISUAL & VIDEO GALLERY ✦"
         title="Pandal Architecture & Celebrations"
         subtitle="Explore our iconic craftsmanship, light tapestries, and video archives"
-        className="relative bg-transparent pt-10 pb-4 sm:pt-20 sm:pb-16 md:py-24"
+        className="relative bg-transparent pt-10 pb-20 sm:pt-20 sm:pb-24 lg:py-24"
       >
         {/* Gallery Slider Highlights */}
         {sliderImages.length > 0 && (

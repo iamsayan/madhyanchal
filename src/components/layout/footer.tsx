@@ -85,7 +85,7 @@ export function Footer() {
   const socialLinks = isDurgaPuja ? durgaSocialLinks : defaultSocialLinks;
 
   return (
-    <footer className="relative overflow-hidden border-t border-slate-200/80 bg-slate-100/60 pt-3 pb-20 text-slate-700 transition-colors sm:pt-10 sm:pb-10 dark:border-white/10 dark:bg-[#0c0a09] dark:text-slate-300">
+    <footer className="relative hidden overflow-hidden border-t border-slate-200/80 bg-slate-100/60 pt-3 text-slate-700 transition-colors lg:block lg:pt-10 lg:pb-10 dark:border-white/10 dark:bg-[#0c0a09] dark:text-slate-300">
       {/* Ambient Halo & Radial Glow */}
       <div className="absolute top-0 left-1/2 h-px w-3/4 max-w-4xl -translate-x-1/2 bg-gradient-to-r from-transparent via-amber-500/50 to-transparent" />
       <div className="pointer-events-none absolute -top-24 left-1/2 h-[150px] w-[300px] -translate-x-1/2 rounded-full bg-amber-500/10 blur-[90px] sm:h-[250px] sm:w-[500px]" />

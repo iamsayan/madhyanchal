@@ -118,7 +118,7 @@ export default function DurgaPujaLandingPage() {
   ];
 
   return (
-    <div className="bg-dot-mesh relative overflow-hidden pb-4 sm:pb-0">
+    <div className="bg-dot-mesh relative overflow-hidden">
       <JsonLd
         data={[
           durgaWebpageSchema,
@@ -233,7 +233,7 @@ export default function DurgaPujaLandingPage() {
       </HeroSlider>
 
       {/* MAIN CONTENT CONTAINER */}
-      <div className="relative z-10 mx-auto max-w-6xl space-y-10 px-3.5 pt-8 pb-12 sm:space-y-16 sm:px-6 lg:px-8">
+      <div className="relative z-10 mx-auto max-w-6xl space-y-10 px-4 pt-8 pb-20 sm:space-y-16 sm:px-6 sm:pb-24 lg:px-8 lg:pb-12">
         {/* 5-DAY SACRED RITUAL SEQUENCE (Native Mobile Horizontal Swipe Track) */}
         <AnimatedWrapper direction="up" className="space-y-3 sm:space-y-4">
           <div className="flex items-center gap-2">
