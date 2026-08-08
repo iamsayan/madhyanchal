@@ -15,13 +15,18 @@ export interface PrintLetterheadOptions {
 
 export const getLetterheadUrl = (template?: string): string => {
   const tmpl = (template || '').toLowerCase().trim();
+  const baseUrl = process.env.NEXT_PUBLIC_API_URL;
+  if (!baseUrl) return '';
+
+  let assetId = '';
   if (tmpl === 'durga') {
-    return process.env.NEXT_PUBLIC_LETTERHEAD_MSDPS_URL || '';
+    assetId = process.env.NEXT_PUBLIC_MSDPS_LETTERHEAD_ASSET_ID || '';
+  } else if (tmpl === 'jagadhatri') {
+    assetId = process.env.NEXT_PUBLIC_MSJPS_LETTERHEAD_ASSET_ID || '';
   }
-  if (tmpl === 'jagadhatri') {
-    return process.env.NEXT_PUBLIC_LETTERHEAD_MSJPS_URL || '';
-  }
-  return '';
+
+  if (!assetId) return '';
+  return `${baseUrl}/assets/link/${assetId}`;
 };
 
 export const formatPrintBodyHtml = (text?: string): string => {

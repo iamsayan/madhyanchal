@@ -18,7 +18,10 @@ import {
   LogOut,
   AlertCircle,
 } from 'lucide-react';
-import { openLetterheadPrintWindow } from '@/lib/letterhead-pdf-helper';
+import {
+  getLetterheadUrl,
+  openLetterheadPrintWindow,
+} from '@/lib/letterhead-pdf-helper';
 import { cn } from '@/lib/utils';
 
 export interface LetterheadData {
@@ -39,19 +42,16 @@ const TEMPLATES = [
   {
     id: 'jagadhatri',
     name: 'Jagadhatri Puja Samity',
-    image: process.env.NEXT_PUBLIC_LETTERHEAD_MSJPS_URL || '',
     color: 'amber',
   },
   {
     id: 'durga',
     name: 'Durga Puja Samity',
-    image: process.env.NEXT_PUBLIC_LETTERHEAD_MSDPS_URL || '',
     color: 'rose',
   },
   {
     id: 'plain',
     name: 'Standard Plain Header',
-    image: '',
     color: 'slate',
   },
 ] as const;
@@ -279,7 +279,7 @@ export function LetterheadGenerator() {
   const selectedTemplate =
     TEMPLATES.find((t) => t.id === formData.template) || TEMPLATES[0];
 
-  const bgImage = selectedTemplate.image;
+  const bgImage = getLetterheadUrl(formData.template);
   const hasLetterhead = Boolean(bgImage);
 
   const handlePresetSelect = (presetId: string) => {
