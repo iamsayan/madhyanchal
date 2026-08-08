@@ -152,24 +152,12 @@ export default function NoticeClientView({
     }
   };
 
-  const featuredNotice = useMemo(() => {
-    const firstNotice = allNotices[0];
-    if (!firstNotice) return null;
-    // If the event_at date/time has already passed, it is no longer featured/latest
-    if (isNoticeEventPast(firstNotice)) return null;
-    return firstNotice;
-  }, [allNotices]);
-
-  // Filter Notices based on Search Query (excluding featured notice already shown in hero banner)
+  // Filter Notices based on Search Query
   const filteredNotices = useMemo(() => {
-    const remainingNotices = featuredNotice
-      ? allNotices.filter((n) => n._id !== featuredNotice._id)
-      : allNotices;
-
     const query = searchQuery.toLowerCase().trim();
-    if (!query) return remainingNotices;
+    if (!query) return allNotices;
 
-    return remainingNotices.filter(
+    return allNotices.filter(
       (notice) =>
         notice.title?.toLowerCase().includes(query) ||
         notice.summary?.toLowerCase().includes(query) ||
@@ -177,7 +165,7 @@ export default function NoticeClientView({
         (notice.ref_no && notice.ref_no.toLowerCase().includes(query)) ||
         (notice.issued_by && notice.issued_by.toLowerCase().includes(query))
     );
-  }, [searchQuery, allNotices, featuredNotice]);
+  }, [searchQuery, allNotices]);
 
   const handlePrintNotice = (notice: NoticeItem) => {
     const eventDate = getEventDate(notice);
@@ -240,118 +228,9 @@ export default function NoticeClientView({
     >
       <div className="space-y-4 sm:space-y-6">
         {/* ============================================================================
-            1. FEATURED / PINNED AGM SPOTLIGHT HERO BANNER
+            1. SEARCH BAR CONTROL
            ============================================================================ */}
-        {featuredNotice && (
-          <AnimatedWrapper direction="up">
-            <div className="relative overflow-hidden rounded-2xl border border-amber-500/25 bg-gradient-to-br from-amber-500/10 via-amber-500/5 to-transparent p-4 backdrop-blur-md transition-all duration-300 sm:rounded-3xl sm:p-7 dark:border-amber-500/20 dark:from-stone-900/90 dark:to-stone-950/80">
-              <div className="space-y-3 sm:space-y-3.5">
-                {/* Top Badges */}
-                <div className="flex flex-wrap items-center gap-1.5 sm:gap-2">
-                  <span className="inline-flex items-center gap-1 rounded-full border border-amber-500/30 bg-amber-500/15 px-2.5 py-0.5 text-[10px] font-bold text-amber-700 sm:px-3 sm:text-[11px] dark:text-amber-300">
-                    <Sparkles className="h-3 w-3 fill-amber-500 text-amber-500" />
-                    Latest Announcement
-                  </span>
-
-                  <span
-                    className={cn(
-                      'inline-flex items-center gap-1 rounded-full border px-2 py-0.5 text-[10px] font-extrabold uppercase sm:px-2.5',
-                      getCategoryBadgeClass(featuredNotice.category)
-                    )}
-                  >
-                    {featuredNotice.category} Notice
-                  </span>
-
-                  {featuredNotice.ref_no && (
-                    <span className="rounded-full border border-slate-200 bg-white/80 px-2 py-0.5 font-mono text-[10px] font-medium text-slate-600 sm:px-2.5 sm:text-[11px] dark:border-white/10 dark:bg-stone-800/80 dark:text-slate-300">
-                      Ref: {featuredNotice.ref_no}
-                    </span>
-                  )}
-                </div>
-
-                {/* Title */}
-                <h2 className="font-paytone text-base text-slate-900 sm:text-2xl dark:text-white">
-                  {featuredNotice.title}
-                </h2>
-
-                {/* Inline Key Meta Details (Event Date, Time & Venue) */}
-                {(getEventDate(featuredNotice) ||
-                  getEventTime(featuredNotice) ||
-                  getNoticeVenue(featuredNotice)) && (
-                  <div className="flex flex-wrap items-center gap-x-4 gap-y-1.5 text-[11px] text-slate-700 sm:gap-x-5 sm:text-xs dark:text-slate-200">
-                    {getEventDate(featuredNotice) && (
-                      <span className="inline-flex items-center gap-1.5">
-                        <Calendar className="h-3.5 w-3.5 text-amber-500" />
-                        <span>
-                          <strong>Event Date:</strong>{' '}
-                          {getEventDate(featuredNotice)}
-                        </span>
-                      </span>
-                    )}
-
-                    {getEventTime(featuredNotice) && (
-                      <span className="inline-flex items-center gap-1.5">
-                        <Clock className="h-3.5 w-3.5 text-amber-500" />
-                        <span>
-                          <strong>Time:</strong> {getEventTime(featuredNotice)}
-                        </span>
-                      </span>
-                    )}
-
-                    {getNoticeVenue(featuredNotice) && (
-                      <span className="inline-flex items-center gap-1.5">
-                        <MapPin className="h-3.5 w-3.5 text-amber-500" />
-                        <span>
-                          <strong>Venue:</strong>{' '}
-                          {getNoticeVenue(featuredNotice)}
-                        </span>
-                      </span>
-                    )}
-                  </div>
-                )}
-
-                {/* Summary */}
-                <p className="line-clamp-3 text-[11px] leading-relaxed text-slate-600 sm:line-clamp-none sm:text-sm dark:text-slate-300">
-                  {featuredNotice.summary}
-                </p>
-
-                {/* 3 Buttons Side-by-Side Right Under Summary */}
-                <div className="flex flex-wrap items-center gap-2 pt-1.5 sm:pt-2">
-                  <button
-                    onClick={() => handleOpenNotice(featuredNotice)}
-                    className="inline-flex items-center justify-center gap-1.5 rounded-xl bg-amber-500 px-3.5 py-2 text-xs font-bold text-slate-950 transition-all hover:bg-amber-400 active:scale-95 sm:px-4 sm:py-2.5 sm:text-sm"
-                  >
-                    <FileText className="h-3.5 w-3.5 sm:h-4 sm:w-4" />
-                    <span>Read Notice</span>
-                  </button>
-
-                  <button
-                    onClick={() => handlePrintNotice(featuredNotice)}
-                    title="Print Notice"
-                    className="inline-flex items-center justify-center gap-1.5 rounded-xl border border-slate-200 bg-white/90 px-3 py-2 text-xs font-semibold text-slate-800 backdrop-blur-md transition-all hover:bg-slate-100 sm:px-3.5 sm:py-2.5 sm:text-sm dark:border-white/10 dark:bg-stone-800/90 dark:text-slate-200 dark:hover:bg-stone-800"
-                  >
-                    <Printer className="h-3.5 w-3.5 text-amber-500 sm:h-4 sm:w-4" />
-                    <span>Print</span>
-                  </button>
-
-                  <button
-                    onClick={() => handleShareNotice(featuredNotice)}
-                    title="Share Direct Notice Link"
-                    className="inline-flex items-center justify-center gap-1.5 rounded-xl border border-slate-200 bg-white/90 px-3 py-2 text-xs font-semibold text-slate-800 backdrop-blur-md transition-all hover:bg-slate-100 sm:px-3.5 sm:py-2.5 sm:text-sm dark:border-white/10 dark:bg-stone-800/90 dark:text-slate-200 dark:hover:bg-stone-800"
-                  >
-                    <Share2 className="h-3 w-3 sm:h-4 sm:w-4" />
-                    <span>Share</span>
-                  </button>
-                </div>
-              </div>
-            </div>
-          </AnimatedWrapper>
-        )}
-
-        {/* ============================================================================
-            2. SEARCH BAR CONTROL
-           ============================================================================ */}
-        <AnimatedWrapper direction="up" delay={0.1}>
+        <AnimatedWrapper direction="up">
           <div className="relative w-full">
             <Search className="pointer-events-none absolute top-1/2 left-3.5 z-10 h-4 w-4 -translate-y-1/2 text-amber-500" />
             <input
@@ -373,9 +252,9 @@ export default function NoticeClientView({
         </AnimatedWrapper>
 
         {/* ============================================================================
-            3. NOTICES GRID LIST
+            2. NOTICES GRID LIST
            ============================================================================ */}
-        <AnimatedWrapper direction="up" delay={0.2}>
+        <AnimatedWrapper direction="up" delay={0.1}>
           {filteredNotices.length === 0 ? (
             <div className="flex flex-col items-center justify-center rounded-3xl border border-dashed border-slate-300/80 bg-white/50 py-16 text-center backdrop-blur-md dark:border-white/10 dark:bg-stone-900/40">
               <ShieldAlert className="h-10 w-10 text-amber-500/60" />
@@ -396,79 +275,119 @@ export default function NoticeClientView({
             </div>
           ) : (
             <div className="grid grid-cols-1 gap-2.5 sm:gap-5 md:grid-cols-2 lg:grid-cols-3">
-              {filteredNotices.map((notice) => (
-                <div
-                  key={notice._id}
-                  className="group relative flex flex-col justify-between rounded-xl border border-slate-200/80 bg-white/90 px-3.5 py-2.5 backdrop-blur-md transition-all duration-200 hover:-translate-y-0.5 hover:border-amber-500/50 sm:rounded-2xl sm:p-5 dark:border-white/10 dark:bg-stone-900/80"
-                >
-                  <div className="space-y-1 sm:space-y-2.5">
-                    {/* Top Row: Category Tag, Ref No & Published Date */}
-                    <div className="flex items-center justify-between gap-2">
-                      <div className="flex items-center gap-1.5 overflow-hidden sm:gap-2">
-                        <span
-                          className={cn(
-                            'py-0.2 inline-flex shrink-0 items-center rounded-md border px-1.5 text-[9px] font-bold uppercase sm:rounded-full sm:px-2.5 sm:py-0.5 sm:text-[10px]',
-                            getCategoryBadgeClass(notice.category)
-                          )}
-                        >
-                          {notice.category}
-                        </span>
-                        {notice.ref_no && (
-                          <span className="truncate font-mono text-[9px] text-slate-400 sm:text-[11px] dark:text-slate-500">
-                            Ref: {notice.ref_no}
+              {filteredNotices.map((notice) => {
+                const isUpcoming =
+                  notice.event_at && !isNoticeEventPast(notice);
+                const eventDate = getEventDate(notice);
+                const eventTime = getEventTime(notice);
+                const eventVenue = getNoticeVenue(notice);
+
+                return (
+                  <div
+                    key={notice._id}
+                    className="group relative flex flex-col justify-between rounded-xl border border-slate-200/80 bg-white/90 px-3.5 py-3 backdrop-blur-md transition-all duration-200 hover:-translate-y-0.5 hover:border-amber-500/50 sm:rounded-2xl sm:p-5 dark:border-white/10 dark:bg-stone-900/80"
+                  >
+                    <div className="space-y-1.5 sm:space-y-2.5">
+                      {/* Top Row: Category Tag, Upcoming Badge, Ref No & Published Date */}
+                      <div className="flex flex-wrap items-center justify-between gap-2">
+                        <div className="flex flex-wrap items-center gap-1.5 sm:gap-2">
+                          <span
+                            className={cn(
+                              'inline-flex shrink-0 items-center rounded-md border px-1.5 py-0.5 text-[9px] font-bold uppercase sm:rounded-full sm:px-2.5 sm:text-[10px]',
+                              getCategoryBadgeClass(notice.category)
+                            )}
+                          >
+                            {notice.category}
                           </span>
-                        )}
+
+                          {isUpcoming && (
+                            <span className="inline-flex shrink-0 items-center gap-1 rounded-md border border-amber-500/30 bg-amber-500/15 px-1.5 py-0.5 text-[9px] font-bold text-amber-700 sm:rounded-full sm:px-2 sm:text-[10px] dark:text-amber-300">
+                              <Sparkles className="h-2.5 w-2.5 fill-amber-500 text-amber-500 sm:h-3 sm:w-3" />
+                              Upcoming
+                            </span>
+                          )}
+
+                          {notice.ref_no && (
+                            <span className="truncate font-mono text-[9px] text-slate-400 sm:text-[11px] dark:text-slate-500">
+                              Ref: {notice.ref_no}
+                            </span>
+                          )}
+                        </div>
+
+                        <span className="shrink-0 text-[10px] font-medium text-slate-500 sm:text-xs dark:text-slate-400">
+                          {getPublishedDate(notice)}
+                        </span>
                       </div>
 
-                      <span className="shrink-0 text-[10px] font-medium text-slate-500 sm:text-xs dark:text-slate-400">
-                        {getPublishedDate(notice)}
-                      </span>
+                      {/* Notice Title */}
+                      <h3 className="line-clamp-2 text-xs font-bold text-slate-900 transition-colors group-hover:text-amber-600 sm:text-base dark:text-white dark:group-hover:text-amber-400">
+                        {notice.title}
+                      </h3>
+
+                      {/* Event Details if available */}
+                      {(eventDate || eventTime || eventVenue) && (
+                        <div className="flex flex-wrap items-center gap-x-3 gap-y-1 text-[10px] font-medium text-amber-800 sm:text-[11px] dark:text-amber-300">
+                          {eventDate && (
+                            <span className="inline-flex items-center gap-1">
+                              <Calendar className="h-3 w-3 text-amber-500" />
+                              {eventDate}
+                            </span>
+                          )}
+                          {eventTime && (
+                            <span className="inline-flex items-center gap-1">
+                              <Clock className="h-3 w-3 text-amber-500" />
+                              {eventTime}
+                            </span>
+                          )}
+                          {eventVenue && (
+                            <span className="inline-flex items-center gap-1">
+                              <MapPin className="h-3 w-3 text-amber-500" />
+                              {eventVenue}
+                            </span>
+                          )}
+                        </div>
+                      )}
+
+                      {/* Summary */}
+                      {notice.summary && (
+                        <p className="line-clamp-2 text-[11px] leading-relaxed text-slate-600 sm:line-clamp-3 sm:text-xs dark:text-slate-400">
+                          {notice.summary}
+                        </p>
+                      )}
                     </div>
 
-                    {/* Notice Title */}
-                    <h3 className="line-clamp-1 text-xs font-bold text-slate-900 transition-colors group-hover:text-amber-600 sm:line-clamp-2 sm:text-base dark:text-white dark:group-hover:text-amber-400">
-                      {notice.title}
-                    </h3>
-
-                    {/* Summary */}
-                    {notice.summary && (
-                      <p className="line-clamp-2 text-[11px] leading-relaxed text-slate-600 sm:line-clamp-3 sm:text-xs dark:text-slate-400">
-                        {notice.summary}
-                      </p>
-                    )}
-                  </div>
-
-                  {/* Card Bottom Actions */}
-                  <div className="mt-2 flex items-center justify-between border-t border-slate-100/80 pt-1.5 sm:mt-4 sm:pt-3 dark:border-white/5">
-                    <button
-                      onClick={() => handleOpenNotice(notice)}
-                      className="inline-flex items-center gap-1 text-[11px] font-bold text-amber-600 transition-colors hover:text-amber-700 sm:text-xs dark:text-amber-400 dark:hover:text-amber-300"
-                    >
-                      View Notice
-                      <ChevronRight className="h-3 w-3 transition-transform group-hover:translate-x-0.5 sm:h-3.5 sm:w-3.5" />
-                    </button>
-
-                    <div className="flex items-center gap-1">
+                    {/* Card Bottom Actions */}
+                    <div className="mt-2.5 flex items-center justify-between border-t border-slate-100/80 pt-2 sm:mt-4 sm:pt-3 dark:border-white/5">
                       <button
-                        onClick={() => handleShareNotice(notice)}
-                        title="Share Notice Link"
-                        aria-label="Share Notice Link"
-                        className="rounded-md p-1 text-slate-400 hover:bg-slate-100 hover:text-slate-700 sm:p-1.5 dark:hover:bg-stone-800 dark:hover:text-slate-200"
+                        onClick={() => handleOpenNotice(notice)}
+                        className="inline-flex items-center gap-1 text-[11px] font-bold text-amber-600 transition-colors hover:text-amber-700 sm:text-xs dark:text-amber-400 dark:hover:text-amber-300"
                       >
-                        <Share2 className="h-3 w-3 sm:h-3.5 sm:w-3.5" />
+                        View Notice
+                        <ChevronRight className="h-3 w-3 transition-transform group-hover:translate-x-0.5 sm:h-3.5 sm:w-3.5" />
                       </button>
-                      <button
-                        onClick={() => handlePrintNotice(notice)}
-                        title="Print Notice"
-                        aria-label="Print Notice"
-                        className="rounded-md p-1 text-slate-400 hover:bg-slate-100 hover:text-slate-700 sm:p-1.5 dark:hover:bg-stone-800 dark:hover:text-slate-200"
-                      >
-                        <Printer className="h-3 w-3 sm:h-3.5 sm:w-3.5" />
-                      </button>
+
+                      <div className="flex items-center gap-1">
+                        <button
+                          onClick={() => handleShareNotice(notice)}
+                          title="Share Notice Link"
+                          aria-label="Share Notice Link"
+                          className="rounded-md p-1 text-slate-400 hover:bg-slate-100 hover:text-slate-700 sm:p-1.5 dark:hover:bg-stone-800 dark:hover:text-slate-200"
+                        >
+                          <Share2 className="h-3 w-3 sm:h-3.5 sm:w-3.5" />
+                        </button>
+                        <button
+                          onClick={() => handlePrintNotice(notice)}
+                          title="Print Notice"
+                          aria-label="Print Notice"
+                          className="rounded-md p-1 text-slate-400 hover:bg-slate-100 hover:text-slate-700 sm:p-1.5 dark:hover:bg-stone-800 dark:hover:text-slate-200"
+                        >
+                          <Printer className="h-3 w-3 sm:h-3.5 sm:w-3.5" />
+                        </button>
+                      </div>
                     </div>
                   </div>
-                </div>
-              ))}
+                );
+              })}
             </div>
           )}
         </AnimatedWrapper>

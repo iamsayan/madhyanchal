@@ -42,9 +42,11 @@ export function PwaInstallPrompt() {
     <pwa-install
       manifest-url="/manifest.json"
       name="Madhyanchal"
-      icon="/circle-logo.png"
+      icon="/icons/icon-64x64.png"
       description="Official App for Madhyanchal Sarbajanin, Chandannagar."
       install-description="Install our official app on your device for instant offline access to Puja Schedules, Pandal Details, Gallery, Pushpanjali timings, and Sit & Draw Competition results!"
+      manual-apple="true"
+      manual-chrome="true"
     />
   );
 }

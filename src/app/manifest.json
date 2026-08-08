@@ -108,7 +108,7 @@
             "url": "/durgapuja/?utm_source=pwa",
             "icons": [
                 {
-                    "src": "/circle-logo.png",
+                    "src": "/icons/icon-192x192.png",
                     "sizes": "192x192"
                 }
             ]
@@ -120,7 +120,7 @@
             "url": "/schedule/?utm_source=pwa",
             "icons": [
                 {
-                    "src": "/circle-logo.png",
+                    "src": "/icons/icon-192x192.png",
                     "sizes": "192x192"
                 }
             ]
@@ -132,7 +132,7 @@
             "url": "/gallery/?utm_source=pwa",
             "icons": [
                 {
-                    "src": "/circle-logo.png",
+                    "src": "/icons/icon-192x192.png",
                     "sizes": "192x192"
                 }
             ]
