@@ -424,7 +424,7 @@ export function MobileNavDock() {
                 stiffness: 360,
                 mass: 0.8,
               }}
-              className="relative z-10 max-h-[85vh] w-full space-y-4 overflow-y-auto rounded-t-3xl border-t border-slate-200 bg-white/95 p-5 pb-[calc(5rem+max(0.75rem,env(safe-area-inset-bottom,0px)))] shadow-2xl backdrop-blur-2xl dark:border-white/15 dark:bg-stone-950/95"
+              className="relative z-10 max-h-[85vh] w-full space-y-3 overflow-y-auto rounded-t-3xl border-t border-slate-200 bg-white/95 p-4 pb-[calc(1.5rem+env(safe-area-inset-bottom,0px)))] shadow-2xl backdrop-blur-2xl dark:border-white/15 dark:bg-stone-950/95"
             >
               {/* Sheet Handle Bar */}
               <div className="mx-auto mb-1 h-1.5 w-12 rounded-full bg-slate-300 dark:bg-slate-700" />
@@ -629,7 +629,7 @@ export function MobileNavDock() {
               </div>
 
               {/* DRAWER MOBILE FOOTER: Logo, Social Icons & Copyright */}
-              <div className="mt-4 border-t border-slate-200/80 pt-4 text-center dark:border-white/10">
+              <div className="mt-3 border-t border-slate-200/80 pt-3 text-center dark:border-white/10">
                 <Link
                   href={isDurgaPuja ? '/durgapuja' : '/'}
                   onClick={() => setMoreOpen(false)}
@@ -638,14 +638,14 @@ export function MobileNavDock() {
                   <Image
                     src="/logo.png"
                     alt="Madhyanchal Sarbajanin Logo"
-                    width={180}
-                    height={45}
+                    width={160}
+                    height={40}
                     className="mx-auto h-7 w-auto object-contain dark:brightness-110"
                   />
                 </Link>
 
                 {/* Social Micro Icons */}
-                <div className="mt-3 flex items-center justify-center gap-2">
+                <div className="mt-1 flex items-center justify-center gap-1.5">
                   {drawerSocialLinks.map((item, idx) => {
                     const Icon = item.icon;
                     return (
@@ -655,31 +655,31 @@ export function MobileNavDock() {
                         target="_blank"
                         rel="noopener noreferrer"
                         aria-label={item.label}
-                        className="flex h-7.5 w-7.5 items-center justify-center rounded-full border border-slate-300/80 bg-slate-100/80 text-slate-700 shadow-2xs transition-all hover:scale-110 hover:border-amber-500/50 hover:bg-amber-500 hover:text-slate-950 active:scale-95 dark:border-white/10 dark:bg-stone-900/80 dark:text-slate-300 dark:hover:bg-amber-500 dark:hover:text-slate-950"
+                        className="flex h-6.5 w-6.5 items-center justify-center rounded-full border border-slate-300/80 bg-slate-100/80 text-slate-700 shadow-2xs transition-all hover:scale-110 hover:border-amber-500/50 hover:bg-amber-500 hover:text-slate-950 active:scale-95 dark:border-white/10 dark:bg-stone-900/80 dark:text-slate-300 dark:hover:bg-amber-500 dark:hover:text-slate-950"
                       >
-                        <Icon className="h-3.5 w-3.5" />
+                        <Icon className="h-3 w-3" />
                       </a>
                     );
                   })}
                 </div>
 
                 {/* Copyright & Developer Credits */}
-                <div className="mt-3 space-y-1 text-[10px] text-slate-500 dark:text-slate-400">
+                <div className="mt-2 space-y-0.5 text-[9.5px] text-slate-500 dark:text-slate-400">
                   <p>
-                    Copyright © {new Date().getFullYear()} Madhyanchal Sarbajanin. All
-                    Rights Reserved.
+                    Copyright © {new Date().getFullYear()} Madhyanchal
+                    Sarbajanin. All Rights Reserved.
                   </p>
-                  <p className="flex items-center justify-center gap-1 text-[9px] text-slate-400 dark:text-slate-500">
+                  <p className="flex items-center justify-center gap-1 text-[8.5px] text-slate-400 dark:text-slate-500">
                     Designed & Developed by{' '}
                     <Link
                       href="https://www.sayandatta.co.in"
                       target="_blank"
                       className={cn(
                         spaceGrotesk.className,
-                        'inline-flex items-center gap-1 rounded border border-amber-500/25 bg-amber-500/10 px-1.5 py-0.5 text-[8px] font-bold tracking-widest transition-all hover:scale-105 hover:border-amber-500/50 hover:bg-amber-500/20'
+                        'inline-flex items-center gap-1 rounded border border-amber-500/25 bg-amber-500/10 px-1.5 py-0.5 text-[7.5px] font-bold tracking-widest transition-all hover:scale-105 hover:border-amber-500/50 hover:bg-amber-500/20'
                       )}
                     >
-                      <Sparkles className="h-2 w-2 animate-pulse text-amber-500" />
+                      <Sparkles className="h-1.5 w-1.5 animate-pulse text-amber-500" />
                       <span className="bg-gradient-to-r from-amber-600 via-amber-500 to-yellow-500 bg-clip-text text-transparent uppercase dark:from-amber-400 dark:to-yellow-300">
                         SAYAN DATTA
                       </span>
