@@ -4,14 +4,15 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { Space_Grotesk } from 'next/font/google';
 
+import { Sparkles } from 'lucide-react';
 import {
-  AtSign,
-  Facebook,
-  Instagram,
-  Sparkles,
-  Twitter,
-  Youtube,
-} from 'lucide-react';
+  SiFacebook,
+  SiInstagram,
+  SiThreads,
+  SiWhatsapp,
+  SiX,
+  SiYoutube,
+} from '@icons-pack/react-simple-icons';
 import { cn } from '@/lib/utils';
 import { useRouteContext } from '@/hooks/use-route-context';
 
@@ -24,47 +25,61 @@ const spaceGrotesk = Space_Grotesk({
 export function Footer() {
   const { isDurgaPuja } = useRouteContext();
 
+  const whatsappUrl =
+    process.env.NEXT_PUBLIC_WHATSAPP_CHANNEL_URL ||
+    'https://whatsapp.com/channel/0029VaA1B2C3D4E5F6G7H8';
+
   const defaultSocialLinks = [
     {
-      icon: Facebook,
+      icon: SiWhatsapp,
+      label: 'WhatsApp Channel',
+      href: whatsappUrl,
+    },
+    {
+      icon: SiFacebook,
       label: 'Facebook',
       href: 'https://www.facebook.com/madhyanchalsarbajanin',
     },
     {
-      icon: Youtube,
+      icon: SiYoutube,
       label: 'YouTube',
       href: 'https://www.youtube.com/@madhyanchalsarbajanin',
     },
     {
-      icon: Instagram,
+      icon: SiInstagram,
       label: 'Instagram',
       href: 'https://www.instagram.com/madhyanchal_sarbajanin',
     },
     {
-      icon: AtSign,
+      icon: SiThreads,
       label: 'Threads',
       href: 'https://www.threads.net/@madhyanchal_sarbajanin',
     },
-    { icon: Twitter, label: 'X (Twitter)', href: 'https://x.com/madhyanchal' },
+    { icon: SiX, label: 'X (Twitter)', href: 'https://x.com/madhyanchal' },
   ];
 
   const durgaSocialLinks = [
     {
-      icon: Facebook,
+      icon: SiWhatsapp,
+      label: 'WhatsApp Channel',
+      href: whatsappUrl,
+    },
+    {
+      icon: SiFacebook,
       label: 'Facebook',
       href: 'https://www.facebook.com/msdpsofficial',
     },
     {
-      icon: Instagram,
+      icon: SiInstagram,
       label: 'Instagram',
       href: 'https://www.instagram.com/madhyanchal_sarbajanin',
     },
     {
-      icon: AtSign,
+      icon: SiThreads,
       label: 'Threads',
       href: 'https://www.threads.net/@madhyanchal_sarbajanin',
     },
-    { icon: Twitter, label: 'X (Twitter)', href: 'https://x.com/madhyanchal' },
+    { icon: SiX, label: 'X (Twitter)', href: 'https://x.com/madhyanchal' },
   ];
 
   const socialLinks = isDurgaPuja ? durgaSocialLinks : defaultSocialLinks;
