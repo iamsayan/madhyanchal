@@ -85,24 +85,29 @@ export function MobileNavDock() {
   useEffect(() => {
     if (typeof window === 'undefined') return;
 
-    const checkPWAStatus = async () => {
-      const pwaInstall = document.getElementsByTagName(
+    let timerId: NodeJS.Timeout;
+    let cleanupListeners: (() => void) | null = null;
+
+    const initPwaCheck = async () => {
+      const pwaInstallEl = document.getElementsByTagName(
         'pwa-install'
       )[0] as unknown as {
         isInstallAvailable?: boolean;
         isUnderStandaloneMode?: boolean;
         getInstalledRelatedApps?: () => Promise<unknown[]>;
+        addEventListener: (type: string, listener: () => void) => void;
+        removeEventListener: (type: string, listener: () => void) => void;
       };
 
-      if (!pwaInstall) return;
+      if (!pwaInstallEl) return false;
 
       // Check package's built-in getInstalledRelatedApps method
-      if (typeof pwaInstall.getInstalledRelatedApps === 'function') {
+      if (typeof pwaInstallEl.getInstalledRelatedApps === 'function') {
         try {
-          const installedApps = await pwaInstall.getInstalledRelatedApps();
+          const installedApps = await pwaInstallEl.getInstalledRelatedApps();
           if (installedApps && installedApps.length > 0) {
             setIsInstallAvailable(false);
-            return;
+            return true;
           }
         } catch {
           // Ignore error
@@ -110,33 +115,47 @@ export function MobileNavDock() {
       }
 
       // Check package's built-in isInstallAvailable & isUnderStandaloneMode properties
-      if (pwaInstall.isUnderStandaloneMode) {
+      if (pwaInstallEl.isUnderStandaloneMode) {
         setIsInstallAvailable(false);
-      } else if (typeof pwaInstall.isInstallAvailable === 'boolean') {
-        setIsInstallAvailable(pwaInstall.isInstallAvailable);
+      } else if (typeof pwaInstallEl.isInstallAvailable === 'boolean') {
+        setIsInstallAvailable(pwaInstallEl.isInstallAvailable);
+      }
+
+      const handleAvailable = () => setIsInstallAvailable(true);
+      const handleInstalled = () => setIsInstallAvailable(false);
+
+      pwaInstallEl.addEventListener('pwa-install-available', handleAvailable);
+      pwaInstallEl.addEventListener('pwa-install-installed', handleInstalled);
+
+      cleanupListeners = () => {
+        pwaInstallEl.removeEventListener(
+          'pwa-install-available',
+          handleAvailable
+        );
+        pwaInstallEl.removeEventListener(
+          'pwa-install-installed',
+          handleInstalled
+        );
+      };
+
+      return true;
+    };
+
+    const runSetup = async () => {
+      const isSuccess = await initPwaCheck();
+      if (!isSuccess) {
+        timerId = setInterval(async () => {
+          const done = await initPwaCheck();
+          if (done) clearInterval(timerId);
+        }, 300);
       }
     };
 
-    checkPWAStatus();
-
-    // Listen for @khmyznikov/pwa-install package custom events
-    const pwaInstallEl = document.getElementsByTagName('pwa-install')[0];
-
-    const handleAvailable = () => setIsInstallAvailable(true);
-    const handleInstalled = () => setIsInstallAvailable(false);
-
-    pwaInstallEl?.addEventListener('pwa-install-available', handleAvailable);
-    pwaInstallEl?.addEventListener('pwa-install-installed', handleInstalled);
+    runSetup();
 
     return () => {
-      pwaInstallEl?.removeEventListener(
-        'pwa-install-available',
-        handleAvailable
-      );
-      pwaInstallEl?.removeEventListener(
-        'pwa-install-installed',
-        handleInstalled
-      );
+      if (timerId) clearInterval(timerId);
+      if (cleanupListeners) cleanupListeners();
     };
   }, [moreOpen]);
 
